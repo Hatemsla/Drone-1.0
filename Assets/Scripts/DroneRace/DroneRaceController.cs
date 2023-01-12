@@ -1,39 +1,49 @@
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace FreeMode
+namespace DroneRace
 {
-    public class FreeModeController : MonoBehaviour
+    public class DroneRaceController : MonoBehaviour
     {
         public float interfaceScale;
         public bool isSimpleMode;
         public bool isGameStart;
         public Transform target;
         public DroneController droneController;
-        public FreeModeUIManager freeModeUIManager;
+        public DroneRaceUIManager droneRaceUIManager;
+        public DroneRaceCheckNode playerNode;
         public Timer timer;
-
+        public List<DroneRaceCheckNode> droneRaceCheckNodes;
+        
         public Camera mainCamera;
-        private CheckNode _checkNode;
+        private DroneRaceCheckNode _checkNode;
         private Vector3 _startPointerSize;
+        private int _playerRacePosition;
+
 
         private void Awake()
         {
-            _startPointerSize = freeModeUIManager.pathArrow.sizeDelta;
+            _startPointerSize = droneRaceUIManager.pathArrow.sizeDelta;
         }
 
         private void Start()
         {
             droneController.isSimpleMode = isSimpleMode;
-            _checkNode = droneController.checkNode;
-            freeModeUIManager.scoreText.text = $"Счет: {_checkNode.passedNode}";
+            _checkNode = droneController.droneRaceCheckNode;
+            droneRaceUIManager.scoreText.text = $"Счет: {_checkNode.passedNode}";
         }
 
         private void Update()
         {
             CheckStartGame();
             CheckEndGame();
+            
+            droneRaceCheckNodes = droneRaceCheckNodes.OrderByDescending(x => x.passedNode).ThenBy(x => x.wayDistance).ToList();
+            droneRaceUIManager.racePositionText.text = $"Позиция: {_playerRacePosition + 1}";
+            _playerRacePosition = droneRaceCheckNodes.IndexOf(playerNode);
         }
 
         private void LateUpdate()
@@ -45,13 +55,13 @@ namespace FreeMode
             Vector3 outPos = realPos;
             float direction = 1;
 
-            freeModeUIManager.pathArrow.GetComponent<Image>().sprite = freeModeUIManager.outOfScreenIcon;
+            droneRaceUIManager.pathArrow.GetComponent<Image>().sprite = droneRaceUIManager.outOfScreenIcon;
 
             if (!IsBehind(target.position)) // если цель спереди
             {
                 if (rect.Contains(realPos)) // и если цель в окне экрана
                 {
-                    freeModeUIManager.pathArrow.GetComponent<Image>().sprite = freeModeUIManager.pointerIcon;
+                    droneRaceUIManager.pathArrow.GetComponent<Image>().sprite = droneRaceUIManager.pointerIcon;
                 }
             }
             else // если цель cзади
@@ -65,7 +75,7 @@ namespace FreeMode
                 }
             }
             // ограничиваем позицию областью экрана
-            float offset = freeModeUIManager.pathArrow.sizeDelta.x / 2;
+            float offset = droneRaceUIManager.pathArrow.sizeDelta.x / 2;
             outPos.x = Mathf.Clamp(outPos.x, offset, Screen.width - offset);
             outPos.y = Mathf.Clamp(outPos.y, offset, Screen.height - offset);
 
@@ -73,8 +83,8 @@ namespace FreeMode
 
             RotatePointer(direction * pos);
 
-            freeModeUIManager.pathArrow.sizeDelta = new Vector2(_startPointerSize.x / 100 * interfaceScale, _startPointerSize.y / 100 * interfaceScale);
-            freeModeUIManager.pathArrow.anchoredPosition = outPos;
+            droneRaceUIManager.pathArrow.sizeDelta = new Vector2(_startPointerSize.x / 100 * interfaceScale, _startPointerSize.y / 100 * interfaceScale);
+            droneRaceUIManager.pathArrow.anchoredPosition = outPos;
         }
 
         private bool IsBehind(Vector3 point) // true если point сзади камеры
@@ -88,19 +98,19 @@ namespace FreeMode
         private void RotatePointer(Vector2 direction) // поворачивает PointerUI в направление direction
         {
             float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-            freeModeUIManager.pathArrow.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+            droneRaceUIManager.pathArrow.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
         }
 
         private void CheckStartGame()
         {
             if (timer.waitForStartGame >= 0)
             {
-                freeModeUIManager.timeToStartGameText.text = $"До начала осталось: {timer.waitForStartGame:f1}";
+                droneRaceUIManager.timeToStartGameText.text = $"До начала осталось: {timer.waitForStartGame:f1}";
             }
             else
             {
-                freeModeUIManager.timeToStartGameText.gameObject.SetActive(false);
-                freeModeUIManager.descriptionPanel.SetActive(false);
+                droneRaceUIManager.timeToStartGameText.gameObject.SetActive(false);
+                droneRaceUIManager.descriptionPanel.SetActive(false);
                 isGameStart = true;
             }
         }
@@ -111,14 +121,14 @@ namespace FreeMode
             {
                 float minutes = Mathf.FloorToInt(timer.waitForEndGame / 60);
                 float seconds = Mathf.FloorToInt(timer.waitForEndGame % 60);
-                freeModeUIManager.timeToEndGameText.text = $"{minutes:00}:{seconds:00}";
+                droneRaceUIManager.timeToEndGameText.text = $"{minutes:00}:{seconds:00}";
             }
             else
             {
                 if (_checkNode.passedNode == _checkNode.nodes.Count - 1)
-                    freeModeUIManager.matchResultText.text = "Вы победили!";
+                    droneRaceUIManager.matchResultText.text = "Вы победили!";
 
-                freeModeUIManager.matchResultPanel.SetActive(true);
+                droneRaceUIManager.matchResultPanel.SetActive(true);
                 isGameStart = false;
                 StartCoroutine(BackToMenu());
             }
@@ -126,13 +136,13 @@ namespace FreeMode
 
         public void CheckScore()
         {
-            freeModeUIManager.scoreText.text = $"Счет: {_checkNode.passedNode}";
+            droneRaceUIManager.scoreText.text = $"Счет: {_checkNode.passedNode}";
         }
 
         private IEnumerator BackToMenu()
         {
             yield return new WaitForSeconds(3);
-            freeModeUIManager.backBtn.onClick.Invoke();
+            droneRaceUIManager.backBtn.onClick.Invoke();
         }
     }
 }

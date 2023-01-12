@@ -2,9 +2,9 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace FreeMode
+namespace DroneRace
 {
-    [RequireComponent(typeof(Rigidbody), typeof(CheckNode))]
+    [RequireComponent(typeof(Rigidbody), typeof(DroneRaceCheckNode))]
     public class DroneController : MonoBehaviour
     {
         public float minMaxPitch;
@@ -16,9 +16,9 @@ namespace FreeMode
         public float lerpSpeed;
         public bool isSimpleMode;
         public Rigidbody rb;
-        public CheckNode checkNode;
+        public DroneRaceCheckNode droneRaceCheckNode;
         public Path pathAI;
-        public FreeModeController freeModeController;
+        public DroneRaceController droneRaceController;
 
         private float _finalPitch;
         private float _finalRoll;
@@ -31,17 +31,18 @@ namespace FreeMode
         {
             rb = GetComponent<Rigidbody>();
             _engines = GetComponentsInChildren<DroneEngine>().ToList();
-            checkNode = GetComponent<CheckNode>();
+            droneRaceCheckNode = GetComponent<DroneRaceCheckNode>();
+            droneRaceCheckNode.nodes = pathAI.nodes;
         }
 
         private void Start()
         {
-            checkNode.nodes = pathAI.nodes;
+            droneRaceCheckNode.nodes = pathAI.nodes;
         }
 
         private void FixedUpdate()
         {
-            if (freeModeController.isGameStart)
+            if (droneRaceController.isGameStart)
             {
                 GetInput();
                 DroneMove();

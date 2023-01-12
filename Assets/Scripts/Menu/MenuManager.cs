@@ -1,4 +1,4 @@
-using FreeMode;
+using DroneRace;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -8,7 +8,7 @@ namespace Menu
     {
         public bool isSimpleMode;
         public MenuUIManager menuUIManager;
-        public FreeModeController freeModeController;
+        public DroneRaceController droneRaceController;
 
         private void Start()
         {
@@ -37,17 +37,17 @@ namespace Menu
             }
             else if (scene.buildIndex == 1)
             {
-                freeModeController = FindObjectOfType<FreeModeController>();
-                freeModeController.freeModeUIManager.backBtn.onClick.AddListener(Back);
-                freeModeController.freeModeUIManager.exitBtn.onClick.AddListener(Exit);
-                freeModeController.isSimpleMode = isSimpleMode;
+                droneRaceController = FindObjectOfType<DroneRaceController>();
+                droneRaceController.droneRaceUIManager.backBtn.onClick.AddListener(Back);
+                droneRaceController.droneRaceUIManager.exitBtn.onClick.AddListener(Exit);
+                droneRaceController.isSimpleMode = isSimpleMode;
             }
             else if (scene.buildIndex == 2)
             {
-                freeModeController = FindObjectOfType<FreeModeController>();
-                freeModeController.freeModeUIManager.backBtn.onClick.AddListener(Back);
-                freeModeController.freeModeUIManager.exitBtn.onClick.AddListener(Exit);
-                freeModeController.isSimpleMode = isSimpleMode;
+                droneRaceController = FindObjectOfType<DroneRaceController>();
+                droneRaceController.droneRaceUIManager.backBtn.onClick.AddListener(Back);
+                droneRaceController.droneRaceUIManager.exitBtn.onClick.AddListener(Exit);
+                droneRaceController.isSimpleMode = isSimpleMode;
             }
         }
 

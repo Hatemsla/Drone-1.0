@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using FreeMode;
+using DroneRace;
 using UnityEngine;
 
 public class CheckpointTrigger : MonoBehaviour
@@ -10,17 +10,16 @@ public class CheckpointTrigger : MonoBehaviour
 
     private void Start()
     {
-        checkpointID = int.Parse(gameObject.name);
         mesh = GetComponent<MeshRenderer>();
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Player")
+        if (other.gameObject.CompareTag("Player"))
         {
-            var drone = other.GetComponentInParent<CheckNode>();
-            var freeModeController = FindObjectOfType<FreeModeController>();
-            if (drone.currentNode == checkpointID)
+            var drone = other.GetComponentInParent<DroneRaceCheckNode>();
+            var freeModeController = FindObjectOfType<DroneRaceController>();
+            if (drone.passedNode == checkpointID)
             {
                 drone.CheckWaypoint();
                 freeModeController.CheckScore();

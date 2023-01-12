@@ -2,9 +2,9 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace FreeMode
+namespace DroneRace
 {
-    public class FreeModeUIManager : MonoBehaviour
+    public class DroneRaceUIManager : MonoBehaviour
     {
         public Button backBtn;
         public Button exitBtn;
@@ -15,6 +15,7 @@ namespace FreeMode
         public TMP_Text timeToEndGameText;
         public TMP_Text matchResultText;
         public TMP_Text scoreText;
+        public TMP_Text racePositionText;
         public GameObject descriptionPanel;
         public GameObject matchResultPanel;
     }

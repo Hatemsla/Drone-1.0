@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace FreeMode
+namespace DroneRace
 {
     public class DroneAI : MonoBehaviour
     {
@@ -17,7 +17,7 @@ namespace FreeMode
         public Rigidbody rb;
         public CheckNode checkNode;
         public Path pathAI;
-        public FreeModeController freeModeController;
+        public DroneRaceController droneRaceController;
 
         private float _finalPitch;
         private float _finalRoll;
@@ -36,7 +36,7 @@ namespace FreeMode
 
         private void FixedUpdate()
         {
-            if (freeModeController.isGameStart)
+            if (droneRaceController.isGameStart)
             {
                 // GetInput();
                 DroneMove();
