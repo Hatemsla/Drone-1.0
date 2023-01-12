@@ -1,12 +1,12 @@
 using System.Collections.Generic;
 using System.Linq;
-using DroneRace;
+using DroneFootball;
 using UnityEngine;
 
-namespace DroneFootball
+namespace DroneRace
 {
-    [RequireComponent(typeof(CheckNode), typeof(Rigidbody))]
-    public class DroneFootballAI : MonoBehaviour
+    [RequireComponent(typeof(Rigidbody), typeof(DroneRaceCheckNode))]
+    public class DroneRaceAI : MonoBehaviour
     {
         public float proportionalGain;
         public float integralGain;
@@ -15,27 +15,28 @@ namespace DroneFootball
         public float outputMax = 1;
         public float integralSaturation;
         public float throttle;
-        public Rigidbody rb;
-        public Transform playerTransform;
-        public CheckNode checkNode;
-        public FootballController footballController;
-        
+        public DroneRaceCheckNode droneRaceCheckNode;
+        public DroneRaceController droneRaceController;
+        public Path pathAI;
         private List<DroneEngine> _engines;
         private float _finalPitch;
         private float _finalRoll;
         private float _finalYaw;
         private float _isMove;
-        private float _yaw;
         private PIDController _pitchController;
+
+        private Rigidbody _rb;
         private PIDController _rollController;
         private PIDController _throttleController;
+        private float _yaw;
         private PIDController _yawController;
 
         private void Awake()
         {
-            rb = GetComponent<Rigidbody>();
+            _rb = GetComponent<Rigidbody>();
             _engines = GetComponentsInChildren<DroneEngine>().ToList();
-            checkNode = GetComponent<CheckNode>();
+            droneRaceCheckNode = GetComponent<DroneRaceCheckNode>();
+            droneRaceCheckNode.nodes = pathAI.nodes;
 
             _throttleController = new PIDController(proportionalGain, integralGain, derivativeGain, outputMin,
                 outputMax,
@@ -48,32 +49,34 @@ namespace DroneFootball
                 integralSaturation);
         }
 
+        private void Start()
+        {
+            droneRaceCheckNode.nodes = pathAI.nodes;
+        }
+
         private void FixedUpdate()
         {
-            if (footballController.isGameStart) DroneMove();
+            if (droneRaceController.isGameStart) DroneMove();
         }
 
         private void DroneMove()
         {
-            foreach (var engine in _engines) engine.UpdateEngine(rb, throttle);
-            throttle = _throttleController.UpdateThrottle(Time.fixedDeltaTime, rb.position.y,
-                playerTransform.position.y);
+            var targetPosition = droneRaceCheckNode.nodes[droneRaceCheckNode.currentNode].position;
+            foreach (var engine in _engines) engine.UpdateEngine(_rb, throttle);
+            throttle = _throttleController.UpdateThrottle(Time.fixedDeltaTime, _rb.position.y, targetPosition.y);
 
-            _finalPitch =
-                _pitchController.UpdateThrottle(Time.fixedDeltaTime, rb.position.x, playerTransform.position.x);
-            _finalRoll = _rollController.UpdateThrottle(Time.fixedDeltaTime, rb.position.z, playerTransform.position.z);
+            _finalPitch = _pitchController.UpdateThrottle(Time.fixedDeltaTime, _rb.position.x, targetPosition.x);
+            _finalRoll = _rollController.UpdateThrottle(Time.fixedDeltaTime, _rb.position.z, targetPosition.z);
 
-            var targetPosition = playerTransform.position;
-            targetPosition.y = rb.position.y; //ignore difference in Y
-            var targetDir = (targetPosition - rb.position).normalized;
-            var forwardDir = rb.rotation * Vector3.forward;
+            targetPosition.y = _rb.position.y; //ignore difference in Y
+            var targetDir = (targetPosition - _rb.position).normalized;
+            var forwardDir = _rb.rotation * Vector3.forward;
 
             var currentAngle = Vector3.SignedAngle(Vector3.forward, forwardDir, Vector3.up);
             var targetAngle = Vector3.SignedAngle(Vector3.forward, targetDir, Vector3.up);
 
             _finalYaw = _yawController.UpdateAngle(Time.fixedDeltaTime, currentAngle, targetAngle);
-            rb.AddForce(new Vector3(_finalPitch, 0, _finalRoll) * 3);
-            // transform.LookAt(playerTransform);
+            _rb.AddForce(new Vector3(_finalPitch, 0, _finalRoll));
         }
     }
 }

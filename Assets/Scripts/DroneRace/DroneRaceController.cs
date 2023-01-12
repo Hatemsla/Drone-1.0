@@ -33,7 +33,6 @@ namespace DroneRace
         {
             droneController.isSimpleMode = isSimpleMode;
             _checkNode = droneController.droneRaceCheckNode;
-            droneRaceUIManager.scoreText.text = $"Счет: {_checkNode.passedNode}";
         }
 
         private void Update()
@@ -41,7 +40,7 @@ namespace DroneRace
             CheckStartGame();
             CheckEndGame();
             
-            droneRaceCheckNodes = droneRaceCheckNodes.OrderByDescending(x => x.passedNode).ThenBy(x => x.wayDistance).ToList();
+            droneRaceCheckNodes = droneRaceCheckNodes.OrderByDescending(x => x.currentNode).ThenBy(x => x.wayDistance).ToList();
             droneRaceUIManager.racePositionText.text = $"Позиция: {_playerRacePosition + 1}";
             _playerRacePosition = droneRaceCheckNodes.IndexOf(playerNode);
         }
@@ -125,18 +124,15 @@ namespace DroneRace
             }
             else
             {
-                if (_checkNode.passedNode == _checkNode.nodes.Count - 1)
+                if (_playerRacePosition == 0)
                     droneRaceUIManager.matchResultText.text = "Вы победили!";
+                else
+                    droneRaceUIManager.matchResultText.text = "Вы проиграли(";
 
                 droneRaceUIManager.matchResultPanel.SetActive(true);
                 isGameStart = false;
                 StartCoroutine(BackToMenu());
             }
-        }
-
-        public void CheckScore()
-        {
-            droneRaceUIManager.scoreText.text = $"Счет: {_checkNode.passedNode}";
         }
 
         private IEnumerator BackToMenu()

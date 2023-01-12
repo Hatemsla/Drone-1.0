@@ -6,7 +6,6 @@ namespace DroneRace
     public class DroneRaceCheckNode : MonoBehaviour
     {
         public int currentNode;
-        public int passedNode;
         public float wayDistance;
         public List<Transform> nodes;
         public GameObject checkPointPrefab;
@@ -18,21 +17,16 @@ namespace DroneRace
 
         public void CheckWaypoint()
         {
-            CreateNewCheckpoint();
-            if (currentNode == nodes.Count - 1)
-                currentNode = 0;
-            else
-                currentNode++;
-            passedNode++;
+            currentNode++;
         }
 
-        private void CreateNewCheckpoint()
+        public void CreateNewCheckpoint()
         {
             var prevCheckpointPosition = nodes[^1].position;
             var newCheckpoint = Instantiate(checkPointPrefab,
                 new Vector3(
                     Random.Range(prevCheckpointPosition.x - 5f, prevCheckpointPosition.x + 5f),
-                    Random.Range(0f, 10f), 
+                    Random.Range(3f, 10f), 
                     Random.Range(prevCheckpointPosition.z + 5f, prevCheckpointPosition.z + 20f)), 
                 Quaternion.identity);
             newCheckpoint.GetComponent<CheckpointTrigger>().checkpointID =

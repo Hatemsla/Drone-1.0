@@ -15,11 +15,11 @@ namespace DroneRace
         public float throttle;
         public float lerpSpeed;
         public bool isSimpleMode;
-        public Rigidbody rb;
         public DroneRaceCheckNode droneRaceCheckNode;
-        public Path pathAI;
         public DroneRaceController droneRaceController;
+        public Path pathAI;
 
+        private Rigidbody _rb;
         private float _finalPitch;
         private float _finalRoll;
         private float _yaw;
@@ -29,7 +29,7 @@ namespace DroneRace
 
         private void Awake()
         {
-            rb = GetComponent<Rigidbody>();
+            _rb = GetComponent<Rigidbody>();
             _engines = GetComponentsInChildren<DroneEngine>().ToList();
             droneRaceCheckNode = GetComponent<DroneRaceCheckNode>();
             droneRaceCheckNode.nodes = pathAI.nodes;
@@ -65,7 +65,7 @@ namespace DroneRace
             {
                 foreach (var engine in _engines)
                 {
-                    engine.UpdateEngine(rb, throttle);
+                    engine.UpdateEngine(_rb, throttle);
                 }
             }
 
@@ -78,7 +78,7 @@ namespace DroneRace
             _finalYaw = Mathf.Lerp(_finalYaw, _yaw, Time.deltaTime * lerpSpeed);
 
             Quaternion rot = Quaternion.Euler(_finalPitch, _finalYaw, _finalRoll);
-            rb.MoveRotation(rot);
+            _rb.MoveRotation(rot);
         }
 
     }

@@ -14,7 +14,6 @@ namespace DroneRace
         public TMP_Text timeToStartGameText;
         public TMP_Text timeToEndGameText;
         public TMP_Text matchResultText;
-        public TMP_Text scoreText;
         public TMP_Text racePositionText;
         public GameObject descriptionPanel;
         public GameObject matchResultPanel;
