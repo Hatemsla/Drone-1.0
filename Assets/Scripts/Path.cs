@@ -11,25 +11,8 @@ public class Path : MonoBehaviour
         GetNodes();
     }
 
-    public void GetNodes()
+    private void GetNodes()
     {
-        nodes = GetComponentsInChildren<Transform>().ToList();
-        nodes.RemoveAt(0);
+        nodes.Add(GetComponentsInChildren<Transform>()[1]);
     }
-
-    // private void OnDrawGizmos()
-    // {
-    //     for (int i = 0; i < nodes.Count; i++)
-    //     {
-    //         Gizmos.color = Color.green;
-    //         if (i == nodes.Count - 1)
-    //         {
-    //             // Gizmos.DrawLine(nodes[i].position, nodes[0].position);
-    //         }
-    //         else
-    //         {
-    //             Gizmos.DrawLine(nodes[i].position, nodes[i + 1].position);
-    //         }
-    //     }
-    // }
 }

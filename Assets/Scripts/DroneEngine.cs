@@ -25,6 +25,6 @@ public class DroneEngine : MonoBehaviour
     {
         if (!propeller) return;
 
-        propeller.Rotate(Vector3.up, propellerRotSpeed);
+        propeller.Rotate(Vector3.up, propellerRotSpeed, Space.World);
     }
 }

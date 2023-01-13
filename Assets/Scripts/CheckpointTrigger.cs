@@ -1,22 +1,22 @@
 using System.Collections;
-using System.Collections.Generic;
 using DroneRace;
 using UnityEngine;
 
 public class CheckpointTrigger : MonoBehaviour
 {
     public int checkpointID;
-    public MeshRenderer mesh;
 
     private bool _isSpawned;
+    public int _countToDestroy;
     
-    private void Start()
-    {
-        mesh = GetComponent<MeshRenderer>();
-    }
-
     private void OnTriggerEnter(Collider other)
     {
+        if (_countToDestroy == 2)
+        {
+            StartCoroutine(DestroyGate());
+        }
+        
+        _countToDestroy++;
         if (other.gameObject.CompareTag("Player"))
         {
             var drone = other.GetComponentInParent<DroneRaceCheckNode>();
@@ -25,7 +25,6 @@ public class CheckpointTrigger : MonoBehaviour
                 drone.CheckWaypoint();
                 if(!_isSpawned)
                     drone.CreateNewCheckpoint();
-                mesh.material.color = new Color(0.5f, 0.5f, 0.5f, 0.6f);
             }
         }
         else if (other.gameObject.CompareTag("Bot"))
@@ -41,5 +40,11 @@ public class CheckpointTrigger : MonoBehaviour
             }
         }
         _isSpawned = true;
+    }
+
+    private IEnumerator DestroyGate()
+    {
+        yield return new WaitForSeconds(3f);
+        Destroy(gameObject);
     }
 }
