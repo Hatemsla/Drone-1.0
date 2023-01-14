@@ -7,16 +7,16 @@ public class CheckpointTrigger : MonoBehaviour
     public int checkpointID;
 
     private bool _isSpawned;
-    public int _countToDestroy;
+    private int _countToDestroy;
     
     private void OnTriggerEnter(Collider other)
     {
-        if (_countToDestroy == 2)
+        _countToDestroy++;
+        if (_countToDestroy >= 2)
         {
             StartCoroutine(DestroyGate());
         }
         
-        _countToDestroy++;
         if (other.gameObject.CompareTag("Player"))
         {
             var drone = other.GetComponentInParent<DroneRaceCheckNode>();

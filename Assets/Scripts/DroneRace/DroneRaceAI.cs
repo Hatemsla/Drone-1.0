@@ -8,6 +8,7 @@ namespace DroneRace
     [RequireComponent(typeof(Rigidbody), typeof(DroneRaceCheckNode))]
     public class DroneRaceAI : MonoBehaviour
     {
+        public float speed = 1;
         public float proportionalGain;
         public float integralGain;
         public float derivativeGain;
@@ -76,7 +77,7 @@ namespace DroneRace
             var targetAngle = Vector3.SignedAngle(Vector3.forward, targetDir, Vector3.up);
 
             _finalYaw = _yawController.UpdateAngle(Time.fixedDeltaTime, currentAngle, targetAngle);
-            _rb.AddForce(new Vector3(_finalPitch, 0, _finalRoll));
+            _rb.AddForce(new Vector3(_finalPitch, 0, _finalRoll) * speed);
         }
     }
 }
