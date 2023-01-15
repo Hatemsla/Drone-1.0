@@ -1,3 +1,4 @@
+using DroneFootball;
 using DroneRace;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -8,13 +9,16 @@ namespace Menu
     {
         public bool isSimpleMode;
         public MenuUIManager menuUIManager;
-        public DroneRaceController droneRaceController;
+        public RaceController raceController;
+        public FootballController footballController;
 
         private void Start()
         {
             DontDestroyOnLoad(gameObject);
-            menuUIManager.simpleModeBtn.onClick.AddListener(SimpleMode);
-            menuUIManager.hardModeBtn.onClick.AddListener(HardMode);
+            menuUIManager.raceSimpleModeBtn.onClick.AddListener(delegate { SimpleMode(1); });
+            menuUIManager.raceHardModeBtn.onClick.AddListener(delegate { HardMode(1); });
+            menuUIManager.footballSimpleModeBtn.onClick.AddListener(delegate { SimpleMode(2); });
+            menuUIManager.footballHardModeBtn.onClick.AddListener(delegate { HardMode(2); });
             menuUIManager.exitBtn.onClick.AddListener(Exit);
             SceneManager.sceneLoaded += OnSceneLoaded;
         }
@@ -31,23 +35,25 @@ namespace Menu
                 }
 
                 menuUIManager = FindObjectOfType<MenuUIManager>();
-                menuUIManager.simpleModeBtn.onClick.AddListener(SimpleMode);
-                menuUIManager.hardModeBtn.onClick.AddListener(HardMode);
+                menuUIManager.raceSimpleModeBtn.onClick.AddListener(delegate { SimpleMode(1); });
+                menuUIManager.raceHardModeBtn.onClick.AddListener(delegate { HardMode(1); });
+                menuUIManager.footballSimpleModeBtn.onClick.AddListener(delegate { SimpleMode(2); });
+                menuUIManager.footballHardModeBtn.onClick.AddListener(delegate { HardMode(2); });
                 menuUIManager.exitBtn.onClick.AddListener(Exit);
             }
             else if (scene.buildIndex == 1)
             {
-                droneRaceController = FindObjectOfType<DroneRaceController>();
-                droneRaceController.droneRaceUIManager.backBtn.onClick.AddListener(Back);
-                droneRaceController.droneRaceUIManager.exitBtn.onClick.AddListener(Exit);
-                droneRaceController.isSimpleMode = isSimpleMode;
+                raceController = FindObjectOfType<RaceController>();
+                raceController.raceUIManager.backBtn.onClick.AddListener(Back);
+                raceController.raceUIManager.exitBtn.onClick.AddListener(Exit);
+                raceController.isSimpleMode = isSimpleMode;
             }
             else if (scene.buildIndex == 2)
             {
-                droneRaceController = FindObjectOfType<DroneRaceController>();
-                droneRaceController.droneRaceUIManager.backBtn.onClick.AddListener(Back);
-                droneRaceController.droneRaceUIManager.exitBtn.onClick.AddListener(Exit);
-                droneRaceController.isSimpleMode = isSimpleMode;
+                footballController = FindObjectOfType<FootballController>();
+                footballController.footballUIManager.backBtn.onClick.AddListener(Back);
+                footballController.footballUIManager.exitBtn.onClick.AddListener(Exit);
+                footballController.isSimpleMode = isSimpleMode;
             }
         }
 
@@ -61,15 +67,15 @@ namespace Menu
             Application.Quit();
         }
 
-        private void SimpleMode()
+        private void SimpleMode(int sceneIndex)
         {
-            SceneManager.LoadScene(1);
+            SceneManager.LoadScene(sceneIndex);
             isSimpleMode = true;
         }
 
-        private void HardMode()
+        private void HardMode(int sceneIndex)
         {
-            SceneManager.LoadScene(2);
+            SceneManager.LoadScene(sceneIndex);
             isSimpleMode = false;
         }
     }

@@ -7,43 +7,25 @@
       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
       <e p="Assembly-CSharp.Player.csproj" t="IncludeRecursive" />
       <e p="Assets" t="Include">
-        <e p="Hierarchy 2" t="Include">
-          <e p="Editor" t="Include">
-            <e p="Hierarchy2.Editor.asmdef" t="Include" />
-            <e p="HierarchyEditor.cs" t="Include" />
-            <e p="HierarchyFolderEditor.cs" t="Include" />
-            <e p="HierarchyResources.cs" t="Include" />
-            <e p="HierarchySettings.cs" t="Include" />
-            <e p="InstantInspector.cs" t="Include" />
-            <e p="SceneRenamePopup.cs" t="Include" />
-            <e p="SelectionsRenamePopup.cs" t="Include" />
-          </e>
-          <e p="Runtime" t="Include">
-            <e p="Hierarchy2.Runtime.asmdef" t="Include" />
-            <e p="HierarchyFolder.cs" t="Include" />
-            <e p="Texture2DExtensions.cs" t="Include" />
-            <e p="UIElements.cs" t="Include" />
-            <e p="VisualElementExstensions.cs" t="Include" />
-          </e>
-        </e>
         <e p="Scripts" t="Include">
           <e p="CheckNode.cs" t="Include" />
-          <e p="CheckpointTrigger.cs" t="Include" />
           <e p="DroneEngine.cs" t="Include" />
           <e p="DroneFootball" t="Include">
             <e p="DroneFootballAI.cs" t="Include" />
+            <e p="DroneFootballCheckNode.cs" t="Include" />
             <e p="DroneFootBallController.cs" t="Include" />
+            <e p="FootballCheckpointTrigger.cs" t="Include" />
             <e p="FootballController.cs" t="Include" />
+            <e p="FootballGate.cs" t="Include" />
             <e p="FootballUIManager.cs" t="Include" />
-            <e p="GateDirectionTrigger.cs" t="Include" />
-            <e p="GateTrigger.cs" t="Include" />
           </e>
           <e p="DroneRace" t="Include">
-            <e p="DroneController.cs" t="Include" />
             <e p="DroneRaceAI.cs" t="Include" />
             <e p="DroneRaceCheckNode.cs" t="Include" />
             <e p="DroneRaceController.cs" t="Include" />
             <e p="DroneRaceUIManager.cs" t="Include" />
+            <e p="RaceCheckpointTrigger.cs" t="Include" />
+            <e p="RaceController.cs" t="Include" />
           </e>
           <e p="Menu" t="Include">
             <e p="MenuManager.cs" t="Include" />
@@ -89,9 +71,6 @@
       </e>
       <e p="DocCodeExamples.csproj" t="IncludeRecursive" />
       <e p="DroneGames.sln" t="IncludeFlat" />
-      <e p="Hierarchy2.Editor.csproj" t="IncludeRecursive" />
-      <e p="Hierarchy2.Runtime.csproj" t="IncludeRecursive" />
-      <e p="Hierarchy2.Runtime.Player.csproj" t="IncludeRecursive" />
       <e p="Library" t="Include">
         <e p="PackageCache" t="Include">
           <e p="com.unity.collab-proxy@1.17.6" t="Include">

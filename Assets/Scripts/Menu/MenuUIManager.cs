@@ -5,8 +5,10 @@ namespace Menu
 {
     public class MenuUIManager : MonoBehaviour
     {
-        public Button simpleModeBtn;
-        public Button hardModeBtn;
+        public Button raceSimpleModeBtn;
+        public Button raceHardModeBtn;
+        public Button footballSimpleModeBtn;
+        public Button footballHardModeBtn;
         public Button exitBtn;
     }
 }

@@ -24,7 +24,7 @@ namespace DroneRace
         {
             var prevCheckpointPosition = nodes[^1].position;
             GameObject newCheckpoint;
-            if ((nodes[^1].GetComponent<CheckpointTrigger>().checkpointID + 1) % 5 == 0)
+            if ((nodes[^1].GetComponent<RaceCheckpointTrigger>().checkpointID + 1) % 5 == 0)
             {
                 newCheckpoint = Instantiate(checkPointPrefab, Vector3.zero, Quaternion.identity);
                 newCheckpoint.transform.SetParent(nodes[^1]);
@@ -69,8 +69,8 @@ namespace DroneRace
                 newCheckpoint.transform.parent = null;
             }
 
-            newCheckpoint.GetComponent<CheckpointTrigger>().checkpointID =
-                nodes[^1].GetComponent<CheckpointTrigger>().checkpointID + 1;
+            newCheckpoint.GetComponent<RaceCheckpointTrigger>().checkpointID =
+                nodes[^1].GetComponent<RaceCheckpointTrigger>().checkpointID + 1;
             nodes.Add(newCheckpoint.transform);
         }
     }

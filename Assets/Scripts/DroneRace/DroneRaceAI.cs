@@ -17,7 +17,7 @@ namespace DroneRace
         public float integralSaturation;
         public float throttle;
         public DroneRaceCheckNode droneRaceCheckNode;
-        public DroneRaceController droneRaceController;
+        public RaceController raceController;
         public Path pathAI;
         private List<DroneEngine> _engines;
         private float _finalPitch;
@@ -57,7 +57,7 @@ namespace DroneRace
 
         private void FixedUpdate()
         {
-            if (droneRaceController.isGameStart) DroneMove();
+            if (raceController.isGameStart) DroneMove();
         }
 
         private void DroneMove()

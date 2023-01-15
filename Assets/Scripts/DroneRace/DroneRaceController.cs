@@ -1,144 +1,85 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace DroneRace
 {
+    [RequireComponent(typeof(Rigidbody), typeof(DroneRaceCheckNode))]
     public class DroneRaceController : MonoBehaviour
     {
-        public float interfaceScale;
+        public float minMaxPitch;
+        public float minMaxRoll;
+        public float yawPower;
+        public Vector2 cyclic;
+        public float pedals;
+        public float throttle;
+        public float lerpSpeed;
         public bool isSimpleMode;
-        public bool isGameStart;
-        public Transform target;
-        public DroneController droneController;
-        public DroneRaceUIManager droneRaceUIManager;
-        public DroneRaceCheckNode playerNode;
-        public Timer timer;
-        public List<DroneRaceCheckNode> droneRaceCheckNodes;
-        
-        public Camera mainCamera;
-        private DroneRaceCheckNode _checkNode;
-        private Vector3 _startPointerSize;
-        private int _playerRacePosition;
+        public DroneRaceCheckNode droneRaceCheckNode;
+        public RaceController raceController;
+        public Path pathAI;
 
+        private Rigidbody _rb;
+        private float _finalPitch;
+        private float _finalRoll;
+        private float _yaw;
+        private float _finalYaw;
+        private float _isMove;
+        private List<DroneEngine> _engines;
 
         private void Awake()
         {
-            _startPointerSize = droneRaceUIManager.pathArrow.sizeDelta;
+            _rb = GetComponent<Rigidbody>();
+            _engines = GetComponentsInChildren<DroneEngine>().ToList();
+            droneRaceCheckNode = GetComponent<DroneRaceCheckNode>();
+            droneRaceCheckNode.nodes = pathAI.nodes;
         }
 
         private void Start()
         {
-            droneController.isSimpleMode = isSimpleMode;
-            _checkNode = droneController.droneRaceCheckNode;
+            droneRaceCheckNode.nodes = pathAI.nodes;
         }
 
-        private void Update()
+        private void FixedUpdate()
         {
-            CheckStartGame();
-            CheckEndGame();
-            
-            droneRaceCheckNodes = droneRaceCheckNodes.OrderByDescending(x => x.currentNode).ThenBy(x => x.wayDistance).ToList();
-            droneRaceUIManager.racePositionText.text = $"Позиция: {_playerRacePosition + 1}";
-            _playerRacePosition = droneRaceCheckNodes.IndexOf(playerNode);
-        }
-
-        private void LateUpdate()
-        {
-            target = _checkNode.nodes[_checkNode.currentNode];
-            Vector3 realPos = mainCamera.WorldToScreenPoint(target.position);
-            Rect rect = new Rect(0, 0, Screen.width, Screen.height);
-
-            Vector3 outPos = realPos;
-            float direction = 1;
-
-            droneRaceUIManager.pathArrow.GetComponent<Image>().sprite = droneRaceUIManager.outOfScreenIcon;
-
-            if (!IsBehind(target.position)) // если цель спереди
+            if (raceController.isGameStart)
             {
-                if (rect.Contains(realPos)) // и если цель в окне экрана
+                GetInput();
+                DroneMove();
+            }
+        }
+
+        private void GetInput()
+        {
+            _isMove = 0;
+            cyclic.x = Input.GetAxis("Horizontal");
+            cyclic.y = Input.GetAxis("Vertical");
+            pedals = Input.GetAxis("Pedal");
+            throttle = Input.GetAxis("Throttle");
+            _isMove = Mathf.Abs(cyclic.x) + Mathf.Abs(cyclic.y) + Mathf.Abs(pedals) + Mathf.Abs(throttle);
+        }
+
+        private void DroneMove()
+        {
+            if (_isMove != 0 || isSimpleMode)
+            {
+                foreach (var engine in _engines)
                 {
-                    droneRaceUIManager.pathArrow.GetComponent<Image>().sprite = droneRaceUIManager.pointerIcon;
+                    engine.UpdateEngine(_rb, throttle);
                 }
             }
-            else // если цель cзади
-            {
-                realPos = -realPos;
-                outPos = new Vector3(realPos.x, 0, 0); // позиция иконки - снизу
-                if (mainCamera.transform.position.y < target.position.y)
-                {
-                    direction = -1;
-                    outPos.y = Screen.height; // позиция иконки - сверху				
-                }
-            }
-            // ограничиваем позицию областью экрана
-            float offset = droneRaceUIManager.pathArrow.sizeDelta.x / 2;
-            outPos.x = Mathf.Clamp(outPos.x, offset, Screen.width - offset);
-            outPos.y = Mathf.Clamp(outPos.y, offset, Screen.height - offset);
 
-            Vector3 pos = realPos - outPos; // направление к цели из PointerUI 
+            float pitch = cyclic.y * minMaxPitch;
+            float roll = -cyclic.x * minMaxRoll;
+            _yaw += pedals * yawPower;
 
-            RotatePointer(direction * pos);
+            _finalPitch = Mathf.Lerp(_finalPitch, pitch, Time.deltaTime * lerpSpeed);
+            _finalRoll = Mathf.Lerp(_finalRoll, roll, Time.deltaTime * lerpSpeed);
+            _finalYaw = Mathf.Lerp(_finalYaw, _yaw, Time.deltaTime * lerpSpeed);
 
-            droneRaceUIManager.pathArrow.sizeDelta = new Vector2(_startPointerSize.x / 100 * interfaceScale, _startPointerSize.y / 100 * interfaceScale);
-            droneRaceUIManager.pathArrow.anchoredPosition = outPos;
+            Quaternion rot = Quaternion.Euler(_finalPitch, _finalYaw, _finalRoll);
+            _rb.MoveRotation(rot);
         }
 
-        private bool IsBehind(Vector3 point) // true если point сзади камеры
-        {
-            Vector3 forward = mainCamera.transform.TransformDirection(Vector3.forward);
-            Vector3 toOther = point - mainCamera.transform.position;
-            if (Vector3.Dot(forward, toOther) < 0) return true;
-            return false;
-        }
-
-        private void RotatePointer(Vector2 direction) // поворачивает PointerUI в направление direction
-        {
-            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-            droneRaceUIManager.pathArrow.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-        }
-
-        private void CheckStartGame()
-        {
-            if (timer.waitForStartGame >= 0)
-            {
-                droneRaceUIManager.timeToStartGameText.text = $"До начала осталось: {timer.waitForStartGame:f1}";
-            }
-            else
-            {
-                droneRaceUIManager.timeToStartGameText.gameObject.SetActive(false);
-                droneRaceUIManager.descriptionPanel.SetActive(false);
-                isGameStart = true;
-            }
-        }
-
-        private void CheckEndGame()
-        {
-            if (timer.waitForEndGame >= 0)
-            {
-                float minutes = Mathf.FloorToInt(timer.waitForEndGame / 60);
-                float seconds = Mathf.FloorToInt(timer.waitForEndGame % 60);
-                droneRaceUIManager.timeToEndGameText.text = $"{minutes:00}:{seconds:00}";
-            }
-            else
-            {
-                if (_playerRacePosition == 0)
-                    droneRaceUIManager.matchResultText.text = "Вы победили!";
-                else
-                    droneRaceUIManager.matchResultText.text = "Вы проиграли(";
-
-                droneRaceUIManager.matchResultPanel.SetActive(true);
-                isGameStart = false;
-                StartCoroutine(BackToMenu());
-            }
-        }
-
-        private IEnumerator BackToMenu()
-        {
-            yield return new WaitForSeconds(3);
-            droneRaceUIManager.backBtn.onClick.Invoke();
-        }
     }
 }
