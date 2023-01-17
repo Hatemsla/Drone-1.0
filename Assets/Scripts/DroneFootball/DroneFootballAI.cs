@@ -9,6 +9,8 @@ namespace DroneFootball
     public class DroneFootballAI : MonoBehaviour
     {
         public float speed;
+        public float minMaxPitch;
+        public float minMaxRoll;
         public float proportionalGain;
         public float integralGain;
         public float derivativeGain;
@@ -16,27 +18,25 @@ namespace DroneFootball
         public float outputMax = 1;
         public float integralSaturation;
         public float throttle;
+        public float lerpSpeed;
         public Transform targetTransform;
-        public DroneFootballCheckNode droneFootballCheckNode;
         public FootballController footballController;
         
         private List<DroneEngine> _engines;
         private Rigidbody _rb;
+        private Transform _droneTransform;
         private float _finalPitch;
         private float _finalRoll;
         private float _finalYaw;
-        private float _isMove;
-        private float _yaw;
         private PIDController _pitchController;
         private PIDController _rollController;
         private PIDController _throttleController;
-        private PIDController _yawController;
 
         private void Awake()
         {
+            _droneTransform = transform.GetChild(0);
             _rb = GetComponent<Rigidbody>();
             _engines = GetComponentsInChildren<DroneEngine>().ToList();
-            droneFootballCheckNode = GetComponent<DroneFootballCheckNode>();
 
             _throttleController = new PIDController(proportionalGain, integralGain, derivativeGain, outputMin,
                 outputMax,
@@ -44,8 +44,6 @@ namespace DroneFootball
             _pitchController = new PIDController(proportionalGain, integralGain, derivativeGain, outputMin, outputMax,
                 integralSaturation);
             _rollController = new PIDController(proportionalGain, integralGain, derivativeGain, outputMin, outputMax,
-                integralSaturation);
-            _yawController = new PIDController(proportionalGain, integralGain, derivativeGain, outputMin, outputMax,
                 integralSaturation);
         }
 
@@ -60,20 +58,19 @@ namespace DroneFootball
             throttle = _throttleController.UpdateThrottle(Time.fixedDeltaTime, _rb.position.y,
                 targetTransform.position.y);
 
-            _finalPitch =
-                _pitchController.UpdateThrottle(Time.fixedDeltaTime, _rb.position.x, targetTransform.position.x);
-            _finalRoll = _rollController.UpdateThrottle(Time.fixedDeltaTime, _rb.position.z, targetTransform.position.z);
+            float pitch = _pitchController.UpdateThrottle(Time.fixedDeltaTime, _rb.position.x, targetTransform.position.x);
+            float roll = _rollController.UpdateThrottle(Time.fixedDeltaTime, _rb.position.z, targetTransform.position.z);
 
             var targetPosition = targetTransform.position;
-            targetPosition.y = _rb.position.y; //ignore difference in Y
-            var targetDir = (targetPosition - _rb.position).normalized;
-            var forwardDir = _rb.rotation * Vector3.forward;
+            targetPosition.y = _rb.position.y;
 
-            var currentAngle = Vector3.SignedAngle(Vector3.forward, forwardDir, Vector3.up);
-            var targetAngle = Vector3.SignedAngle(Vector3.forward, targetDir, Vector3.up);
+            _rb.AddForce(new Vector3(pitch, 0, roll) * speed);
 
-            _finalYaw = _yawController.UpdateAngle(Time.fixedDeltaTime, currentAngle, targetAngle);
-            _rb.AddForce(new Vector3(_finalPitch, 0, _finalRoll) * speed);
+            _finalPitch = Mathf.Lerp(_finalPitch, pitch * minMaxPitch, Time.deltaTime * lerpSpeed);
+            _finalRoll = Mathf.Lerp(_finalRoll, roll * minMaxRoll, Time.deltaTime * lerpSpeed);
+            _finalYaw = Vector3.Angle(targetPosition - _droneTransform.localPosition, _droneTransform.forward);
+            
+            _droneTransform.localEulerAngles = new Vector3(_finalPitch, _finalYaw, _finalRoll);
         }
     }
 }

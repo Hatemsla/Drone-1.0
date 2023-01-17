@@ -13,6 +13,6 @@ public class Path : MonoBehaviour
 
     private void GetNodes()
     {
-        nodes.Add(GetComponentsInChildren<Transform>()[1]);
+        nodes.Add(transform.GetChild(0).transform);
     }
 }

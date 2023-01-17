@@ -9,6 +9,8 @@ namespace DroneRace
     public class DroneRaceAI : MonoBehaviour
     {
         public float speed = 1;
+        public float minMaxPitch;
+        public float minMaxRoll;
         public float proportionalGain;
         public float integralGain;
         public float derivativeGain;
@@ -16,24 +18,26 @@ namespace DroneRace
         public float outputMax = 1;
         public float integralSaturation;
         public float throttle;
+        public float lerpSpeed;
         public DroneRaceCheckNode droneRaceCheckNode;
         public RaceController raceController;
         public Path pathAI;
+        
         private List<DroneEngine> _engines;
+        private Rigidbody _rb;
+        private Transform _droneTransform;
         private float _finalPitch;
         private float _finalRoll;
         private float _finalYaw;
         private float _isMove;
         private PIDController _pitchController;
-
-        private Rigidbody _rb;
         private PIDController _rollController;
         private PIDController _throttleController;
-        private float _yaw;
         private PIDController _yawController;
 
         private void Awake()
         {
+            _droneTransform = transform.GetChild(0);
             _rb = GetComponent<Rigidbody>();
             _engines = GetComponentsInChildren<DroneEngine>().ToList();
             droneRaceCheckNode = GetComponent<DroneRaceCheckNode>();
@@ -66,18 +70,18 @@ namespace DroneRace
             foreach (var engine in _engines) engine.UpdateEngine(_rb, throttle);
             throttle = _throttleController.UpdateThrottle(Time.fixedDeltaTime, _rb.position.y, targetPosition.y);
 
-            _finalPitch = _pitchController.UpdateThrottle(Time.fixedDeltaTime, _rb.position.x, targetPosition.x);
-            _finalRoll = _rollController.UpdateThrottle(Time.fixedDeltaTime, _rb.position.z, targetPosition.z);
+            float pitch = _pitchController.UpdateThrottle(Time.fixedDeltaTime, _rb.position.x, targetPosition.x);
+            float roll = _rollController.UpdateThrottle(Time.fixedDeltaTime, _rb.position.z, targetPosition.z);
 
-            targetPosition.y = _rb.position.y; //ignore difference in Y
-            var targetDir = (targetPosition - _rb.position).normalized;
-            var forwardDir = _rb.rotation * Vector3.forward;
-
-            var currentAngle = Vector3.SignedAngle(Vector3.forward, forwardDir, Vector3.up);
-            var targetAngle = Vector3.SignedAngle(Vector3.forward, targetDir, Vector3.up);
-
-            _finalYaw = _yawController.UpdateAngle(Time.fixedDeltaTime, currentAngle, targetAngle);
-            _rb.AddForce(new Vector3(_finalPitch, 0, _finalRoll) * speed);
+            targetPosition.y = _rb.position.y;
+            
+            _rb.AddForce(new Vector3(pitch, 0, roll) * speed);
+            
+            _finalPitch = Mathf.Lerp(_finalPitch, pitch * minMaxPitch, Time.deltaTime * lerpSpeed);
+            _finalRoll = Mathf.Lerp(_finalRoll, roll * minMaxRoll, Time.deltaTime * lerpSpeed);
+            _finalYaw = Vector3.Angle(targetPosition - _droneTransform.localPosition, _droneTransform.forward);
+            
+            _droneTransform.localEulerAngles = new Vector3(_finalPitch, _finalYaw, _finalRoll);
         }
     }
 }
