@@ -18,14 +18,14 @@ namespace DroneRace
         public DroneRaceCheckNode droneRaceCheckNode;
         public RaceController raceController;
         public Path pathAI;
-
-        private Rigidbody _rb;
+        private List<DroneEngine> _engines;
         private float _finalPitch;
         private float _finalRoll;
-        private float _yaw;
         private float _finalYaw;
         private float _isMove;
-        private List<DroneEngine> _engines;
+
+        private Rigidbody _rb;
+        private float _yaw;
 
         private void Awake()
         {
@@ -62,24 +62,19 @@ namespace DroneRace
         private void DroneMove()
         {
             if (_isMove != 0 || isSimpleMode)
-            {
                 foreach (var engine in _engines)
-                {
                     engine.UpdateEngine(_rb, throttle);
-                }
-            }
 
-            float pitch = cyclic.y * minMaxPitch;
-            float roll = -cyclic.x * minMaxRoll;
+            var pitch = cyclic.y * minMaxPitch;
+            var roll = -cyclic.x * minMaxRoll;
             _yaw += pedals * yawPower;
 
             _finalPitch = Mathf.Lerp(_finalPitch, pitch, Time.deltaTime * lerpSpeed);
             _finalRoll = Mathf.Lerp(_finalRoll, roll, Time.deltaTime * lerpSpeed);
             _finalYaw = Mathf.Lerp(_finalYaw, _yaw, Time.deltaTime * lerpSpeed);
 
-            Quaternion rot = Quaternion.Euler(_finalPitch, _finalYaw, _finalRoll);
+            var rot = Quaternion.Euler(_finalPitch, _finalYaw, _finalRoll);
             _rb.MoveRotation(rot);
         }
-
     }
 }
