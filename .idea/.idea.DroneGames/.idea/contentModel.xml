@@ -7,8 +7,36 @@
       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
       <e p="Assembly-CSharp.Player.csproj" t="IncludeRecursive" />
       <e p="Assets" t="Include">
+        <e p="Materials" t="Include">
+          <e p="Track" t="Include" />
+        </e>
+        <e p="Models" t="Include" />
+        <e p="Prefabs" t="Include" />
+        <e p="Quad_Racer" t="Include">
+          <e p="Art" t="Include">
+            <e p="Drones" t="Include">
+              <e p="01" t="Include">
+                <e p="Materials" t="Include" />
+                <e p="Textures" t="Include">
+                  <e p="No_Logos" t="Include" />
+                </e>
+              </e>
+            </e>
+          </e>
+        </e>
+        <e p="Scenes" t="Include">
+          <e p="DroneFootball" t="Include" />
+          <e p="HardDroneMode" t="Include" />
+          <e p="SimpleDroneMode" t="Include" />
+        </e>
         <e p="Scripts" t="Include">
           <e p="CheckNode.cs" t="Include" />
+          <e p="Components" t="Include">
+            <e p="DirectionComponent.cs" t="Include" />
+            <e p="EngineComponent.cs" t="Include" />
+            <e p="ModelComponent.cs" t="Include" />
+            <e p="MovableComponent.cs" t="Include" />
+          </e>
           <e p="DroneEngine.cs" t="Include" />
           <e p="DroneFootball" t="Include">
             <e p="DroneFootballAI.cs" t="Include" />
@@ -31,21 +59,45 @@
             <e p="MenuManager.cs" t="Include" />
             <e p="MenuUIManager.cs" t="Include" />
           </e>
+          <e p="MonoBehaviours" t="Include">
+            <e p="EcsGameStartup.cs" t="Include" />
+          </e>
           <e p="Path.cs" t="Include" />
           <e p="PIDController.cs" t="Include" />
+          <e p="Providers" t="Include">
+            <e p="DirectionProvider.cs" t="Include" />
+            <e p="EnemyTagProvider.cs" t="Include" />
+            <e p="EngineProvider.cs" t="Include" />
+            <e p="ModelProvider.cs" t="Include" />
+            <e p="MovableProvider.cs" t="Include" />
+            <e p="PlayerTagProvider.cs" t="Include" />
+          </e>
+          <e p="Systems" t="Include">
+            <e p="EngineSystem.cs" t="Include" />
+            <e p="MovementSystem.cs" t="Include" />
+            <e p="PlayerInputSystem.cs" t="Include" />
+          </e>
+          <e p="Tags" t="Include">
+            <e p="EnemyTag.cs" t="Include" />
+            <e p="PlayerTag.cs" t="Include" />
+          </e>
           <e p="TargetPointer.cs" t="Include" />
           <e p="Timer.cs" t="Include" />
         </e>
-        <e p="StreamingAssets" t="Include">
-          <e p="UnityServicesProjectConfiguration.json" t="Include" />
+        <e p="SkySeries Freebie" t="Include">
+          <e p="FreebieHdri" t="Include" />
         </e>
         <e p="TextMesh Pro" t="Include">
+          <e p="Documentation" t="Include" />
           <e p="Fonts" t="Include">
             <e p="LiberationSans - OFL.txt" t="Include" />
           </e>
           <e p="Resources" t="Include">
+            <e p="Fonts &amp; Materials" t="Include" />
             <e p="LineBreaking Following Characters.txt" t="Include" />
             <e p="LineBreaking Leading Characters.txt" t="Include" />
+            <e p="Sprite Assets" t="Include" />
+            <e p="Style Sheets" t="Include" />
           </e>
           <e p="Shaders" t="Include">
             <e p="TMP_Bitmap-Custom-Atlas.shader" t="Include" />
@@ -71,15 +123,31 @@
             <e p="EmojiOne.json" t="Include" />
           </e>
         </e>
+        <e p="Textures" t="Include" />
       </e>
       <e p="DocCodeExamples.csproj" t="IncludeRecursive" />
       <e p="DroneGames.sln" t="IncludeFlat" />
+      <e p="Leopotam.Ecs.csproj" t="IncludeRecursive" />
+      <e p="Leopotam.Ecs.Player.csproj" t="IncludeRecursive" />
       <e p="Library" t="Include">
         <e p="PackageCache" t="Include">
-          <e p="com.unity.collab-proxy@1.17.6" t="Include">
+          <e p="com.leopotam.ecs@d4d2e74f93" t="Include">
+            <e p="Leopotam.Ecs.asmdef" t="Include" />
+            <e p="package.json" t="Include" />
+            <e p="src" t="Include">
+              <e p="EcsComponent.cs" t="Include" />
+              <e p="EcsEntity.cs" t="Include" />
+              <e p="EcsFilter.cs" t="Include" />
+              <e p="EcsHelpers.cs" t="Include" />
+              <e p="EcsSystem.cs" t="Include" />
+              <e p="EcsWorld.cs" t="Include" />
+            </e>
+          </e>
+          <e p="com.unity.collab-proxy@1.17.7" t="Include">
             <e p="Editor" t="Include">
               <e p="Collaborate" t="Include">
                 <e p="Assets" t="Include">
+                  <e p="Icons" t="Include" />
                   <e p="Layouts" t="Include">
                     <e p="AlertBox.uxml" t="Include" />
                     <e p="BaseChangeListElement.uxml" t="Include" />
@@ -281,7 +349,6 @@
                   <e p="AssetFilesFilterPatternsMenuBuilder.cs" t="Include" />
                   <e p="AssetMenuItems.cs" t="Include" />
                   <e p="AssetMenuOperations.cs" t="Include" />
-                  <e p="AssetMenuRoutingOperations.cs" t="Include" />
                   <e p="AssetOperations.cs" t="Include" />
                   <e p="AssetsSelection.cs" t="Include" />
                   <e p="Dialogs" t="Include">
@@ -303,6 +370,7 @@
                   <e p="DrawAssetOverlay.cs" t="Include" />
                 </e>
                 <e p="Assets" t="Include">
+                  <e p="Images" t="Include" />
                   <e p="Layouts" t="Include">
                     <e p="CreatedOrganizationPanel.uxml" t="Include" />
                     <e p="CreateOrganizationPanel.uxml" t="Include" />
@@ -317,7 +385,6 @@
                     <e p="SSOSignUpPanel.uxml" t="Include" />
                     <e p="TabView.uxml" t="Include" />
                     <e p="TeamEditionConfigurationWindow.uxml" t="Include" />
-                    <e p="TurnOffPlasticWindow.uxml" t="Include" />
                     <e p="WaitingSignInPanel.uxml" t="Include" />
                   </e>
                   <e p="Styles" t="Include">
@@ -337,7 +404,6 @@
                     <e p="SSOSignUpPanel.uss" t="Include" />
                     <e p="TabView.uss" t="Include" />
                     <e p="TeamEditionConfigurationWindow.uss" t="Include" />
-                    <e p="TurnOffPlasticWindow.uss" t="Include" />
                     <e p="WaitingSignInPanel.uss" t="Include" />
                   </e>
                 </e>
@@ -350,6 +416,7 @@
                     <e p="AssetPostprocessor.cs" t="Include" />
                     <e p="AssetsProcessor.cs" t="Include" />
                     <e p="PlasticAssetsProcessor.cs" t="Include" />
+                    <e p="WorkspaceOperationsMonitor.cs" t="Include" />
                   </e>
                   <e p="ProjectPath.cs" t="Include" />
                   <e p="RefreshAsset.cs" t="Include" />
@@ -396,9 +463,6 @@
                     <e p="TeamEditionConfigurationWindow.cs" t="Include" />
                   </e>
                   <e p="ToolConfig.cs" t="Include" />
-                  <e p="TurnOffPlastic" t="Include">
-                    <e p="TurnOffPlasticWindow.cs" t="Include" />
-                  </e>
                   <e p="WriteLogConfiguration.cs" t="Include" />
                 </e>
                 <e p="Developer" t="Include">
@@ -451,6 +515,7 @@
                 <e p="PlasticMenuItem.cs" t="Include" />
                 <e p="PlasticNotification.cs" t="Include" />
                 <e p="PlasticPlugin.cs" t="Include" />
+                <e p="PlasticProjectOfflineMode.cs" t="Include" />
                 <e p="PlasticProjectSettingsProvider.cs" t="Include" />
                 <e p="PlasticWindow" t="Include">
                   <e p="PlasticSCMWindow.cs" t="Include" />
@@ -477,6 +542,7 @@
                     <e p="GetAvatar.cs" t="Include" />
                   </e>
                   <e p="BoolSetting.cs" t="Include" />
+                  <e p="CloseWindowIfOpened.cs" t="Include" />
                   <e p="CooldownWindowDelayer.cs" t="Include" />
                   <e p="DockEditorWindow.cs" t="Include" />
                   <e p="DrawActionButton.cs" t="Include" />
@@ -705,10 +771,116 @@
                   <e p="TokenExchangeResponse.cs" t="Include" />
                   <e p="WebRestApiClient.cs" t="Include" />
                 </e>
-                <e p="WorkspaceOperationsMonitor.cs" t="Include" />
                 <e p="WorkspaceWindow.cs" t="Include" />
               </e>
             </e>
+            <e p="Lib" t="Include">
+              <e p="Editor" t="Include">
+                <e p="PlasticSCM" t="Include">
+                  <e p="FileSystemWatcherLicense.txt" t="Include" />
+                  <e p="Localization" t="Include">
+                    <e p="basecommands.en.txt" t="Include" />
+                    <e p="basecommands.es.txt" t="Include" />
+                    <e p="basecommands.ja.txt" t="Include" />
+                    <e p="basecommands.ko.txt" t="Include" />
+                    <e p="basecommands.zh-Hans.txt" t="Include" />
+                    <e p="basecommands.zh-Hant.txt" t="Include" />
+                    <e p="binmergetool.en.txt" t="Include" />
+                    <e p="binmergetool.es.txt" t="Include" />
+                    <e p="binmergetool.ja.txt" t="Include" />
+                    <e p="binmergetool.ko.txt" t="Include" />
+                    <e p="binmergetool.zh-Hans.txt" t="Include" />
+                    <e p="binmergetool.zh-Hant.txt" t="Include" />
+                    <e p="clientcommon.en.txt" t="Include" />
+                    <e p="clientcommon.es.txt" t="Include" />
+                    <e p="clientcommon.ja.txt" t="Include" />
+                    <e p="clientcommon.ko.txt" t="Include" />
+                    <e p="clientcommon.zh-Hans.txt" t="Include" />
+                    <e p="clientcommon.zh-Hant.txt" t="Include" />
+                    <e p="cm-help.en.txt" t="Include" />
+                    <e p="cm-help.es.txt" t="Include" />
+                    <e p="cm-help.ja.txt" t="Include" />
+                    <e p="cm-help.ko.txt" t="Include" />
+                    <e p="cm-help.zh-Hans.txt" t="Include" />
+                    <e p="cm-help.zh-Hant.txt" t="Include" />
+                    <e p="cm.en.txt" t="Include" />
+                    <e p="cm.es.txt" t="Include" />
+                    <e p="cm.ja.txt" t="Include" />
+                    <e p="cm.ko.txt" t="Include" />
+                    <e p="cm.zh-Hans.txt" t="Include" />
+                    <e p="cm.zh-Hant.txt" t="Include" />
+                    <e p="commontypes.en.txt" t="Include" />
+                    <e p="commontypes.es.txt" t="Include" />
+                    <e p="commontypes.ja.txt" t="Include" />
+                    <e p="commontypes.ko.txt" t="Include" />
+                    <e p="commontypes.zh-Hans.txt" t="Include" />
+                    <e p="commontypes.zh-Hant.txt" t="Include" />
+                    <e p="configurehelper.en.txt" t="Include" />
+                    <e p="configurehelper.es.txt" t="Include" />
+                    <e p="configurehelper.ja.txt" t="Include" />
+                    <e p="configurehelper.ko.txt" t="Include" />
+                    <e p="configurehelper.zh-Hans.txt" t="Include" />
+                    <e p="configurehelper.zh-Hant.txt" t="Include" />
+                    <e p="differences.en.txt" t="Include" />
+                    <e p="differences.es.txt" t="Include" />
+                    <e p="differences.ja.txt" t="Include" />
+                    <e p="differences.ko.txt" t="Include" />
+                    <e p="differences.zh-Hans.txt" t="Include" />
+                    <e p="differences.zh-Hant.txt" t="Include" />
+                    <e p="guihelp.en.txt" t="Include" />
+                    <e p="guihelp.es.txt" t="Include" />
+                    <e p="guihelp.ja.txt" t="Include" />
+                    <e p="guihelp.ko.txt" t="Include" />
+                    <e p="guihelp.zh-Hans.txt" t="Include" />
+                    <e p="guihelp.zh-Hant.txt" t="Include" />
+                    <e p="i3.en.txt" t="Include" />
+                    <e p="i3.es.txt" t="Include" />
+                    <e p="i3.ja.txt" t="Include" />
+                    <e p="i3.ko.txt" t="Include" />
+                    <e p="i3.zh-Hans.txt" t="Include" />
+                    <e p="i3.zh-Hant.txt" t="Include" />
+                    <e p="images.en.txt" t="Include" />
+                    <e p="images.es.txt" t="Include" />
+                    <e p="images.ja.txt" t="Include" />
+                    <e p="images.ko.txt" t="Include" />
+                    <e p="images.zh-Hans.txt" t="Include" />
+                    <e p="images.zh-Hant.txt" t="Include" />
+                    <e p="mergetool.en.txt" t="Include" />
+                    <e p="mergetool.es.txt" t="Include" />
+                    <e p="mergetool.ja.txt" t="Include" />
+                    <e p="mergetool.ko.txt" t="Include" />
+                    <e p="mergetool.zh-Hans.txt" t="Include" />
+                    <e p="mergetool.zh-Hant.txt" t="Include" />
+                    <e p="plastic-gui.en.txt" t="Include" />
+                    <e p="plastic-gui.es.txt" t="Include" />
+                    <e p="plastic-gui.ja.txt" t="Include" />
+                    <e p="plastic-gui.ko.txt" t="Include" />
+                    <e p="plastic-gui.zh-Hans.txt" t="Include" />
+                    <e p="plastic-gui.zh-Hant.txt" t="Include" />
+                    <e p="semantic.en.txt" t="Include" />
+                    <e p="semantic.ja.txt" t="Include" />
+                    <e p="semantic.ko.txt" t="Include" />
+                    <e p="semantic.zh-Hans.txt" t="Include" />
+                    <e p="semantic.zh-Hant.txt" t="Include" />
+                    <e p="workspaceserver.en.txt" t="Include" />
+                    <e p="workspaceserver.es.txt" t="Include" />
+                    <e p="workspaceserver.ja.txt" t="Include" />
+                    <e p="workspaceserver.ko.txt" t="Include" />
+                    <e p="workspaceserver.zh-Hans.txt" t="Include" />
+                    <e p="workspaceserver.zh-Hant.txt" t="Include" />
+                    <e p="xdiff.en.txt" t="Include" />
+                    <e p="xdiff.es.txt" t="Include" />
+                    <e p="xdiff.ja.txt" t="Include" />
+                    <e p="xdiff.ko.txt" t="Include" />
+                    <e p="xdiff.zh-Hans.txt" t="Include" />
+                    <e p="xdiff.zh-Hant.txt" t="Include" />
+                  </e>
+                </e>
+              </e>
+            </e>
+            <e p="package.json" t="Include" />
+            <e p="ValidationConfig.json" t="Include" />
+            <e p="ValidationExceptions.json" t="Include" />
           </e>
           <e p="com.unity.editorcoroutines@1.0.0" t="Include">
             <e p="Editor" t="Include">
@@ -718,8 +890,19 @@
               <e p="EditorWindowCoroutineExtension.cs" t="Include" />
               <e p="Unity.EditorCoroutines.Editor.asmdef" t="Include" />
             </e>
+            <e p="package.json" t="Include" />
           </e>
-          <e p="com.unity.ide.rider@3.0.15" t="Include">
+          <e p="com.unity.ext.nunit@1.0.6" t="Include">
+            <e p="net35" t="Include">
+              <e p="unity-custom" t="Include" />
+            </e>
+            <e p="package.json" t="Include" />
+          </e>
+          <e p="com.unity.feature.development@1.0.1" t="Include">
+            <e p="package.json" t="Include" />
+          </e>
+          <e p="com.unity.ide.rider@3.0.18" t="Include">
+            <e p="package.json" t="Include" />
             <e p="Rider" t="Include">
               <e p="Editor" t="Include">
                 <e p="com.unity.ide.rider.asmdef" t="Include" />
@@ -752,6 +935,7 @@
                 <e p="RiderScriptEditorData.cs" t="Include" />
                 <e p="RiderScriptEditorDataPersisted.cs" t="Include" />
                 <e p="RiderStyles.cs" t="Include" />
+                <e p="StartUpMethodExecutor.cs" t="Include" />
                 <e p="UnitTesting" t="Include">
                   <e p="CallbackData.cs" t="Include" />
                   <e p="CallbackInitializer.cs" t="Include" />
@@ -779,6 +963,9 @@
               <e p="AsyncOperation.cs" t="Include" />
               <e p="Cli.cs" t="Include" />
               <e p="com.unity.ide.visualstudio.asmdef" t="Include" />
+              <e p="COMIntegration" t="Include">
+                <e p="Release" t="Include" />
+              </e>
               <e p="Discovery.cs" t="Include" />
               <e p="FileUtility.cs" t="Include" />
               <e p="Image.cs" t="Include" />
@@ -794,6 +981,14 @@
                 <e p="TcpClient.cs" t="Include" />
                 <e p="TcpListener.cs" t="Include" />
                 <e p="UdpSocket.cs" t="Include" />
+              </e>
+              <e p="Plugins" t="Include">
+                <e p="AppleEventIntegration.bundle" t="Include">
+                  <e p="Contents" t="Include">
+                    <e p="_CodeSignature" t="Include" />
+                    <e p="MacOS" t="Include" />
+                  </e>
+                </e>
               </e>
               <e p="ProjectGeneration" t="Include">
                 <e p="AssemblyNameProvider.cs" t="Include" />
@@ -821,7 +1016,11 @@
               <e p="VisualStudioEditor.cs" t="Include" />
               <e p="VisualStudioInstallation.cs" t="Include" />
               <e p="VisualStudioIntegration.cs" t="Include" />
+              <e p="VSWhere" t="Include" />
             </e>
+            <e p="package.json" t="Include" />
+            <e p="ValidationConfig.json" t="Include" />
+            <e p="ValidationExceptions.json" t="Include" />
           </e>
           <e p="com.unity.ide.vscode@1.2.5" t="Include">
             <e p="Editor" t="Include">
@@ -836,6 +1035,114 @@
               <e p="Unity.com.unity.vscode.Editor.asmdef" t="Include" />
               <e p="VSCodeDiscovery.cs" t="Include" />
               <e p="VSCodeScriptEditor.cs" t="Include" />
+            </e>
+            <e p="package.json" t="Include" />
+            <e p="ValidationExceptions.json" t="Include" />
+          </e>
+          <e p="com.unity.modules.ai@1.0.0" t="Include">
+            <e p="package.json" t="Include" />
+          </e>
+          <e p="com.unity.modules.androidjni@1.0.0" t="Include">
+            <e p="package.json" t="Include" />
+          </e>
+          <e p="com.unity.modules.animation@1.0.0" t="Include">
+            <e p="package.json" t="Include" />
+          </e>
+          <e p="com.unity.modules.assetbundle@1.0.0" t="Include">
+            <e p="package.json" t="Include" />
+          </e>
+          <e p="com.unity.modules.audio@1.0.0" t="Include">
+            <e p="package.json" t="Include" />
+          </e>
+          <e p="com.unity.modules.cloth@1.0.0" t="Include">
+            <e p="package.json" t="Include" />
+          </e>
+          <e p="com.unity.modules.director@1.0.0" t="Include">
+            <e p="package.json" t="Include" />
+          </e>
+          <e p="com.unity.modules.imageconversion@1.0.0" t="Include">
+            <e p="package.json" t="Include" />
+          </e>
+          <e p="com.unity.modules.imgui@1.0.0" t="Include">
+            <e p="package.json" t="Include" />
+          </e>
+          <e p="com.unity.modules.jsonserialize@1.0.0" t="Include">
+            <e p="package.json" t="Include" />
+          </e>
+          <e p="com.unity.modules.particlesystem@1.0.0" t="Include">
+            <e p="package.json" t="Include" />
+          </e>
+          <e p="com.unity.modules.physics2d@1.0.0" t="Include">
+            <e p="package.json" t="Include" />
+          </e>
+          <e p="com.unity.modules.physics@1.0.0" t="Include">
+            <e p="package.json" t="Include" />
+          </e>
+          <e p="com.unity.modules.screencapture@1.0.0" t="Include">
+            <e p="package.json" t="Include" />
+          </e>
+          <e p="com.unity.modules.subsystems@1.0.0" t="Include">
+            <e p="package.json" t="Include" />
+          </e>
+          <e p="com.unity.modules.terrain@1.0.0" t="Include">
+            <e p="package.json" t="Include" />
+          </e>
+          <e p="com.unity.modules.terrainphysics@1.0.0" t="Include">
+            <e p="package.json" t="Include" />
+          </e>
+          <e p="com.unity.modules.tilemap@1.0.0" t="Include">
+            <e p="package.json" t="Include" />
+          </e>
+          <e p="com.unity.modules.ui@1.0.0" t="Include">
+            <e p="package.json" t="Include" />
+          </e>
+          <e p="com.unity.modules.uielements@1.0.0" t="Include">
+            <e p="package.json" t="Include" />
+          </e>
+          <e p="com.unity.modules.uielementsnative@1.0.0" t="Include">
+            <e p="package.json" t="Include" />
+          </e>
+          <e p="com.unity.modules.umbra@1.0.0" t="Include">
+            <e p="package.json" t="Include" />
+          </e>
+          <e p="com.unity.modules.unityanalytics@1.0.0" t="Include">
+            <e p="package.json" t="Include" />
+          </e>
+          <e p="com.unity.modules.unitywebrequest@1.0.0" t="Include">
+            <e p="package.json" t="Include" />
+          </e>
+          <e p="com.unity.modules.unitywebrequestassetbundle@1.0.0" t="Include">
+            <e p="package.json" t="Include" />
+          </e>
+          <e p="com.unity.modules.unitywebrequestaudio@1.0.0" t="Include">
+            <e p="package.json" t="Include" />
+          </e>
+          <e p="com.unity.modules.unitywebrequesttexture@1.0.0" t="Include">
+            <e p="package.json" t="Include" />
+          </e>
+          <e p="com.unity.modules.unitywebrequestwww@1.0.0" t="Include">
+            <e p="package.json" t="Include" />
+          </e>
+          <e p="com.unity.modules.vehicles@1.0.0" t="Include">
+            <e p="package.json" t="Include" />
+          </e>
+          <e p="com.unity.modules.video@1.0.0" t="Include">
+            <e p="package.json" t="Include" />
+          </e>
+          <e p="com.unity.modules.vr@1.0.0" t="Include">
+            <e p="package.json" t="Include" />
+          </e>
+          <e p="com.unity.modules.wind@1.0.0" t="Include">
+            <e p="package.json" t="Include" />
+          </e>
+          <e p="com.unity.modules.xr@1.0.0" t="Include">
+            <e p="package.json" t="Include" />
+          </e>
+          <e p="com.unity.nuget.newtonsoft-json@3.0.2" t="Include">
+            <e p="link.xml" t="Include" />
+            <e p="package.json" t="Include" />
+            <e p="Runtime" t="Include">
+              <e p="AOT" t="Include" />
             </e>
           </e>
           <e p="com.unity.performance.profile-analyzer@1.1.1" t="Include">
@@ -878,6 +1185,7 @@
               <e p="Units.cs" t="Include" />
               <e p="Unity.Performance.Profile-Analyzer.Editor.asmdef" t="Include" />
             </e>
+            <e p="package.json" t="Include" />
             <e p="Tests" t="Include">
               <e p="Editor" t="Include">
                 <e p="Unity.Performance.Profile-Analyzer.EditorTests.asmdef" t="Include" />
@@ -885,6 +1193,7 @@
             </e>
           </e>
           <e p="com.unity.postprocessing@3.2.2" t="Include">
+            <e p="package.json" t="Include" />
             <e p="PostProcessing" t="Include">
               <e p="Editor" t="Include">
                 <e p="Attributes" t="Include">
@@ -934,6 +1243,7 @@
                   <e p="Styling.cs" t="Include" />
                 </e>
               </e>
+              <e p="Gizmos" t="Include" />
               <e p="Runtime" t="Include">
                 <e p="Attributes" t="Include">
                   <e p="DisplayNameAttribute.cs" t="Include" />
@@ -1002,6 +1312,90 @@
                   <e p="XRSettings.cs" t="Include" />
                 </e>
               </e>
+              <e p="Shaders" t="Include">
+                <e p="ACES.hlsl" t="Include" />
+                <e p="Api" t="Include">
+                  <e p="D3D11.hlsl" t="Include" />
+                  <e p="D3D12.hlsl" t="Include" />
+                  <e p="D3D9.hlsl" t="Include" />
+                  <e p="Metal.hlsl" t="Include" />
+                  <e p="OpenGL.hlsl" t="Include" />
+                  <e p="PSP2.hlsl" t="Include" />
+                  <e p="PSSL.hlsl" t="Include" />
+                  <e p="Switch.hlsl" t="Include" />
+                  <e p="Vulkan.hlsl" t="Include" />
+                  <e p="XboxOne.hlsl" t="Include" />
+                </e>
+                <e p="Builtins" t="Include">
+                  <e p="AutoExposure.compute" t="Include" />
+                  <e p="Bloom.shader" t="Include" />
+                  <e p="Copy.shader" t="Include" />
+                  <e p="CopyStd.shader" t="Include" />
+                  <e p="CopyStdFromDoubleWide.shader" t="Include" />
+                  <e p="CopyStdFromTexArray.shader" t="Include" />
+                  <e p="DeferredFog.shader" t="Include" />
+                  <e p="DepthOfField.hlsl" t="Include" />
+                  <e p="DepthOfField.shader" t="Include" />
+                  <e p="DiscardAlpha.shader" t="Include" />
+                  <e p="DiskKernels.hlsl" t="Include" />
+                  <e p="Distortion.hlsl" t="Include" />
+                  <e p="Dithering.hlsl" t="Include" />
+                  <e p="ExposureHistogram.compute" t="Include" />
+                  <e p="ExposureHistogram.hlsl" t="Include" />
+                  <e p="FastApproximateAntialiasing.hlsl" t="Include" />
+                  <e p="FinalPass.shader" t="Include" />
+                  <e p="Fog.hlsl" t="Include" />
+                  <e p="GaussianDownsample.compute" t="Include" />
+                  <e p="GrainBaker.shader" t="Include" />
+                  <e p="Lut2DBaker.shader" t="Include" />
+                  <e p="Lut3DBaker.compute" t="Include" />
+                  <e p="MotionBlur.shader" t="Include" />
+                  <e p="MultiScaleVO.shader" t="Include" />
+                  <e p="MultiScaleVODownsample1.compute" t="Include" />
+                  <e p="MultiScaleVODownsample2.compute" t="Include" />
+                  <e p="MultiScaleVORender.compute" t="Include" />
+                  <e p="MultiScaleVOUpsample.compute" t="Include" />
+                  <e p="ScalableAO.hlsl" t="Include" />
+                  <e p="ScalableAO.shader" t="Include" />
+                  <e p="ScreenSpaceReflections.hlsl" t="Include" />
+                  <e p="ScreenSpaceReflections.shader" t="Include" />
+                  <e p="SubpixelMorphologicalAntialiasing.hlsl" t="Include" />
+                  <e p="SubpixelMorphologicalAntialiasing.shader" t="Include" />
+                  <e p="SubpixelMorphologicalAntialiasingBridge.hlsl" t="Include" />
+                  <e p="TemporalAntialiasing.shader" t="Include" />
+                  <e p="Texture2DLerp.shader" t="Include" />
+                  <e p="Texture3DLerp.compute" t="Include" />
+                  <e p="Uber.shader" t="Include" />
+                </e>
+                <e p="Colors.hlsl" t="Include" />
+                <e p="Debug" t="Include">
+                  <e p="Histogram.compute" t="Include" />
+                  <e p="Histogram.shader" t="Include" />
+                  <e p="LightMeter.shader" t="Include" />
+                  <e p="Overlays.shader" t="Include" />
+                  <e p="Vectorscope.compute" t="Include" />
+                  <e p="Vectorscope.shader" t="Include" />
+                  <e p="Waveform.compute" t="Include" />
+                  <e p="Waveform.shader" t="Include" />
+                </e>
+                <e p="Editor" t="Include">
+                  <e p="ConvertToLog.shader" t="Include" />
+                  <e p="CurveGrid.shader" t="Include" />
+                  <e p="Trackball.shader" t="Include" />
+                </e>
+                <e p="Sampling.hlsl" t="Include" />
+                <e p="StdLib.hlsl" t="Include" />
+                <e p="xRLib.hlsl" t="Include" />
+              </e>
+              <e p="Textures" t="Include">
+                <e p="BlueNoise256px" t="Include" />
+                <e p="BlueNoise64px" t="Include" />
+                <e p="Cubes" t="Include" />
+                <e p="LensDirt" t="Include" />
+                <e p="LUTs" t="Include" />
+                <e p="SMAA" t="Include" />
+                <e p="SpectralLUTs" t="Include" />
+              </e>
             </e>
             <e p="Tests" t="Include">
               <e p="Editor" t="Include">
@@ -1027,6 +1421,57 @@
                 <e p="AssetTreeView.cs" t="Include" />
                 <e p="PackageImporter.cs" t="Include" />
                 <e p="Unity.ProBuilder.AssetIdRemapUtility.asmdef" t="Include" />
+              </e>
+            </e>
+            <e p="Content" t="Include">
+              <e p="Icons" t="Include">
+                <e p="Modes" t="Include" />
+                <e p="Scene" t="Include" />
+                <e p="Scripts" t="Include" />
+                <e p="Toolbar" t="Include">
+                  <e p="Background" t="Include" />
+                </e>
+                <e p="Tools" t="Include">
+                  <e p="PolyShape" t="Include" />
+                  <e p="ShapeTool" t="Include">
+                    <e p="on" t="Include" />
+                  </e>
+                </e>
+                <e p="UVEditor" t="Include" />
+              </e>
+              <e p="Material" t="Include">
+                <e p="Textures" t="Include" />
+              </e>
+              <e p="Resources" t="Include">
+                <e p="Cursors" t="Include" />
+                <e p="Materials" t="Include" />
+                <e p="Textures" t="Include" />
+              </e>
+              <e p="Shader" t="Include">
+                <e p="DiffuseTextureBlend.shader" t="Include" />
+                <e p="DiffuseVertexColor.shader" t="Include" />
+                <e p="EdgePicker.shader" t="Include" />
+                <e p="FaceHighlight.shader" t="Include" />
+                <e p="FacePicker.shader" t="Include" />
+                <e p="HideVertices.shader" t="Include" />
+                <e p="LineBillboard.shader" t="Include" />
+                <e p="LineBillboardMetal.shader" t="Include" />
+                <e p="NormalPreview.shader" t="Include" />
+                <e p="PointBillboard.shader" t="Include" />
+                <e p="ProBuilderCG.cginc" t="Include" />
+                <e p="ReferenceUnlit.shader" t="Include" />
+                <e p="ScrollHighlight.shader" t="Include" />
+                <e p="SelectionPicker.shader" t="Include" />
+                <e p="SmoothingPreview.shader" t="Include" />
+                <e p="StandardVertexColor.shader" t="Include" />
+                <e p="TransparentOverlay.shader" t="Include" />
+                <e p="UnlitSolidColor.shader" t="Include" />
+                <e p="UnlitVertexColor.shader" t="Include" />
+                <e p="VertexPicker.shader" t="Include" />
+                <e p="VertexShader.shader" t="Include" />
+              </e>
+              <e p="Upgrade" t="Include">
+                <e p="AssetIdRemap-4_0_0.json" t="Include" />
               </e>
             </e>
             <e p="Editor" t="Include">
@@ -1325,6 +1770,7 @@
                 <e p="Unity.ProBuilder.Stl.asmdef" t="Include" />
               </e>
             </e>
+            <e p="package.json" t="Include" />
             <e p="Runtime" t="Include">
               <e p="Core" t="Include">
                 <e p="ActionResult.cs" t="Include" />
@@ -1448,6 +1894,7 @@
               </e>
               <e p="Unity.ProBuilder.asmdef" t="Include" />
             </e>
+            <e p="ValidationExceptions.json" t="Include" />
           </e>
           <e p="com.unity.services.core@1.5.2" t="Include">
             <e p="Editor" t="Include">
@@ -1539,6 +1986,7 @@
                 <e p="UiHelpers" t="Include">
                   <e p="AccessTokenErrorUiHelper.cs" t="Include" />
                   <e p="ExceptionHelper.cs" t="Include" />
+                  <e p="Images" t="Include" />
                   <e p="IProjectEditorDrawerFactory.cs" t="Include" />
                   <e p="LoggedOutUiHelper.cs" t="Include" />
                   <e p="OfflineUiHelper.cs" t="Include" />
@@ -1582,6 +2030,7 @@
                 </e>
               </e>
             </e>
+            <e p="package.json" t="Include" />
             <e p="Runtime" t="Include">
               <e p="Analytics" t="Include">
                 <e p="AnalyticsOptionsExtensions.cs" t="Include" />
@@ -1842,6 +2291,7 @@
             </e>
           </e>
           <e p="com.unity.settings-manager@1.0.3" t="Include">
+            <e p="Content" t="Include" />
             <e p="Editor" t="Include">
               <e p="Attributes.cs" t="Include" />
               <e p="ISettingsRepository.cs" t="Include" />
@@ -1856,6 +2306,7 @@
               <e p="UserSettingsRepository.cs" t="Include" />
               <e p="ValueWrapper.cs" t="Include" />
             </e>
+            <e p="package.json" t="Include" />
             <e p="Tests" t="Include">
               <e p="Editor" t="Include">
                 <e p="Unity.Settings.Editor.Tests.asmdef" t="Include" />
@@ -1863,6 +2314,7 @@
             </e>
           </e>
           <e p="com.unity.test-framework@1.1.31" t="Include">
+            <e p="package.json" t="Include" />
             <e p="UnityEditor.TestRunner" t="Include">
               <e p="Api" t="Include">
                 <e p="Analytics" t="Include">
@@ -2297,8 +2749,25 @@
                 <e p="CoverageUtils.cs" t="Include" />
               </e>
             </e>
+            <e p="Lib" t="Include">
+              <e p="ReportGenerator" t="Include" />
+            </e>
+            <e p="package.json" t="Include" />
           </e>
           <e p="com.unity.textmeshpro@3.0.6" t="Include">
+            <e p="Editor Resources" t="Include">
+              <e p="Gizmos" t="Include" />
+              <e p="Shaders" t="Include">
+                <e p="TMP_Properties.cginc" t="Include" />
+                <e p="TMP_SDF Internal Editor.shader" t="Include" />
+                <e p="TMP_SDF_SSD.cginc" t="Include" />
+              </e>
+              <e p="Textures" t="Include" />
+            </e>
+            <e p="Package Resources" t="Include" />
+            <e p="package.json" t="Include" />
+            <e p="PackageConversionData.json" t="Include" />
+            <e p="PackageConversionData_Assets.json" t="Include" />
             <e p="Scripts" t="Include">
               <e p="Editor" t="Include">
                 <e p="DropdownOptionListDrawer.cs" t="Include" />
@@ -2422,6 +2891,7 @@
                 <e p="Unity.TextMeshPro.Tests.asmdef" t="Include" />
               </e>
             </e>
+            <e p="ValidationExceptions.json" t="Include" />
           </e>
           <e p="com.unity.timeline@1.6.4" t="Include">
             <e p="DocCodeExamples" t="Include">
@@ -2636,6 +3106,12 @@
                   <e p="dark.uss" t="Include" />
                   <e p="light.uss" t="Include" />
                 </e>
+                <e p="Images" t="Include">
+                  <e p="DarkSkin" t="Include" />
+                  <e p="Icons" t="Include" />
+                  <e p="LightSkin" t="Include" />
+                  <e p="Shared" t="Include" />
+                </e>
                 <e p="res" t="Include">
                   <e p="Timeline_DarkSkin.txt" t="Include" />
                   <e p="Timeline_LightSkin.txt" t="Include" />
@@ -2788,6 +3264,7 @@
                 <e p="WindowConstants.cs" t="Include" />
               </e>
             </e>
+            <e p="package.json" t="Include" />
             <e p="Runtime" t="Include">
               <e p="Activation" t="Include">
                 <e p="ActivationMixerPlayable.cs" t="Include" />
@@ -2892,6 +3369,7 @@
                 <e p="WeightUtility.cs" t="Include" />
               </e>
             </e>
+            <e p="ValidationExceptions.json" t="Include" />
           </e>
           <e p="com.unity.ugui@1.0.0" t="Include">
             <e p="Editor" t="Include">
@@ -2942,6 +3420,7 @@
               </e>
               <e p="UnityEditor.UI.asmdef" t="Include" />
             </e>
+            <e p="package.json" t="Include" />
             <e p="Runtime" t="Include">
               <e p="EventSystem" t="Include">
                 <e p="EventData" t="Include">
@@ -3062,10 +3541,37 @@
             </e>
             <e p="Tests" t="Include">
               <e p="Editor" t="Include">
+                <e p="Canvas" t="Include" />
+                <e p="CanvasRenderer" t="Include" />
+                <e p="EventSystem" t="Include" />
+                <e p="InputField" t="Include" />
+                <e p="RectMask2D" t="Include" />
+                <e p="Slider" t="Include" />
+                <e p="Text" t="Include" />
                 <e p="UnityEditor.UI.EditorTests.asmdef" t="Include" />
+                <e p="UnityEvent" t="Include" />
               </e>
               <e p="Runtime" t="Include">
+                <e p="Button" t="Include" />
+                <e p="Canvas" t="Include" />
+                <e p="Dropdown" t="Include" />
+                <e p="EventSystem" t="Include">
+                  <e p="InputModuleTests" t="Include" />
+                </e>
+                <e p="Graphic" t="Include" />
+                <e p="Image" t="Include" />
+                <e p="InputField" t="Include" />
+                <e p="Layout" t="Include" />
+                <e p="LayoutGroup" t="Include" />
+                <e p="MaskClipping" t="Include" />
+                <e p="NestedLayout" t="Include" />
+                <e p="ScrollBar" t="Include" />
+                <e p="ScrollRect" t="Include" />
+                <e p="Slider" t="Include" />
+                <e p="TextEditor" t="Include" />
+                <e p="Toggle" t="Include" />
                 <e p="UnityEngine.UI.Tests.asmdef" t="Include" />
+                <e p="Util" t="Include" />
               </e>
             </e>
           </e>
@@ -3146,6 +3652,7 @@
                   <e p="SingleDecoratorProvider.cs" t="Include" />
                 </e>
                 <e p="Dependencies" t="Include">
+                  <e p="Assemblies" t="Include" />
                   <e p="DotNetZip" t="Include">
                     <e p="Unity.VisualScripting.IonicZip.xml" t="Include" />
                   </e>
@@ -3211,6 +3718,7 @@
                   <e p="XmlDocumentation.cs" t="Include" />
                   <e p="XmlDocumentationTags.cs" t="Include" />
                 </e>
+                <e p="EditorAssetResources" t="Include" />
                 <e p="Exceptions" t="Include">
                   <e p="EditorDebugUtility.cs" t="Include" />
                   <e p="UnityEditorInternalException.cs" t="Include" />
@@ -3220,6 +3728,7 @@
                   <e p="GraphPointerData.cs" t="Include" />
                   <e p="LudiqGraphsEditorUtility.cs" t="Include" />
                 </e>
+                <e p="IconMap" t="Include" />
                 <e p="Inspection" t="Include">
                   <e p="DraggedListItem.cs" t="Include" />
                   <e p="EditorAttribute.cs" t="Include" />
@@ -3897,6 +4406,7 @@
                 <e p="XFlowGraph.cs" t="Include" />
               </e>
               <e p="VisualScripting.Shared" t="Include">
+                <e p="EditorAssetResources" t="Include" />
                 <e p="EmptyGraphWindow.cs" t="Include" />
                 <e p="Unity.VisualScripting.Shared.Editor.asmdef" t="Include" />
               </e>
@@ -3992,6 +4502,8 @@
                 <e p="Unity.VisualScripting.State.Editor.asmdef" t="Include" />
               </e>
             </e>
+            <e p="Graphics" t="Include" />
+            <e p="package.json" t="Include" />
             <e p="Runtime" t="Include">
               <e p="VisualScripting.Core" t="Include">
                 <e p="Cloning" t="Include">
@@ -5025,6 +5537,30 @@
                   <e p="StateGraphContainerType.cs" t="Include" />
                 </e>
                 <e p="Unity.VisualScripting.State.asmdef" t="Include" />
+              </e>
+            </e>
+            <e p="ValidationConfig.json" t="Include" />
+            <e p="ValidationExceptions.json" t="Include" />
+          </e>
+          <e p="com.voody.unileo@bbaed2aec8" t="Include">
+            <e p="Leopotam.Ecs.asmref" t="Include" />
+            <e p="package.json" t="Include" />
+            <e p="Runtime" t="Include">
+              <e p="MonoHelpers" t="Include">
+                <e p="BaseMonoProvider.cs" t="Include" />
+                <e p="ConversionSystemExtension.cs" t="Include" />
+                <e p="ConvertToEntity.cs" t="Include" />
+                <e p="IConvertToEntity.cs" t="Include" />
+                <e p="MonoProvider.cs" t="Include" />
+                <e p="WorldHandler.cs" t="Include" />
+              </e>
+              <e p="World" t="Include">
+                <e p="Components" t="Include">
+                  <e p="InstantiateComponent.cs" t="Include" />
+                </e>
+                <e p="Systems" t="Include">
+                  <e p="WorldInitSystem.cs" t="Include" />
+                </e>
               </e>
             </e>
           </e>

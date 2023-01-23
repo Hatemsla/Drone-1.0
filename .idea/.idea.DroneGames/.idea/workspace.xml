@@ -26,12 +26,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2b7fdc50-160f-488f-bb8d-47a059ac380e" name="Default Changelist" comment="Add bot rotation">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.DroneGames/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.DroneGames/.idea/contentModel.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.DroneGames/.idea/indexLayout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.DroneGames/.idea/indexLayout.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.DroneGames/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.DroneGames/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/DroneFootball.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/DroneFootball.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/DroneEngine.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/DroneEngine.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/DroneRace/DroneRaceController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/DroneRace/DroneRaceController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Fallback.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Fallback.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Packages/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/manifest.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Packages/packages-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/packages-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserSettings/EditorUserSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/EditorUserSettings.asset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UserSettings/Layouts/default-2021.dwlt" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/Layouts/default-2021.dwlt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -46,6 +48,7 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/8D52D11E-DB30-4E6D-8243-3AAA29E701D5/2c/2e11d78b/NativeInputSystem.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/9D211078-424F-4D96-88F1-97836E3E28B6/a8/a98ad584/SendMouseEvents.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/561971C9-1C08-471B-9E99-5B582C6B3074/c2/6ae00d0e/Transform.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Systems/MovementSystem.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/C9D3FFD4-B986-49EE-9989-E1908EACA019/96/b1cc9e67/IntPtr.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/DroneFootball/FootballGate.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/561971C9-1C08-471B-9E99-5B582C6B3074/ec/d528734b/Vector3.cs" root0="SKIP_HIGHLIGHTING" />
@@ -77,8 +80,25 @@
         <option value="$PROJECT_DIR$/Assets/Scripts/DroneFootball/FootballCheckpointTrigger.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/DroneFootball/DroneFootballAI.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/DroneRace/DroneRaceAI.cs" />
-        <option value="$PROJECT_DIR$/Assets/Scripts/DroneRace/DroneRaceController.cs" />
         <option value="$PROJECT_DIR$/Assets/Scripts/DroneEngine.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Components/DirectionComponent.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Systems/PlayerInputSystem.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Providers/DirectionProvider.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Providers/MovableProvider.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Components/ModelComponent.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Providers/ModelProvider.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Providers/EngineProvider.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/DroneRace/DroneRaceController.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Systems/PlayerMovementSystem.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Components/MovableComponent.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Tags/PlayerTag.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Providers/PlayerTagProvider.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Tags/EnemyTag.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Providers/EnemyTagProvider.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/MonoBehaviours/EcsGameStartup.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Systems/MovementSystem.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Components/EngineComponent.cs" />
+        <option value="$PROJECT_DIR$/Assets/Scripts/Systems/EngineSystem.cs" />
       </list>
     </option>
   </component>
@@ -151,6 +171,7 @@
       <workItem from="1674065299915" duration="1478000" />
       <workItem from="1674069021297" duration="96000" />
       <workItem from="1674132112058" duration="1105000" />
+      <workItem from="1674469029588" duration="6670000" />
     </task>
     <task id="LOCAL-00001" summary="Add checkpoint spawn in droneRace">
       <created>1673510278765</created>
@@ -318,11 +339,11 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="425" y="187" key="run.anything.popup/0.0.1536.824@0.0.1536.824" timestamp="1673613001709" />
-    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1674065363943">
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1674477380386">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="431" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824/1920.0.1920.1040@0.0.1536.824" timestamp="1674051830852" />
-    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1674065363943" />
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1674477380386" />
     <state x="491" y="325" key="vcs.readOnlyHandler.ReadOnlyStatusDialog" timestamp="1674066022853">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
