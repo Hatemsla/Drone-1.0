@@ -17,7 +17,6 @@ namespace DroneRace
         public bool isSimpleMode;
         public DroneRaceCheckNode droneRaceCheckNode;
         public RaceController raceController;
-        public Path pathAI;
         private List<DroneEngine> _engines;
         private float _finalPitch;
         private float _finalRoll;
@@ -32,12 +31,6 @@ namespace DroneRace
             _rb = GetComponent<Rigidbody>();
             _engines = GetComponentsInChildren<DroneEngine>().ToList();
             droneRaceCheckNode = GetComponent<DroneRaceCheckNode>();
-            droneRaceCheckNode.nodes = pathAI.nodes;
-        }
-
-        private void Start()
-        {
-            droneRaceCheckNode.nodes = pathAI.nodes;
         }
 
         private void FixedUpdate()

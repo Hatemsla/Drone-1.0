@@ -1,5 +1,8 @@
+using System.Collections.Generic;
+using System.Linq;
 using DroneFootball;
 using DroneRace;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -12,15 +15,64 @@ namespace Menu
         public RaceController raceController;
         public FootballController footballController;
 
+        private Resolution[] _resolutions;
+        private readonly List<string> _difficulties = new List<string>(){"Супер легко", "Легко", "Нормально", "Сложно", "Невозможно"};
+        private readonly List<float> _gatesSize = new List<float> { 4, 3, 2.5f, 2, 1};
+        private float _currentDifficultScale;
+        private int _currentDifficultIndex;
+
         private void Start()
         {
             DontDestroyOnLoad(gameObject);
-            menuUIManager.raceSimpleModeBtn.onClick.AddListener(delegate { SimpleMode(1); });
-            menuUIManager.raceHardModeBtn.onClick.AddListener(delegate { HardMode(1); });
-            menuUIManager.footballSimpleModeBtn.onClick.AddListener(delegate { SimpleMode(2); });
-            menuUIManager.footballHardModeBtn.onClick.AddListener(delegate { HardMode(2); });
-            menuUIManager.exitBtn.onClick.AddListener(Exit);
+
+            _resolutions = Screen.resolutions.Distinct().ToArray();
+            SetDropdownResolutions();
+            SetDropdownDifficulties();
+
+            menuUIManager.raceBtn.onClick.AddListener(delegate { StartGame(1); });
+            menuUIManager.footballBtn.onClick.AddListener(delegate { StartGame(2); });
+            menuUIManager.difficultToggle.isOn = false;
             SceneManager.sceneLoaded += OnSceneLoaded;
+        }
+
+        private void SetDropdownResolutions()
+        {
+            var options = new List<string>();
+            int currentResolutionIndex = 0;
+            for(int i = 0; i < _resolutions.Length; i++)
+            {
+                options.Add($"{_resolutions[i].width} x {_resolutions[i].height} {_resolutions[i].refreshRate}Hz");
+
+                if (_resolutions[i].width == Screen.currentResolution.width ||
+                    _resolutions[i].height == Screen.currentResolution.height)
+                {
+                    currentResolutionIndex = i;
+                }
+            }
+            menuUIManager.resolutionDropdown.AddOptions(options);
+            menuUIManager.resolutionDropdown.value = currentResolutionIndex;
+            menuUIManager.resolutionDropdown.RefreshShownValue();
+        }
+
+        private void SetDropdownDifficulties()
+        {
+            menuUIManager.difficultDropdown.ClearOptions();
+            menuUIManager.difficultDropdown.AddOptions(_difficulties);
+            menuUIManager.difficultDropdown.value = 2;
+        }
+
+        public void SetResolution(int resolutionIndex)
+        {
+            if (_resolutions == null)
+                _resolutions = Screen.resolutions.Distinct().ToArray();
+            Resolution resolution = _resolutions[resolutionIndex];
+            Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
+        }
+
+        public void SetDifficult(int difficultIndex)
+        {
+            _currentDifficultScale = _gatesSize[difficultIndex];
+            _currentDifficultIndex = difficultIndex;
         }
 
         private void OnSceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
@@ -35,15 +87,28 @@ namespace Menu
                 }
 
                 menuUIManager = FindObjectOfType<MenuUIManager>();
-                menuUIManager.raceSimpleModeBtn.onClick.AddListener(delegate { SimpleMode(1); });
-                menuUIManager.raceHardModeBtn.onClick.AddListener(delegate { HardMode(1); });
-                menuUIManager.footballSimpleModeBtn.onClick.AddListener(delegate { SimpleMode(2); });
-                menuUIManager.footballHardModeBtn.onClick.AddListener(delegate { HardMode(2); });
-                menuUIManager.exitBtn.onClick.AddListener(Exit);
+                menuUIManager.gameBtn.onClick.AddListener(GameMenu);
+                menuUIManager.optionsBtn.onClick.AddListener(OptionsMenu);
+                menuUIManager.startExitBtn.onClick.AddListener(Exit);
+                menuUIManager.optionsExitBtn.onClick.AddListener(Exit);
+                menuUIManager.gameExitBtn.onClick.AddListener(Exit);
+                menuUIManager.gameBackBtn.onClick.AddListener(Back);
+                menuUIManager.optionsBackBtn.onClick.AddListener(Back);
+                menuUIManager.isFullscreenToggle.onValueChanged.AddListener(Fullscreen);
+                menuUIManager.difficultDropdown.onValueChanged.AddListener(SetDifficult);
+                menuUIManager.difficultDropdown.value = _currentDifficultIndex;
+                menuUIManager.difficultToggle.onValueChanged.AddListener(SetGameMode);
+                menuUIManager.difficultToggle.isOn = false;
+                menuUIManager.raceBtn.onClick.AddListener(delegate { StartGame(1); });
+                menuUIManager.footballBtn.onClick.AddListener(delegate { StartGame(2); });
+                
+                SetDropdownResolutions();
+                menuUIManager.resolutionDropdown.onValueChanged.AddListener(SetResolution);
             }
             else if (scene.buildIndex == 1)
             {
                 raceController = FindObjectOfType<RaceController>();
+                raceController.currentDifficultScale = _currentDifficultScale;
                 raceController.raceUIManager.backBtn.onClick.AddListener(Back);
                 raceController.raceUIManager.exitBtn.onClick.AddListener(Exit);
                 raceController.isSimpleMode = isSimpleMode;
@@ -51,6 +116,7 @@ namespace Menu
             else if (scene.buildIndex == 2)
             {
                 footballController = FindObjectOfType<FootballController>();
+                footballController.currentDifficultScale = _currentDifficultScale;
                 footballController.footballUIManager.backBtn.onClick.AddListener(Back);
                 footballController.footballUIManager.exitBtn.onClick.AddListener(Exit);
                 footballController.isSimpleMode = isSimpleMode;
@@ -59,7 +125,16 @@ namespace Menu
 
         public void Back()
         {
-            SceneManager.LoadScene(0);
+            if (SceneManager.GetActiveScene().buildIndex == 0)
+            {
+                menuUIManager.gameMenu.SetActive(false);
+                menuUIManager.optionMenu.SetActive(false);
+                menuUIManager.startMenu.SetActive(true);
+            }
+            else
+            {
+                SceneManager.LoadScene(0);
+            }
         }
 
         public void Exit()
@@ -67,16 +142,33 @@ namespace Menu
             Application.Quit();
         }
 
-        private void SimpleMode(int sceneIndex)
+        public void GameMenu()
         {
-            SceneManager.LoadScene(sceneIndex);
-            isSimpleMode = true;
+            menuUIManager.gameMenu.SetActive(true);
+            menuUIManager.optionMenu.SetActive(false);
+            menuUIManager.startMenu.SetActive(false);
         }
 
-        private void HardMode(int sceneIndex)
+        public void OptionsMenu()
+        {
+            menuUIManager.gameMenu.SetActive(false);
+            menuUIManager.optionMenu.SetActive(true);
+            menuUIManager.startMenu.SetActive(false);
+        }
+
+        public void Fullscreen(bool isFullscreen)
+        {
+            Screen.fullScreen = isFullscreen;
+        }
+
+        public void SetGameMode(bool mode)
+        {
+            isSimpleMode = !mode;
+        }
+
+        private void StartGame(int sceneIndex)
         {
             SceneManager.LoadScene(sceneIndex);
-            isSimpleMode = false;
         }
     }
 }

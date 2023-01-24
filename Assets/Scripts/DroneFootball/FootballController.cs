@@ -7,6 +7,7 @@ namespace DroneFootball
     public class FootballController : MonoBehaviour
     {
         public float interfaceScale;
+        public float currentDifficultScale;
         public bool isSimpleMode;
         public bool isGameStart;
         public Transform targetCheckpoint;
@@ -14,6 +15,7 @@ namespace DroneFootball
         public FootballUIManager footballUIManager;
         public Timer timer;
         public DroneFootballAI[] droneFootballAIList;
+        public FootballCheckpointTrigger footballCheckpointTrigger;
 
         private Camera _mainCamera;
         private DroneFootballCheckNode _playerCheckNode;
@@ -27,6 +29,7 @@ namespace DroneFootball
 
         private void Start()
         {
+            footballCheckpointTrigger.currentDifficultScale = currentDifficultScale;
             droneFootballController.isSimpleMode = isSimpleMode;
             _playerCheckNode = droneFootballController.droneFootballCheckNode;
 
@@ -81,7 +84,7 @@ namespace DroneFootball
             RotatePointer(direction * pos);
 
             footballUIManager.pathArrow.sizeDelta = new Vector2(_startPointerSize.x / 100 * interfaceScale, _startPointerSize.y / 100 * interfaceScale);
-            footballUIManager.pathArrow.anchoredPosition = outPos;
+            footballUIManager.pathArrow.position = outPos;
         }
 
         private bool IsBehind(Vector3 point) // true если point сзади камеры

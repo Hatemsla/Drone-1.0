@@ -21,7 +21,6 @@ namespace DroneRace
         public float lerpSpeed;
         public DroneRaceCheckNode droneRaceCheckNode;
         public RaceController raceController;
-        public Path pathAI;
         
         private List<DroneEngine> _engines;
         private Rigidbody _rb;
@@ -41,7 +40,6 @@ namespace DroneRace
             _rb = GetComponent<Rigidbody>();
             _engines = GetComponentsInChildren<DroneEngine>().ToList();
             droneRaceCheckNode = GetComponent<DroneRaceCheckNode>();
-            droneRaceCheckNode.nodes = pathAI.nodes;
 
             _throttleController = new PIDController(proportionalGain, integralGain, derivativeGain, outputMin,
                 outputMax,
@@ -52,11 +50,6 @@ namespace DroneRace
                 integralSaturation);
             _yawController = new PIDController(proportionalGain, integralGain, derivativeGain, outputMin, outputMax,
                 integralSaturation);
-        }
-
-        private void Start()
-        {
-            droneRaceCheckNode.nodes = pathAI.nodes;
         }
 
         private void FixedUpdate()

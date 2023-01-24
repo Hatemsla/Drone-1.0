@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace DroneRace
 {
@@ -7,8 +9,16 @@ namespace DroneRace
     {
         public int currentNode;
         public float wayDistance;
+        public float currentDifficultScale;
         public List<Transform> nodes;
         public GameObject checkPointPrefab;
+
+        private Path _path;
+
+        private void Start()
+        {
+            _path = FindObjectOfType<Path>();
+        }
 
         private void Update()
         {
@@ -17,6 +27,7 @@ namespace DroneRace
 
         public void CheckWaypoint()
         {
+            nodes = _path.nodes;
             currentNode++;
         }
 
@@ -45,6 +56,7 @@ namespace DroneRace
                 }
 
                 newCheckpoint.transform.parent = null;
+                newCheckpoint.transform.localScale = new Vector3(currentDifficultScale, currentDifficultScale, currentDifficultScale);
             }
             else
             {
@@ -67,11 +79,12 @@ namespace DroneRace
                 }
                 
                 newCheckpoint.transform.parent = null;
+                newCheckpoint.transform.localScale = new Vector3(currentDifficultScale, currentDifficultScale, currentDifficultScale);
             }
 
             newCheckpoint.GetComponent<RaceCheckpointTrigger>().checkpointID =
-                nodes[^1].GetComponent<RaceCheckpointTrigger>().checkpointID + 1;
-            nodes.Add(newCheckpoint.transform);
+                _path.nodes[^1].GetComponent<RaceCheckpointTrigger>().checkpointID + 1;
+            _path.nodes.Add(newCheckpoint.transform);
         }
     }
 }

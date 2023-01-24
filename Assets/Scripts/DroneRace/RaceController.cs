@@ -9,6 +9,7 @@ namespace DroneRace
     public class RaceController : MonoBehaviour
     {
         public float interfaceScale;
+        public float currentDifficultScale;
         public bool isSimpleMode;
         public bool isGameStart;
         public Transform targetCheckpoint;
@@ -16,6 +17,7 @@ namespace DroneRace
         public DroneRaceUIManager raceUIManager;
         public DroneRaceCheckNode playerNode;
         public Timer timer;
+        public Path path;
         public List<DroneRaceCheckNode> droneRaceCheckNodes;
         
         private Camera _mainCamera;
@@ -34,6 +36,11 @@ namespace DroneRace
         {
             droneRaceController.isSimpleMode = isSimpleMode;
             _checkNode = droneRaceController.droneRaceCheckNode;
+            foreach (var drone in droneRaceCheckNodes)
+            {
+                drone.currentDifficultScale = currentDifficultScale;
+                path.nodes[0].localScale = new Vector3(currentDifficultScale, currentDifficultScale, currentDifficultScale);
+            }
         }
 
         private void Update()
@@ -84,7 +91,7 @@ namespace DroneRace
             RotatePointer(direction * pos);
 
             raceUIManager.pathArrow.sizeDelta = new Vector2(_startPointerSize.x / 100 * interfaceScale, _startPointerSize.y / 100 * interfaceScale);
-            raceUIManager.pathArrow.anchoredPosition = outPos;
+            raceUIManager.pathArrow.position = outPos;
         }
 
         private bool IsBehind(Vector3 point) // true если point сзади камеры
