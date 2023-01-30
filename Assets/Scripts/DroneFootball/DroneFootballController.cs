@@ -21,8 +21,8 @@ namespace DroneFootball
         private Rigidbody _rb;
         private float _finalPitch;
         private float _finalRoll;
-        private float _yaw;
         private float _finalYaw;
+        private float _yaw;
         private float _isMove;
 
         private void Awake()

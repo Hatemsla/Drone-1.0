@@ -9,7 +9,6 @@ namespace DroneRace
     {
         public int currentNode;
         public float wayDistance;
-        public float currentDifficultScale;
         public List<Transform> nodes;
         public GameObject checkPointPrefab;
 
@@ -56,7 +55,7 @@ namespace DroneRace
                 }
 
                 newCheckpoint.transform.parent = null;
-                newCheckpoint.transform.localScale = new Vector3(currentDifficultScale, currentDifficultScale, currentDifficultScale);
+                newCheckpoint.transform.localScale = new Vector3(3, 3, 3);
             }
             else
             {
@@ -79,7 +78,7 @@ namespace DroneRace
                 }
                 
                 newCheckpoint.transform.parent = null;
-                newCheckpoint.transform.localScale = new Vector3(currentDifficultScale, currentDifficultScale, currentDifficultScale);
+                newCheckpoint.transform.localScale = new Vector3(3, 3, 3);
             }
 
             newCheckpoint.GetComponent<RaceCheckpointTrigger>().checkpointID =

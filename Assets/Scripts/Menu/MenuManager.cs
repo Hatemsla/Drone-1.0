@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Linq;
 using DroneFootball;
 using DroneRace;
-using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -16,9 +15,11 @@ namespace Menu
         public FootballController footballController;
 
         private Resolution[] _resolutions;
-        private readonly List<string> _difficulties = new List<string>(){"Супер легко", "Легко", "Нормально", "Сложно", "Невозможно"};
-        private readonly List<float> _gatesSize = new List<float> { 4, 3, 2.5f, 2, 1};
-        private float _currentDifficultScale;
+        private readonly List<string> _difficulties = new List<string>{"Супер легко", "Легко", "Нормально", "Сложно", "Невозможно"};
+        private readonly List<float> _gatesSize = new List<float> { 3f, 2f, 1.5f, 1.25f, 1f};
+        private readonly List<float> _droneSpeed = new List<float> { 0.5f, 0.75f, 1f, 1.5f, 2f};
+        private float _currentGateScale;
+        private float _currentAIDroneSpeed;
         private int _currentDifficultIndex;
 
         private void Start()
@@ -71,7 +72,8 @@ namespace Menu
 
         public void SetDifficult(int difficultIndex)
         {
-            _currentDifficultScale = _gatesSize[difficultIndex];
+            _currentGateScale = _gatesSize[difficultIndex];
+            _currentAIDroneSpeed = _droneSpeed[difficultIndex];
             _currentDifficultIndex = difficultIndex;
         }
 
@@ -108,7 +110,7 @@ namespace Menu
             else if (scene.buildIndex == 1)
             {
                 raceController = FindObjectOfType<RaceController>();
-                raceController.currentDifficultScale = _currentDifficultScale;
+                raceController.currentAIDroneSpeed = _currentAIDroneSpeed;
                 raceController.raceUIManager.backBtn.onClick.AddListener(Back);
                 raceController.raceUIManager.exitBtn.onClick.AddListener(Exit);
                 raceController.isSimpleMode = isSimpleMode;
@@ -116,7 +118,8 @@ namespace Menu
             else if (scene.buildIndex == 2)
             {
                 footballController = FindObjectOfType<FootballController>();
-                footballController.currentDifficultScale = _currentDifficultScale;
+                footballController.currentGateScale = _currentGateScale;
+                footballController.currentAIDroneSpeed = _currentAIDroneSpeed;
                 footballController.footballUIManager.backBtn.onClick.AddListener(Back);
                 footballController.footballUIManager.exitBtn.onClick.AddListener(Exit);
                 footballController.isSimpleMode = isSimpleMode;

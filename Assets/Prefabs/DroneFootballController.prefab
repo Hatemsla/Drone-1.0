@@ -2049,7 +2049,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cf6d69a1e9c68d438217041432a4858, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxPower: 4
+  maxPower: 6
   propellerRotSpeed: 300
   propeller: {fileID: 6633713454494849752}
 --- !u!1 &8344154996808680729
@@ -2096,7 +2096,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cf6d69a1e9c68d438217041432a4858, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxPower: 4
+  maxPower: 6
   propellerRotSpeed: 300
   propeller: {fileID: 2994909680554692291}
 --- !u!1 &8344154997012181358
@@ -2143,7 +2143,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cf6d69a1e9c68d438217041432a4858, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxPower: 4
+  maxPower: 6
   propellerRotSpeed: 300
   propeller: {fileID: 4925355527097404070}
 --- !u!1 &8344154997122016218
@@ -2190,7 +2190,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cf6d69a1e9c68d438217041432a4858, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxPower: 4
+  maxPower: 6
   propellerRotSpeed: 300
   propeller: {fileID: 4750793932895732074}
 --- !u!1 &8344154997185107364
@@ -2313,9 +2313,8 @@ MonoBehaviour:
   cyclic: {x: 0, y: 0}
   pedals: 0
   throttle: 0
-  lerpSpeed: 2
+  lerpSpeed: 3
   isSimpleMode: 0
-  rb: {fileID: 0}
   droneFootballCheckNode: {fileID: 0}
   footballController: {fileID: 0}
 --- !u!114 &1961687292831539662
@@ -2331,7 +2330,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentNode: 0
-  nodes: []
 --- !u!1 &8344154997929595336
 GameObject:
   m_ObjectHideFlags: 0
@@ -2394,14 +2392,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8344154998106154582}
-  m_LocalRotation: {x: 0.17364778, y: 0.002071185, z: -0.00036520575, w: 0.9848056}
-  m_LocalPosition: {x: -0.009000003, y: 1.261, z: -1.424}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.6, z: -1.56}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8344154997890245122}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 20, y: 0.241, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!20 &8344154998106154580
 Camera:
   m_ObjectHideFlags: 0

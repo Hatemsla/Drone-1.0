@@ -9,11 +9,12 @@ namespace DroneRace
     public class RaceController : MonoBehaviour
     {
         public float interfaceScale;
-        public float currentDifficultScale;
+        public float currentAIDroneSpeed;
         public bool isSimpleMode;
         public bool isGameStart;
         public Transform targetCheckpoint;
         public DroneRaceController droneRaceController;
+        public DroneRaceAI droneRaceAI;
         public DroneRaceUIManager raceUIManager;
         public DroneRaceCheckNode playerNode;
         public Timer timer;
@@ -38,9 +39,10 @@ namespace DroneRace
             _checkNode = droneRaceController.droneRaceCheckNode;
             foreach (var drone in droneRaceCheckNodes)
             {
-                drone.currentDifficultScale = currentDifficultScale;
-                path.nodes[0].localScale = new Vector3(currentDifficultScale, currentDifficultScale, currentDifficultScale);
+                path.nodes[0].localScale = new Vector3(3, 3, 3);
             }
+
+            droneRaceAI.speed *= currentAIDroneSpeed;
         }
 
         private void Update()

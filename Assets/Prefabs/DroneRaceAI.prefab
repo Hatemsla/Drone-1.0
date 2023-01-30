@@ -1349,7 +1349,6 @@ GameObject:
   - component: {fileID: 6226538643810807270}
   - component: {fileID: 6226538643810807271}
   - component: {fileID: 6226538643810807264}
-  - component: {fileID: 6226538643810807269}
   - component: {fileID: 559114011915233090}
   m_Layer: 0
   m_Name: DroneRaceAI
@@ -1389,7 +1388,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!114 &6226538643810807264
 MonoBehaviour:
@@ -1405,21 +1404,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentNode: 0
   wayDistance: 0
-  nodes: []
+  currentDifficultScale: 0
+  nodes:
+  - {fileID: 0}
   checkPointPrefab: {fileID: 8593175009206053158, guid: d9387ae542a894a4ea93a1b8d5734caa, type: 3}
---- !u!135 &6226538643810807269
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6226538643810807266}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.43130174
-  m_Center: {x: 0, y: 0.39725205, z: 0}
 --- !u!114 &559114011915233090
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1432,6 +1420,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ebd6d8ee48e40b45be0ccb58711199c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speed: 3
+  minMaxPitch: 30
+  minMaxRoll: 30
   proportionalGain: 1
   integralGain: 1
   derivativeGain: 1
@@ -1439,9 +1430,9 @@ MonoBehaviour:
   outputMax: 1
   integralSaturation: 1
   throttle: 0
+  lerpSpeed: 2
   droneRaceCheckNode: {fileID: 0}
-  droneRaceController: {fileID: 0}
-  pathAI: {fileID: 0}
+  raceController: {fileID: 0}
 --- !u!1 &6226538643851140652
 GameObject:
   m_ObjectHideFlags: 0
@@ -1958,9 +1949,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5900738697774589950}
+  - component: {fileID: 1309326072}
   m_Layer: 0
   m_Name: Drone
-  m_TagString: Untagged
+  m_TagString: Bot
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1973,7 +1965,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6532596851121667396}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.1, z: 0}
+  m_LocalPosition: {x: 0, y: 0.1, z: -0.62}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2004,6 +1996,19 @@ Transform:
   m_Father: {fileID: 6226538643810807270}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &1309326072
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6532596851121667396}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.43130174
+  m_Center: {x: 0, y: 0.29, z: 0}
 --- !u!1 &6762903828208165999
 GameObject:
   m_ObjectHideFlags: 0

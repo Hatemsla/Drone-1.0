@@ -7,7 +7,8 @@ namespace DroneFootball
     public class FootballController : MonoBehaviour
     {
         public float interfaceScale;
-        public float currentDifficultScale;
+        public float currentGateScale;
+        public float currentAIDroneSpeed;
         public bool isSimpleMode;
         public bool isGameStart;
         public Transform targetCheckpoint;
@@ -29,7 +30,7 @@ namespace DroneFootball
 
         private void Start()
         {
-            footballCheckpointTrigger.currentDifficultScale = currentDifficultScale;
+            footballCheckpointTrigger.currentGateScale = currentGateScale;
             droneFootballController.isSimpleMode = isSimpleMode;
             _playerCheckNode = droneFootballController.droneFootballCheckNode;
 
@@ -38,6 +39,7 @@ namespace DroneFootball
             foreach (var droneAI in droneFootballAIList)
             {
                 droneAI.footballController = this;
+                droneAI.speed *= currentAIDroneSpeed;
             }
         }
 

@@ -1285,7 +1285,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4614730690171260031}
   - component: {fileID: 4614730690171260030}
-  - component: {fileID: 4614730690171260028}
   - component: {fileID: 983543520344574869}
   - component: {fileID: 3510808209705705292}
   m_Layer: 0
@@ -1326,21 +1325,8 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 112
   m_CollisionDetection: 0
---- !u!135 &4614730690171260028
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4614730690171260027}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Radius: 0.43130174
-  m_Center: {x: 0, y: 0.39725205, z: 0}
 --- !u!114 &983543520344574869
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1366,10 +1352,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f281e06dc21b57045b9536e79bdc2fc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 4
-  minMaxPitch: 0
-  minMaxRoll: 0
-  yawPower: 0
+  speed: 6
+  minMaxPitch: 30
+  minMaxRoll: 30
   proportionalGain: 1
   integralGain: 1
   derivativeGain: 1
@@ -1377,11 +1362,9 @@ MonoBehaviour:
   outputMax: 1
   integralSaturation: 1
   throttle: 0
-  lerpSpeed: 0
+  lerpSpeed: 2
   targetTransform: {fileID: 0}
-  droneFootballCheckNode: {fileID: 0}
   footballController: {fileID: 0}
-  _droneTransform: {fileID: 0}
 --- !u!1 &4614730690203287477
 GameObject:
   m_ObjectHideFlags: 0

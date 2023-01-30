@@ -285,11 +285,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interfaceScale: 80
-  currentDifficultScale: 0
+  currentGateScale: 0
+  currentAIDroneSpeed: 0
   isSimpleMode: 0
   isGameStart: 0
   targetCheckpoint: {fileID: 0}
   droneRaceController: {fileID: 1188795002}
+  droneRaceAI: {fileID: 1187477258}
   raceUIManager: {fileID: 1475108207}
   playerNode: {fileID: 1188795003}
   timer: {fileID: 36402594}
@@ -1027,69 +1029,17 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 559114011915233090, guid: 39489b8482e035f4ebf6cc797a082af8, type: 3}
-      propertyPath: speed
+      propertyPath: integralGain
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 559114011915233090, guid: 39489b8482e035f4ebf6cc797a082af8, type: 3}
-      propertyPath: pathAI
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 559114011915233090, guid: 39489b8482e035f4ebf6cc797a082af8, type: 3}
-      propertyPath: lerpSpeed
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 559114011915233090, guid: 39489b8482e035f4ebf6cc797a082af8, type: 3}
-      propertyPath: minMaxRoll
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 559114011915233090, guid: 39489b8482e035f4ebf6cc797a082af8, type: 3}
-      propertyPath: minMaxPitch
-      value: 30
+      propertyPath: derivativeGain
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 559114011915233090, guid: 39489b8482e035f4ebf6cc797a082af8, type: 3}
       propertyPath: raceController
       value: 
       objectReference: {fileID: 528065040}
-    - target: {fileID: 559114011915233090, guid: 39489b8482e035f4ebf6cc797a082af8, type: 3}
-      propertyPath: droneRaceController
-      value: 
-      objectReference: {fileID: 528065040}
-    - target: {fileID: 5900738697774589950, guid: 39489b8482e035f4ebf6cc797a082af8, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0.62
-      objectReference: {fileID: 0}
-    - target: {fileID: 5900738697774589950, guid: 39489b8482e035f4ebf6cc797a082af8, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5900738697774589950, guid: 39489b8482e035f4ebf6cc797a082af8, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5900738697774589950, guid: 39489b8482e035f4ebf6cc797a082af8, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5900738697774589950, guid: 39489b8482e035f4ebf6cc797a082af8, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5900738697774589950, guid: 39489b8482e035f4ebf6cc797a082af8, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5900738697774589950, guid: 39489b8482e035f4ebf6cc797a082af8, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6226538643810807264, guid: 39489b8482e035f4ebf6cc797a082af8, type: 3}
-      propertyPath: checkPointPrefab
-      value: 
-      objectReference: {fileID: 8593175009206053158, guid: d9387ae542a894a4ea93a1b8d5734caa, type: 3}
-    - target: {fileID: 6226538643810807264, guid: 39489b8482e035f4ebf6cc797a082af8, type: 3}
-      propertyPath: nodes.Array.size
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 6226538643810807264, guid: 39489b8482e035f4ebf6cc797a082af8, type: 3}
       propertyPath: nodes.Array.data[0]
       value: 
@@ -1097,10 +1047,6 @@ PrefabInstance:
     - target: {fileID: 6226538643810807266, guid: 39489b8482e035f4ebf6cc797a082af8, type: 3}
       propertyPath: m_Name
       value: DroneRaceAI
-      objectReference: {fileID: 0}
-    - target: {fileID: 6226538643810807266, guid: 39489b8482e035f4ebf6cc797a082af8, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6226538643810807270, guid: 39489b8482e035f4ebf6cc797a082af8, type: 3}
       propertyPath: m_RootOrder
@@ -1146,16 +1092,7 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6226538643810807271, guid: 39489b8482e035f4ebf6cc797a082af8, type: 3}
-      propertyPath: m_Constraints
-      value: 112
-      objectReference: {fileID: 0}
-    - target: {fileID: 6532596851121667396, guid: 39489b8482e035f4ebf6cc797a082af8, type: 3}
-      propertyPath: m_TagString
-      value: Bot
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 6226538643810807269, guid: 39489b8482e035f4ebf6cc797a082af8, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 39489b8482e035f4ebf6cc797a082af8, type: 3}
 --- !u!114 &1187477257 stripped
 MonoBehaviour:
@@ -1166,6 +1103,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 32f74b10f6b8404fb696150d6ed0e856, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1187477258 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 559114011915233090, guid: 39489b8482e035f4ebf6cc797a082af8, type: 3}
+  m_PrefabInstance: {fileID: 1187477256}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ebd6d8ee48e40b45be0ccb58711199c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &1188795002 stripped
@@ -1343,24 +1291,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1298150993}
   m_CullTransparentMesh: 1
---- !u!1 &1309326070 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6532596851121667396, guid: 39489b8482e035f4ebf6cc797a082af8, type: 3}
-  m_PrefabInstance: {fileID: 1187477256}
-  m_PrefabAsset: {fileID: 0}
---- !u!135 &1309326072
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1309326070}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.43130174
-  m_Center: {x: 0, y: 0.29, z: 0}
 --- !u!1 &1402431821
 GameObject:
   m_ObjectHideFlags: 0
@@ -2324,6 +2254,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6554557504251720185, guid: c50fcde4d03026b4ab9c4c3eff558381, type: 3}
+      propertyPath: maxPower
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6554557504571034045, guid: c50fcde4d03026b4ab9c4c3eff558381, type: 3}
+      propertyPath: maxPower
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6554557504774274502, guid: c50fcde4d03026b4ab9c4c3eff558381, type: 3}
+      propertyPath: maxPower
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6554557504876244850, guid: c50fcde4d03026b4ab9c4c3eff558381, type: 3}
+      propertyPath: maxPower
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 6554557505652567720, guid: c50fcde4d03026b4ab9c4c3eff558381, type: 3}
       propertyPath: m_RootOrder
       value: 8
@@ -2391,6 +2337,10 @@ PrefabInstance:
     - target: {fileID: 6554557505652567727, guid: c50fcde4d03026b4ab9c4c3eff558381, type: 3}
       propertyPath: pathAI
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6554557505652567727, guid: c50fcde4d03026b4ab9c4c3eff558381, type: 3}
+      propertyPath: lerpSpeed
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6554557505652567727, guid: c50fcde4d03026b4ab9c4c3eff558381, type: 3}
       propertyPath: moveSound
