@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace DroneFootball
@@ -8,27 +9,44 @@ namespace DroneFootball
     {
         public float currentGateScale;
         public AudioSource music;
-
-        private AudioClip _clip;
+        public GameObject playerDrone;
+        public List<AudioClip> clips;
+        
         private FootballGate _footballGate;
-
+        private readonly Vector3 _playerDroneStartPosition = new Vector3(0, 0, -35);
+        private int _playerScore;
+        private int _clipIndex;
+        
         private void Start()
         {
             _footballGate = GetComponentInParent<FootballGate>();
             transform.localScale = new Vector3(currentGateScale, currentGateScale, currentGateScale);
-            _clip = music.clip;
+            music.clip = clips[_clipIndex];
+            music.volume = AudioListener.volume;
         }
 
         private void OnTriggerExit(Collider other)
         {
             if (other.gameObject.CompareTag("Player"))
             {
-                music.PlayOneShot(_clip);
-
+                music.clip = clips[_clipIndex];
+                music.PlayOneShot(clips[_clipIndex]);
+                if (_clipIndex == clips.Count - 1)
+                    _clipIndex = 0;
+                else
+                    _clipIndex++;
+                
                 transform.localScale = new Vector3(currentGateScale, currentGateScale, currentGateScale);
-                var drone = other.GetComponentInParent<DroneFootballCheckNode>();
-                drone.CheckWaypoint();
+                _playerScore = other.GetComponent<DroneFootballCheckNode>().currentNode+1;
                 _footballGate.SetNewGatePosition();
+                Destroy(other.gameObject);
+                var player = Instantiate(playerDrone, _playerDroneStartPosition, Quaternion.identity);
+                var playerCheckNode = player.GetComponent<DroneFootballCheckNode>();
+                var playerController = player.GetComponent<DroneFootballController>();
+                playerCheckNode.currentNode = _playerScore;
+                playerController.footballController.playerCheckNode = playerCheckNode;
+                playerController.footballController.CheckScore();
+                _footballGate.droneFootballTransform = player.transform;
             }
         }
     }

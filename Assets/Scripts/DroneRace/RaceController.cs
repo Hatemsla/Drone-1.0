@@ -10,6 +10,7 @@ namespace DroneRace
     {
         public float interfaceScale;
         public float currentAIDroneSpeed;
+        public int clipIndex;
         public bool isSimpleMode;
         public bool isGameStart;
         public Transform targetCheckpoint;

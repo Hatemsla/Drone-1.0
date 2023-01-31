@@ -49,7 +49,7 @@ namespace DroneFootball
 
         private void FixedUpdate()
         {
-            if (footballController.isGameStart) DroneMove();
+            DroneMove();
         }
 
         private void DroneMove()

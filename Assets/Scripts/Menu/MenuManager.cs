@@ -3,6 +3,7 @@ using System.Linq;
 using DroneFootball;
 using DroneRace;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
 namespace Menu
@@ -20,6 +21,7 @@ namespace Menu
         private readonly List<float> _droneSpeed = new List<float> { 0.5f, 0.75f, 1f, 1.5f, 2f};
         private float _currentGateScale;
         private float _currentAIDroneSpeed;
+        private float _currentVolume;
         private int _currentDifficultIndex;
 
         private void Start()
@@ -33,6 +35,7 @@ namespace Menu
             menuUIManager.raceBtn.onClick.AddListener(delegate { StartGame(1); });
             menuUIManager.footballBtn.onClick.AddListener(delegate { StartGame(2); });
             menuUIManager.difficultToggle.isOn = false;
+            menuUIManager.volumeSlider.value = 1;
             SceneManager.sceneLoaded += OnSceneLoaded;
         }
 
@@ -79,6 +82,7 @@ namespace Menu
 
         private void OnSceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
         {
+            AudioListener.volume = _currentVolume;
             if (scene.buildIndex == 0)
             {
                 var dontDestroyOnLoadObjects = FindObjectsOfType<MenuManager>();
@@ -89,6 +93,8 @@ namespace Menu
                 }
 
                 menuUIManager = FindObjectOfType<MenuUIManager>();
+                menuUIManager.volumeSlider.value = _currentVolume;
+                menuUIManager.volumeSlider.onValueChanged.AddListener(delegate { ChangeVolume(); });
                 menuUIManager.gameBtn.onClick.AddListener(GameMenu);
                 menuUIManager.optionsBtn.onClick.AddListener(OptionsMenu);
                 menuUIManager.startExitBtn.onClick.AddListener(Exit);
@@ -103,7 +109,7 @@ namespace Menu
                 menuUIManager.difficultToggle.isOn = false;
                 menuUIManager.raceBtn.onClick.AddListener(delegate { StartGame(1); });
                 menuUIManager.footballBtn.onClick.AddListener(delegate { StartGame(2); });
-                
+
                 SetDropdownResolutions();
                 menuUIManager.resolutionDropdown.onValueChanged.AddListener(SetResolution);
             }
@@ -167,6 +173,12 @@ namespace Menu
         public void SetGameMode(bool mode)
         {
             isSimpleMode = !mode;
+        }
+
+        public void ChangeVolume()
+        {
+            AudioListener.volume = menuUIManager.volumeSlider.value;
+            _currentVolume = menuUIManager.volumeSlider.value;
         }
 
         private void StartGame(int sceneIndex)

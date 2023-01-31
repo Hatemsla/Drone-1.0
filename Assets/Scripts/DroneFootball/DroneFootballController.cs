@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -14,6 +15,7 @@ namespace DroneFootball
         public float throttle;
         public float lerpSpeed;
         public bool isSimpleMode;
+        public bool isStop;
         public DroneFootballCheckNode droneFootballCheckNode;
         public FootballController footballController;
 
@@ -24,20 +26,29 @@ namespace DroneFootball
         private float _finalYaw;
         private float _yaw;
         private float _isMove;
+        private bool _isStopAlready;
 
         private void Awake()
         {
             _rb = GetComponent<Rigidbody>();
             _engines = GetComponentsInChildren<DroneEngine>().ToList();
             droneFootballCheckNode = GetComponent<DroneFootballCheckNode>();
+            footballController = FindObjectOfType<FootballController>();
+            footballController.droneFootballController = this;
+            isSimpleMode = footballController.isSimpleMode;
+            footballController.playerCamera = GetComponentInChildren<Camera>();
         }
 
         private void FixedUpdate()
         {
-            if (footballController.isGameStart)
+            if (footballController.isGameStart && !isStop)
             {
                 GetInput();
                 DroneMove();
+            }
+            else if(footballController.isGameStart && !_isStopAlready)
+            {
+                StartCoroutine(DroneStop());
             }
         }
 
@@ -60,7 +71,8 @@ namespace DroneFootball
                     engine.UpdateEngine(_rb, throttle);
                 }
             }
-
+            CheckDroneHover();
+            
             float pitch = cyclic.y * minMaxPitch;
             float roll = -cyclic.x * minMaxRoll;
             _yaw += pedals * yawPower;
@@ -71,6 +83,30 @@ namespace DroneFootball
 
             Quaternion rot = Quaternion.Euler(_finalPitch, _finalYaw, _finalRoll);
             _rb.MoveRotation(rot);
+        }
+        
+        private void CheckDroneHover()
+        {
+            if (isSimpleMode && _isMove == 0)
+            {
+                _rb.drag = 3;
+            }
+            else
+            {
+                _rb.drag = 0.5f;
+            }
+        }
+
+        private IEnumerator DroneStop()
+        {
+            _isStopAlready = true;
+            isStop = true;
+            _rb.drag = 10;
+            _rb.angularDrag = 10;
+            transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+            yield return new WaitForSeconds(2);
+            _isStopAlready = false;
+            isStop = false;
         }
     }
 }

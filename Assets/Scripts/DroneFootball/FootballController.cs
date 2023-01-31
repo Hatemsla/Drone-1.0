@@ -13,28 +13,28 @@ namespace DroneFootball
         public bool isGameStart;
         public Transform targetCheckpoint;
         public DroneFootballController droneFootballController;
+        public DroneFootballCheckNode playerCheckNode;
         public FootballUIManager footballUIManager;
         public Timer timer;
         public DroneFootballAI[] droneFootballAIList;
         public FootballCheckpointTrigger footballCheckpointTrigger;
 
-        private Camera _mainCamera;
-        private DroneFootballCheckNode _playerCheckNode;
+        public Camera playerCamera;
         private Vector3 _startPointerSize;
 
         private void Awake()
         {
             _startPointerSize = footballUIManager.pathArrow.sizeDelta;
-            _mainCamera = Camera.main;
+            playerCamera = Camera.main;
         }
 
         private void Start()
         {
             footballCheckpointTrigger.currentGateScale = currentGateScale;
             droneFootballController.isSimpleMode = isSimpleMode;
-            _playerCheckNode = droneFootballController.droneFootballCheckNode;
+            playerCheckNode = droneFootballController.droneFootballCheckNode;
 
-            footballUIManager.scoreText.text = $"Счет: {_playerCheckNode.currentNode}";
+            footballUIManager.scoreText.text = $"Счет: {playerCheckNode.currentNode}";
 
             foreach (var droneAI in droneFootballAIList)
             {
@@ -51,7 +51,7 @@ namespace DroneFootball
 
         private void LateUpdate()
         {
-            Vector3 realPos = _mainCamera.WorldToScreenPoint(targetCheckpoint.position);
+            Vector3 realPos = playerCamera.WorldToScreenPoint(targetCheckpoint.position);
             Rect rect = new Rect(0, 0, Screen.width, Screen.height);
 
             Vector3 outPos = realPos;
@@ -70,7 +70,7 @@ namespace DroneFootball
             {
                 realPos = -realPos;
                 outPos = new Vector3(realPos.x, 0, 0); // позиция иконки - снизу
-                if (_mainCamera.transform.position.y < targetCheckpoint.position.y)
+                if (playerCamera.transform.position.y < targetCheckpoint.position.y)
                 {
                     direction = -1;
                     outPos.y = Screen.height; // позиция иконки - сверху				
@@ -91,8 +91,8 @@ namespace DroneFootball
 
         private bool IsBehind(Vector3 point) // true если point сзади камеры
         {
-            Vector3 forward = _mainCamera.transform.TransformDirection(Vector3.forward);
-            Vector3 toOther = point - _mainCamera.transform.position;
+            Vector3 forward = playerCamera.transform.TransformDirection(Vector3.forward);
+            Vector3 toOther = point - playerCamera.transform.position;
             if (Vector3.Dot(forward, toOther) < 0) return true;
             return false;
         }
@@ -127,7 +127,7 @@ namespace DroneFootball
             }
             else
             {
-                if (_playerCheckNode.currentNode >= 10)
+                if (playerCheckNode.currentNode >= 10)
                     footballUIManager.matchResultText.text = "Вы победили!";
                 else
                     footballUIManager.matchResultText.text = "Вы проиграли(";
@@ -140,7 +140,7 @@ namespace DroneFootball
 
         public void CheckScore()
         {
-            footballUIManager.scoreText.text = $"Счет: {_playerCheckNode.currentNode}";
+            footballUIManager.scoreText.text = $"Счет: {playerCheckNode.currentNode}";
         }
 
         private IEnumerator BackToMenu()

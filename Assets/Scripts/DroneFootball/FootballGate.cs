@@ -17,8 +17,7 @@ namespace DroneFootball
 
         private void Awake()
         {
-            droneFootballAI1.targetTransform = botPoint1;
-            droneFootballAI2.targetTransform = botPoint2;
+            SetBotsPositions();
         }
 
         private void OnTriggerEnter(Collider other)
@@ -32,13 +31,19 @@ namespace DroneFootball
 
         public void SetNewGatePosition()
         {
-            footballController.CheckScore();
             var y = Random.Range(5f, 20f);
             _circleCenter = new Vector3(0f, y, 0f);
-            transform.position = new Vector3(Random.Range(-40f, 40f), y, Random.Range(-40f, 40f));
+            transform.position = new Vector3(Random.Range(-40f, 40f), y, Random.Range(0, 40f));
             transform.LookAt(_circleCenter);
+            SetBotsPositions();
+        }
+
+        private void SetBotsPositions()
+        {
             droneFootballAI1.targetTransform = botPoint1;
+            droneFootballAI1.transform.position = botPoint1.transform.position;
             droneFootballAI2.targetTransform = botPoint2;
+            droneFootballAI2.transform.position = botPoint2.transform.position;
         }
     }
 }

@@ -17,6 +17,7 @@ namespace Menu
         public TMP_Dropdown difficultDropdown;
         public Button optionsBackBtn;
         public Button optionsExitBtn;
+        public Slider volumeSlider;
 
         [Header("Game menu")] 
         public Toggle difficultToggle;

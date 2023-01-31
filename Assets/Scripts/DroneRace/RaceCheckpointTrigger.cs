@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace DroneRace
@@ -8,8 +9,9 @@ namespace DroneRace
     {
         public int checkpointID;
         public AudioSource music;
+        public List<AudioClip> clips;
 
-        private AudioClip _clip;
+        private RaceController _raceController;
         private bool _isSpawned;
         private bool _isMusic;
         private bool _isPlayerFlew;
@@ -18,12 +20,13 @@ namespace DroneRace
 
         private void Start()
         {
-            _clip = music.clip;
+            _raceController = FindObjectOfType<RaceController>();
+            music.clip = clips[_raceController.clipIndex];
+            music.volume = AudioListener.volume;
         }
 
         private void OnTriggerEnter(Collider other)
         {
-        
             if (other.gameObject.CompareTag("Player"))
             {
                 if (!_isPlayerFlew)
@@ -34,7 +37,12 @@ namespace DroneRace
 
                 if (!_isMusic)
                 {
-                    music.PlayOneShot(_clip);
+                    music.clip = clips[_raceController.clipIndex];
+                    music.PlayOneShot(clips[_raceController.clipIndex]);
+                    if (_raceController.clipIndex == clips.Count - 1)
+                        _raceController.clipIndex = 0;
+                    else
+                        _raceController.clipIndex++;
                     _isMusic = true;
                 }
                 

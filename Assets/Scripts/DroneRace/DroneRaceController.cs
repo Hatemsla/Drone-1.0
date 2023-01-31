@@ -55,8 +55,14 @@ namespace DroneRace
         private void DroneMove()
         {
             if (_isMove != 0 || isSimpleMode)
+            {
                 foreach (var engine in _engines)
+                {
                     engine.UpdateEngine(_rb, throttle);
+                }
+            }
+            
+            CheckDroneHover();
 
             var pitch = cyclic.y * minMaxPitch;
             var roll = -cyclic.x * minMaxRoll;
@@ -68,6 +74,18 @@ namespace DroneRace
 
             var rot = Quaternion.Euler(_finalPitch, _finalYaw, _finalRoll);
             _rb.MoveRotation(rot);
+        }
+
+        private void CheckDroneHover()
+        {
+            if (isSimpleMode && _isMove == 0)
+            {
+                _rb.drag = 3;
+            }
+            else
+            {
+                _rb.drag = 0.5f;
+            }
         }
     }
 }

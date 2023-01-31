@@ -245,17 +245,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interfaceScale: 80
-  currentDifficultScale: 0
+  currentGateScale: 0
+  currentAIDroneSpeed: 0
   isSimpleMode: 0
   isGameStart: 0
   targetCheckpoint: {fileID: 8633810405163399060}
   droneFootballController: {fileID: 1961687292831539657}
+  playerCheckNode: {fileID: 0}
   footballUIManager: {fileID: 1911565054}
   timer: {fileID: 1514429406}
   droneFootballAIList:
   - {fileID: 6809216753731649526}
   - {fileID: 1631104793}
   footballCheckpointTrigger: {fileID: 8633810405163399061}
+  playerCamera: {fileID: 0}
 --- !u!1 &70864140
 GameObject:
   m_ObjectHideFlags: 0
@@ -2238,7 +2241,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8344154997890245122, guid: 9b62a2da63726e142884aa9e05b4f99f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.5256939
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8344154997890245122, guid: 9b62a2da63726e142884aa9e05b4f99f, type: 3}
       propertyPath: m_LocalPosition.y
@@ -2246,7 +2249,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8344154997890245122, guid: 9b62a2da63726e142884aa9e05b4f99f, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -34.56
+      value: -35
       objectReference: {fileID: 0}
     - target: {fileID: 8344154997890245122, guid: 9b62a2da63726e142884aa9e05b4f99f, type: 3}
       propertyPath: m_LocalRotation.w
@@ -2374,6 +2377,62 @@ PrefabInstance:
       propertyPath: m_Size.z
       value: 0.001
       objectReference: {fileID: 0}
+    - target: {fileID: 4673341802250844902, guid: 74c315a341f0c7045a2a0e22093bbce1, type: 3}
+      propertyPath: playerDrone
+      value: 
+      objectReference: {fileID: 8344154997890245126, guid: 9b62a2da63726e142884aa9e05b4f99f, type: 3}
+    - target: {fileID: 4673341802250844902, guid: 74c315a341f0c7045a2a0e22093bbce1, type: 3}
+      propertyPath: clips.Array.size
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 4673341802250844902, guid: 74c315a341f0c7045a2a0e22093bbce1, type: 3}
+      propertyPath: clips.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: e37429eebfad429449ddf8736c3662cb, type: 3}
+    - target: {fileID: 4673341802250844902, guid: 74c315a341f0c7045a2a0e22093bbce1, type: 3}
+      propertyPath: clips.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: 6be3721ea732d0f45ae75e928b6e1ebc, type: 3}
+    - target: {fileID: 4673341802250844902, guid: 74c315a341f0c7045a2a0e22093bbce1, type: 3}
+      propertyPath: clips.Array.data[2]
+      value: 
+      objectReference: {fileID: 8300000, guid: 7cacf29bbf7067544b2a52cc474f777d, type: 3}
+    - target: {fileID: 4673341802250844902, guid: 74c315a341f0c7045a2a0e22093bbce1, type: 3}
+      propertyPath: clips.Array.data[3]
+      value: 
+      objectReference: {fileID: 8300000, guid: 52717d79be4b63344af25bb84151e936, type: 3}
+    - target: {fileID: 4673341802250844902, guid: 74c315a341f0c7045a2a0e22093bbce1, type: 3}
+      propertyPath: clips.Array.data[4]
+      value: 
+      objectReference: {fileID: 8300000, guid: 39241fedf84602e43abd7c9c2cc5e2f9, type: 3}
+    - target: {fileID: 4673341802250844902, guid: 74c315a341f0c7045a2a0e22093bbce1, type: 3}
+      propertyPath: clips.Array.data[5]
+      value: 
+      objectReference: {fileID: 8300000, guid: 901e6cf81f9b20948a5e7d6ad55aa166, type: 3}
+    - target: {fileID: 4673341802250844902, guid: 74c315a341f0c7045a2a0e22093bbce1, type: 3}
+      propertyPath: clips.Array.data[6]
+      value: 
+      objectReference: {fileID: 8300000, guid: ba4a5810603c67e448d71f4e4a39f998, type: 3}
+    - target: {fileID: 4673341802250844902, guid: 74c315a341f0c7045a2a0e22093bbce1, type: 3}
+      propertyPath: clips.Array.data[7]
+      value: 
+      objectReference: {fileID: 8300000, guid: c52acf0f2582aa24487d2cab40245bf6, type: 3}
+    - target: {fileID: 4673341802250844902, guid: 74c315a341f0c7045a2a0e22093bbce1, type: 3}
+      propertyPath: clips.Array.data[8]
+      value: 
+      objectReference: {fileID: 8300000, guid: 711a82a91f003af4993b418a37271910, type: 3}
+    - target: {fileID: 4673341802250844902, guid: 74c315a341f0c7045a2a0e22093bbce1, type: 3}
+      propertyPath: clips.Array.data[9]
+      value: 
+      objectReference: {fileID: 8300000, guid: f510669096d805a48bc09fb2b5592c9a, type: 3}
+    - target: {fileID: 4673341802250844902, guid: 74c315a341f0c7045a2a0e22093bbce1, type: 3}
+      propertyPath: clips.Array.data[10]
+      value: 
+      objectReference: {fileID: 8300000, guid: e5d84c391aaa5ea48970c35cf1e0c59d, type: 3}
+    - target: {fileID: 4673341802250844902, guid: 74c315a341f0c7045a2a0e22093bbce1, type: 3}
+      propertyPath: clips.Array.data[11]
+      value: 
+      objectReference: {fileID: 8300000, guid: 9341dc4af7d4a724ebb724cbe5794a2a, type: 3}
     - target: {fileID: 6458476110923224592, guid: 74c315a341f0c7045a2a0e22093bbce1, type: 3}
       propertyPath: m_Name
       value: CheckpointFootball
