@@ -18,6 +18,7 @@ namespace Menu
         public Button optionsBackBtn;
         public Button optionsExitBtn;
         public Slider volumeSlider;
+        public Slider yawSensitivitySlider;
 
         [Header("Game menu")] 
         public Toggle difficultToggle;

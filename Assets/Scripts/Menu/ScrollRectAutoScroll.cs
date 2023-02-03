@@ -27,10 +27,8 @@ namespace Menu
 
         private void Update()
         {
-            // Scroll via input.
             InputScroll();
             if (!_mouseOver)
-                // Lerp scrolling code.
                 _mScrollRect.normalizedPosition = Vector2.Lerp(_mScrollRect.normalizedPosition, _mNextScrollPosition,
                     scrollSpeed * Time.deltaTime);
             else

@@ -3,7 +3,6 @@ using System.Linq;
 using DroneFootball;
 using DroneRace;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
 namespace Menu
@@ -22,6 +21,7 @@ namespace Menu
         private float _currentGateScale;
         private float _currentAIDroneSpeed;
         private float _currentVolume;
+        private float _currentYawSensitivity = 1;
         private int _currentDifficultIndex;
 
         private void Start()
@@ -95,6 +95,8 @@ namespace Menu
                 menuUIManager = FindObjectOfType<MenuUIManager>();
                 menuUIManager.volumeSlider.value = _currentVolume;
                 menuUIManager.volumeSlider.onValueChanged.AddListener(delegate { ChangeVolume(); });
+                menuUIManager.yawSensitivitySlider.value = _currentYawSensitivity - 1;
+                menuUIManager.yawSensitivitySlider.onValueChanged.AddListener(delegate { ChangeYawSensitivity(); });
                 menuUIManager.gameBtn.onClick.AddListener(GameMenu);
                 menuUIManager.optionsBtn.onClick.AddListener(OptionsMenu);
                 menuUIManager.startExitBtn.onClick.AddListener(Exit);
@@ -120,6 +122,7 @@ namespace Menu
                 raceController.raceUIManager.backBtn.onClick.AddListener(Back);
                 raceController.raceUIManager.exitBtn.onClick.AddListener(Exit);
                 raceController.isSimpleMode = isSimpleMode;
+                raceController.droneRaceController.yawPower = _currentYawSensitivity;
             }
             else if (scene.buildIndex == 2)
             {
@@ -129,6 +132,7 @@ namespace Menu
                 footballController.footballUIManager.backBtn.onClick.AddListener(Back);
                 footballController.footballUIManager.exitBtn.onClick.AddListener(Exit);
                 footballController.isSimpleMode = isSimpleMode;
+                footballController.droneFootballController.yawPower = _currentYawSensitivity;
             }
         }
 
@@ -179,6 +183,11 @@ namespace Menu
         {
             AudioListener.volume = menuUIManager.volumeSlider.value;
             _currentVolume = menuUIManager.volumeSlider.value;
+        }
+
+        public void ChangeYawSensitivity()
+        {
+            _currentYawSensitivity = menuUIManager.yawSensitivitySlider.value + 1;
         }
 
         private void StartGame(int sceneIndex)
