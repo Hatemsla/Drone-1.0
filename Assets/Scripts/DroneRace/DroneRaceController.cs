@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace DroneRace
 {
@@ -37,19 +38,25 @@ namespace DroneRace
         {
             if (raceController.isGameStart)
             {
-                GetInput();
+                _isMove = 0;
+                _isMove = Mathf.Abs(cyclic.x) + Mathf.Abs(cyclic.y) + Mathf.Abs(pedals) + Mathf.Abs(throttle);
                 DroneMove();
             }
         }
 
-        private void GetInput()
+        private void OnCyclic(InputValue value)
         {
-            _isMove = 0;
-            cyclic.x = Input.GetAxis("Horizontal");
-            cyclic.y = Input.GetAxis("Vertical");
-            pedals = Input.GetAxis("Pedal");
-            throttle = Input.GetAxis("Throttle");
-            _isMove = Mathf.Abs(cyclic.x) + Mathf.Abs(cyclic.y) + Mathf.Abs(pedals) + Mathf.Abs(throttle);
+            cyclic = value.Get<Vector2>();
+        }
+
+        private void OnPedals(InputValue value)
+        {
+            pedals = value.Get<float>();
+        }
+        
+        private void OnThrottle(InputValue value)
+        {
+            throttle = value.Get<float>();
         }
 
         private void DroneMove()
