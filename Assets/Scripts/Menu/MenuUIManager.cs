@@ -27,6 +27,8 @@ namespace Menu
         public GameObject soundSettings;
         public GameObject controlSettings;
         public GameObject customizationSettings;
+        public GameObject botColorPicker;
+        public GameObject playerColorPicker;
 
         [Header("Game menu")] 
         public Toggle difficultToggle;

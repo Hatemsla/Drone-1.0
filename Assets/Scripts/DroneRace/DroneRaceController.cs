@@ -18,12 +18,13 @@ namespace DroneRace
         public bool isSimpleMode;
         public DroneRaceCheckNode droneRaceCheckNode;
         public RaceController raceController;
+        public MeshRenderer droneMeshRenderer;
+        
         private List<DroneEngine> _engines;
         private float _finalPitch;
         private float _finalRoll;
         private float _finalYaw;
         private float _isMove;
-
         private Rigidbody _rb;
         private float _yaw;
 

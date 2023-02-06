@@ -1,9 +1,12 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using DroneFootball;
 using DroneRace;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 namespace Menu
 {
@@ -13,11 +16,16 @@ namespace Menu
         public MenuUIManager menuUIManager;
         public RaceController raceController;
         public FootballController footballController;
+        public Color botsColor;
+        public Color playerColor;
 
         private Resolution[] _resolutions;
-        private readonly List<string> _difficulties = new List<string>{"Супер легко", "Легко", "Нормально", "Сложно", "Невозможно"};
-        private readonly List<float> _gatesSize = new List<float> { 3f, 2f, 1.5f, 1.25f, 1f};
-        private readonly List<float> _droneSpeed = new List<float> { 0.5f, 0.75f, 1f, 1.5f, 2f};
+
+        private readonly List<string> _difficulties = new List<string>
+            {"Супер легко", "Легко", "Нормально", "Сложно", "Невозможно"};
+
+        private readonly List<float> _gatesSize = new List<float> {3f, 2f, 1.5f, 1.25f, 1f};
+        private readonly List<float> _droneSpeed = new List<float> {0.5f, 0.75f, 1f, 1.5f, 2f};
         private float _currentGateScale;
         private float _currentAIDroneSpeed;
         private float _currentVolume;
@@ -36,6 +44,7 @@ namespace Menu
             menuUIManager.footballBtn.onClick.AddListener(delegate { StartGame(2); });
             menuUIManager.difficultToggle.isOn = false;
             menuUIManager.volumeSlider.value = 1;
+
             SceneManager.sceneLoaded += OnSceneLoaded;
         }
 
@@ -43,7 +52,7 @@ namespace Menu
         {
             var options = new List<string>();
             int currentResolutionIndex = 0;
-            for(int i = 0; i < _resolutions.Length; i++)
+            for (int i = 0; i < _resolutions.Length; i++)
             {
                 options.Add($"{_resolutions[i].width} x {_resolutions[i].height} {_resolutions[i].refreshRate}Hz");
 
@@ -53,6 +62,7 @@ namespace Menu
                     currentResolutionIndex = i;
                 }
             }
+
             menuUIManager.resolutionDropdown.AddOptions(options);
             menuUIManager.resolutionDropdown.value = currentResolutionIndex;
             menuUIManager.resolutionDropdown.RefreshShownValue();
@@ -127,6 +137,8 @@ namespace Menu
                 raceController.raceUIManager.exitBtn.onClick.AddListener(Exit);
                 raceController.isSimpleMode = isSimpleMode;
                 raceController.droneRaceController.yawPower = _currentYawSensitivity;
+                raceController.droneRaceController.droneMeshRenderer.material.SetColor("_Color", playerColor);
+                raceController.droneRaceController.droneMeshRenderer.material.SetColor("_EmissionColor", playerColor);
             }
             else if (scene.buildIndex == 2)
             {
@@ -196,6 +208,8 @@ namespace Menu
 
         private void StartGame(int sceneIndex)
         {
+            botsColor = menuUIManager.botColorPicker.GetComponentInChildren<ColorPreview>().color;
+            playerColor = menuUIManager.playerColorPicker.GetComponentInChildren<ColorPreview>().color;
             SceneManager.LoadScene(sceneIndex);
         }
 
@@ -214,7 +228,7 @@ namespace Menu
             menuUIManager.controlSettings.SetActive(false);
             menuUIManager.customizationSettings.SetActive(false);
         }
-        
+
         public void ControlSettings()
         {
             menuUIManager.generalSettings.SetActive(false);
@@ -222,7 +236,7 @@ namespace Menu
             menuUIManager.controlSettings.SetActive(true);
             menuUIManager.customizationSettings.SetActive(false);
         }
-        
+
         public void CustomizationSettings()
         {
             menuUIManager.generalSettings.SetActive(false);
