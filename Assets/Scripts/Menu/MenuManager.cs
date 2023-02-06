@@ -111,6 +111,10 @@ namespace Menu
                 menuUIManager.difficultToggle.isOn = false;
                 menuUIManager.raceBtn.onClick.AddListener(delegate { StartGame(1); });
                 menuUIManager.footballBtn.onClick.AddListener(delegate { StartGame(2); });
+                menuUIManager.generalSettingsBtn.onClick.AddListener(GeneralSettings);
+                menuUIManager.soundSettingsBtn.onClick.AddListener(SoundSettings);
+                menuUIManager.controlSettingsBtn.onClick.AddListener(ControlSettings);
+                menuUIManager.customizationSettingsBtn.onClick.AddListener(CustomizationSettings);
 
                 SetDropdownResolutions();
                 menuUIManager.resolutionDropdown.onValueChanged.AddListener(SetResolution);
@@ -193,6 +197,38 @@ namespace Menu
         private void StartGame(int sceneIndex)
         {
             SceneManager.LoadScene(sceneIndex);
+        }
+
+        public void GeneralSettings()
+        {
+            menuUIManager.generalSettings.SetActive(true);
+            menuUIManager.soundSettings.SetActive(false);
+            menuUIManager.controlSettings.SetActive(false);
+            menuUIManager.customizationSettings.SetActive(false);
+        }
+
+        public void SoundSettings()
+        {
+            menuUIManager.generalSettings.SetActive(false);
+            menuUIManager.soundSettings.SetActive(true);
+            menuUIManager.controlSettings.SetActive(false);
+            menuUIManager.customizationSettings.SetActive(false);
+        }
+        
+        public void ControlSettings()
+        {
+            menuUIManager.generalSettings.SetActive(false);
+            menuUIManager.soundSettings.SetActive(false);
+            menuUIManager.controlSettings.SetActive(true);
+            menuUIManager.customizationSettings.SetActive(false);
+        }
+        
+        public void CustomizationSettings()
+        {
+            menuUIManager.generalSettings.SetActive(false);
+            menuUIManager.soundSettings.SetActive(false);
+            menuUIManager.controlSettings.SetActive(false);
+            menuUIManager.customizationSettings.SetActive(true);
         }
     }
 }

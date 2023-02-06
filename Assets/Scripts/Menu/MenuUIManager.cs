@@ -17,8 +17,16 @@ namespace Menu
         public TMP_Dropdown difficultDropdown;
         public Button optionsBackBtn;
         public Button optionsExitBtn;
+        public Button generalSettingsBtn;
+        public Button soundSettingsBtn;
+        public Button controlSettingsBtn;
+        public Button customizationSettingsBtn;
         public Slider volumeSlider;
         public Slider yawSensitivitySlider;
+        public GameObject generalSettings;
+        public GameObject soundSettings;
+        public GameObject controlSettings;
+        public GameObject customizationSettings;
 
         [Header("Game menu")] 
         public Toggle difficultToggle;
