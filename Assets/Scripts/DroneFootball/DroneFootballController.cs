@@ -19,6 +19,7 @@ namespace DroneFootball
         public bool isStop;
         public DroneFootballCheckNode droneFootballCheckNode;
         public FootballController footballController;
+        public MeshRenderer droneMeshRenderer;
 
         private List<DroneEngine> _engines;
         private Rigidbody _rb;

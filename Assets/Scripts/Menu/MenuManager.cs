@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using DroneFootball;
 using DroneRace;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
@@ -125,6 +126,10 @@ namespace Menu
                 menuUIManager.soundSettingsBtn.onClick.AddListener(SoundSettings);
                 menuUIManager.controlSettingsBtn.onClick.AddListener(ControlSettings);
                 menuUIManager.customizationSettingsBtn.onClick.AddListener(CustomizationSettings);
+                menuUIManager.playerColorPicker.GetComponentInChildren<ColorPreview>().color = playerColor;
+                menuUIManager.playerColorPicker.GetComponentInChildren<ColorPreview>().image.color = playerColor;
+                menuUIManager.botColorPicker.GetComponentInChildren<ColorPreview>().color = botsColor;
+                menuUIManager.botColorPicker.GetComponentInChildren<ColorPreview>().image.color = botsColor;
 
                 SetDropdownResolutions();
                 menuUIManager.resolutionDropdown.onValueChanged.AddListener(SetResolution);
@@ -139,6 +144,8 @@ namespace Menu
                 raceController.droneRaceController.yawPower = _currentYawSensitivity;
                 raceController.droneRaceController.droneMeshRenderer.material.SetColor("_Color", playerColor);
                 raceController.droneRaceController.droneMeshRenderer.material.SetColor("_EmissionColor", playerColor);
+                raceController.droneRaceAI.droneMeshRenderer.material.SetColor("_Color", botsColor);
+                raceController.droneRaceAI.droneMeshRenderer.material.SetColor("_EmissionColor", botsColor);
             }
             else if (scene.buildIndex == 2)
             {
@@ -149,6 +156,12 @@ namespace Menu
                 footballController.footballUIManager.exitBtn.onClick.AddListener(Exit);
                 footballController.isSimpleMode = isSimpleMode;
                 footballController.droneFootballController.yawPower = _currentYawSensitivity;
+                footballController.droneFootballController.droneMeshRenderer.material.SetColor("_Color", playerColor);
+                footballController.droneFootballController.droneMeshRenderer.material.SetColor("_EmissionColor", playerColor);
+                footballController.droneFootballAIList[0].droneMeshRenderer.material.SetColor("_Color", botsColor);
+                footballController.droneFootballAIList[0].droneMeshRenderer.material.SetColor("_EmissionColor", botsColor);
+                footballController.droneFootballAIList[1].droneMeshRenderer.material.SetColor("_Color", botsColor);
+                footballController.droneFootballAIList[1].droneMeshRenderer.material.SetColor("_EmissionColor", botsColor);
             }
         }
 
@@ -159,6 +172,8 @@ namespace Menu
                 menuUIManager.gameMenu.SetActive(false);
                 menuUIManager.optionMenu.SetActive(false);
                 menuUIManager.startMenu.SetActive(true);
+                menuUIManager.botPicker.SetActive(false);
+                menuUIManager.playerPicker.SetActive(false);
             }
             else
             {

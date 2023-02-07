@@ -21,6 +21,7 @@ namespace DroneRace
         public float lerpSpeed;
         public DroneRaceCheckNode droneRaceCheckNode;
         public RaceController raceController;
+        public MeshRenderer droneMeshRenderer;
         
         private List<DroneEngine> _engines;
         private Rigidbody _rb;

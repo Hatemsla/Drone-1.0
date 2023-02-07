@@ -7,17 +7,29 @@ namespace Menu
     public class ColorPreview : MonoBehaviour
     {
         public Color color;
+        public Image image;
+        public GameObject colorPicker;
 
-        private Image _image;
+        private Button _colorPreviewBtn;
+        private bool _isPickerOpen = true;
 
         private void Start()
         {
-            _image = GetComponent<Image>();
+            colorPicker.SetActive(false);
+            image = GetComponent<Image>();
+            _colorPreviewBtn = GetComponent<Button>();
+            _colorPreviewBtn.onClick.AddListener(ColorPickerOpen);
         }
 
         private void Update()
         {
-            color = _image.color;
+            color = image.color;
+        }
+
+        private void ColorPickerOpen()
+        {
+            colorPicker.SetActive(_isPickerOpen);
+            _isPickerOpen = !_isPickerOpen;
         }
     }
 }

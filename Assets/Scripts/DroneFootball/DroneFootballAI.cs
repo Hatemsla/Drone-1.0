@@ -21,6 +21,7 @@ namespace DroneFootball
         public float lerpSpeed;
         public Transform targetTransform;
         public FootballController footballController;
+        public MeshRenderer droneMeshRenderer;
         
         private List<DroneEngine> _engines;
         private Rigidbody _rb;
