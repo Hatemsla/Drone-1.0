@@ -29,8 +29,8 @@ namespace Menu
         public GameObject customizationSettings;
         public GameObject botColorPicker;
         public GameObject playerColorPicker;
-        public GameObject botPicker;
-        public GameObject playerPicker;
+        public GameObject botColorImage;
+        public GameObject playerColorImage;
 
         [Header("Game menu")] 
         public Toggle difficultToggle;

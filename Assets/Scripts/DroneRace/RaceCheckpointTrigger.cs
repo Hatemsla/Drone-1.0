@@ -27,7 +27,7 @@ namespace DroneRace
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.gameObject.CompareTag("Player"))
+            if (other.gameObject.CompareTag("Player") && other.GetComponentInParent<DroneRaceCheckNode>().currentNode == checkpointID)
             {
                 if (!_isPlayerFlew)
                 {
@@ -47,12 +47,9 @@ namespace DroneRace
                 }
                 
                 var drone = other.GetComponentInParent<DroneRaceCheckNode>();
-                if (drone.currentNode == checkpointID)
-                {
-                    drone.CheckWaypoint();
-                    if(!_isSpawned)
-                        drone.CreateNewCheckpoint();
-                }
+                drone.CheckWaypoint();
+                if(!_isSpawned)
+                    drone.CreateNewCheckpoint();
             }
             else if (other.gameObject.CompareTag("Bot"))
             {

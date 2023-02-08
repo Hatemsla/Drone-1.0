@@ -172,8 +172,12 @@ namespace Menu
                 menuUIManager.gameMenu.SetActive(false);
                 menuUIManager.optionMenu.SetActive(false);
                 menuUIManager.startMenu.SetActive(true);
-                menuUIManager.botPicker.SetActive(false);
-                menuUIManager.playerPicker.SetActive(false);
+                menuUIManager.botColorImage.SetActive(false);
+                menuUIManager.playerColorImage.SetActive(false);
+                menuUIManager.generalSettings.SetActive(true);
+                menuUIManager.soundSettings.SetActive(false);
+                menuUIManager.controlSettings.SetActive(false);
+                menuUIManager.customizationSettings.SetActive(false);
             }
             else
             {
@@ -234,6 +238,8 @@ namespace Menu
             menuUIManager.soundSettings.SetActive(false);
             menuUIManager.controlSettings.SetActive(false);
             menuUIManager.customizationSettings.SetActive(false);
+            menuUIManager.botColorImage.SetActive(false);
+            menuUIManager.playerColorImage.SetActive(false);
         }
 
         public void SoundSettings()
@@ -242,6 +248,8 @@ namespace Menu
             menuUIManager.soundSettings.SetActive(true);
             menuUIManager.controlSettings.SetActive(false);
             menuUIManager.customizationSettings.SetActive(false);
+            menuUIManager.botColorImage.SetActive(false);
+            menuUIManager.playerColorImage.SetActive(false);
         }
 
         public void ControlSettings()
@@ -250,6 +258,8 @@ namespace Menu
             menuUIManager.soundSettings.SetActive(false);
             menuUIManager.controlSettings.SetActive(true);
             menuUIManager.customizationSettings.SetActive(false);
+            menuUIManager.botColorImage.SetActive(false);
+            menuUIManager.playerColorImage.SetActive(false);
         }
 
         public void CustomizationSettings()
@@ -258,6 +268,8 @@ namespace Menu
             menuUIManager.soundSettings.SetActive(false);
             menuUIManager.controlSettings.SetActive(false);
             menuUIManager.customizationSettings.SetActive(true);
+            menuUIManager.botColorImage.SetActive(false);
+            menuUIManager.playerColorImage.SetActive(false);
         }
     }
 }
