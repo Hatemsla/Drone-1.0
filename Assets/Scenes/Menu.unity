@@ -4452,7 +4452,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1898505694
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4560,6 +4560,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isSimpleMode: 0
+  dbManager: {fileID: 0}
   menuUIManager: {fileID: 966137601}
   raceController: {fileID: 0}
   footballController: {fileID: 0}
@@ -4592,6 +4593,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb6d0ff1f279bd647b05b08cbfe49bc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  userLogin: 
+  userPassword: 
   menuManager: {fileID: 1903872029}
 --- !u!1 &1907985689 stripped
 GameObject:
@@ -5027,7 +5030,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2095725736
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6075,9 +6078,21 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2374606464690671139, guid: f1a920e6753deaa4590bd3aaeaeaeb6d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2374606464690671139, guid: f1a920e6753deaa4590bd3aaeaeaeb6d, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1903872029}
+      objectReference: {fileID: 1903872031}
+    - target: {fileID: 2374606464690671139, guid: f1a920e6753deaa4590bd3aaeaeaeb6d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Login
+      objectReference: {fileID: 0}
+    - target: {fileID: 2374606464690671139, guid: f1a920e6753deaa4590bd3aaeaeaeb6d, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: DB.DBManager, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 2374606464690671141, guid: f1a920e6753deaa4590bd3aaeaeaeb6d, type: 3}
       propertyPath: m_Name
       value: LogBtn
@@ -7528,9 +7543,21 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5961163171238705995, guid: b133b124a08db7a49b043350c496d654, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5961163171238705995, guid: b133b124a08db7a49b043350c496d654, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1903872029}
+      objectReference: {fileID: 1903872031}
+    - target: {fileID: 5961163171238705995, guid: b133b124a08db7a49b043350c496d654, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Registration
+      objectReference: {fileID: 0}
+    - target: {fileID: 5961163171238705995, guid: b133b124a08db7a49b043350c496d654, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: DB.DBManager, Assembly-CSharp
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b133b124a08db7a49b043350c496d654, type: 3}
 --- !u!1001 &8620650690446894999

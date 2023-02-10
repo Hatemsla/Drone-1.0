@@ -1,3 +1,4 @@
+using System;
 using Menu;
 using Npgsql;
 using UnityEngine;
@@ -6,7 +7,10 @@ namespace DB
 {
     public class DBManager : MonoBehaviour
     {
-        private readonly string _connectString =
+        public string userLogin;
+        public string userPassword;
+        
+        private readonly string _connectionString =
             "Host=localhost;Port=5432;Username=postgres;Password=Bobik123654;Database=drones";
 
         public MenuManager menuManager;
@@ -19,7 +23,7 @@ namespace DB
 
         public void LoadSettings()
         {
-            using (NpgsqlConnection conn = new NpgsqlConnection(_connectString))
+            using (NpgsqlConnection conn = new NpgsqlConnection(_connectionString))
             {
                 
             }
@@ -30,47 +34,56 @@ namespace DB
             
         }
 
-        public void Registration(string userLogin, string userPassword)
+        public void Registration()
         {
-            using (NpgsqlConnection conn = new NpgsqlConnection(_connectString))
+            userLogin = menuManager.menuUIManager.regLoginInput.text;
+            userPassword = menuManager.menuUIManager.regPasswordInput.text;
+
+            if (!CheckUserExist())
             {
-                conn.Open();
-                string checkPlayeId =
-                    $"select exists (select * from users where login = '{userLogin}' and password = '{userPassword}')";
-                NpgsqlCommand cmd = new NpgsqlCommand(checkPlayeId, conn);
-                NpgsqlDataReader dr = cmd.ExecuteReader();
-                bool isPlayerExist = false;
-                while (dr.Read())
+                using (NpgsqlConnection conn = new NpgsqlConnection(_connectionString))
                 {
-                    if (dr.GetBoolean(0))
-                    {
-                        isPlayerExist = true;
-                        break;
-                    }
+                    conn.Open();
+                    string reg = $"insert into users values('{userLogin}', '{userPassword}')";
+                    NpgsqlCommand cmd = new NpgsqlCommand(reg, conn);
+                    cmd.ExecuteNonQuery();
+                    menuManager.OpenMenu("Start");
                 }
 
-                if (!isPlayerExist)
-                {
-                    string reg = $"insert into users values('{userLogin}', '{userPassword}')";
-                    cmd = new NpgsqlCommand(reg, conn);
-                    cmd.ExecuteNonQuery();
-                }
+                menuManager.menuUIManager.regLoginInput.text = String.Empty;
+                menuManager.menuUIManager.regPasswordInput.text = String.Empty;
             }
         }
 
         public void Login()
         {
-            
+            userLogin = menuManager.menuUIManager.logLoginInput.text;
+            userPassword = menuManager.menuUIManager.logPasswordInput.text;
+
+            if (CheckUserExist())
+            {
+                menuManager.OpenMenu("Start");
+                menuManager.menuUIManager.logLoginInput.text = String.Empty;
+                menuManager.menuUIManager.logPasswordInput.text = String.Empty;
+            }
         }
 
-        public bool CheckUserLoginExist()
+        private bool CheckUserExist()
         {
-            return true;
-        }
-
-        public bool CheckUserExist()
-        {
-            return false;
+            using (NpgsqlConnection conn = new NpgsqlConnection(_connectionString))
+            {
+                conn.Open();
+                string checkUserId =
+                    $"select exists (select * from users where login = '{userLogin}' and password = '{userPassword}')";
+                NpgsqlCommand cmd =
+                    new NpgsqlCommand(checkUserId, conn);
+                NpgsqlDataReader dr = cmd.ExecuteReader();
+                while (dr.Read())
+                {
+                    return dr.GetBoolean(0);
+                }
+                return false;
+            }
         }
     }
 }

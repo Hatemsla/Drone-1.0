@@ -16,6 +16,7 @@ namespace Menu
     public class MenuManager : MonoBehaviour
     {
         public bool isSimpleMode;
+        public DBManager dbManager;
         public MenuUIManager menuUIManager;
         public RaceController raceController;
         public FootballController footballController;
@@ -39,6 +40,7 @@ namespace Menu
         {
             DontDestroyOnLoad(gameObject);
 
+            dbManager = GetComponent<DBManager>();
             _resolutions = Screen.resolutions.Distinct().ToArray();
             SetDropdownResolutions();
             SetDropdownDifficulties();
@@ -139,8 +141,8 @@ namespace Menu
                 menuUIManager.authLogBtn.onClick.AddListener(delegate { OpenMenu("Log"); });
                 menuUIManager.authRegBtn.onClick.AddListener(delegate { OpenMenu("Reg"); });
                 menuUIManager.logBackBtn.onClick.AddListener(delegate { OpenMenu("Auth"); });
-                menuUIManager.logBtn.onClick.AddListener(delegate { OpenMenu("Start"); });
-                menuUIManager.regBtn.onClick.AddListener(delegate { OpenMenu("Start"); });
+                menuUIManager.logBtn.onClick.AddListener(delegate { dbManager.Login(); });
+                menuUIManager.regBtn.onClick.AddListener(delegate { dbManager.Registration(); });
                 menuUIManager.regBackBtn.onClick.AddListener(delegate { OpenMenu("Auth"); });
                 menuUIManager.startExitAccBtn.onClick.AddListener(delegate { OpenMenu("Auth"); });
                 
