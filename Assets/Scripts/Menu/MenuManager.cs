@@ -1,11 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using DB;
 using DroneFootball;
 using DroneRace;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.ProBuilder.MeshOperations;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -96,25 +98,24 @@ namespace Menu
             AudioListener.volume = _currentVolume;
             if (scene.buildIndex == 0)
             {
-                var dontDestroyOnLoadObjects = FindObjectsOfType<MenuManager>();
-                foreach (var obj in dontDestroyOnLoadObjects)
-                {
+                var dontDestroyMenuManager = FindObjectsOfType<MenuManager>();
+                var dontDestroyDbManager = FindObjectsOfType<DBManager>();
+                foreach (var obj in dontDestroyMenuManager)
                     if (obj.transform.gameObject != transform.gameObject)
                         Destroy(obj);
-                }
+
+                foreach (var obj in dontDestroyDbManager)
+                    if (obj.transform.gameObject != transform.gameObject)
+                        Destroy(obj);
 
                 menuUIManager = FindObjectOfType<MenuUIManager>();
                 menuUIManager.volumeSlider.value = _currentVolume;
                 menuUIManager.volumeSlider.onValueChanged.AddListener(delegate { ChangeVolume(); });
                 menuUIManager.yawSensitivitySlider.value = _currentYawSensitivity - 1;
                 menuUIManager.yawSensitivitySlider.onValueChanged.AddListener(delegate { ChangeYawSensitivity(); });
-                menuUIManager.gameBtn.onClick.AddListener(GameMenu);
-                menuUIManager.optionsBtn.onClick.AddListener(OptionsMenu);
                 menuUIManager.startExitBtn.onClick.AddListener(Exit);
                 menuUIManager.optionsExitBtn.onClick.AddListener(Exit);
                 menuUIManager.gameExitBtn.onClick.AddListener(Exit);
-                menuUIManager.gameBackBtn.onClick.AddListener(Back);
-                menuUIManager.optionsBackBtn.onClick.AddListener(Back);
                 menuUIManager.isFullscreenToggle.onValueChanged.AddListener(Fullscreen);
                 menuUIManager.difficultDropdown.onValueChanged.AddListener(SetDifficult);
                 menuUIManager.difficultDropdown.value = _currentDifficultIndex;
@@ -122,15 +123,27 @@ namespace Menu
                 menuUIManager.difficultToggle.isOn = false;
                 menuUIManager.raceBtn.onClick.AddListener(delegate { StartGame(1); });
                 menuUIManager.footballBtn.onClick.AddListener(delegate { StartGame(2); });
-                menuUIManager.generalSettingsBtn.onClick.AddListener(GeneralSettings);
-                menuUIManager.soundSettingsBtn.onClick.AddListener(SoundSettings);
-                menuUIManager.controlSettingsBtn.onClick.AddListener(ControlSettings);
-                menuUIManager.customizationSettingsBtn.onClick.AddListener(CustomizationSettings);
                 menuUIManager.playerColorPicker.GetComponentInChildren<ColorPreview>().color = playerColor;
                 menuUIManager.playerColorPicker.GetComponentInChildren<ColorPreview>().image.color = playerColor;
                 menuUIManager.botColorPicker.GetComponentInChildren<ColorPreview>().color = botsColor;
                 menuUIManager.botColorPicker.GetComponentInChildren<ColorPreview>().image.color = botsColor;
-
+                menuUIManager.authExitBtn.onClick.AddListener(Exit);
+                menuUIManager.gameBtn.onClick.AddListener(delegate { OpenMenu("Game"); });
+                menuUIManager.optionsBtn.onClick.AddListener(delegate { OpenMenu("Options"); });
+                menuUIManager.gameBackBtn.onClick.AddListener(delegate { OpenMenu("Start"); });
+                menuUIManager.optionsBackBtn.onClick.AddListener(delegate { OpenMenu("Start"); });
+                menuUIManager.generalSettingsBtn.onClick.AddListener(delegate { OpenSubMenu("GeneralOpt"); });
+                menuUIManager.soundSettingsBtn.onClick.AddListener(delegate { OpenSubMenu("SoundOpt"); });
+                menuUIManager.controlSettingsBtn.onClick.AddListener(delegate { OpenSubMenu("ControlOpt"); });
+                menuUIManager.customizationSettingsBtn.onClick.AddListener(delegate { OpenSubMenu("CustOpt"); });
+                menuUIManager.authLogBtn.onClick.AddListener(delegate { OpenMenu("Log"); });
+                menuUIManager.authRegBtn.onClick.AddListener(delegate { OpenMenu("Reg"); });
+                menuUIManager.logBackBtn.onClick.AddListener(delegate { OpenMenu("Auth"); });
+                menuUIManager.logBtn.onClick.AddListener(delegate { OpenMenu("Start"); });
+                menuUIManager.regBtn.onClick.AddListener(delegate { OpenMenu("Start"); });
+                menuUIManager.regBackBtn.onClick.AddListener(delegate { OpenMenu("Auth"); });
+                menuUIManager.startExitAccBtn.onClick.AddListener(delegate { OpenMenu("Auth"); });
+                
                 SetDropdownResolutions();
                 menuUIManager.resolutionDropdown.onValueChanged.AddListener(SetResolution);
             }
@@ -138,7 +151,7 @@ namespace Menu
             {
                 raceController = FindObjectOfType<RaceController>();
                 raceController.currentAIDroneSpeed = _currentAIDroneSpeed;
-                raceController.raceUIManager.backBtn.onClick.AddListener(Back);
+                raceController.raceUIManager.backBtn.onClick.AddListener(BackToMenu);
                 raceController.raceUIManager.exitBtn.onClick.AddListener(Exit);
                 raceController.isSimpleMode = isSimpleMode;
                 raceController.droneRaceController.yawPower = _currentYawSensitivity;
@@ -152,7 +165,7 @@ namespace Menu
                 footballController = FindObjectOfType<FootballController>();
                 footballController.currentGateScale = _currentGateScale;
                 footballController.currentAIDroneSpeed = _currentAIDroneSpeed;
-                footballController.footballUIManager.backBtn.onClick.AddListener(Back);
+                footballController.footballUIManager.backBtn.onClick.AddListener(BackToMenu);
                 footballController.footballUIManager.exitBtn.onClick.AddListener(Exit);
                 footballController.isSimpleMode = isSimpleMode;
                 footballController.droneFootballController.yawPower = _currentYawSensitivity;
@@ -165,43 +178,44 @@ namespace Menu
             }
         }
 
-        public void Back()
+        public void OpenSubMenu(string menuName)
         {
-            if (SceneManager.GetActiveScene().buildIndex == 0)
+            foreach (var menu in menuUIManager.subMenus)
             {
-                menuUIManager.gameMenu.SetActive(false);
-                menuUIManager.optionMenu.SetActive(false);
-                menuUIManager.startMenu.SetActive(true);
-                menuUIManager.botColorImage.SetActive(false);
-                menuUIManager.playerColorImage.SetActive(false);
-                menuUIManager.generalSettings.SetActive(true);
-                menuUIManager.soundSettings.SetActive(false);
-                menuUIManager.controlSettings.SetActive(false);
-                menuUIManager.customizationSettings.SetActive(false);
-            }
-            else
+                if (menu.menuName == menuName)
+                {
+                    menu.Open();
+                }
+                else
+                {
+                    menu.Close();
+                }
+            }   
+        }
+
+        public void OpenMenu(string menuName)
+        {
+            foreach (var menu in menuUIManager.menus)
             {
-                SceneManager.LoadScene(0);
-            }
+                if (menu.menuName == menuName)
+                {
+                    menu.Open();
+                }
+                else
+                {
+                    menu.Close();
+                }
+            }            
+        }
+
+        public void BackToMenu()
+        {
+            SceneManager.LoadScene(0);
         }
 
         public void Exit()
         {
             Application.Quit();
-        }
-
-        public void GameMenu()
-        {
-            menuUIManager.gameMenu.SetActive(true);
-            menuUIManager.optionMenu.SetActive(false);
-            menuUIManager.startMenu.SetActive(false);
-        }
-
-        public void OptionsMenu()
-        {
-            menuUIManager.gameMenu.SetActive(false);
-            menuUIManager.optionMenu.SetActive(true);
-            menuUIManager.startMenu.SetActive(false);
         }
 
         public void Fullscreen(bool isFullscreen)
@@ -230,46 +244,6 @@ namespace Menu
             botsColor = menuUIManager.botColorPicker.GetComponentInChildren<ColorPreview>().color;
             playerColor = menuUIManager.playerColorPicker.GetComponentInChildren<ColorPreview>().color;
             SceneManager.LoadScene(sceneIndex);
-        }
-
-        public void GeneralSettings()
-        {
-            menuUIManager.generalSettings.SetActive(true);
-            menuUIManager.soundSettings.SetActive(false);
-            menuUIManager.controlSettings.SetActive(false);
-            menuUIManager.customizationSettings.SetActive(false);
-            menuUIManager.botColorImage.SetActive(false);
-            menuUIManager.playerColorImage.SetActive(false);
-        }
-
-        public void SoundSettings()
-        {
-            menuUIManager.generalSettings.SetActive(false);
-            menuUIManager.soundSettings.SetActive(true);
-            menuUIManager.controlSettings.SetActive(false);
-            menuUIManager.customizationSettings.SetActive(false);
-            menuUIManager.botColorImage.SetActive(false);
-            menuUIManager.playerColorImage.SetActive(false);
-        }
-
-        public void ControlSettings()
-        {
-            menuUIManager.generalSettings.SetActive(false);
-            menuUIManager.soundSettings.SetActive(false);
-            menuUIManager.controlSettings.SetActive(true);
-            menuUIManager.customizationSettings.SetActive(false);
-            menuUIManager.botColorImage.SetActive(false);
-            menuUIManager.playerColorImage.SetActive(false);
-        }
-
-        public void CustomizationSettings()
-        {
-            menuUIManager.generalSettings.SetActive(false);
-            menuUIManager.soundSettings.SetActive(false);
-            menuUIManager.controlSettings.SetActive(false);
-            menuUIManager.customizationSettings.SetActive(true);
-            menuUIManager.botColorImage.SetActive(false);
-            menuUIManager.playerColorImage.SetActive(false);
         }
     }
 }

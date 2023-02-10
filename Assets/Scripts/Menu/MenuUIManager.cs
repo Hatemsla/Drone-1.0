@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -6,10 +7,28 @@ namespace Menu
 {
     public class MenuUIManager : MonoBehaviour
     {
+        [Header("Auth menu")] 
+        public Button authLogBtn;
+        public Button authRegBtn;
+        public Button authExitBtn;
+
+        [Header("Log menu")] 
+        public TMP_InputField logLoginInput;
+        public TMP_InputField logPasswordInput;
+        public Button logBtn;
+        public Button logBackBtn;
+        
+        [Header("Reg menu")]
+        public TMP_InputField regLoginInput;
+        public TMP_InputField regPasswordInput;
+        public Button regBtn;
+        public Button regBackBtn;
+
         [Header("Start menu")] 
         public Button gameBtn;
         public Button optionsBtn;
         public Button startExitBtn;
+        public Button startExitAccBtn;
         
         [Header("Options menu")]
         public Toggle isFullscreenToggle;
@@ -43,5 +62,7 @@ namespace Menu
         public GameObject startMenu;
         public GameObject optionMenu;
         public GameObject gameMenu;
+        public List<Menu> menus;
+        public List<SubMenu> subMenus;
     }
 }
