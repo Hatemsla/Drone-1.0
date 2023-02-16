@@ -141,11 +141,13 @@ namespace Menu
                 menuUIManager.authLogBtn.onClick.AddListener(delegate { OpenMenu("Log"); });
                 menuUIManager.authRegBtn.onClick.AddListener(delegate { OpenMenu("Reg"); });
                 menuUIManager.logBackBtn.onClick.AddListener(delegate { OpenMenu("Auth"); });
+                menuUIManager.logBackBtn.onClick.AddListener(ClearLogInputs);
                 menuUIManager.logBtn.onClick.AddListener(delegate { dbManager.Login(); });
                 menuUIManager.regBtn.onClick.AddListener(delegate { dbManager.Registration(); });
                 menuUIManager.regBackBtn.onClick.AddListener(delegate { OpenMenu("Auth"); });
+                menuUIManager.regBackBtn.onClick.AddListener(ClearRegInputs);
                 menuUIManager.startExitAccBtn.onClick.AddListener(delegate { OpenMenu("Auth"); });
-                
+
                 SetDropdownResolutions();
                 menuUIManager.resolutionDropdown.onValueChanged.AddListener(SetResolution);
             }
@@ -180,6 +182,19 @@ namespace Menu
             }
         }
 
+        public void ClearLogInputs()
+        {
+            menuUIManager.logLoginInput.text = String.Empty;
+            menuUIManager.logPasswordInput.text = String.Empty;
+        }
+
+        public void ClearRegInputs()
+        {
+            menuUIManager.regLoginInput.text = String.Empty;
+            menuUIManager.regPasswordInput.text = String.Empty;
+        }
+
+        
         public void OpenSubMenu(string menuName)
         {
             foreach (var menu in menuUIManager.subMenus)

@@ -178,22 +178,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 6108715313055537369, guid: d9387ae542a894a4ea93a1b8d5734caa, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.08
-      objectReference: {fileID: 0}
-    - target: {fileID: 6108715313055537369, guid: d9387ae542a894a4ea93a1b8d5734caa, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6108715313055537369, guid: d9387ae542a894a4ea93a1b8d5734caa, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6108715313055537369, guid: d9387ae542a894a4ea93a1b8d5734caa, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 180
-      objectReference: {fileID: 0}
     - target: {fileID: 8593175009206053158, guid: d9387ae542a894a4ea93a1b8d5734caa, type: 3}
       propertyPath: m_Name
       value: CheckpointRace
@@ -1105,6 +1089,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 559114011915233090, guid: 39489b8482e035f4ebf6cc797a082af8, type: 3}
+      propertyPath: speed
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 559114011915233090, guid: 39489b8482e035f4ebf6cc797a082af8, type: 3}
+      propertyPath: lerpSpeed
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 559114011915233090, guid: 39489b8482e035f4ebf6cc797a082af8, type: 3}
       propertyPath: raceController
       value: 
@@ -2316,7 +2308,15 @@ PrefabInstance:
       objectReference: {fileID: 1054009058}
     - target: {fileID: 6554557505652567727, guid: c50fcde4d03026b4ab9c4c3eff558381, type: 3}
       propertyPath: lerpSpeed
-      value: 1.5
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6554557505652567727, guid: c50fcde4d03026b4ab9c4c3eff558381, type: 3}
+      propertyPath: minMaxRoll
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 6554557505652567727, guid: c50fcde4d03026b4ab9c4c3eff558381, type: 3}
+      propertyPath: minMaxPitch
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 6554557505652567727, guid: c50fcde4d03026b4ab9c4c3eff558381, type: 3}
       propertyPath: raceController

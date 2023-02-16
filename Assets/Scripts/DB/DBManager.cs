@@ -11,7 +11,7 @@ namespace DB
         public string userPassword;
         
         private readonly string _connectionString =
-            "Host=localhost;Port=5432;Username=postgres;Password=Bobik123654;Database=drones";
+            "Host=192.168.1.130;Port=5432;Username=postgres;Password=Bobik123654;Database=drones";
 
         public MenuManager menuManager;
 
