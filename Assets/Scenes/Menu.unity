@@ -4566,6 +4566,7 @@ MonoBehaviour:
   footballController: {fileID: 0}
   botsColor: {r: 0, g: 0, b: 0, a: 0}
   playerColor: {r: 0, g: 0, b: 0, a: 0}
+  isMenuScene: 1
 --- !u!4 &1903872030
 Transform:
   m_ObjectHideFlags: 0
@@ -4593,8 +4594,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb6d0ff1f279bd647b05b08cbfe49bc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  userLogin: 
-  userPassword: 
   menuManager: {fileID: 1903872029}
 --- !u!1 &1907985689 stripped
 GameObject:
@@ -7721,9 +7720,37 @@ PrefabInstance:
     m_TransformParent: {fileID: 1898505694}
     m_Modifications:
     - target: {fileID: 8327051809564155946, guid: ce05733dfc54d5841b793361465fa05b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8327051809564155946, guid: ce05733dfc54d5841b793361465fa05b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8327051809564155946, guid: ce05733dfc54d5841b793361465fa05b, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1903872029}
+    - target: {fileID: 8327051809564155946, guid: ce05733dfc54d5841b793361465fa05b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1903872031}
+    - target: {fileID: 8327051809564155946, guid: ce05733dfc54d5841b793361465fa05b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8327051809564155946, guid: ce05733dfc54d5841b793361465fa05b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: SaveUserData
+      objectReference: {fileID: 0}
+    - target: {fileID: 8327051809564155946, guid: ce05733dfc54d5841b793361465fa05b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: DB.DBManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 8327051809564155946, guid: ce05733dfc54d5841b793361465fa05b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 8327051809564155947, guid: ce05733dfc54d5841b793361465fa05b, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

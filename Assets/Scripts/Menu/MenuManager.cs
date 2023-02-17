@@ -6,8 +6,6 @@ using DroneFootball;
 using DroneRace;
 using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.ProBuilder.MeshOperations;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -35,6 +33,7 @@ namespace Menu
         private float _currentVolume;
         private float _currentYawSensitivity = 1;
         private int _currentDifficultIndex;
+        [SerializeField] private bool isMenuScene = true;
 
         private void Start()
         {
@@ -51,6 +50,12 @@ namespace Menu
             menuUIManager.volumeSlider.value = 1;
 
             SceneManager.sceneLoaded += OnSceneLoaded;
+        }
+
+        private void Update()
+        {
+            if(isMenuScene)
+                dbManager.UserData.SecondsInGame += Time.deltaTime;
         }
 
         private void SetDropdownResolutions()
@@ -100,6 +105,7 @@ namespace Menu
             AudioListener.volume = _currentVolume;
             if (scene.buildIndex == 0)
             {
+                isMenuScene = true;
                 var dontDestroyMenuManager = FindObjectsOfType<MenuManager>();
                 var dontDestroyDbManager = FindObjectsOfType<DBManager>();
                 foreach (var obj in dontDestroyMenuManager)
@@ -147,12 +153,14 @@ namespace Menu
                 menuUIManager.regBackBtn.onClick.AddListener(delegate { OpenMenu("Auth"); });
                 menuUIManager.regBackBtn.onClick.AddListener(ClearRegInputs);
                 menuUIManager.startExitAccBtn.onClick.AddListener(delegate { OpenMenu("Auth"); });
+                menuUIManager.startExitAccBtn.onClick.AddListener(dbManager.SaveUserData);
 
                 SetDropdownResolutions();
                 menuUIManager.resolutionDropdown.onValueChanged.AddListener(SetResolution);
             }
             else if (scene.buildIndex == 1)
             {
+                isMenuScene = false;
                 raceController = FindObjectOfType<RaceController>();
                 raceController.currentAIDroneSpeed = _currentAIDroneSpeed;
                 raceController.raceUIManager.backBtn.onClick.AddListener(BackToMenu);
@@ -166,6 +174,7 @@ namespace Menu
             }
             else if (scene.buildIndex == 2)
             {
+                isMenuScene = false;
                 footballController = FindObjectOfType<FootballController>();
                 footballController.currentGateScale = _currentGateScale;
                 footballController.currentAIDroneSpeed = _currentAIDroneSpeed;
@@ -232,6 +241,7 @@ namespace Menu
 
         public void Exit()
         {
+            dbManager.SaveUserData();
             Application.Quit();
         }
 
