@@ -9,13 +9,14 @@
         public int ResolutionId { get; set; }
         public int BotsColorId { get; set; }
         public int PlayerColorId { get; set; }
+        public int DifficultId { get; set; }
 
         public UserSettings()
         {
         }
 
         public UserSettings(int settingsId, bool isFullscreen, float soundLevel, float yawRotationSensitivity, int resolutionId,
-            int botsColorId, int playerColorId)
+            int botsColorId, int playerColorId, int difficultId)
         {
             SettingsId = settingsId;
             IsFullscreen = isFullscreen;
@@ -24,6 +25,7 @@
             ResolutionId = resolutionId;
             BotsColorId = botsColorId;
             PlayerColorId = playerColorId;
+            DifficultId = difficultId;
         }
     }
 }
