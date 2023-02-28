@@ -63,6 +63,9 @@ namespace Menu
 
             if (_isRace)
                 dbManager.UserStatisticRace.SecondsInGame += Time.deltaTime;
+
+            if (_isFootball)
+                dbManager.UserStatisticFootball.SecondsInGame += Time.deltaTime;
         }
 
         private void SetDropdownResolutions()
@@ -126,6 +129,7 @@ namespace Menu
                         Destroy(obj);
 
                 menuUIManager = FindObjectOfType<MenuUIManager>();
+                OpenMenu("Start");
                 menuUIManager.volumeSlider.value = currentVolume;
                 menuUIManager.volumeSlider.onValueChanged.AddListener(delegate { ChangeVolume(); });
                 menuUIManager.yawSensitivitySlider.value = currentYawSensitivity - 1;
@@ -160,6 +164,8 @@ namespace Menu
                 menuUIManager.regBackBtn.onClick.AddListener(delegate { OpenMenu("Auth"); });
                 menuUIManager.regBackBtn.onClick.AddListener(ClearRegInputs);
                 menuUIManager.startExitAccBtn.onClick.AddListener(delegate { OpenMenu("Auth"); });
+                menuUIManager.startExitAccBtn.onClick.AddListener(dbManager.SaveUserFootballStatistic);
+                menuUIManager.startExitAccBtn.onClick.AddListener(dbManager.SaveUserRaceStatistic);
                 menuUIManager.startExitAccBtn.onClick.AddListener(dbManager.SaveUserResolution);
                 menuUIManager.startExitAccBtn.onClick.AddListener(dbManager.SaveUserSettings);
                 menuUIManager.startExitAccBtn.onClick.AddListener(dbManager.SaveUserData);
@@ -254,6 +260,8 @@ namespace Menu
 
         public void Exit()
         {
+            dbManager.SaveUserFootballStatistic();
+            dbManager.SaveUserRaceStatistic();
             dbManager.SaveUserResolution();
             dbManager.SaveUserSettings();
             dbManager.SaveUserData();

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using DB;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -26,7 +27,7 @@ namespace DroneRace
         private DroneRaceCheckNode _checkNode;
         private Vector3 _startPointerSize;
         private int _playerRacePosition;
-
+        private bool _isResult;
 
         private void Awake()
         {
@@ -135,14 +136,27 @@ namespace DroneRace
             }
             else
             {
-                if (_playerRacePosition == 0)
-                    raceUIManager.matchResultText.text = "Вы победили!";
-                else
-                    raceUIManager.matchResultText.text = "Вы проиграли(";
+                if (!_isResult)
+                {
+                    var db = FindObjectOfType<DBManager>();
+                    if (_playerRacePosition == 0)
+                    {
+                        raceUIManager.matchResultText.text = "Вы победили!";
+                        db.UserStatisticRace.GamesCount++;
+                        db.UserStatisticRace.WinsCount++;
+                    }
+                    else
+                    {
+                        raceUIManager.matchResultText.text = "Вы проиграли(";
+                        db.UserStatisticRace.GamesCount++;
+                        db.UserStatisticRace.LosesCount++;
+                    }
 
-                raceUIManager.matchResultPanel.SetActive(true);
-                isGameStart = false;
-                StartCoroutine(BackToMenu());
+                    raceUIManager.matchResultPanel.SetActive(true);
+                    isGameStart = false;
+                    StartCoroutine(BackToMenu());
+                    _isResult = true;
+                }
             }
         }
 

@@ -29,9 +29,80 @@ namespace DB
             DontDestroyOnLoad(this);
         }
 
+        public void SaveUserRaceStatistic()
+        {
+            if (IsStatisticsExist(true))
+            {
+                using (var conn = new NpgsqlConnection(_connectionString))
+                {
+                    conn.Open();
+                    var updateString =
+                        $"update statistics_race set wins_count = {UserStatisticRace.WinsCount}, loses_count = {UserStatisticRace.LosesCount}, " +
+                        $"games_count = {UserStatisticRace.GamesCount}, seconds_in_game = {Convert.ToInt32(UserStatisticRace.SecondsInGame)} " +
+                        $"where statistic_race_id = {UserStatisticRace.StatisticRaceId}";
+                    var cmd = new NpgsqlCommand(updateString, conn);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            else
+            {
+                using (var conn = new NpgsqlConnection(_connectionString))
+                {
+                    conn.Open();
+                    var insertString =
+                        $"insert into statistics_race values({UserStatisticRace.StatisticRaceId}, {UserStatisticRace.WinsCount}, {UserStatisticRace.LosesCount}, " +
+                        $"{UserStatisticRace.GamesCount}, {Convert.ToInt32(UserStatisticRace.SecondsInGame)})";
+                    var cmd = new NpgsqlCommand(insertString, conn);
+                    cmd.ExecuteNonQuery();
+                }
+
+                using (var conn = new NpgsqlConnection(_connectionString))
+                {
+                    conn.Open();
+                    var updateString =
+                        $"update users set statistic_race_id = {UserStatisticRace.StatisticRaceId} where login = '{UserData.UserLogin}'";
+                    var cmd = new NpgsqlCommand(updateString, conn);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
         public void SaveUserFootballStatistic()
         {
-            
+            if (IsStatisticsExist(false))
+            {
+                using (var conn = new NpgsqlConnection(_connectionString))
+                {
+                    conn.Open();
+                    var updateString =
+                        $"update statistics_football set wins_count = {UserStatisticFootball.WinsCount}, loses_count = {UserStatisticFootball.LosesCount}, " +
+                        $"games_count = {UserStatisticFootball.GamesCount}, seconds_in_game = {Convert.ToInt32(UserStatisticFootball.SecondsInGame)} " +
+                        $"where statistic_football_id = {UserStatisticFootball.StatisticFootballId}";
+                    var cmd = new NpgsqlCommand(updateString, conn);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            else
+            {
+                using (var conn = new NpgsqlConnection(_connectionString))
+                {
+                    conn.Open();
+                    var insertString =
+                        $"insert into statistics_football values({UserStatisticFootball.StatisticFootballId}, {UserStatisticFootball.WinsCount}, {UserStatisticFootball.LosesCount}, " +
+                        $"{UserStatisticFootball.GamesCount}, {Convert.ToInt32(UserStatisticFootball.SecondsInGame)})";
+                    var cmd = new NpgsqlCommand(insertString, conn);
+                    cmd.ExecuteNonQuery();
+                }
+
+                using (var conn = new NpgsqlConnection(_connectionString))
+                {
+                    conn.Open();
+                    var updateString =
+                        $"update users set statistic_football_id = {UserStatisticFootball.StatisticFootballId} where login = '{UserData.UserLogin}'";
+                    var cmd = new NpgsqlCommand(updateString, conn);
+                    cmd.ExecuteNonQuery();
+                }
+            }
         }
 
         public void SaveUserResolution()
@@ -46,7 +117,8 @@ namespace DB
                 {
                     conn.Open();
                     var selectId =
-                        $"select resolution_id from resolutions where width = {UserResolutions.Width} and height = {UserResolutions.Height} and refresh_rate = {UserResolutions.FrameRate}";
+                        $"select resolution_id from resolutions where width = {UserResolutions.Width} and height = {UserResolutions.Height} and " +
+                        $"refresh_rate = {UserResolutions.FrameRate}";
                     var cmd = new NpgsqlCommand(selectId, conn);
                     var dr = cmd.ExecuteReader();
                     while (dr.Read()) resId = dr.GetInt32(0);
@@ -108,7 +180,9 @@ namespace DB
                 {
                     conn.Open();
                     var insertString =
-                        $"insert into settings values ({UserSettings.SettingsId}, {UserSettings.IsFullscreen}, {UserSettings.SoundLevel.ToString().Replace(',', '.')}, {UserSettings.YawRotationSensitivity.ToString().Replace(',', '.')}, {UserSettings.ResolutionId}, {UserSettings.BotsColorId}, {UserSettings.PlayerColorId}, {UserSettings.DifficultId})";
+                        $"insert into settings values ({UserSettings.SettingsId}, {UserSettings.IsFullscreen}, {UserSettings.SoundLevel.ToString().Replace(',', '.')}, " +
+                        $"{UserSettings.YawRotationSensitivity.ToString().Replace(',', '.')}, {UserSettings.ResolutionId}, {UserSettings.BotsColorId}, " +
+                        $"{UserSettings.PlayerColorId}, {UserSettings.DifficultId})";
                     var cmd = new NpgsqlCommand(insertString, conn);
                     cmd.ExecuteNonQuery();
                 }
@@ -116,9 +190,9 @@ namespace DB
                 using (var conn = new NpgsqlConnection(_connectionString))
                 {
                     conn.Open();
-                    var insertString =
+                    var updateString =
                         $"update users set settings_id = {UserSettings.SettingsId} where login = '{UserData.UserLogin}'";
-                    var cmd = new NpgsqlCommand(insertString, conn);
+                    var cmd = new NpgsqlCommand(updateString, conn);
                     cmd.ExecuteNonQuery();
                 }
             }
@@ -179,8 +253,12 @@ namespace DB
                 BotsColor.ColorId,
                 PlayerColor.ColorId,
                 UserDifficultlyLevels.DifficultId);
+            UserStatisticFootball =
+                new UserStatisticFootball(SelectNewId("statistic_football_id", "statistics_football"), 0, 0, 0, 0);
+            UserStatisticRace = new UserStatisticRace(SelectNewId("statistic_race_id", "statistics_race"), 0, 0, 0, 0);
             UserData = new UserData(menuManager.menuUIManager.regLoginInput.text,
-                menuManager.menuUIManager.regPasswordInput.text, 0, UserSettings.SettingsId);
+                menuManager.menuUIManager.regPasswordInput.text, 0, UserSettings.SettingsId,
+                UserStatisticRace.StatisticRaceId, UserStatisticFootball.StatisticFootballId);
 
             if (!IsUserExist(true))
             {
@@ -206,8 +284,8 @@ namespace DB
             if (IsUserExist(false))
             {
                 var userData = LoadUserData(UserData.UserLogin, UserData.UserPassword);
-                UserData.SecondsInGame = Convert.ToSingle(userData[2]);
-                UserData.SettingsId = Convert.ToInt32(userData[3]);
+                UserData = new UserData(userData[0], userData[1], Convert.ToSingle(userData[2]),
+                    Convert.ToInt32(userData[3]), Convert.ToInt32(userData[4]), Convert.ToInt32(userData[5]));
 
                 var userSettings = LoadUserSettings(UserData.SettingsId.ToString());
                 UserSettings = new UserSettings(Convert.ToInt32(userSettings[0]), Convert.ToBoolean(userSettings[1]),
@@ -227,6 +305,16 @@ namespace DB
 
                 var userDifficult = LoadUserDifficult(UserSettings.DifficultId.ToString());
                 UserDifficultlyLevels = new UserDifficultlyLevels(Convert.ToInt32(userDifficult[0]), userDifficult[1]);
+
+                var userFootballStatistic = LoadUserFootballStatistic(UserData.StatisticFootballId.ToString());
+                UserStatisticFootball = new UserStatisticFootball(Convert.ToInt32(userFootballStatistic[0]),
+                    Convert.ToInt32(userFootballStatistic[1]), Convert.ToInt32(userFootballStatistic[2]),
+                    Convert.ToInt32(userFootballStatistic[3]), Convert.ToSingle(userFootballStatistic[4]));
+
+                var userRaceStatistic = LoadUserRaceStatistic(UserData.StatisticRaceId.ToString());
+                UserStatisticRace = new UserStatisticRace(Convert.ToInt32(userRaceStatistic[0]),
+                    Convert.ToInt32(userRaceStatistic[1]), Convert.ToInt32(userRaceStatistic[2]),
+                    Convert.ToInt32(userRaceStatistic[3]), Convert.ToSingle(userRaceStatistic[4]));
 
                 menuManager.OpenMenu("Start");
                 ApplySettings();
@@ -251,7 +339,7 @@ namespace DB
                 Convert.ToByte(BotsColor.ColorName.Substring(4, 2), 16),
                 Convert.ToByte(BotsColor.ColorName.Substring(6, 2), 16)
             };
-            
+
             byte[] playerRgba =
             {
                 Convert.ToByte(PlayerColor.ColorName.Substring(0, 2), 16),
@@ -272,6 +360,42 @@ namespace DB
             menuManager.menuUIManager.resolutionDropdown.value = menuManager.currentResolutionIndex;
             var resolution = menuManager.Resolutions[menuManager.currentResolutionIndex];
             Screen.SetResolution(resolution.width, resolution.height, UserSettings.IsFullscreen);
+        }
+
+        private string[] LoadUserRaceStatistic(string raceStatisticId)
+        {
+            var result = "";
+            using (var conn = new NpgsqlConnection(_connectionString))
+            {
+                conn.Open();
+                var userResolution =
+                    $"select * from statistics_race where statistic_race_id = {raceStatisticId}";
+                var cmd = new NpgsqlCommand(userResolution, conn);
+                var dr = cmd.ExecuteReader();
+                while (dr.Read())
+                    result =
+                        $"{dr.GetInt32(0)} {dr.GetInt32(1)} {dr.GetInt32(2)} {dr.GetInt32(3)} {dr.GetInt32(4)}";
+            }
+
+            return result.Split(" ");
+        }
+
+        private string[] LoadUserFootballStatistic(string footballStatisticId)
+        {
+            var result = "";
+            using (var conn = new NpgsqlConnection(_connectionString))
+            {
+                conn.Open();
+                var userResolution =
+                    $"select * from statistics_football where statistic_football_id = {footballStatisticId}";
+                var cmd = new NpgsqlCommand(userResolution, conn);
+                var dr = cmd.ExecuteReader();
+                while (dr.Read())
+                    result =
+                        $"{dr.GetInt32(0)} {dr.GetInt32(1)} {dr.GetInt32(2)} {dr.GetInt32(3)} {dr.GetInt32(4)}";
+            }
+
+            return result.Split(" ");
         }
 
         private string[] LoadUserDifficult(string difficultId)
@@ -336,7 +460,8 @@ namespace DB
                 var dr = cmd.ExecuteReader();
                 while (dr.Read())
                     result =
-                        $"{dr.GetInt32(0)} {dr.GetBoolean(1)} {dr.GetFloat(2)} {dr.GetFloat(3)} {dr.GetInt32(4)} {dr.GetInt32(5)} {dr.GetInt32(6)} {dr.GetInt32(7)}";
+                        $"{dr.GetInt32(0)} {dr.GetBoolean(1)} {dr.GetFloat(2)} {dr.GetFloat(3)} {dr.GetInt32(4)} {dr.GetInt32(5)} " +
+                        $"{dr.GetInt32(6)} {dr.GetInt32(7)}";
             }
 
             return result.Split(" ");
@@ -353,7 +478,7 @@ namespace DB
                 var dr = cmd.ExecuteReader();
                 while (dr.Read())
                     result =
-                        $"{dr.GetString(0)} {dr.GetString(1)} {dr.GetInt32(2)} {dr.GetInt32(3)} {dr.GetValue(4)} {dr.GetValue(5)}";
+                        $"{dr.GetString(0)} {dr.GetString(1)} {dr.GetInt32(2)} {dr.GetInt32(3)} {dr.GetInt32(4)} {dr.GetInt32(5)}";
             }
 
             return result.Split(" ");
@@ -389,6 +514,34 @@ namespace DB
 
                 var cmd =
                     new NpgsqlCommand(checkUserId, conn);
+                var dr = cmd.ExecuteReader();
+                while (dr.Read()) return dr.GetBoolean(0);
+                return false;
+            }
+        }
+
+        private bool IsStatisticsExist(bool isRace)
+        {
+            if (isRace)
+                using (var conn = new NpgsqlConnection(_connectionString))
+                {
+                    conn.Open();
+                    var checkRaceId =
+                        $"select exists(select * from users where login = '{UserData.UserLogin}' and statistic_race_id is not null)";
+                    var cmd =
+                        new NpgsqlCommand(checkRaceId, conn);
+                    var dr = cmd.ExecuteReader();
+                    while (dr.Read()) return dr.GetBoolean(0);
+                    return false;
+                }
+
+            using (var conn = new NpgsqlConnection(_connectionString))
+            {
+                conn.Open();
+                var checkFootballId =
+                    $"select exists(select * from users where login = '{UserData.UserLogin}' and statistic_football_id is not null)";
+                var cmd =
+                    new NpgsqlCommand(checkFootballId, conn);
                 var dr = cmd.ExecuteReader();
                 while (dr.Read()) return dr.GetBoolean(0);
                 return false;

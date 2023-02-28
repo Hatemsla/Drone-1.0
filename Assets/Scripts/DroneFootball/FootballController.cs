@@ -1,4 +1,6 @@
 using System.Collections;
+using DB;
+using Menu;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -18,9 +20,10 @@ namespace DroneFootball
         public Timer timer;
         public DroneFootballAI[] droneFootballAIList;
         public FootballCheckpointTrigger footballCheckpointTrigger;
-
         public Camera playerCamera;
+
         private Vector3 _startPointerSize;
+        private bool _isResult;
 
         private void Awake()
         {
@@ -127,14 +130,27 @@ namespace DroneFootball
             }
             else
             {
-                if (playerCheckNode.currentNode >= 10)
-                    footballUIManager.matchResultText.text = "Вы победили!";
-                else
-                    footballUIManager.matchResultText.text = "Вы проиграли(";
-                
-                footballUIManager.matchResultPanel.SetActive(true);
-                isGameStart = false;
-                StartCoroutine(BackToMenu());
+                if (!_isResult)
+                {
+                    var db = FindObjectOfType<DBManager>();
+                    if (playerCheckNode.currentNode >= 10)
+                    {
+                        footballUIManager.matchResultText.text = "Вы победили!";
+                        db.UserStatisticFootball.GamesCount++;
+                        db.UserStatisticFootball.WinsCount++;
+                    }
+                    else
+                    {
+                        footballUIManager.matchResultText.text = "Вы проиграли(";
+                        db.UserStatisticFootball.GamesCount++;
+                        db.UserStatisticFootball.LosesCount++;
+                    }
+
+                    footballUIManager.matchResultPanel.SetActive(true);
+                    isGameStart = false;
+                    StartCoroutine(BackToMenu());
+                    _isResult = true;
+                }
             }
         }
 
