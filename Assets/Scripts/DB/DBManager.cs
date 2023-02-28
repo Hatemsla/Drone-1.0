@@ -3,6 +3,7 @@ using Menu;
 using Npgsql;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace DB
 {
@@ -19,6 +20,8 @@ namespace DB
         public UserDifficultlyLevels UserDifficultlyLevels = new UserDifficultlyLevels();
         public UserResolutions UserResolutions = new UserResolutions();
         public UserSettings UserSettings = new UserSettings();
+        public UserStatisticFootball UserStatisticFootball = new UserStatisticFootball();
+        public UserStatisticRace UserStatisticRace = new UserStatisticRace();
 
         private void Start()
         {
@@ -26,11 +29,9 @@ namespace DB
             DontDestroyOnLoad(this);
         }
 
-        public void LoadSettings()
+        public void SaveUserFootballStatistic()
         {
-            using (var conn = new NpgsqlConnection(_connectionString))
-            {
-            }
+            
         }
 
         public void SaveUserResolution()
@@ -74,12 +75,12 @@ namespace DB
             PlayerColor =
                 new UserColors(
                     SelectIdWhere("color_id", "colors", "color",
-                        $"{menuManager.playerColorPreview.color.ToHexString() + "FF"}"),
-                    menuManager.playerColorPreview.color.ToHexString() + "FF");
+                        $"{menuManager.playerColorPreview.color.ToHexString()}"),
+                    menuManager.playerColorPreview.color.ToHexString());
             BotsColor = new UserColors(
                 SelectIdWhere("color_id", "colors", "color",
-                    $"{menuManager.botsColorPreview.color.ToHexString() + "FF"}"),
-                menuManager.botsColorPreview.color.ToHexString() + "FF");
+                    $"{menuManager.botsColorPreview.color.ToHexString()}"),
+                menuManager.botsColorPreview.color.ToHexString());
 
             UserSettings.IsFullscreen = menuManager.menuUIManager.isFullscreenToggle.isOn;
             UserSettings.SoundLevel = menuManager.currentVolume;
@@ -164,12 +165,12 @@ namespace DB
             PlayerColor =
                 new UserColors(
                     SelectIdWhere("color_id", "colors", "color",
-                        $"{menuManager.playerColorPreview.color.ToHexString() + "FF"}"),
-                    menuManager.playerColorPreview.color.ToHexString() + "FF");
+                        $"{menuManager.playerColorPreview.color.ToHexString()}"),
+                    menuManager.playerColorPreview.color.ToHexString());
             BotsColor = new UserColors(
                 SelectIdWhere("color_id", "colors", "color",
-                    $"{menuManager.botsColorPreview.color.ToHexString() + "FF"}"),
-                menuManager.botsColorPreview.color.ToHexString() + "FF");
+                    $"{menuManager.botsColorPreview.color.ToHexString()}"),
+                menuManager.botsColorPreview.color.ToHexString());
             UserSettings = new UserSettings(SelectNewId("settings_id", "settings"),
                 menuManager.menuUIManager.isFullscreenToggle.isOn,
                 menuManager.currentVolume,
@@ -204,36 +205,76 @@ namespace DB
 
             if (IsUserExist(false))
             {
-                var userData = SelectUserData(UserData.UserLogin, UserData.UserPassword);
+                var userData = LoadUserData(UserData.UserLogin, UserData.UserPassword);
                 UserData.SecondsInGame = Convert.ToSingle(userData[2]);
                 UserData.SettingsId = Convert.ToInt32(userData[3]);
 
-                var userSettings = SelectUserSettings(UserData.SettingsId.ToString());
+                var userSettings = LoadUserSettings(UserData.SettingsId.ToString());
                 UserSettings = new UserSettings(Convert.ToInt32(userSettings[0]), Convert.ToBoolean(userSettings[1]),
                     Convert.ToSingle(userSettings[2]), Convert.ToSingle(userSettings[3]),
                     Convert.ToInt32(userSettings[4]), Convert.ToInt32(userSettings[5]),
                     Convert.ToInt32(userSettings[6]), Convert.ToInt32(userSettings[7]));
 
-                var userResolution = SelectUserResolution(UserSettings.ResolutionId.ToString());
+                var userResolution = LoadUserResolution(UserSettings.ResolutionId.ToString());
                 UserResolutions = new UserResolutions(Convert.ToInt32(userResolution[0]),
                     Convert.ToInt32(userResolution[1]), Convert.ToInt32(userResolution[2]),
                     Convert.ToInt32(userResolution[3]));
 
-                var playerColor = SelectUserColor(UserSettings.PlayerColorId.ToString());
+                var playerColor = LoadUserColor(UserSettings.PlayerColorId.ToString());
                 PlayerColor = new UserColors(Convert.ToInt32(playerColor[0]), playerColor[1]);
-                var botsColor = SelectUserColor(UserSettings.BotsColorId.ToString());
+                var botsColor = LoadUserColor(UserSettings.BotsColorId.ToString());
                 BotsColor = new UserColors(Convert.ToInt32(botsColor[0]), botsColor[1]);
 
-                var userDifficult = SelectUserDifficult(UserSettings.DifficultId.ToString());
+                var userDifficult = LoadUserDifficult(UserSettings.DifficultId.ToString());
                 UserDifficultlyLevels = new UserDifficultlyLevels(Convert.ToInt32(userDifficult[0]), userDifficult[1]);
 
                 menuManager.OpenMenu("Start");
+                ApplySettings();
                 menuManager.menuUIManager.logLoginInput.text = string.Empty;
                 menuManager.menuUIManager.logPasswordInput.text = string.Empty;
             }
         }
-        
-        private string[] SelectUserDifficult(string difficultId)
+
+        private void ApplySettings()
+        {
+            menuManager.menuUIManager.volumeSlider.value = UserSettings.SoundLevel;
+            menuManager.menuUIManager.yawSensitivitySlider.value = UserSettings.YawRotationSensitivity - 1;
+            menuManager.menuUIManager.isFullscreenToggle.isOn = UserSettings.IsFullscreen;
+            menuManager.menuUIManager.difficultDropdown.value = UserSettings.DifficultId - 1;
+            var botsImage = menuManager.botsColorPreview.GetComponent<Image>();
+            var playerImage = menuManager.playerColorPreview.GetComponent<Image>();
+
+            byte[] botsRgba =
+            {
+                Convert.ToByte(BotsColor.ColorName.Substring(0, 2), 16),
+                Convert.ToByte(BotsColor.ColorName.Substring(2, 2), 16),
+                Convert.ToByte(BotsColor.ColorName.Substring(4, 2), 16),
+                Convert.ToByte(BotsColor.ColorName.Substring(6, 2), 16)
+            };
+            
+            byte[] playerRgba =
+            {
+                Convert.ToByte(PlayerColor.ColorName.Substring(0, 2), 16),
+                Convert.ToByte(PlayerColor.ColorName.Substring(2, 2), 16),
+                Convert.ToByte(PlayerColor.ColorName.Substring(4, 2), 16),
+                Convert.ToByte(PlayerColor.ColorName.Substring(6, 2), 16)
+            };
+
+            botsImage.color = new Color32(botsRgba[0], botsRgba[1], botsRgba[2], botsRgba[3]);
+            playerImage.color = new Color32(playerRgba[0], playerRgba[1], playerRgba[2], playerRgba[3]);
+
+            for (var i = 0; i < menuManager.Resolutions.Length; i++)
+                if (menuManager.Resolutions[i].width == UserResolutions.Width &&
+                    menuManager.Resolutions[i].height == UserResolutions.Height &&
+                    menuManager.Resolutions[i].refreshRate == UserResolutions.FrameRate)
+                    menuManager.currentResolutionIndex = i;
+
+            menuManager.menuUIManager.resolutionDropdown.value = menuManager.currentResolutionIndex;
+            var resolution = menuManager.Resolutions[menuManager.currentResolutionIndex];
+            Screen.SetResolution(resolution.width, resolution.height, UserSettings.IsFullscreen);
+        }
+
+        private string[] LoadUserDifficult(string difficultId)
         {
             var result = "";
             using (var conn = new NpgsqlConnection(_connectionString))
@@ -249,8 +290,8 @@ namespace DB
 
             return result.Split(" ");
         }
-        
-        private string[] SelectUserColor(string colorId)
+
+        private string[] LoadUserColor(string colorId)
         {
             var result = "";
             using (var conn = new NpgsqlConnection(_connectionString))
@@ -267,7 +308,7 @@ namespace DB
             return result.Split(" ");
         }
 
-        private string[] SelectUserResolution(string resolutionId)
+        private string[] LoadUserResolution(string resolutionId)
         {
             var result = "";
             using (var conn = new NpgsqlConnection(_connectionString))
@@ -284,7 +325,7 @@ namespace DB
             return result.Split(" ");
         }
 
-        private string[] SelectUserSettings(string settingsId)
+        private string[] LoadUserSettings(string settingsId)
         {
             var result = "";
             using (var conn = new NpgsqlConnection(_connectionString))
@@ -301,7 +342,7 @@ namespace DB
             return result.Split(" ");
         }
 
-        private string[] SelectUserData(string login, string password)
+        private string[] LoadUserData(string login, string password)
         {
             var result = "";
             using (var conn = new NpgsqlConnection(_connectionString))

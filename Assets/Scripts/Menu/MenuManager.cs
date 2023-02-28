@@ -33,7 +33,9 @@ namespace Menu
         private readonly List<float> _droneSpeed = new List<float> {0.5f, 0.75f, 1f, 1.5f, 2f};
         private float _currentGateScale;
         private float _currentAIDroneSpeed;
-        [SerializeField] private bool isMenuScene = true;
+        private bool _isFootball;
+        private bool _isRace;
+        private bool _isMenuScene;
 
         private void Start()
         {
@@ -56,8 +58,11 @@ namespace Menu
 
         private void Update()
         {
-            if(isMenuScene)
+            if(_isMenuScene)
                 dbManager.UserData.SecondsInGame += Time.deltaTime;
+
+            if (_isRace)
+                dbManager.UserStatisticRace.SecondsInGame += Time.deltaTime;
         }
 
         private void SetDropdownResolutions()
@@ -107,7 +112,9 @@ namespace Menu
             AudioListener.volume = currentVolume;
             if (scene.buildIndex == 0)
             {
-                isMenuScene = true;
+                _isMenuScene = true;
+                _isRace = false;
+                _isFootball = false;
                 var dontDestroyMenuManager = FindObjectsOfType<MenuManager>();
                 var dontDestroyDbManager = FindObjectsOfType<DBManager>();
                 foreach (var obj in dontDestroyMenuManager)
@@ -162,7 +169,9 @@ namespace Menu
             }
             else if (scene.buildIndex == 1)
             {
-                isMenuScene = false;
+                _isMenuScene = false;
+                _isRace = true;
+                _isFootball = false;
                 raceController = FindObjectOfType<RaceController>();
                 raceController.currentAIDroneSpeed = _currentAIDroneSpeed;
                 raceController.raceUIManager.backBtn.onClick.AddListener(BackToMenu);
@@ -176,7 +185,9 @@ namespace Menu
             }
             else if (scene.buildIndex == 2)
             {
-                isMenuScene = false;
+                _isMenuScene = false;
+                _isRace = false;
+                _isFootball = true;
                 footballController = FindObjectOfType<FootballController>();
                 footballController.currentGateScale = _currentGateScale;
                 footballController.currentAIDroneSpeed = _currentAIDroneSpeed;
@@ -243,6 +254,7 @@ namespace Menu
 
         public void Exit()
         {
+            dbManager.SaveUserResolution();
             dbManager.SaveUserSettings();
             dbManager.SaveUserData();
             Application.Quit();
