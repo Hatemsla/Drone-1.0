@@ -27,9 +27,10 @@ namespace Menu
         [Header("Start menu")] 
         public Button gameBtn;
         public Button optionsBtn;
+        public Button statBtn;
         public Button startExitBtn;
         public Button startExitAccBtn;
-        
+
         [Header("Options menu")]
         public Toggle isFullscreenToggle;
         public TMP_Dropdown resolutionDropdown;
@@ -57,6 +58,11 @@ namespace Menu
         public Button footballBtn;
         public Button gameBackBtn;
         public Button gameExitBtn;
+
+        [Header("Statistic menu")] 
+        public TMP_Text statText1;
+        public TMP_Text statText2;
+        public Button statBackBtn;
         
         [Header("Menus")]
         public GameObject startMenu;

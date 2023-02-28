@@ -1,13 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using DB;
 using DroneFootball;
 using DroneRace;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 namespace Menu
 {
@@ -15,7 +14,7 @@ namespace Menu
     {
         public bool isSimpleMode;
         public int currentDifficultIndex;
-        public int currentResolutionIndex = 0;
+        public int currentResolutionIndex;
         public float currentYawSensitivity = 1;
         public float currentVolume;
         public DBManager dbManager;
@@ -24,18 +23,21 @@ namespace Menu
         public FootballController footballController;
         public ColorPreview botsColorPreview;
         public ColorPreview playerColorPreview;
-        public Resolution[] Resolutions;
 
         private readonly List<string> _difficulties = new List<string>
             {"Супер легко", "Легко", "Нормально", "Сложно", "Невозможно"};
 
-        private readonly List<float> _gatesSize = new List<float> {3f, 2f, 1.5f, 1.25f, 1f};
         private readonly List<float> _droneSpeed = new List<float> {0.5f, 0.75f, 1f, 1.5f, 2f};
-        private float _currentGateScale;
+
+        private readonly List<float> _gatesSize = new List<float> {3f, 2f, 1.5f, 1.25f, 1f};
         private float _currentAIDroneSpeed;
+        private float _currentGateScale;
         private bool _isFootball;
+        private bool _isMenuScene = true;
         private bool _isRace;
-        private bool _isMenuScene;
+        public Resolution[] Resolutions;
+        public StringBuilder StatText1;
+        public StringBuilder StatText2;
 
         private void Start()
         {
@@ -52,13 +54,13 @@ namespace Menu
             menuUIManager.volumeSlider.value = 1;
             botsColorPreview = menuUIManager.botColorPicker.GetComponentInChildren<ColorPreview>();
             playerColorPreview = menuUIManager.playerColorPicker.GetComponentInChildren<ColorPreview>();
-            
+
             SceneManager.sceneLoaded += OnSceneLoaded;
         }
 
         private void Update()
         {
-            if(_isMenuScene)
+            if (_isMenuScene)
                 dbManager.UserData.SecondsInGame += Time.deltaTime;
 
             if (_isRace)
@@ -66,20 +68,20 @@ namespace Menu
 
             if (_isFootball)
                 dbManager.UserStatisticFootball.SecondsInGame += Time.deltaTime;
+
+            SetStatistics();
         }
 
         private void SetDropdownResolutions()
         {
             var options = new List<string>();
-            for (int i = 0; i < Resolutions.Length; i++)
+            for (var i = 0; i < Resolutions.Length; i++)
             {
                 options.Add($"{Resolutions[i].width} x {Resolutions[i].height} {Resolutions[i].refreshRate}Hz");
 
                 if (Resolutions[i].width == Screen.currentResolution.width ||
                     Resolutions[i].height == Screen.currentResolution.height)
-                {
                     currentResolutionIndex = i;
-                }
             }
 
             menuUIManager.resolutionDropdown.AddOptions(options);
@@ -94,11 +96,55 @@ namespace Menu
             menuUIManager.difficultDropdown.value = 2;
         }
 
+        public void SetStatistics()
+        {
+            StatText1 = new StringBuilder();
+            StatText1.AppendLine("Всего сыграно игр: " + (dbManager.UserStatisticFootball.GamesCount +
+                                                          dbManager.UserStatisticRace.GamesCount));
+            StatText1.AppendLine("Игр в дроногонках: " + dbManager.UserStatisticRace.GamesCount);
+            StatText1.AppendLine("Игр в дронофутболе: " + dbManager.UserStatisticFootball.GamesCount);
+            StatText1.AppendLine("Всего побед: " + (dbManager.UserStatisticFootball.WinsCount +
+                                                    dbManager.UserStatisticRace.WinsCount));
+            StatText1.AppendLine("Побед в дроногонках: " + dbManager.UserStatisticFootball.WinsCount);
+            StatText1.AppendLine("Побед в дронофутболе: " + dbManager.UserStatisticRace.WinsCount);
+            StatText1.AppendLine("Всего поражений: " + (dbManager.UserStatisticFootball.LosesCount +
+                                                        dbManager.UserStatisticRace.LosesCount));
+            StatText1.AppendLine("Поражений в дроногонках: " + dbManager.UserStatisticFootball.LosesCount);
+            StatText1.AppendLine("Поражений в дронофутболе: " + dbManager.UserStatisticRace.LosesCount);
+            StatText1.AppendLine("Всего ничьей: " + (dbManager.UserStatisticFootball.GamesCount +
+                dbManager.UserStatisticRace.GamesCount - (dbManager.UserStatisticFootball.LosesCount +
+                                                          dbManager.UserStatisticRace.LosesCount +
+                                                          dbManager.UserStatisticFootball.WinsCount +
+                                                          dbManager.UserStatisticRace.WinsCount)));
+            StatText1.AppendLine("Ничьей в дроногонках: " + (dbManager.UserStatisticRace.GamesCount -
+                                                             (dbManager.UserStatisticRace.LosesCount +
+                                                              dbManager.UserStatisticRace.WinsCount)));
+            StatText1.AppendLine("Ничьей в дронофутболе: " + (dbManager.UserStatisticFootball.GamesCount -
+                dbManager.UserStatisticFootball.LosesCount + dbManager.UserStatisticFootball.WinsCount));
+            menuUIManager.statText1.text = StatText1.ToString();
+
+            StatText2 = new StringBuilder();
+            StatText2.AppendLine("Всего времени в игре: " + TimeFormat(
+                dbManager.UserStatisticFootball.SecondsInGame + dbManager.UserStatisticRace.SecondsInGame +
+                dbManager.UserData.SecondsInGame));
+            StatText2.AppendLine("Времени в дроногонках: " + TimeFormat(dbManager.UserStatisticRace.SecondsInGame));
+            StatText2.AppendLine("Времени в дронофутболе: " + TimeFormat(dbManager.UserStatisticFootball.SecondsInGame));
+            menuUIManager.statText2.text = StatText2.ToString();
+        }
+
+        private string TimeFormat(float time)
+        {
+            float hours = Mathf.FloorToInt(time / 3600);
+            float minutes = Mathf.FloorToInt(time / 60);
+            float seconds = Mathf.FloorToInt(time % 60);
+            return $"{hours:00}:{minutes:00}:{seconds:00}";
+        }
+
         public void SetResolution(int resolutionIndex)
         {
             if (Resolutions == null)
                 Resolutions = Screen.resolutions.Distinct().ToArray();
-            Resolution resolution = Resolutions[resolutionIndex];
+            var resolution = Resolutions[resolutionIndex];
             currentResolutionIndex = resolutionIndex;
             Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
         }
@@ -148,6 +194,7 @@ namespace Menu
                 playerColorPreview = menuUIManager.playerColorPicker.GetComponentInChildren<ColorPreview>();
                 menuUIManager.authExitBtn.onClick.AddListener(Exit);
                 menuUIManager.gameBtn.onClick.AddListener(delegate { OpenMenu("Game"); });
+                menuUIManager.statBtn.onClick.AddListener(delegate { OpenMenu("Statistics"); });
                 menuUIManager.optionsBtn.onClick.AddListener(delegate { OpenMenu("Options"); });
                 menuUIManager.gameBackBtn.onClick.AddListener(delegate { OpenMenu("Start"); });
                 menuUIManager.optionsBackBtn.onClick.AddListener(delegate { OpenMenu("Start"); });
@@ -169,6 +216,7 @@ namespace Menu
                 menuUIManager.startExitAccBtn.onClick.AddListener(dbManager.SaveUserResolution);
                 menuUIManager.startExitAccBtn.onClick.AddListener(dbManager.SaveUserSettings);
                 menuUIManager.startExitAccBtn.onClick.AddListener(dbManager.SaveUserData);
+                menuUIManager.statBackBtn.onClick.AddListener(delegate { OpenMenu("Start"); });
 
                 SetDropdownResolutions();
                 menuUIManager.resolutionDropdown.onValueChanged.AddListener(SetResolution);
@@ -184,10 +232,13 @@ namespace Menu
                 raceController.raceUIManager.exitBtn.onClick.AddListener(Exit);
                 raceController.isSimpleMode = isSimpleMode;
                 raceController.droneRaceController.yawPower = currentYawSensitivity;
-                raceController.droneRaceController.droneMeshRenderer.material.SetColor("_Color", playerColorPreview.color);
-                raceController.droneRaceController.droneMeshRenderer.material.SetColor("_EmissionColor", playerColorPreview.color);
+                raceController.droneRaceController.droneMeshRenderer.material.SetColor("_Color",
+                    playerColorPreview.color);
+                raceController.droneRaceController.droneMeshRenderer.material.SetColor("_EmissionColor",
+                    playerColorPreview.color);
                 raceController.droneRaceAI.droneMeshRenderer.material.SetColor("_Color", botsColorPreview.color);
-                raceController.droneRaceAI.droneMeshRenderer.material.SetColor("_EmissionColor", botsColorPreview.color);
+                raceController.droneRaceAI.droneMeshRenderer.material.SetColor("_EmissionColor",
+                    botsColorPreview.color);
             }
             else if (scene.buildIndex == 2)
             {
@@ -201,56 +252,50 @@ namespace Menu
                 footballController.footballUIManager.exitBtn.onClick.AddListener(Exit);
                 footballController.isSimpleMode = isSimpleMode;
                 footballController.droneFootballController.yawPower = currentYawSensitivity;
-                footballController.droneFootballController.droneMeshRenderer.material.SetColor("_Color", playerColorPreview.color);
-                footballController.droneFootballController.droneMeshRenderer.material.SetColor("_EmissionColor", playerColorPreview.color);
-                footballController.droneFootballAIList[0].droneMeshRenderer.material.SetColor("_Color", botsColorPreview.color);
-                footballController.droneFootballAIList[0].droneMeshRenderer.material.SetColor("_EmissionColor", botsColorPreview.color);
-                footballController.droneFootballAIList[1].droneMeshRenderer.material.SetColor("_Color", botsColorPreview.color);
-                footballController.droneFootballAIList[1].droneMeshRenderer.material.SetColor("_EmissionColor", botsColorPreview.color);
+                footballController.droneFootballController.droneMeshRenderer.material.SetColor("_Color",
+                    playerColorPreview.color);
+                footballController.droneFootballController.droneMeshRenderer.material.SetColor("_EmissionColor",
+                    playerColorPreview.color);
+                footballController.droneFootballAIList[0].droneMeshRenderer.material
+                    .SetColor("_Color", botsColorPreview.color);
+                footballController.droneFootballAIList[0].droneMeshRenderer.material
+                    .SetColor("_EmissionColor", botsColorPreview.color);
+                footballController.droneFootballAIList[1].droneMeshRenderer.material
+                    .SetColor("_Color", botsColorPreview.color);
+                footballController.droneFootballAIList[1].droneMeshRenderer.material
+                    .SetColor("_EmissionColor", botsColorPreview.color);
             }
         }
 
         public void ClearLogInputs()
         {
-            menuUIManager.logLoginInput.text = String.Empty;
-            menuUIManager.logPasswordInput.text = String.Empty;
+            menuUIManager.logLoginInput.text = string.Empty;
+            menuUIManager.logPasswordInput.text = string.Empty;
         }
 
         public void ClearRegInputs()
         {
-            menuUIManager.regLoginInput.text = String.Empty;
-            menuUIManager.regPasswordInput.text = String.Empty;
+            menuUIManager.regLoginInput.text = string.Empty;
+            menuUIManager.regPasswordInput.text = string.Empty;
         }
 
-        
+
         public void OpenSubMenu(string menuName)
         {
             foreach (var menu in menuUIManager.subMenus)
-            {
                 if (menu.menuName == menuName)
-                {
                     menu.Open();
-                }
                 else
-                {
                     menu.Close();
-                }
-            }   
         }
 
         public void OpenMenu(string menuName)
         {
             foreach (var menu in menuUIManager.menus)
-            {
                 if (menu.menuName == menuName)
-                {
                     menu.Open();
-                }
                 else
-                {
                     menu.Close();
-                }
-            }            
         }
 
         public void BackToMenu()
