@@ -7,6 +7,7 @@ using DroneFootball;
 using DroneRace;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 namespace Menu
 {
@@ -23,6 +24,7 @@ namespace Menu
         public FootballController footballController;
         public ColorPreview botsColorPreview;
         public ColorPreview playerColorPreview;
+        public Resolution[] Resolutions;
 
         private readonly List<string> _difficulties = new List<string>
             {"Супер легко", "Легко", "Нормально", "Сложно", "Невозможно"};
@@ -35,9 +37,10 @@ namespace Menu
         private bool _isFootball;
         private bool _isMenuScene = true;
         private bool _isRace;
-        public Resolution[] Resolutions;
-        public StringBuilder StatText1;
-        public StringBuilder StatText2;
+        private StringBuilder _statText1;
+        private StringBuilder _statText2;
+        private Color _botsColorPreview;
+        private Color _playerColorPreview;
 
         private void Start()
         {
@@ -70,6 +73,8 @@ namespace Menu
                 dbManager.UserStatisticFootball.SecondsInGame += Time.deltaTime;
 
             SetStatistics();
+            _botsColorPreview = botsColorPreview.color;
+            _playerColorPreview = playerColorPreview.color;
         }
 
         private void SetDropdownResolutions()
@@ -98,38 +103,38 @@ namespace Menu
 
         public void SetStatistics()
         {
-            StatText1 = new StringBuilder();
-            StatText1.AppendLine("Всего сыграно игр: " + (dbManager.UserStatisticFootball.GamesCount +
+            _statText1 = new StringBuilder();
+            _statText1.AppendLine("Всего сыграно игр: " + (dbManager.UserStatisticFootball.GamesCount +
                                                           dbManager.UserStatisticRace.GamesCount));
-            StatText1.AppendLine("Игр в дроногонках: " + dbManager.UserStatisticRace.GamesCount);
-            StatText1.AppendLine("Игр в дронофутболе: " + dbManager.UserStatisticFootball.GamesCount);
-            StatText1.AppendLine("Всего побед: " + (dbManager.UserStatisticFootball.WinsCount +
+            _statText1.AppendLine("Игр в дроногонках: " + dbManager.UserStatisticRace.GamesCount);
+            _statText1.AppendLine("Игр в дронофутболе: " + dbManager.UserStatisticFootball.GamesCount);
+            _statText1.AppendLine("Всего побед: " + (dbManager.UserStatisticFootball.WinsCount +
                                                     dbManager.UserStatisticRace.WinsCount));
-            StatText1.AppendLine("Побед в дроногонках: " + dbManager.UserStatisticFootball.WinsCount);
-            StatText1.AppendLine("Побед в дронофутболе: " + dbManager.UserStatisticRace.WinsCount);
-            StatText1.AppendLine("Всего поражений: " + (dbManager.UserStatisticFootball.LosesCount +
+            _statText1.AppendLine("Побед в дроногонках: " + dbManager.UserStatisticFootball.WinsCount);
+            _statText1.AppendLine("Побед в дронофутболе: " + dbManager.UserStatisticRace.WinsCount);
+            _statText1.AppendLine("Всего поражений: " + (dbManager.UserStatisticFootball.LosesCount +
                                                         dbManager.UserStatisticRace.LosesCount));
-            StatText1.AppendLine("Поражений в дроногонках: " + dbManager.UserStatisticFootball.LosesCount);
-            StatText1.AppendLine("Поражений в дронофутболе: " + dbManager.UserStatisticRace.LosesCount);
-            StatText1.AppendLine("Всего ничьей: " + (dbManager.UserStatisticFootball.GamesCount +
+            _statText1.AppendLine("Поражений в дроногонках: " + dbManager.UserStatisticFootball.LosesCount);
+            _statText1.AppendLine("Поражений в дронофутболе: " + dbManager.UserStatisticRace.LosesCount);
+            _statText1.AppendLine("Всего ничьей: " + (dbManager.UserStatisticFootball.GamesCount +
                 dbManager.UserStatisticRace.GamesCount - (dbManager.UserStatisticFootball.LosesCount +
                                                           dbManager.UserStatisticRace.LosesCount +
                                                           dbManager.UserStatisticFootball.WinsCount +
                                                           dbManager.UserStatisticRace.WinsCount)));
-            StatText1.AppendLine("Ничьей в дроногонках: " + (dbManager.UserStatisticRace.GamesCount -
+            _statText1.AppendLine("Ничьей в дроногонках: " + (dbManager.UserStatisticRace.GamesCount -
                                                              (dbManager.UserStatisticRace.LosesCount +
                                                               dbManager.UserStatisticRace.WinsCount)));
-            StatText1.AppendLine("Ничьей в дронофутболе: " + (dbManager.UserStatisticFootball.GamesCount -
+            _statText1.AppendLine("Ничьей в дронофутболе: " + (dbManager.UserStatisticFootball.GamesCount -
                 dbManager.UserStatisticFootball.LosesCount + dbManager.UserStatisticFootball.WinsCount));
-            menuUIManager.statText1.text = StatText1.ToString();
+            menuUIManager.statText1.text = _statText1.ToString();
 
-            StatText2 = new StringBuilder();
-            StatText2.AppendLine("Всего времени в игре: " + TimeFormat(
+            _statText2 = new StringBuilder();
+            _statText2.AppendLine("Всего времени в игре: " + TimeFormat(
                 dbManager.UserStatisticFootball.SecondsInGame + dbManager.UserStatisticRace.SecondsInGame +
                 dbManager.UserData.SecondsInGame));
-            StatText2.AppendLine("Времени в дроногонках: " + TimeFormat(dbManager.UserStatisticRace.SecondsInGame));
-            StatText2.AppendLine("Времени в дронофутболе: " + TimeFormat(dbManager.UserStatisticFootball.SecondsInGame));
-            menuUIManager.statText2.text = StatText2.ToString();
+            _statText2.AppendLine("Времени в дроногонках: " + TimeFormat(dbManager.UserStatisticRace.SecondsInGame));
+            _statText2.AppendLine("Времени в дронофутболе: " + TimeFormat(dbManager.UserStatisticFootball.SecondsInGame));
+            menuUIManager.statText2.text = _statText2.ToString();
         }
 
         private string TimeFormat(float time)
@@ -192,6 +197,8 @@ namespace Menu
                 menuUIManager.footballBtn.onClick.AddListener(delegate { StartGame(2); });
                 botsColorPreview = menuUIManager.botColorPicker.GetComponentInChildren<ColorPreview>();
                 playerColorPreview = menuUIManager.playerColorPicker.GetComponentInChildren<ColorPreview>();
+                botsColorPreview.GetComponent<Image>().color = _botsColorPreview;
+                playerColorPreview.GetComponent<Image>().color = _playerColorPreview;
                 menuUIManager.authExitBtn.onClick.AddListener(Exit);
                 menuUIManager.gameBtn.onClick.AddListener(delegate { OpenMenu("Game"); });
                 menuUIManager.statBtn.onClick.AddListener(delegate { OpenMenu("Statistics"); });
@@ -233,12 +240,12 @@ namespace Menu
                 raceController.isSimpleMode = isSimpleMode;
                 raceController.droneRaceController.yawPower = currentYawSensitivity;
                 raceController.droneRaceController.droneMeshRenderer.material.SetColor("_Color",
-                    playerColorPreview.color);
+                    _playerColorPreview);
                 raceController.droneRaceController.droneMeshRenderer.material.SetColor("_EmissionColor",
-                    playerColorPreview.color);
-                raceController.droneRaceAI.droneMeshRenderer.material.SetColor("_Color", botsColorPreview.color);
+                    _playerColorPreview);
+                raceController.droneRaceAI.droneMeshRenderer.material.SetColor("_Color", _botsColorPreview);
                 raceController.droneRaceAI.droneMeshRenderer.material.SetColor("_EmissionColor",
-                    botsColorPreview.color);
+                    _botsColorPreview);
             }
             else if (scene.buildIndex == 2)
             {
@@ -253,18 +260,24 @@ namespace Menu
                 footballController.isSimpleMode = isSimpleMode;
                 footballController.droneFootballController.yawPower = currentYawSensitivity;
                 footballController.droneFootballController.droneMeshRenderer.material.SetColor("_Color",
-                    playerColorPreview.color);
+                    _playerColorPreview);
                 footballController.droneFootballController.droneMeshRenderer.material.SetColor("_EmissionColor",
-                    playerColorPreview.color);
+                    _playerColorPreview);
                 footballController.droneFootballAIList[0].droneMeshRenderer.material
-                    .SetColor("_Color", botsColorPreview.color);
+                    .SetColor("_Color", _botsColorPreview);
                 footballController.droneFootballAIList[0].droneMeshRenderer.material
-                    .SetColor("_EmissionColor", botsColorPreview.color);
+                    .SetColor("_EmissionColor", _botsColorPreview);
                 footballController.droneFootballAIList[1].droneMeshRenderer.material
-                    .SetColor("_Color", botsColorPreview.color);
+                    .SetColor("_Color", _botsColorPreview);
                 footballController.droneFootballAIList[1].droneMeshRenderer.material
-                    .SetColor("_EmissionColor", botsColorPreview.color);
+                    .SetColor("_EmissionColor", _botsColorPreview);
             }
+        }
+
+        public void CloseColorPickers()
+        {
+            botsColorPreview.CloseColorPicker();
+            playerColorPreview.CloseColorPicker();
         }
 
         public void ClearLogInputs()

@@ -12,7 +12,7 @@ namespace DB
         public MenuManager menuManager;
 
         private readonly string _connectionString =
-            "Host=192.168.1.130;Port=5432;Username=postgres;Password=Bobik123654;Database=drones";
+            "Host=127.0.0.1;Port=5432;Username=postgres;Password=Bobik123654;Database=drones";
 
         public UserColors BotsColor = new UserColors();
         public UserColors PlayerColor = new UserColors();
@@ -623,7 +623,8 @@ namespace DB
             {
                 conn.Open();
                 var cmd = new NpgsqlCommand(
-                    $"select {idName} from {table} where {whereName1} = '{where1}' and {whereName2} = '{where2}' and {whereName3} = '{where3}'",
+                    $"select {idName} from {table} where {whereName1} = '{where1}' and {whereName2} = '{where2}' " +
+                    $"and {whereName3} = '{where3}'",
                     conn);
                 var dr = cmd.ExecuteReader();
                 while (dr.Read()) id = dr.GetInt32(0);
