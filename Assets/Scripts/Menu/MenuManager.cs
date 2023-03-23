@@ -5,6 +5,7 @@ using System.Text;
 using DB;
 using DroneFootball;
 using DroneRace;
+using Sockets;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -19,6 +20,7 @@ namespace Menu
         public float currentYawSensitivity = 1;
         public float currentVolume;
         public DBManager dbManager;
+        public Server server;
         public MenuUIManager menuUIManager;
         public RaceController raceController;
         public FootballController footballController;
@@ -34,6 +36,7 @@ namespace Menu
         private readonly List<float> _gatesSize = new List<float> {3f, 2f, 1.5f, 1.25f, 1f};
         private float _currentAIDroneSpeed;
         private float _currentGateScale;
+        private int _gameTimeInSeconds;
         private bool _isFootball;
         private bool _isMenuScene = true;
         private bool _isRace;
@@ -41,12 +44,14 @@ namespace Menu
         private StringBuilder _statText2;
         private Color _botsColorPreview;
         private Color _playerColorPreview;
+        private static readonly int EmissionColor = Shader.PropertyToID("_EmissionColor");
 
         private void Start()
         {
             DontDestroyOnLoad(gameObject);
 
             dbManager = GetComponent<DBManager>();
+            server = GetComponent<Server>();
             Resolutions = Screen.resolutions.Distinct().ToArray();
             SetDropdownResolutions();
             SetDropdownDifficulties();
@@ -171,11 +176,16 @@ namespace Menu
                 _isFootball = false;
                 var dontDestroyMenuManager = FindObjectsOfType<MenuManager>();
                 var dontDestroyDbManager = FindObjectsOfType<DBManager>();
+                var dontDestroyServer = FindObjectsOfType<Server>();
                 foreach (var obj in dontDestroyMenuManager)
                     if (obj.transform.gameObject != transform.gameObject)
                         Destroy(obj);
 
                 foreach (var obj in dontDestroyDbManager)
+                    if (obj.transform.gameObject != transform.gameObject)
+                        Destroy(obj);
+
+                foreach (var obj in dontDestroyServer)
                     if (obj.transform.gameObject != transform.gameObject)
                         Destroy(obj);
 
@@ -218,12 +228,13 @@ namespace Menu
                 menuUIManager.regBackBtn.onClick.AddListener(delegate { OpenMenu("Auth"); });
                 menuUIManager.regBackBtn.onClick.AddListener(ClearRegInputs);
                 menuUIManager.startExitAccBtn.onClick.AddListener(delegate { OpenMenu("Auth"); });
-                menuUIManager.startExitAccBtn.onClick.AddListener(dbManager.SaveUserFootballStatistic);
-                menuUIManager.startExitAccBtn.onClick.AddListener(dbManager.SaveUserRaceStatistic);
-                menuUIManager.startExitAccBtn.onClick.AddListener(dbManager.SaveUserResolution);
-                menuUIManager.startExitAccBtn.onClick.AddListener(dbManager.SaveUserSettings);
-                menuUIManager.startExitAccBtn.onClick.AddListener(dbManager.SaveUserData);
+                // menuUIManager.startExitAccBtn.onClick.AddListener(dbManager.SaveUserFootballStatistic);
+                // menuUIManager.startExitAccBtn.onClick.AddListener(dbManager.SaveUserRaceStatistic);
+                // menuUIManager.startExitAccBtn.onClick.AddListener(dbManager.SaveUserResolution);
+                // menuUIManager.startExitAccBtn.onClick.AddListener(dbManager.SaveUserSettings);
+                // menuUIManager.startExitAccBtn.onClick.AddListener(dbManager.SaveUserData);
                 menuUIManager.statBackBtn.onClick.AddListener(delegate { OpenMenu("Start"); });
+                menuUIManager.gameTimeInput.text = _gameTimeInSeconds.ToString();
 
                 SetDropdownResolutions();
                 menuUIManager.resolutionDropdown.onValueChanged.AddListener(SetResolution);
@@ -246,6 +257,9 @@ namespace Menu
                 raceController.droneRaceAI.droneMeshRenderer.material.SetColor("_Color", _botsColorPreview);
                 raceController.droneRaceAI.droneMeshRenderer.material.SetColor("_EmissionColor",
                     _botsColorPreview);
+                server.droneRaceController = raceController.droneRaceController;
+                
+                raceController.timer.timeForEndGame = _gameTimeInSeconds;
             }
             else if (scene.buildIndex == 2)
             {
@@ -266,11 +280,14 @@ namespace Menu
                 footballController.droneFootballAIList[0].droneMeshRenderer.material
                     .SetColor("_Color", _botsColorPreview);
                 footballController.droneFootballAIList[0].droneMeshRenderer.material
-                    .SetColor("_EmissionColor", _botsColorPreview);
+                    .SetColor(EmissionColor, _botsColorPreview);
                 footballController.droneFootballAIList[1].droneMeshRenderer.material
                     .SetColor("_Color", _botsColorPreview);
                 footballController.droneFootballAIList[1].droneMeshRenderer.material
                     .SetColor("_EmissionColor", _botsColorPreview);
+                server.droneFootballController = footballController.droneFootballController;
+                
+                footballController.timer.timeForEndGame = _gameTimeInSeconds;
             }
         }
 
@@ -318,11 +335,11 @@ namespace Menu
 
         public void Exit()
         {
-            dbManager.SaveUserFootballStatistic();
-            dbManager.SaveUserRaceStatistic();
-            dbManager.SaveUserResolution();
-            dbManager.SaveUserSettings();
-            dbManager.SaveUserData();
+            // dbManager.SaveUserFootballStatistic();
+            // dbManager.SaveUserRaceStatistic();
+            // dbManager.SaveUserResolution();
+            // dbManager.SaveUserSettings();
+            // dbManager.SaveUserData();
             Application.Quit();
         }
 
@@ -349,7 +366,16 @@ namespace Menu
 
         private void StartGame(int sceneIndex)
         {
+            GameTimeHandler();
             SceneManager.LoadScene(sceneIndex);
+        }
+
+        private void GameTimeHandler()
+        {
+            if (menuUIManager.gameTimeInput.text.Length > 0)
+                _gameTimeInSeconds = Convert.ToInt32(menuUIManager.gameTimeInput.text);
+            else
+                _gameTimeInSeconds = 300;
         }
     }
 }

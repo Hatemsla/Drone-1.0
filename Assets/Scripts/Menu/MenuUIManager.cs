@@ -51,6 +51,7 @@ namespace Menu
         public GameObject playerColorPicker;
         public GameObject botColorImage;
         public GameObject playerColorImage;
+        public TMP_InputField gameTimeInput;
 
         [Header("Game menu")] 
         public Toggle difficultToggle;

@@ -2258,6 +2258,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 906780282, guid: c50fcde4d03026b4ab9c4c3eff558381, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.2
+      objectReference: {fileID: 0}
     - target: {fileID: 6554557505652567720, guid: c50fcde4d03026b4ab9c4c3eff558381, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -2302,10 +2306,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6554557505652567723, guid: c50fcde4d03026b4ab9c4c3eff558381, type: 3}
-      propertyPath: m_Material
-      value: 
-      objectReference: {fileID: 13400000, guid: 430c8b21e6a352248b853e54ebc427a6, type: 2}
     - target: {fileID: 6554557505652567724, guid: c50fcde4d03026b4ab9c4c3eff558381, type: 3}
       propertyPath: m_Name
       value: DroneController
@@ -2315,20 +2315,20 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1054009058}
     - target: {fileID: 6554557505652567727, guid: c50fcde4d03026b4ab9c4c3eff558381, type: 3}
-      propertyPath: lerpSpeed
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6554557505652567727, guid: c50fcde4d03026b4ab9c4c3eff558381, type: 3}
-      propertyPath: minMaxRoll
-      value: 25
-      objectReference: {fileID: 0}
-    - target: {fileID: 6554557505652567727, guid: c50fcde4d03026b4ab9c4c3eff558381, type: 3}
-      propertyPath: minMaxPitch
-      value: 25
-      objectReference: {fileID: 0}
-    - target: {fileID: 6554557505652567727, guid: c50fcde4d03026b4ab9c4c3eff558381, type: 3}
       propertyPath: raceController
       value: 
       objectReference: {fileID: 528065040}
+    - target: {fileID: 6554557505860283129, guid: c50fcde4d03026b4ab9c4c3eff558381, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6554557505860283129, guid: c50fcde4d03026b4ab9c4c3eff558381, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -1.56
+      objectReference: {fileID: 0}
+    - target: {fileID: 6554557505860283134, guid: c50fcde4d03026b4ab9c4c3eff558381, type: 3}
+      propertyPath: field of view
+      value: 60
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c50fcde4d03026b4ab9c4c3eff558381, type: 3}
