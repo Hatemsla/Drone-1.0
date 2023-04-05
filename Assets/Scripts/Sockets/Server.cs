@@ -22,14 +22,14 @@ namespace Sockets
         public DroneRaceController droneRaceController;
         
         private static Socket _listener;
-        private readonly CancellationTokenSource _source;
-        public readonly ManualResetEvent AllDone;
-        public string _data;
+        private CancellationTokenSource _source;
+        public ManualResetEvent AllDone;
+        private string _data;
 
         public const int Port = 8888;
         public const int Waittime = 1;
 
-        private Server()
+        private void Awake()
         {
             _source = new CancellationTokenSource();
             AllDone = new ManualResetEvent(false);
@@ -42,9 +42,7 @@ namespace Sockets
 
         private void ListenEvents(CancellationToken token)
         {
-            IPHostEntry ipHostInfo = Dns.GetHostEntry(Dns.GetHostName());
-            IPAddress ipAddress =
-                ipHostInfo.AddressList.FirstOrDefault(ip => ip.AddressFamily == AddressFamily.InterNetwork);
+            IPAddress ipAddress = IPAddress.Parse("127.0.0.1");
             IPEndPoint localEndPoint = new IPEndPoint(ipAddress, Port);
 
             _listener = new Socket(ipAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
@@ -53,13 +51,13 @@ namespace Sockets
             {
                 _listener.Bind(localEndPoint);
                 _listener.Listen(10);
-
+                
                 while (!token.IsCancellationRequested)
                 {
                     AllDone.Reset();
 
                     _listener.BeginAccept(new AsyncCallback(AcceptCallback), _listener);
-
+                    
                     while (!token.IsCancellationRequested)
                     {
                         if (AllDone.WaitOne(Waittime))
@@ -133,6 +131,7 @@ namespace Sockets
         private void OnDestroy()
         {
             _source.Cancel();
+            _source.Dispose();
         }
 
         public class StateObject

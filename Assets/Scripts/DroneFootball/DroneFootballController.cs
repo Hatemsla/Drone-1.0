@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Sockets;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -39,6 +40,7 @@ namespace DroneFootball
             footballController.droneFootballController = this;
             isSimpleMode = footballController.isSimpleMode;
             footballController.playerCamera = GetComponentInChildren<Camera>();
+            FindObjectOfType<Server>().droneFootballController = this;
         }
 
         private void FixedUpdate()
@@ -55,20 +57,20 @@ namespace DroneFootball
             }
         }
         
-        // private void OnCyclic(InputValue value)
-        // {
-        //     cyclic = value.Get<Vector2>();
-        // }
-        //
-        // private void OnPedals(InputValue value)
-        // {
-        //     pedals = value.Get<float>();
-        // }
+        private void OnCyclic(InputValue value)
+        {
+            cyclic = value.Get<Vector2>();
+        }
         
-        // private void OnThrottle(InputValue value)
-        // {
-        //     throttle = value.Get<float>();
-        // }
+        private void OnPedals(InputValue value)
+        {
+            pedals = value.Get<float>();
+        }
+        
+        private void OnThrottle(InputValue value)
+        {
+            throttle = value.Get<float>();
+        }
 
         private void DroneMove()
         {

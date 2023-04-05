@@ -49,7 +49,7 @@ namespace DroneRace
         {
             cyclic = value.Get<Vector2>();
         }
-
+        
         private void OnPedals(InputValue value)
         {
             pedals = value.Get<float>();

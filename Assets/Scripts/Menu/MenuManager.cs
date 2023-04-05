@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Builder;
 using DB;
 using DroneFootball;
 using DroneRace;
@@ -24,6 +25,7 @@ namespace Menu
         public MenuUIManager menuUIManager;
         public RaceController raceController;
         public FootballController footballController;
+        public BuilderManager builderManager;
         public ColorPreview botsColorPreview;
         public ColorPreview playerColorPreview;
         public Resolution[] Resolutions;
@@ -40,6 +42,7 @@ namespace Menu
         private bool _isFootball;
         private bool _isMenuScene = true;
         private bool _isRace;
+        private bool _isBuilder;
         private StringBuilder _statText1;
         private StringBuilder _statText2;
         private Color _botsColorPreview;
@@ -58,6 +61,7 @@ namespace Menu
 
             menuUIManager.raceBtn.onClick.AddListener(delegate { StartGame(1); });
             menuUIManager.footballBtn.onClick.AddListener(delegate { StartGame(2); });
+            menuUIManager.trackBuilderBtn.onClick.AddListener(delegate { StartGame(3); });
             menuUIManager.difficultToggle.isOn = false;
             menuUIManager.volumeSlider.value = 1;
             botsColorPreview = menuUIManager.botColorPicker.GetComponentInChildren<ColorPreview>();
@@ -205,6 +209,7 @@ namespace Menu
                 menuUIManager.difficultToggle.isOn = false;
                 menuUIManager.raceBtn.onClick.AddListener(delegate { StartGame(1); });
                 menuUIManager.footballBtn.onClick.AddListener(delegate { StartGame(2); });
+                menuUIManager.trackBuilderBtn.onClick.AddListener(delegate { StartGame(3); });
                 botsColorPreview = menuUIManager.botColorPicker.GetComponentInChildren<ColorPreview>();
                 playerColorPreview = menuUIManager.playerColorPicker.GetComponentInChildren<ColorPreview>();
                 botsColorPreview.GetComponent<Image>().color = _botsColorPreview;
@@ -288,6 +293,16 @@ namespace Menu
                 server.droneFootballController = footballController.droneFootballController;
                 
                 footballController.timer.timeForEndGame = _gameTimeInSeconds;
+            }
+            else if(scene.buildIndex == 3)
+            {
+                _isMenuScene = false;
+                _isRace = false;
+                _isFootball = false;
+                _isBuilder = true;
+                builderManager = FindObjectOfType<BuilderManager>();
+                builderManager.builderUI.exitBtn.onClick.AddListener(Exit);
+                builderManager.builderUI.backBtn.onClick.AddListener(BackToMenu);
             }
         }
 
