@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using cakeslice;
+using UnityEngine.EventSystems;
 using Outline = cakeslice.Outline;
 
 namespace Builder
@@ -19,7 +20,7 @@ namespace Builder
 
         private void Update()
         {
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
             {
                 var ray = Camera.main!.ScreenPointToRay(Input.mousePosition);
                 RaycastHit hit;
@@ -49,6 +50,7 @@ namespace Builder
             if (selectedObject == null) return;
             var obj = selectedObject;
             Deselect();
+            _builderManager.objectsPool.Remove(obj.transform.root.gameObject);
             Destroy(obj.transform.root.gameObject);
         }
 

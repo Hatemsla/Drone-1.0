@@ -12,11 +12,11 @@ namespace DroneRace
         public List<Transform> nodes;
         public GameObject checkPointPrefab;
 
-        private Path _path;
+        private RacePath _racePath;
 
         private void Start()
         {
-            _path = FindObjectOfType<Path>();
+            _racePath = FindObjectOfType<RacePath>();
         }
 
         private void Update()
@@ -26,7 +26,7 @@ namespace DroneRace
 
         public void CheckWaypoint()
         {
-            nodes = _path.nodes;
+            nodes = _racePath.nodes;
             currentNode++;
         }
 
@@ -82,8 +82,8 @@ namespace DroneRace
             }
 
             newCheckpoint.GetComponent<RaceCheckpointTrigger>().checkpointID =
-                _path.nodes[^1].GetComponent<RaceCheckpointTrigger>().checkpointID + 1;
-            _path.nodes.Add(newCheckpoint.transform);
+                _racePath.nodes[^1].GetComponent<RaceCheckpointTrigger>().checkpointID + 1;
+            _racePath.nodes.Add(newCheckpoint.transform);
         }
     }
 }

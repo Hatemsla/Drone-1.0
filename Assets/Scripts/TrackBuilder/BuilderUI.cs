@@ -12,5 +12,7 @@ namespace Builder
         public Button gateBtn;
         public Button exitBtn;
         public Button backBtn;
+        public Button saveBtn;
+        public Button loadBtn;
     }
 }

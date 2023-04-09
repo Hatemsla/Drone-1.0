@@ -65,7 +65,12 @@ namespace Menu
         public TMP_Text statText1;
         public TMP_Text statText2;
         public Button statBackBtn;
-        
+
+        [Header("Builder menu")] 
+        public TMP_InputField levelInput;
+        public Button createLevelBtn;
+        public Button loadLevelBtn;
+
         [Header("Menus")]
         public GameObject startMenu;
         public GameObject optionMenu;

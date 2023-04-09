@@ -20,7 +20,7 @@ namespace DroneRace
         public DroneRaceUIManager raceUIManager;
         public DroneRaceCheckNode playerNode;
         public Timer timer;
-        public Path path;
+        public RacePath racePath;
         public List<DroneRaceCheckNode> droneRaceCheckNodes;
         
         private Camera _mainCamera;
@@ -41,7 +41,7 @@ namespace DroneRace
             _checkNode = droneRaceController.droneRaceCheckNode;
             foreach (var drone in droneRaceCheckNodes)
             {
-                path.nodes[0].localScale = new Vector3(3, 3, 3);
+                racePath.nodes[0].localScale = new Vector3(3, 3, 3);
             }
 
             droneRaceAI.speed *= currentAIDroneSpeed;

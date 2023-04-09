@@ -4,7 +4,7 @@ using System.Linq;
 using DroneRace;
 using UnityEngine;
 
-public class Path : MonoBehaviour
+public class RacePath : MonoBehaviour
 {
     public List<Transform> nodes;
     

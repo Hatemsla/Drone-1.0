@@ -1,132 +1,66 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using Newtonsoft.Json;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 namespace Builder
 {
     public class BuilderManager : MonoBehaviour
     {
+        public string levelName;
         public float gridSize;
         public bool canPlace;
+        public Scene levelScene;
         public BuilderUI builderUI;
         public LayerMask layerMask;
         public GameObject pendingObject;
         public TrackObject currentObjectType;
-        public GameObject groundPrefab;
         public Vector3 mousePos;
         public GameObject[] objects;
         public List<GameObject> objectsPool;
-        public Dictionary<float, bool> UpPointHeights;
-        public Dictionary<GameObject, float> Grounds;
         
         private int _currentGroundIndex;
         private RaycastHit _hit;
-        private float _heightGateOffset = 2f;
         private Selection _selection;
             
         private void Start()
         {
             _selection = FindObjectOfType<Selection>();
-            UpPointHeights = new Dictionary<float, bool> { { 0f, true } };
-            Grounds = new Dictionary<GameObject, float> { { groundPrefab, 0f } };
+            CreateObjectsPoolScene();
         }
 
         private void Update()
         {
             Ray ray = Camera.main!.ScreenPointToRay(Input.mousePosition);
 
-            if (Physics.Raycast(ray, out _hit, 10000, layerMask))
+            if (Physics.Raycast(ray, out _hit, 10000, layerMask) && !EventSystem.current.IsPointerOverGameObject())
             {
                 mousePos = _hit.point;
                 
                 if (pendingObject == null) return;
                 
-                if (LayerMask.LayerToName(_hit.collider.gameObject.layer) == "FloorConnection" && currentObjectType.objectType == ObjectsType.Floor)
+                switch (currentObjectType.objectType)
                 {
-                    // pendingObject.transform.position = _hit.collider.transform.position;
-                    // pendingObject.transform.rotation = _hit.collider.transform.rotation;
-                }
-                else
-                {
-                    switch (currentObjectType.objectType)
-                    {
-                        case ObjectsType.Floor:
-                            pendingObject.transform.position = _hit.point;
-                            break;
-                        case ObjectsType.Wall:
-                            pendingObject.transform.position =
-                                new Vector3(_hit.point.x, _hit.point.y + 1.25f, _hit.point.z);
-                            break;
-                        case ObjectsType.Slant:
-                            pendingObject.transform.position =
-                                new Vector3(_hit.point.x, _hit.point.y + 1.25f, _hit.point.z);
-                            break;
-                        default:
-                            pendingObject.transform.position = _hit.point;
-                            break;
-                    }
+                    case ObjectsType.Floor:
+                        pendingObject.transform.position = _hit.point;
+                        break;
+                    case ObjectsType.Wall:
+                        pendingObject.transform.position =
+                            new Vector3(_hit.point.x, _hit.point.y + 1.25f, _hit.point.z);
+                        break;
+                    case ObjectsType.Slant:
+                        pendingObject.transform.position =
+                            new Vector3(_hit.point.x, _hit.point.y + 1.25f, _hit.point.z);
+                        break;
+                    default:
+                        pendingObject.transform.position = _hit.point;
+                        break;
                 }
             }
-            
-            // switch (currentObjectType.objectType)
-            // {
-            //     case ObjectsType.Floor:
-            //         pendingObject.transform.position = new Vector3
-            //         (
-            //             RoundToNearsGrid(_pos.x),
-            //             _pos.y,
-            //             RoundToNearsGrid(_pos.z)
-            //         );
-            //         break;
-            //     case ObjectsType.Slant:
-            //     {
-            //         var yOffset = currentObjectType.rotateStateIndex switch
-            //         {
-            //             -1 => 1f,
-            //             0 => 1.35f,
-            //             _ => 1.65f
-            //         };
-            //
-            //         var y = Grounds.ElementAt(_currentGroundIndex).Value + yOffset;
-            //         pendingObject.transform.position = new Vector3
-            //         (
-            //             RoundToNearsGrid(_pos.x),
-            //             y,
-            //             RoundToNearsGrid(_pos.z)
-            //         );
-            //         break;
-            //     }
-            //     case ObjectsType.Gate:
-            //     {
-            //         _heightGateOffset = currentObjectType.heightStateIndex switch
-            //         {
-            //             -1 => 1.375f,
-            //             0 => 2f,
-            //             _ => 3f
-            //         };
-            //
-            //         var y = Grounds.ElementAt(_currentGroundIndex).Value + _heightGateOffset;
-            //         pendingObject.transform.position = new Vector3
-            //         (
-            //             RoundToNearsGrid(_pos.x),
-            //             y,
-            //             RoundToNearsGrid(_pos.z)
-            //         );
-            //         break;
-            //     }
-            //     default:
-            //     {
-            //         var y = Grounds.ElementAt(_currentGroundIndex).Value + 1.35f;
-            //         pendingObject.transform.position = new Vector3
-            //         (
-            //             RoundToNearsGrid(_pos.x),
-            //             y,
-            //             RoundToNearsGrid(_pos.z)
-            //         );
-            //         break;
-            //     }
-            // }
 
             if (Input.GetMouseButtonDown(0) && canPlace)
             {
@@ -172,12 +106,6 @@ namespace Builder
 
         public void PlaceObject()
         {
-            // if (currentObjectType.objectType == ObjectsType.Slant && !UpPointHeights.ContainsKey(MathF.Round(currentObjectType.upPointHeight, 2)))
-            // {
-            //     UpPointHeights.Add(MathF.Round(currentObjectType.upPointHeight, 2), false);
-            //     UpPointHeights = new Dictionary<float, bool>(UpPointHeights.OrderBy(x => x.Key));
-            // }
-
             try
             {
                 ChangeLayerRecursively(pendingObject.transform, LayerMask.NameToLayer("TrackGround"));
@@ -207,9 +135,11 @@ namespace Builder
         {
             pendingObject.transform.Rotate(axis, rotateAmount, space);
         }
+        
         public void SelectObject(int index)
         {
             pendingObject = Instantiate(objects[index], mousePos, transform.rotation);
+            SceneManager.MoveGameObjectToScene(pendingObject, levelScene);
             objectsPool.Add(pendingObject);
             _selection.Deselect();
             _selection.Select(pendingObject);
@@ -217,64 +147,63 @@ namespace Builder
             currentObjectType.isActive = true;
         }
 
-        public void UpFloor()
+        private void CreateObjectsPoolScene()
         {
-            if(_currentGroundIndex == UpPointHeights.Count - 1) return;
+            levelScene = SceneManager.CreateScene("ObjectsPool");
+            MoveObjectsToPoolScene();
+        }
 
-            _currentGroundIndex++;
-            if (UpPointHeights.ElementAt(_currentGroundIndex).Value)
+        private void MoveObjectsToPoolScene()
+        {
+            foreach (var obj in objectsPool)
             {
-                for (var i = 0; i < Grounds.Count; i++)
-                {
-                    if(i != _currentGroundIndex)
-                        Grounds.ElementAt(i).Key.SetActive(false);
-                    else
-                    {
-                        Grounds.ElementAt(i).Key.SetActive(true);
-                        _currentGroundIndex = i;
-                        break;
-                    }
-                }
-            }
-            else
-            {
-                var newGround = Instantiate(groundPrefab,
-                    new Vector3(0, UpPointHeights.ElementAt(_currentGroundIndex).Key, 0), Quaternion.identity);
-
-                Grounds.Add(newGround, UpPointHeights.ElementAt(_currentGroundIndex).Key);
-                Grounds = new Dictionary<GameObject, float>(Grounds.OrderBy(x => x.Value));
-                UpPointHeights[UpPointHeights.ElementAt(_currentGroundIndex).Key] = true;
-
-                foreach (var ground in Grounds)
-                {
-                    ground.Key.SetActive(ground.Key == newGround);
-
-                    if (ground.Key == newGround)
-                        _currentGroundIndex = Grounds.Keys.ToList().IndexOf(ground.Key);
-                }
+                SceneManager.MoveGameObjectToScene(obj, levelScene);
             }
         }
 
-        public void DownFloor()
+        public void LoadScene()
         {
-            var isGroundExist = Grounds.ContainsKey(Grounds.ElementAt(_currentGroundIndex - 1).Key);
+            Dictionary<string, Dictionary<string, string>> loadedData =
+                new Dictionary<string, Dictionary<string, string>>();
             
-            if(!isGroundExist)
-                return;
-
-            _currentGroundIndex--;
+            if(objectsPool.Count > 0)
+                ClearObject();
             
-            for (var i = 0; i < Grounds.Count; i++)
+            string jsonData = File.ReadAllText(Application.dataPath + "/Levels/" + levelName + ".json");
+            loadedData = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, string>>>(jsonData);
+            foreach (KeyValuePair<string, Dictionary<string, string>> kvp in loadedData)
             {
-                if(i != _currentGroundIndex)
-                    Grounds.ElementAt(i).Key.SetActive(false);
-                else
-                {
-                    Grounds.ElementAt(i).Key.SetActive(true);
-                }
+                string objectName = kvp.Value["name"].Substring(0, kvp.Value["name"].IndexOf('('));
+                Vector3 position = ParseVector3(kvp.Value["position"]);
+                Vector3 rotation = ParseVector3(kvp.Value["rotation"]);
+                Vector3 scale = ParseVector3(kvp.Value["scale"]);
+                int layer = Convert.ToInt32(kvp.Value["layer"]);
+                GameObject newObj = Instantiate(Resources.Load<GameObject>("TrackObjects/" + objectName), position, Quaternion.Euler(rotation));
+                newObj.layer = layer;
+                newObj.transform.localScale = scale;
+                newObj.name = kvp.Value["name"];
+                objectsPool.Add(newObj);
             }
         }
-
+        
+        private Vector3 ParseVector3(string str)
+        {
+            string[] values = str.Split(' ');
+            float x = float.Parse(values[0]);
+            float y = float.Parse(values[1]);
+            float z = float.Parse(values[2]);
+            return new Vector3(x, y, z);
+        }
+        
+        private void ClearObject()
+        {
+            foreach (var obj in objectsPool)
+            {
+                Destroy(obj);
+            }
+            objectsPool.Clear();
+        }
+        
         private float RoundToNearsGrid(float pos)
         {
             float xDiff = pos % gridSize;

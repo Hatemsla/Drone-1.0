@@ -1,11 +1,14 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using Builder;
 using DB;
 using DroneFootball;
 using DroneRace;
+using Newtonsoft.Json;
 using Sockets;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -15,6 +18,7 @@ namespace Menu
 {
     public class MenuManager : MonoBehaviour
     {
+        public string levelName;
         public bool isSimpleMode;
         public int currentDifficultIndex;
         public int currentResolutionIndex;
@@ -42,7 +46,7 @@ namespace Menu
         private bool _isFootball;
         private bool _isMenuScene = true;
         private bool _isRace;
-        private bool _isBuilder;
+        private bool _isLoadLevel;
         private StringBuilder _statText1;
         private StringBuilder _statText2;
         private Color _botsColorPreview;
@@ -61,7 +65,8 @@ namespace Menu
 
             menuUIManager.raceBtn.onClick.AddListener(delegate { StartGame(1); });
             menuUIManager.footballBtn.onClick.AddListener(delegate { StartGame(2); });
-            menuUIManager.trackBuilderBtn.onClick.AddListener(delegate { StartGame(3); });
+            menuUIManager.createLevelBtn.onClick.AddListener(CreateLevel);
+            menuUIManager.loadLevelBtn.onClick.AddListener(LoadLevel);
             menuUIManager.difficultToggle.isOn = false;
             menuUIManager.volumeSlider.value = 1;
             botsColorPreview = menuUIManager.botColorPicker.GetComponentInChildren<ColorPreview>();
@@ -209,7 +214,8 @@ namespace Menu
                 menuUIManager.difficultToggle.isOn = false;
                 menuUIManager.raceBtn.onClick.AddListener(delegate { StartGame(1); });
                 menuUIManager.footballBtn.onClick.AddListener(delegate { StartGame(2); });
-                menuUIManager.trackBuilderBtn.onClick.AddListener(delegate { StartGame(3); });
+                menuUIManager.createLevelBtn.onClick.AddListener(CreateLevel);
+                menuUIManager.loadLevelBtn.onClick.AddListener(LoadLevel);
                 botsColorPreview = menuUIManager.botColorPicker.GetComponentInChildren<ColorPreview>();
                 playerColorPreview = menuUIManager.playerColorPicker.GetComponentInChildren<ColorPreview>();
                 botsColorPreview.GetComponent<Image>().color = _botsColorPreview;
@@ -220,6 +226,7 @@ namespace Menu
                 menuUIManager.optionsBtn.onClick.AddListener(delegate { OpenMenu("Options"); });
                 menuUIManager.gameBackBtn.onClick.AddListener(delegate { OpenMenu("Start"); });
                 menuUIManager.optionsBackBtn.onClick.AddListener(delegate { OpenMenu("Start"); });
+                menuUIManager.trackBuilderBtn.onClick.AddListener(delegate { OpenMenu("Builder"); });
                 menuUIManager.generalSettingsBtn.onClick.AddListener(delegate { OpenSubMenu("GeneralOpt"); });
                 menuUIManager.soundSettingsBtn.onClick.AddListener(delegate { OpenSubMenu("SoundOpt"); });
                 menuUIManager.controlSettingsBtn.onClick.AddListener(delegate { OpenSubMenu("ControlOpt"); });
@@ -299,11 +306,63 @@ namespace Menu
                 _isMenuScene = false;
                 _isRace = false;
                 _isFootball = false;
-                _isBuilder = true;
                 builderManager = FindObjectOfType<BuilderManager>();
                 builderManager.builderUI.exitBtn.onClick.AddListener(Exit);
                 builderManager.builderUI.backBtn.onClick.AddListener(BackToMenu);
+                builderManager.builderUI.saveBtn.onClick.AddListener(SaveLevel);
+                builderManager.levelName = levelName;
+
+                if (_isLoadLevel)
+                {
+                    builderManager.LoadScene();
+                }
             }
+        }
+
+        public void LoadLevel()
+        {
+            if(!File.Exists(Application.dataPath + "/Levels/" + menuUIManager.levelInput.text + ".json"))
+                return;
+
+            levelName = menuUIManager.levelInput.text;
+            _isLoadLevel = true;
+            SceneManager.LoadScene(3);
+        }
+
+        public void CreateLevel()
+        {
+            if(!IsValidLevelName(menuUIManager.levelInput.text))
+                return;
+            
+            Directory.CreateDirectory(Application.dataPath + "/Levels");
+            levelName = menuUIManager.levelInput.text;
+            _isLoadLevel = false;
+            SceneManager.LoadScene(3);
+        }
+
+        public void SaveLevel()
+        {
+            Dictionary<string, Dictionary<string, string>> data = new Dictionary<string, Dictionary<string, string>>();
+            foreach (GameObject obj in builderManager.levelScene.GetRootGameObjects())
+            {
+                if (obj.layer != LayerMask.NameToLayer("TrackGround") && obj.layer != LayerMask.NameToLayer("Track"))
+                    continue;
+                
+                Dictionary<string, string> objData = new Dictionary<string, string>();
+                objData["name"] = obj.name;
+                objData["position"] = FormatVector3(obj.transform.position);
+                objData["rotation"] = FormatVector3(obj.transform.rotation.eulerAngles);
+                objData["scale"] = FormatVector3(obj.transform.localScale);
+                objData["layer"] = obj.layer.ToString();
+                data[obj.GetInstanceID() + ""] = objData;
+            }
+            string json = JsonConvert.SerializeObject(data, Formatting.Indented);
+            File.WriteAllText(Application.dataPath + "/Levels/" + levelName + ".json", json);
+        }
+        
+        private string FormatVector3(Vector3 vector)
+        {
+            return vector.x + " " + vector.y + " " + vector.z;
         }
 
         public void CloseColorPickers()
@@ -383,6 +442,12 @@ namespace Menu
         {
             GameTimeHandler();
             SceneManager.LoadScene(sceneIndex);
+        }
+
+        private bool IsValidLevelName(string input)
+        {
+            string pattern = @"^(?=.*[a-zA-Z])[a-zA-Z0-9]{2,}$";
+            return Regex.IsMatch(input, pattern);
         }
 
         private void GameTimeHandler()
