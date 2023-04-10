@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using cakeslice;
 using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -14,14 +15,15 @@ namespace Builder
         public string levelName;
         public float gridSize;
         public bool canPlace;
-        public Scene levelScene;
         public BuilderUI builderUI;
+        public Transform ground;
         public LayerMask layerMask;
         public GameObject pendingObject;
         public TrackObject currentObjectType;
         public Vector3 mousePos;
         public GameObject[] objects;
         public List<GameObject> objectsPool;
+        [HideInInspector] public Scene levelScene;
         
         private int _currentGroundIndex;
         private RaycastHit _hit;
@@ -50,11 +52,15 @@ namespace Builder
                         break;
                     case ObjectsType.Wall:
                         pendingObject.transform.position =
-                            new Vector3(_hit.point.x, _hit.point.y + 1.25f, _hit.point.z);
+                            new Vector3(_hit.point.x, _hit.point.y + currentObjectType.yOffset, _hit.point.z);
                         break;
                     case ObjectsType.Slant:
                         pendingObject.transform.position =
-                            new Vector3(_hit.point.x, _hit.point.y + 1.25f, _hit.point.z);
+                            new Vector3(_hit.point.x, _hit.point.y + currentObjectType.yOffset, _hit.point.z);
+                        break;
+                    case ObjectsType.Lamp:
+                        pendingObject.transform.position =
+                            new Vector3(_hit.point.x, _hit.point.y + currentObjectType.yOffset, _hit.point.z);
                         break;
                     default:
                         pendingObject.transform.position = _hit.point;
@@ -131,6 +137,18 @@ namespace Builder
             }
         }
 
+        public void OffOutlineRecursively(Transform obj)
+        {
+            if(obj.gameObject.GetComponent<Outline>())
+                obj.gameObject.GetComponent<Outline>().enabled = false;
+
+            foreach (Transform child in obj)
+            {
+                OffOutlineRecursively(child);
+            }
+        }
+
+        
         private void RotateObject(Vector3 axis, float rotateAmount, Space space)
         {
             pendingObject.transform.Rotate(axis, rotateAmount, space);
@@ -179,13 +197,14 @@ namespace Builder
                 Vector3 scale = ParseVector3(kvp.Value["scale"]);
                 int layer = Convert.ToInt32(kvp.Value["layer"]);
                 GameObject newObj = Instantiate(Resources.Load<GameObject>("TrackObjects/" + objectName), position, Quaternion.Euler(rotation));
-                newObj.layer = layer;
+                ChangeLayerRecursively(newObj.transform, layer);
+                OffOutlineRecursively(newObj.transform);
                 newObj.transform.localScale = scale;
                 newObj.name = kvp.Value["name"];
                 objectsPool.Add(newObj);
             }
         }
-        
+
         private Vector3 ParseVector3(string str)
         {
             string[] values = str.Split(' ');

@@ -5,6 +5,7 @@
         Floor,
         Wall,
         Slant,
-        Gate
+        Gate,
+        Lamp,
     }
 }

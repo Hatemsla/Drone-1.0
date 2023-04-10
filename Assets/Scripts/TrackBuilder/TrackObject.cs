@@ -9,6 +9,7 @@ namespace Builder
     public class TrackObject : MonoBehaviour
     {
         public ObjectsType objectType;
+        public float yOffset;
         public float upPointHeight;
         public int rotateStateIndex = 0;
         public int heightStateIndex = 0;

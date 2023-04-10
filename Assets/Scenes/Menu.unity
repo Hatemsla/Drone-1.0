@@ -4349,7 +4349,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1349210747
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6181,7 +6181,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1898505694
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6290,7 +6290,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99be5f96e7e4eda4c8c3fe12adb456a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  savePath: 
   levelName: 
   isSimpleMode: 0
   currentDifficultIndex: 0
@@ -8320,6 +8319,10 @@ PrefabInstance:
     - target: {fileID: 8563579150712886329, guid: 32b74fb3b1c249b4cb03dc7e11c58b58, type: 3}
       propertyPath: m_text
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8563579151262922156, guid: 32b74fb3b1c249b4cb03dc7e11c58b58, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8563579151315731333, guid: 32b74fb3b1c249b4cb03dc7e11c58b58, type: 3}
       propertyPath: m_AnchorMax.x

@@ -1,4 +1,5 @@
 ﻿using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Builder
@@ -8,6 +9,7 @@ namespace Builder
         private TrackObject _trackObject;
         private BuilderManager _builderManager;
         private Selection _selection;
+        private Vector3 _connectPosition;
 
         private void Start()
         {
@@ -20,6 +22,9 @@ namespace Builder
         {
             if (_trackObject.isActive)
             {
+                if(_builderManager.pendingObject == null)
+                    return;
+                
                 if (_trackObject.objectType == ObjectsType.Floor &&
                     other.gameObject.layer == LayerMask.NameToLayer("FloorConnection"))
                 {
@@ -30,13 +35,17 @@ namespace Builder
                          other.gameObject.layer == LayerMask.NameToLayer("WallConnection"))
                 {
                     _builderManager.PlaceObject();
-                    _trackObject.transform.position = other.transform.position;
+                    _connectPosition = new Vector3(other.transform.position.x,
+                        other.transform.position.y + _trackObject.yOffset, other.transform.position.z);
+                    _trackObject.transform.position = _connectPosition;
                 }
                 else if (_trackObject.objectType == ObjectsType.Slant &&
-                         other.gameObject.layer == LayerMask.NameToLayer("WallConnection"))
+                         (other.gameObject.layer == LayerMask.NameToLayer("WallConnection") || other.gameObject.layer == LayerMask.NameToLayer("FloorConnection")))
                 {
                     _builderManager.PlaceObject();
-                    _trackObject.transform.position = other.transform.position;
+                    _connectPosition = new Vector3(other.transform.position.x,
+                        _builderManager.mousePos.y + _trackObject.yOffset, other.transform.position.z);
+                    _trackObject.transform.position = _connectPosition;
                 }
             }
         }

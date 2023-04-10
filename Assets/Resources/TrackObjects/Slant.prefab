@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 748471771328601549}
-  - component: {fileID: 8981480729786758599}
   - component: {fileID: 1738248133447880796}
+  - component: {fileID: 8981480729786758599}
   m_Layer: 7
   m_Name: Slant
   m_TagString: Track
@@ -38,23 +38,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8981480729786758599
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 83540553584772983}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ab4a5091580a3b41a4a106fe026bc9c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  objectType: 2
-  upPointHeight: 0
-  rotateStateIndex: 0
-  heightStateIndex: 0
-  isActive: 0
 --- !u!54 &1738248133447880796
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -71,6 +54,24 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &8981480729786758599
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 83540553584772983}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ab4a5091580a3b41a4a106fe026bc9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectType: 2
+  yOffset: 1.25
+  upPointHeight: 0
+  rotateStateIndex: 0
+  heightStateIndex: 0
+  isActive: 0
 --- !u!1 &270808382197004656
 GameObject:
   m_ObjectHideFlags: 0
