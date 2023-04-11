@@ -28,10 +28,12 @@ namespace Builder
         private int _currentGroundIndex;
         private RaycastHit _hit;
         private Selection _selection;
+        private Camera _mainCamera;
             
         private void Start()
         {
             _selection = FindObjectOfType<Selection>();
+            _mainCamera = Camera.main;
             CreateObjectsPoolScene();
         }
 
@@ -49,18 +51,6 @@ namespace Builder
                 {
                     case ObjectsType.Floor:
                         pendingObject.transform.position = _hit.point;
-                        break;
-                    case ObjectsType.Wall:
-                        pendingObject.transform.position =
-                            new Vector3(_hit.point.x, _hit.point.y + currentObjectType.yOffset, _hit.point.z);
-                        break;
-                    case ObjectsType.Slant:
-                        pendingObject.transform.position =
-                            new Vector3(_hit.point.x, _hit.point.y + currentObjectType.yOffset, _hit.point.z);
-                        break;
-                    case ObjectsType.Lamp:
-                        pendingObject.transform.position =
-                            new Vector3(_hit.point.x, _hit.point.y + currentObjectType.yOffset, _hit.point.z);
                         break;
                     default:
                         pendingObject.transform.position =
@@ -87,6 +77,15 @@ namespace Builder
                 var mouseScroll = Input.GetAxis("Mouse ScrollWheel");
                 var rotateAmount = mouseScroll > 0 ? 1 : -1; 
                 RotateObject(Vector3.up, 10 * rotateAmount, Space.World);
+            }
+
+            if (Input.GetKey(KeyCode.W))
+            {
+                ChangeObjectHeight(2 * Time.deltaTime);
+            }
+            else if (Input.GetKey(KeyCode.S))
+            {
+                ChangeObjectHeight(-2 * Time.deltaTime);
             }
 
             if (Input.GetKeyDown(KeyCode.Z))
@@ -128,6 +127,18 @@ namespace Builder
             catch
             {
                 // ignored
+            }
+        }
+
+        private void ChangeObjectHeight(float value)
+        {
+            if(currentObjectType == null)
+                return;
+
+            if (currentObjectType.objectType == ObjectsType.Gate)
+            {
+                currentObjectType.yOffset += value;
+                // _mainCamera.transform.Translate(0, value, 0, Space.Self);
             }
         }
         

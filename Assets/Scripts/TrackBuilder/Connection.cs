@@ -39,7 +39,6 @@ namespace Builder
                     _connectPosition = new Vector3(other.transform.position.x,
                         other.transform.position.y + _trackObject.yOffset, other.transform.position.z);
                     _trackObject.transform.position = _connectPosition;
-                    _trackObject.transform.rotation = other.transform.rotation;
                 }
                 else if (_trackObject.objectType == ObjectsType.Slant && 
                          other.gameObject.layer == LayerMask.NameToLayer("SlantConnection"))
