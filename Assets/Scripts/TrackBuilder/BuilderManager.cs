@@ -63,7 +63,8 @@ namespace Builder
                             new Vector3(_hit.point.x, _hit.point.y + currentObjectType.yOffset, _hit.point.z);
                         break;
                     default:
-                        pendingObject.transform.position = _hit.point;
+                        pendingObject.transform.position =
+                            new Vector3(_hit.point.x, _hit.point.y + currentObjectType.yOffset, _hit.point.z);
                         break;
                 }
             }
@@ -75,11 +76,17 @@ namespace Builder
                 
             if (Input.GetKeyDown(KeyCode.Q))
             {
-                RotateObject(Vector3.up, currentObjectType.objectType == ObjectsType.Gate ? -45 : -90, Space.World);
+                RotateObject(Vector3.up, -10, Space.World);
             }
             else if (Input.GetKeyDown(KeyCode.E))
             {
-                RotateObject(Vector3.up, currentObjectType.objectType == ObjectsType.Gate ? 45 : 90, Space.World);
+                RotateObject(Vector3.up, 10, Space.World);
+            }
+            else if (Input.GetAxis("Mouse ScrollWheel") != 0)
+            {
+                var mouseScroll = Input.GetAxis("Mouse ScrollWheel");
+                var rotateAmount = mouseScroll > 0 ? 1 : -1; 
+                RotateObject(Vector3.up, 10 * rotateAmount, Space.World);
             }
 
             if (Input.GetKeyDown(KeyCode.Z))
@@ -126,7 +133,7 @@ namespace Builder
         
         public void ChangeLayerRecursively(Transform obj, int layer)
         {
-            if (LayerMask.LayerToName(obj.gameObject.layer) != "FloorConnection" && LayerMask.LayerToName(obj.gameObject.layer) != "WallConnection")
+            if (LayerMask.LayerToName(obj.gameObject.layer) != "FloorConnection" && LayerMask.LayerToName(obj.gameObject.layer) != "WallConnection" && LayerMask.LayerToName(obj.gameObject.layer) != "SlantConnection")
             {
                 obj.gameObject.layer = layer;
             }
@@ -151,6 +158,8 @@ namespace Builder
         
         private void RotateObject(Vector3 axis, float rotateAmount, Space space)
         {
+            if(pendingObject == null)
+                return;
             pendingObject.transform.Rotate(axis, rotateAmount, space);
         }
         

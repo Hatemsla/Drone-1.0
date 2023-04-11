@@ -7,5 +7,9 @@
         Slant,
         Gate,
         Lamp,
+        Block,
+        Cargo,
+        Trap,
+        Checkpoint
     }
 }

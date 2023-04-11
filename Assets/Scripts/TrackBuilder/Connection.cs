@@ -30,6 +30,7 @@ namespace Builder
                 {
                     _builderManager.PlaceObject();
                     _trackObject.transform.position = other.transform.position;
+                    _trackObject.transform.rotation = other.transform.rotation;
                 }
                 else if (_trackObject.objectType == ObjectsType.Wall &&
                          other.gameObject.layer == LayerMask.NameToLayer("WallConnection"))
@@ -38,14 +39,13 @@ namespace Builder
                     _connectPosition = new Vector3(other.transform.position.x,
                         other.transform.position.y + _trackObject.yOffset, other.transform.position.z);
                     _trackObject.transform.position = _connectPosition;
+                    _trackObject.transform.rotation = other.transform.rotation;
                 }
-                else if (_trackObject.objectType == ObjectsType.Slant &&
-                         (other.gameObject.layer == LayerMask.NameToLayer("WallConnection") || other.gameObject.layer == LayerMask.NameToLayer("FloorConnection")))
+                else if (_trackObject.objectType == ObjectsType.Slant && 
+                         other.gameObject.layer == LayerMask.NameToLayer("SlantConnection"))
                 {
                     _builderManager.PlaceObject();
-                    _connectPosition = new Vector3(other.transform.position.x,
-                        _builderManager.mousePos.y + _trackObject.yOffset, other.transform.position.z);
-                    _trackObject.transform.position = _connectPosition;
+                    _trackObject.transform.position = other.transform.position;
                 }
             }
         }
@@ -71,9 +71,9 @@ namespace Builder
                     }
                 }
                 else if (_trackObject.objectType == ObjectsType.Slant &&
-                         other.gameObject.layer == LayerMask.NameToLayer("WallConnection"))
+                         other.gameObject.layer == LayerMask.NameToLayer("SlantConnection"))
                 {
-                    if (Vector3.Distance(other.transform.position, _builderManager.mousePos) > 4)
+                    if (Vector3.Distance(other.transform.position, _builderManager.mousePos) > 3)
                     {
                         _selection.Move();
                     }
