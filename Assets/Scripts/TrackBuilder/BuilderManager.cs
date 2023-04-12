@@ -28,12 +28,17 @@ namespace Builder
         private int _currentGroundIndex;
         private RaycastHit _hit;
         private Selection _selection;
-        private Camera _mainCamera;
             
         private void Start()
         {
             _selection = FindObjectOfType<Selection>();
-            _mainCamera = Camera.main;
+
+            for (int i = 0; i < builderUI.createButtons.Count; i++)
+            {
+                var i1 = i;
+                builderUI.createButtons[i].onClick.AddListener(delegate { SelectObject(i1); });
+            }
+            
             CreateObjectsPoolScene();
         }
 

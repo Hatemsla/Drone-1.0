@@ -10,6 +10,7 @@
         Block,
         Cargo,
         Trap,
-        Checkpoint
+        Checkpoint,
+        PathSpinal
     }
 }

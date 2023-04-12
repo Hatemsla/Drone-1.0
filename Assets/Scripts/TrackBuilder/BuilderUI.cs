@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,5 +15,7 @@ namespace Builder
         public Button backBtn;
         public Button saveBtn;
         public Button loadBtn;
+
+        public List<Button> createButtons;
     }
 }
