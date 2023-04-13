@@ -11,6 +11,7 @@
         Cargo,
         Trap,
         Checkpoint,
-        PathSpinal
+        PathSpinal,
+        Drone,
     }
 }

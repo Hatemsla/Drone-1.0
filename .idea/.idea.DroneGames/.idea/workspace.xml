@@ -27,10 +27,21 @@
   <component name="ChangeListManager">
     <list default="true" id="2b7fdc50-160f-488f-bb8d-47a059ac380e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.DroneGames/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.DroneGames/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Levels/test.json" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Levels/test.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/TrackObjects/Gate.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/TrackObjects/Gate.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/TrackObjects/Lamp6.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/TrackObjects/Lamp6.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/TrackObjects/Slant.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/TrackObjects/Slant.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/DroneRace.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/DroneRace.unity" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/TrackBuilder.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/TrackBuilder.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/CameraController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/CameraController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/TrackBuilder/BuilderManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TrackBuilder/BuilderManager.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/TrackBuilder/BuilderUI.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TrackBuilder/BuilderUI.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/TrackBuilder/ObjectsType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TrackBuilder/ObjectsType.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TrackBuilder/Selection.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TrackBuilder/Selection.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Fallback.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Fallback.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/GraphicsSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/GraphicsSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserSettings/EditorUserSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/EditorUserSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserSettings/Layouts/CurrentMaximizeLayout.dwlt" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/Layouts/CurrentMaximizeLayout.dwlt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UserSettings/Layouts/default-2021.dwlt" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/Layouts/default-2021.dwlt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -46,7 +57,7 @@
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/DroneFootball/FootballGate.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Menu/ColorPreview.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="mock://C:/Work/Unity/DroneGames/Assets/Scripts/TrackBuilder/BuilderManager.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://C:/Work/Unity/DroneGames/Assets/Scripts/TrackBuilder/BuilderManager.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/TrackBuilder/DroneBuilderCheckNode.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -170,10 +181,10 @@
       </option>
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="19520">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="28844">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" value="19520" />
+      <option name="pid" value="28844" />
       <option name="projectPathOnTarget" />
       <option name="selectedOptions">
         <list />
@@ -246,7 +257,8 @@
       <workItem from="1681202001933" duration="11483000" />
       <workItem from="1681307481944" duration="1863000" />
       <workItem from="1681311352315" duration="81000" />
-      <workItem from="1681311488859" duration="716000" />
+      <workItem from="1681311488859" duration="4249000" />
+      <workItem from="1681389343432" duration="9521000" />
     </task>
     <task id="LOCAL-00001" summary="Add checkpoint spawn in droneRace">
       <created>1673510278765</created>
@@ -290,7 +302,14 @@
       <option name="project" value="LOCAL" />
       <updated>1681225283358</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Add ui buttons auto pre-settings">
+      <created>1681312343862</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1681312343862</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -318,7 +337,8 @@
     <MESSAGE value="Add bot rotation" />
     <MESSAGE value="Add more object to track builder scene" />
     <MESSAGE value="Add changeable height for gate and add rotating for windmill" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add changeable height for gate and add rotating for windmill" />
+    <MESSAGE value="Add ui buttons auto pre-settings" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add ui buttons auto pre-settings" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

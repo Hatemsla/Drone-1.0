@@ -15,6 +15,15 @@ namespace Builder
         public Button backBtn;
         public Button saveBtn;
         public Button loadBtn;
+        public Button testLevelBtn;
+        public Button returnToLevelBtn;
+        
+        public RectTransform pathArrow;
+        public Sprite pointerIcon;
+        public Sprite outOfScreenIcon;
+
+        public GameObject createPanel;
+        public GameObject editPanel;
 
         public List<Button> createButtons;
     }

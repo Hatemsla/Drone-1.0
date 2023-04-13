@@ -51,6 +51,7 @@ namespace Builder
             var obj = selectedObject;
             Deselect();
             _builderManager.objectsPool.Remove(obj.transform.root.gameObject);
+            _builderManager.droneBuilderCheckNode.RemoveNode(obj.transform.root.transform);
             Destroy(obj.transform.root.gameObject);
         }
 

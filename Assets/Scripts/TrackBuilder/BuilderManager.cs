@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using cakeslice;
 using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using Outline = cakeslice.Outline;
 
 namespace Builder
 {
@@ -14,23 +15,37 @@ namespace Builder
     {
         public string levelName;
         public float gridSize;
+        public float interfaceScale;
         public bool canPlace;
+        public bool isMove;
         public BuilderUI builderUI;
+        public DroneBuilderController droneBuilderController;
+        public DroneBuilderCheckNode droneBuilderCheckNode;
         public Transform ground;
         public LayerMask layerMask;
         public GameObject pendingObject;
         public TrackObject currentObjectType;
         public Vector3 mousePos;
+        public Transform targetCheckpoint;
         public GameObject[] objects;
         public List<GameObject> objectsPool;
         [HideInInspector] public Scene levelScene;
         
         private int _currentGroundIndex;
+        private Connection[] _connections;
         private RaycastHit _hit;
         private Selection _selection;
+        private Camera _mainCamera;
+        private Vector3 _mainCameraPrevPosition;
+        private Vector3 _dronePrevPosition;
+        private Vector3 _startPointerSize;
+        private Quaternion _mainCameraPrevRotation;
+        private Quaternion _dronePrevRotation;
             
         private void Start()
         {
+            _startPointerSize = builderUI.pathArrow.sizeDelta;
+            _mainCamera = Camera.main;
             _selection = FindObjectOfType<Selection>();
 
             for (int i = 0; i < builderUI.createButtons.Count; i++)
@@ -93,6 +108,9 @@ namespace Builder
                 ChangeObjectHeight(-2 * Time.deltaTime);
             }
 
+            if(currentObjectType == null)
+                return;
+            
             if (Input.GetKeyDown(KeyCode.Z))
             {
                 switch (currentObjectType.objectType)
@@ -118,6 +136,133 @@ namespace Builder
                         currentObjectType.heightStateIndex--;
                         break;
                 }
+            }
+        }
+
+        private void LateUpdate()
+        {
+            if (droneBuilderCheckNode.currentNode >= droneBuilderCheckNode.nodes.Count)
+            {
+                builderUI.pathArrow.gameObject.SetActive(false);
+                Debug.Log("Вы прошли уровень!");
+                return;
+            }
+            
+            targetCheckpoint = droneBuilderCheckNode.nodes[droneBuilderCheckNode.currentNode].transform;
+            Vector3 realPos = _mainCamera.WorldToScreenPoint(targetCheckpoint.position);
+            Rect rect = new Rect(0, 0, Screen.width, Screen.height);
+
+            Vector3 outPos = realPos;
+            float direction = 1;
+
+            builderUI.pathArrow.GetComponent<Image>().sprite = builderUI.outOfScreenIcon;
+
+            if (!IsBehind(targetCheckpoint.position)) // если цель спереди
+            {
+                if (rect.Contains(realPos)) // и если цель в окне экрана
+                {
+                    builderUI.pathArrow.GetComponent<Image>().sprite = builderUI.pointerIcon;
+                }
+            }
+            else // если цель cзади
+            {
+                realPos = -realPos;
+                outPos = new Vector3(realPos.x, 0, 0); // позиция иконки - снизу
+                if (_mainCamera.transform.position.y < targetCheckpoint.position.y)
+                {
+                    direction = -1;
+                    outPos.y = Screen.height; // позиция иконки - сверху				
+                }
+            }
+            // ограничиваем позицию областью экрана
+            float offset = builderUI.pathArrow.sizeDelta.x / 2;
+            outPos.x = Mathf.Clamp(outPos.x, offset, Screen.width - offset);
+            outPos.y = Mathf.Clamp(outPos.y, offset, Screen.height - offset);
+
+            Vector3 pos = realPos - outPos; // направление к цели из PointerUI 
+
+            RotatePointer(direction * pos);
+
+            builderUI.pathArrow.sizeDelta = new Vector2(_startPointerSize.x / 100 * interfaceScale, _startPointerSize.y / 100 * interfaceScale);
+            builderUI.pathArrow.position = outPos;
+        }
+        
+        private bool IsBehind(Vector3 point) // true если point сзади камеры
+        {
+            Vector3 forward = _mainCamera.transform.TransformDirection(Vector3.forward);
+            Vector3 toOther = point - _mainCamera.transform.position;
+            if (Vector3.Dot(forward, toOther) < 0) return true;
+            return false;
+        }
+
+        private void RotatePointer(Vector2 direction) // поворачивает PointerUI в направление direction
+        {
+            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+            builderUI.pathArrow.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+        }
+
+        public void TestLevel()
+        {
+            isMove = !isMove;
+            if (isMove)
+            {
+                _mainCamera.GetComponent<FreeFlyCamera>().enabled = false;
+                TurnAllOutlineEffects(false);
+                TurnAllConnections(false);
+                _mainCameraPrevPosition = _mainCamera.transform.position;
+                _mainCameraPrevRotation = _mainCamera.transform.rotation;
+                _dronePrevPosition = droneBuilderController.transform.position;
+                _dronePrevRotation = droneBuilderController.transform.rotation;
+                _mainCamera.transform.SetParent(droneBuilderController.transform);
+                _mainCamera.transform.position = droneBuilderController.GetComponent<CameraController>().camerasPositions[0].position;
+                _mainCamera.transform.rotation = droneBuilderController.GetComponent<CameraController>().camerasPositions[0].rotation;
+                droneBuilderController.GetComponent<Rigidbody>().isKinematic = false;
+                droneBuilderController.GetComponent<Rigidbody>().useGravity = true;
+                droneBuilderController.GetComponent<CameraController>().enabled = true;
+                builderUI.createPanel.SetActive(false);
+                builderUI.editPanel.SetActive(false);
+                builderUI.returnToLevelBtn.gameObject.SetActive(true);
+                builderUI.pathArrow.gameObject.SetActive(true);
+                droneBuilderCheckNode.currentNode = 0;
+                _selection.enabled = false;
+            }
+            else
+            {
+                _mainCamera.transform.parent = null;
+                _mainCamera.GetComponent<FreeFlyCamera>().enabled = true;
+                TurnAllConnections(true);
+                _mainCamera.transform.position = _mainCameraPrevPosition;
+                _mainCamera.transform.rotation = _mainCameraPrevRotation;
+                droneBuilderController.transform.position = _dronePrevPosition;
+                droneBuilderController.transform.rotation = _dronePrevRotation;
+                droneBuilderController.GetComponent<Rigidbody>().isKinematic = true;
+                droneBuilderController.GetComponent<Rigidbody>().useGravity = false;
+                droneBuilderController.GetComponent<CameraController>().enabled = true;
+                builderUI.createPanel.SetActive(true);
+                builderUI.editPanel.SetActive(true);
+                builderUI.returnToLevelBtn.gameObject.SetActive(false);
+                builderUI.pathArrow.gameObject.SetActive(false);
+                _selection.enabled = true;
+            }
+        }
+
+        private void TurnAllConnections(bool turn)
+        {
+            if(!turn)
+                _connections = FindObjectsOfType<Connection>();
+            
+            foreach (var connection in _connections)
+            {
+                connection.gameObject.SetActive(turn);
+            }
+        }
+
+        private void TurnAllOutlineEffects(bool turn)
+        {
+            var outlines = FindObjectsOfType<Outline>();
+            foreach (var outline in outlines)
+            {
+                outline.enabled = turn;
             }
         }
 
@@ -188,6 +333,13 @@ namespace Builder
             _selection.Select(pendingObject);
             currentObjectType = pendingObject.GetComponent<TrackObject>();
             currentObjectType.isActive = true;
+
+            if (currentObjectType.objectType == ObjectsType.Gate)
+            {
+                currentObjectType.GetComponent<BuilderCheckpointTrigger>().checkpointId =
+                    droneBuilderCheckNode.nodes.Count;
+                droneBuilderCheckNode.AddNode(pendingObject.transform);
+            }
         }
 
         private void CreateObjectsPoolScene()
@@ -247,7 +399,7 @@ namespace Builder
             }
             objectsPool.Clear();
         }
-        
+
         private float RoundToNearsGrid(float pos)
         {
             float xDiff = pos % gridSize;

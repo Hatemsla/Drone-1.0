@@ -10,6 +10,7 @@ public class CameraController : MonoBehaviour
 
     private void Start()
     {
+        camera = Camera.main;
         camera.transform.localPosition = camerasPositions[0].localPosition;
         camera.nearClipPlane = 0.3f;
     }
