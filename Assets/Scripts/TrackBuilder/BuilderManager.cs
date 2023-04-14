@@ -47,6 +47,8 @@ namespace Builder
             _startPointerSize = builderUI.pathArrow.sizeDelta;
             _mainCamera = Camera.main;
             _selection = FindObjectOfType<Selection>();
+            _selection.Select(droneBuilderController.gameObject);
+            _selection.Deselect();
 
             for (int i = 0; i < builderUI.createButtons.Count; i++)
             {
@@ -84,6 +86,9 @@ namespace Builder
                 PlaceObject();
             }
                 
+            if(currentObjectType == null)
+                return;
+            
             if (Input.GetKeyDown(KeyCode.Q))
             {
                 RotateObject(Vector3.up, -10, Space.World);
@@ -95,8 +100,11 @@ namespace Builder
             else if (Input.GetAxis("Mouse ScrollWheel") != 0)
             {
                 var mouseScroll = Input.GetAxis("Mouse ScrollWheel");
-                var rotateAmount = mouseScroll > 0 ? 1 : -1; 
-                RotateObject(Vector3.up, 10 * rotateAmount, Space.World);
+                var rotateAmount = mouseScroll > 0 ? 1 : -1;
+                if(currentObjectType.objectType == ObjectsType.Trap)
+                    RotateObject(Vector3.right, 10 * rotateAmount, Space.World);
+                else
+                    RotateObject(Vector3.up, 10 * rotateAmount, Space.World);
             }
 
             if (Input.GetKey(KeyCode.W))
@@ -108,19 +116,12 @@ namespace Builder
                 ChangeObjectHeight(-2 * Time.deltaTime);
             }
 
-            if(currentObjectType == null)
-                return;
-            
             if (Input.GetKeyDown(KeyCode.Z))
             {
                 switch (currentObjectType.objectType)
                 {
-                    case ObjectsType.Slant when currentObjectType.rotateStateIndex >= 0:
-                        currentObjectType.rotateStateIndex--;
-                        RotateObject(Vector3.forward, -20f, Space.Self);
-                        break;
-                    case ObjectsType.Gate when currentObjectType.heightStateIndex <= 0:
-                        currentObjectType.heightStateIndex++;
+                    case ObjectsType.Trap:
+                        RotateObject(Vector3.right, 10f, Space.World);
                         break;
                 }
             }
@@ -128,12 +129,8 @@ namespace Builder
             {
                 switch (currentObjectType.objectType)
                 {
-                    case ObjectsType.Slant when currentObjectType.rotateStateIndex <= 0:
-                        currentObjectType.rotateStateIndex++;
-                        RotateObject(Vector3.forward, 20f, Space.Self);
-                        break;
-                    case ObjectsType.Gate when currentObjectType.heightStateIndex >= 0:
-                        currentObjectType.heightStateIndex--;
+                    case ObjectsType.Trap:
+                        RotateObject(Vector3.right, -10f, Space.World);
                         break;
                 }
             }
@@ -141,10 +138,12 @@ namespace Builder
 
         private void LateUpdate()
         {
+            if(droneBuilderCheckNode.nodes.Count == 0)
+                return;
+            
             if (droneBuilderCheckNode.currentNode >= droneBuilderCheckNode.nodes.Count)
             {
                 builderUI.pathArrow.gameObject.SetActive(false);
-                Debug.Log("Вы прошли уровень!");
                 return;
             }
             
@@ -222,7 +221,8 @@ namespace Builder
                 builderUI.createPanel.SetActive(false);
                 builderUI.editPanel.SetActive(false);
                 builderUI.returnToLevelBtn.gameObject.SetActive(true);
-                builderUI.pathArrow.gameObject.SetActive(true);
+                if(droneBuilderCheckNode.nodes.Count > 0)
+                    builderUI.pathArrow.gameObject.SetActive(true);
                 droneBuilderCheckNode.currentNode = 0;
                 _selection.enabled = false;
             }

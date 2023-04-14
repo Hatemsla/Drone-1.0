@@ -13,5 +13,6 @@
         Checkpoint,
         PathSpinal,
         Drone,
+        Billboard,
     }
 }
