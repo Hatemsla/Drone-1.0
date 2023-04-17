@@ -41,21 +41,24 @@ namespace Builder
         private Vector3 _startPointerSize;
         private Quaternion _mainCameraPrevRotation;
         private Quaternion _dronePrevRotation;
-            
-        private void Start()
+
+        private void Awake()
         {
-            _startPointerSize = builderUI.pathArrow.sizeDelta;
             _mainCamera = Camera.main;
+            _startPointerSize = builderUI.pathArrow.sizeDelta;
             _selection = FindObjectOfType<Selection>();
             _selection.Select(droneBuilderController.gameObject);
             _selection.Deselect();
-
+            
             for (int i = 0; i < builderUI.createButtons.Count; i++)
             {
                 var i1 = i;
                 builderUI.createButtons[i].onClick.AddListener(delegate { SelectObject(i1); });
             }
-            
+        }
+
+        private void Start()
+        {
             CreateObjectsPoolScene();
         }
 
@@ -352,8 +355,12 @@ namespace Builder
         {
             foreach (var obj in objectsPool)
             {
+                if(obj.GetComponent<BuilderCheckpointTrigger>())
+                    droneBuilderCheckNode.nodes.Add(obj.GetComponent<BuilderCheckpointTrigger>());
                 SceneManager.MoveGameObjectToScene(obj, levelScene);
             }
+
+            droneBuilderCheckNode.nodes.Reverse();
         }
 
         public void LoadScene()

@@ -12,7 +12,7 @@ public class DroneBuilderCheckNode : MonoBehaviour
 
     private void Start()
     {
-        nodes = FindObjectsOfType<BuilderCheckpointTrigger>().Reverse().ToList();
+        // nodes = FindObjectsOfType<BuilderCheckpointTrigger>().Reverse().ToList();
         SetCheckpointsId();
     }
 

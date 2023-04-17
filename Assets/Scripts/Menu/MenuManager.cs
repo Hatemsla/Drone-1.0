@@ -47,6 +47,7 @@ namespace Menu
         private bool _isMenuScene = true;
         private bool _isRace;
         private bool _isLoadLevel;
+        private bool _isStartBuilder;
         private StringBuilder _statText1;
         private StringBuilder _statText2;
         private Color _botsColorPreview;
@@ -67,8 +68,10 @@ namespace Menu
             menuUIManager.footballBtn.onClick.AddListener(delegate { StartGame(2); });
             menuUIManager.createLevelBtn.onClick.AddListener(CreateLevel);
             menuUIManager.loadLevelBtn.onClick.AddListener(LoadLevel);
+            menuUIManager.playBtn.onClick.AddListener(StartBuilder);
             menuUIManager.difficultToggle.isOn = false;
             menuUIManager.volumeSlider.value = 1;
+            menuUIManager.yawSensitivitySlider.value = 2;
             botsColorPreview = menuUIManager.botColorPicker.GetComponentInChildren<ColorPreview>();
             playerColorPreview = menuUIManager.playerColorPicker.GetComponentInChildren<ColorPreview>();
 
@@ -216,6 +219,7 @@ namespace Menu
                 menuUIManager.footballBtn.onClick.AddListener(delegate { StartGame(2); });
                 menuUIManager.createLevelBtn.onClick.AddListener(CreateLevel);
                 menuUIManager.loadLevelBtn.onClick.AddListener(LoadLevel);
+                menuUIManager.playBtn.onClick.AddListener(StartBuilder);
                 botsColorPreview = menuUIManager.botColorPicker.GetComponentInChildren<ColorPreview>();
                 playerColorPreview = menuUIManager.playerColorPicker.GetComponentInChildren<ColorPreview>();
                 botsColorPreview.GetComponent<Image>().color = _botsColorPreview;
@@ -230,6 +234,7 @@ namespace Menu
                 menuUIManager.generalSettingsBtn.onClick.AddListener(delegate { OpenSubMenu("GeneralOpt"); });
                 menuUIManager.soundSettingsBtn.onClick.AddListener(delegate { OpenSubMenu("SoundOpt"); });
                 menuUIManager.controlSettingsBtn.onClick.AddListener(delegate { OpenSubMenu("ControlOpt"); });
+                menuUIManager.difficultSettingsBtn.onClick.AddListener(delegate { OpenSubMenu("DifficultOpt"); });
                 menuUIManager.customizationSettingsBtn.onClick.AddListener(delegate { OpenSubMenu("CustOpt"); });
                 menuUIManager.authLogBtn.onClick.AddListener(delegate { OpenMenu("Log"); });
                 menuUIManager.authRegBtn.onClick.AddListener(delegate { OpenMenu("Reg"); });
@@ -311,10 +316,17 @@ namespace Menu
                 builderManager.builderUI.backBtn.onClick.AddListener(BackToMenu);
                 builderManager.builderUI.saveBtn.onClick.AddListener(SaveLevel);
                 builderManager.levelName = levelName;
+                server.droneBuilderController = builderManager.droneBuilderController;
 
                 if (_isLoadLevel)
                 {
                     builderManager.LoadScene();
+                }
+
+                if (_isStartBuilder)
+                {
+                    builderManager.LoadScene();
+                    builderManager.TestLevel();
                 }
             }
         }
@@ -326,6 +338,7 @@ namespace Menu
 
             levelName = menuUIManager.levelInput.text;
             _isLoadLevel = true;
+            _isStartBuilder = false;
             SceneManager.LoadScene(3);
         }
 
@@ -337,6 +350,17 @@ namespace Menu
             Directory.CreateDirectory(Application.dataPath + "/Levels");
             levelName = menuUIManager.levelInput.text;
             _isLoadLevel = false;
+            _isStartBuilder = false;
+            SceneManager.LoadScene(3);
+        }
+
+        public void StartBuilder()
+        {
+            if(!File.Exists(Application.dataPath + "/Levels/" + menuUIManager.levelInput.text + ".json"))
+                return;
+            
+            levelName = menuUIManager.levelInput.text;
+            _isStartBuilder = true;
             SceneManager.LoadScene(3);
         }
 
@@ -431,11 +455,13 @@ namespace Menu
         {
             AudioListener.volume = menuUIManager.volumeSlider.value;
             currentVolume = menuUIManager.volumeSlider.value;
+            menuUIManager.volumeValue.text = (currentVolume * 100).ToString("0");
         }
 
         public void ChangeYawSensitivity()
         {
             currentYawSensitivity = menuUIManager.yawSensitivitySlider.value + 1;
+            menuUIManager.yawValue.text = currentYawSensitivity.ToString("0.0");
         }
 
         private void StartGame(int sceneIndex)

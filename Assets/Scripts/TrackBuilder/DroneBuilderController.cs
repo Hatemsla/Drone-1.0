@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using DroneRace;
 using UnityEngine;
@@ -97,6 +98,13 @@ namespace Builder
             {
                 _rb.drag = 0.5f;
             }
+        }
+
+        public IEnumerator IsFreezing()
+        {
+            builderManager.isMove = false;
+            yield return new WaitForSeconds(3f);
+            builderManager.isMove = true;
         }
     }
 }

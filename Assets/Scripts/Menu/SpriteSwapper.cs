@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -12,6 +13,11 @@ namespace Menu
         public Sprite pressedSprite;
         public Sprite disabledSprite;
 
+        private void Start()
+        {
+            objectImage = GetComponent<Image>();
+        }
+
         public void OnPointerExit(PointerEventData eventData)
         {
             objectImage.sprite = defaultSprite;
@@ -19,11 +25,17 @@ namespace Menu
 
         public void OnPointerEnter(PointerEventData eventData)
         {
+            if(hoverSprite == null)
+                return;
+            
             objectImage.sprite = hoverSprite;
         }
 
         public void OnPointerDown(PointerEventData eventData)
         {
+            if(pressedSprite == null)
+                return;
+            
             objectImage.sprite = pressedSprite;
         }
 

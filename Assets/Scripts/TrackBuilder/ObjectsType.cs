@@ -14,5 +14,8 @@
         PathSpinal,
         Drone,
         Billboard,
+        WindZone,
+        Magnet,
+        FreezingBall
     }
 }

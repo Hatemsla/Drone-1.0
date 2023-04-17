@@ -40,18 +40,22 @@ namespace Menu
         public Button generalSettingsBtn;
         public Button soundSettingsBtn;
         public Button controlSettingsBtn;
+        public Button difficultSettingsBtn;
         public Button customizationSettingsBtn;
         public Slider volumeSlider;
         public Slider yawSensitivitySlider;
         public GameObject generalSettings;
         public GameObject soundSettings;
         public GameObject controlSettings;
+        public GameObject difficultSettings;
         public GameObject customizationSettings;
         public GameObject botColorPicker;
         public GameObject playerColorPicker;
         public GameObject botColorImage;
         public GameObject playerColorImage;
         public TMP_InputField gameTimeInput;
+        public TMP_Text volumeValue;
+        public TMP_Text yawValue;
 
         [Header("Game menu")] 
         public Toggle difficultToggle;
@@ -70,6 +74,7 @@ namespace Menu
         public TMP_InputField levelInput;
         public Button createLevelBtn;
         public Button loadLevelBtn;
+        public Button playBtn;
 
         [Header("Menus")]
         public GameObject startMenu;

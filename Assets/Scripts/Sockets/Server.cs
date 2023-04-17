@@ -5,11 +5,11 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Builder;
 using DroneFootball;
 using DroneRace;
 using Menu;
 using Newtonsoft.Json;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Sockets
@@ -20,6 +20,7 @@ namespace Sockets
         public MenuManager menuManager;
         public DroneFootballController droneFootballController;
         public DroneRaceController droneRaceController;
+        public DroneBuilderController droneBuilderController;
         
         private static Socket _listener;
         private CancellationTokenSource _source;
@@ -107,6 +108,8 @@ namespace Sockets
                         SetDroneFootballData(MioData, droneFootballController);
                     else if(droneRaceController)
                         SetDroneRaceData(MioData, droneRaceController);
+                    else if(droneBuilderController)
+                        SetDroneTrackBuilderData(MioData, droneBuilderController);
                 }
                 handler.Close();
             }
@@ -121,6 +124,14 @@ namespace Sockets
         }
         
         private void SetDroneRaceData(MioData data, DroneRaceController drone)
+        {
+            drone.throttle = data.LeftMio.X / 1000f;
+            drone.pedals = data.LeftMio.Y / 1000f;
+            drone.cyclic.x = data.RightMio.X / 1000f;
+            drone.cyclic.y = data.RightMio.Y / 1000f;
+        }
+
+        private void SetDroneTrackBuilderData(MioData data, DroneBuilderController drone)
         {
             drone.throttle = data.LeftMio.X / 1000f;
             drone.pedals = data.LeftMio.Y / 1000f;
