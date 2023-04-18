@@ -92,7 +92,7 @@ namespace Builder
         {
             if (isSimpleMode && _isMove == 0)
             {
-                _rb.drag = 3;
+                _rb.drag = 5;
             }
             else
             {

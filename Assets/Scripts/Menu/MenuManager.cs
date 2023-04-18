@@ -236,6 +236,7 @@ namespace Menu
                 menuUIManager.controlSettingsBtn.onClick.AddListener(delegate { OpenSubMenu("ControlOpt"); });
                 menuUIManager.difficultSettingsBtn.onClick.AddListener(delegate { OpenSubMenu("DifficultOpt"); });
                 menuUIManager.customizationSettingsBtn.onClick.AddListener(delegate { OpenSubMenu("CustOpt"); });
+                menuUIManager.builderBackBtn.onClick.AddListener(delegate { OpenMenu("Game"); });
                 menuUIManager.authLogBtn.onClick.AddListener(delegate { OpenMenu("Log"); });
                 menuUIManager.authRegBtn.onClick.AddListener(delegate { OpenMenu("Reg"); });
                 menuUIManager.logBackBtn.onClick.AddListener(delegate { OpenMenu("Auth"); });
@@ -251,7 +252,10 @@ namespace Menu
                 // menuUIManager.startExitAccBtn.onClick.AddListener(dbManager.SaveUserSettings);
                 // menuUIManager.startExitAccBtn.onClick.AddListener(dbManager.SaveUserData);
                 menuUIManager.statBackBtn.onClick.AddListener(delegate { OpenMenu("Start"); });
-                menuUIManager.gameTimeInput.text = _gameTimeInSeconds.ToString();
+                if (_gameTimeInSeconds > 0)
+                    menuUIManager.gameTimeInput.text = _gameTimeInSeconds.ToString();
+                else
+                    menuUIManager.gameTimeInput.text = "300";
 
                 SetDropdownResolutions();
                 menuUIManager.resolutionDropdown.onValueChanged.AddListener(SetResolution);
@@ -478,7 +482,7 @@ namespace Menu
 
         private void GameTimeHandler()
         {
-            if (menuUIManager.gameTimeInput.text.Length > 0)
+            if (!string.IsNullOrEmpty(menuUIManager.gameTimeInput.text))
                 _gameTimeInSeconds = Convert.ToInt32(menuUIManager.gameTimeInput.text);
             else
                 _gameTimeInSeconds = 300;

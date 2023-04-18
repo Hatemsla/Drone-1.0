@@ -90,7 +90,7 @@ namespace DroneFootball
             _finalPitch = Mathf.Lerp(_finalPitch, pitch, Time.deltaTime * lerpSpeed);
             _finalRoll = Mathf.Lerp(_finalRoll, roll, Time.deltaTime * lerpSpeed);
             _finalYaw = Mathf.Lerp(_finalYaw, _yaw, Time.deltaTime * lerpSpeed);
-
+            
             Quaternion rot = Quaternion.Euler(_finalPitch, _finalYaw, _finalRoll);
             _rb.MoveRotation(rot);
         }
@@ -99,7 +99,7 @@ namespace DroneFootball
         {
             if (isSimpleMode && _isMove == 0)
             {
-                _rb.drag = 3;
+                _rb.drag = 5;
             }
             else
             {
