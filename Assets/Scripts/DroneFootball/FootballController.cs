@@ -24,6 +24,7 @@ namespace DroneFootball
 
         private Vector3 _startPointerSize;
         private bool _isResult;
+        private bool _isTabPanel;
 
         private void Awake()
         {
@@ -50,6 +51,7 @@ namespace DroneFootball
         {
             CheckStartGame();
             CheckEndGame();
+            CheckTabPanel();
         }
 
         private void LateUpdate()
@@ -106,16 +108,27 @@ namespace DroneFootball
             footballUIManager.pathArrow.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
         }
 
+        private void CheckTabPanel()
+        {
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                _isTabPanel = !_isTabPanel;
+                footballUIManager.tabPanel.SetActive(_isTabPanel);
+                Time.timeScale = _isTabPanel ? 0f : 1f;
+            }
+        }
+
         private void CheckStartGame()
         {
             if (timer.waitForStartGame >= 0)
             {
-                footballUIManager.timeToStartGameText.text = $"До начала осталось: {timer.waitForStartGame:f1}";
+                footballUIManager.timeToStartGameText.text = $"00:{timer.waitForStartGame:00}";
             }
             else
             {
                 footballUIManager.timeToStartGameText.gameObject.SetActive(false);
                 footballUIManager.descriptionPanel.SetActive(false);
+                footballUIManager.backgroundImage.SetActive(false);
                 isGameStart = true;
             }
         }

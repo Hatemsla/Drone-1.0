@@ -17,5 +17,7 @@ namespace DroneRace
         public TMP_Text racePositionText;
         public GameObject descriptionPanel;
         public GameObject matchResultPanel;
+        public GameObject backgroundImage;
+        public GameObject tabPanel;
     }
 }

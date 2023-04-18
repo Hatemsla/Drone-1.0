@@ -16,6 +16,7 @@ namespace Builder
         public string levelName;
         public float gridSize;
         public float interfaceScale;
+        public float currentYawSensitivity;
         public bool canPlace;
         public bool isMove;
         public BuilderUI builderUI;
@@ -249,6 +250,12 @@ namespace Builder
             }
         }
 
+        public void StartLevel()
+        {
+            LoadScene();
+            TestLevel();
+        }
+
         private void TurnAllConnections(bool turn)
         {
             if(!turn)
@@ -360,7 +367,11 @@ namespace Builder
                 SceneManager.MoveGameObjectToScene(obj, levelScene);
             }
 
-            droneBuilderCheckNode.nodes.Reverse();
+            if (droneBuilderCheckNode.nodes.Count > 0)
+            {
+                // droneBuilderCheckNode.nodes.Reverse();
+                builderUI.pathArrow.gameObject.SetActive(true);
+            }
         }
 
         public void LoadScene()

@@ -316,6 +316,7 @@ namespace Menu
                 _isRace = false;
                 _isFootball = false;
                 builderManager = FindObjectOfType<BuilderManager>();
+                builderManager.currentYawSensitivity = currentYawSensitivity;
                 builderManager.builderUI.exitBtn.onClick.AddListener(Exit);
                 builderManager.builderUI.backBtn.onClick.AddListener(BackToMenu);
                 builderManager.builderUI.saveBtn.onClick.AddListener(SaveLevel);
@@ -329,8 +330,7 @@ namespace Menu
 
                 if (_isStartBuilder)
                 {
-                    builderManager.LoadScene();
-                    builderManager.TestLevel();
+                    builderManager.StartLevel();
                 }
             }
         }
@@ -433,6 +433,7 @@ namespace Menu
         public void BackToMenu()
         {
             SceneManager.LoadScene(0);
+            Time.timeScale = 1f;
         }
 
         public void Exit()

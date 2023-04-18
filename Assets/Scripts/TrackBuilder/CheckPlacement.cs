@@ -10,7 +10,7 @@ namespace Builder
     {
         private BuilderManager _builderManager;
 
-        private void Start()
+        private void Awake()
         {
             _builderManager = FindObjectOfType<BuilderManager>();
         }

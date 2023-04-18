@@ -28,6 +28,7 @@ namespace DroneRace
         private Vector3 _startPointerSize;
         private int _playerRacePosition;
         private bool _isResult;
+        private bool _isTabPanel;
 
         private void Awake()
         {
@@ -51,7 +52,8 @@ namespace DroneRace
         {
             CheckStartGame();
             CheckEndGame();
-            
+            CheckTabPanel();
+
             droneRaceCheckNodes = droneRaceCheckNodes.OrderByDescending(x => x.currentNode).ThenBy(x => x.wayDistance).ToList();
             raceUIManager.racePositionText.text = $"Позиция: {_playerRacePosition + 1}";
             _playerRacePosition = droneRaceCheckNodes.IndexOf(playerNode);
@@ -112,16 +114,27 @@ namespace DroneRace
             raceUIManager.pathArrow.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
         }
 
+        private void CheckTabPanel()
+        {
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                _isTabPanel = !_isTabPanel;
+                raceUIManager.tabPanel.SetActive(_isTabPanel);
+                Time.timeScale = _isTabPanel ? 0f : 1f;
+            }
+        }
+        
         private void CheckStartGame()
         {
             if (timer.waitForStartGame >= 0)
             {
-                raceUIManager.timeToStartGameText.text = $"До начала осталось: {timer.waitForStartGame:f1}";
+                raceUIManager.timeToStartGameText.text = $"00:{timer.waitForStartGame:00}";
             }
             else
             {
                 raceUIManager.timeToStartGameText.gameObject.SetActive(false);
                 raceUIManager.descriptionPanel.SetActive(false);
+                raceUIManager.backgroundImage.SetActive(false);
                 isGameStart = true;
             }
         }

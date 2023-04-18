@@ -17,5 +17,7 @@ namespace DroneFootball
         public TMP_Text scoreText;
         public GameObject descriptionPanel;
         public GameObject matchResultPanel;
+        public GameObject backgroundImage;
+        public GameObject tabPanel;
     }
 }

@@ -35,6 +35,7 @@ namespace Builder
             builderManager = FindObjectOfType<BuilderManager>();
             builderManager.droneBuilderController = this;
             builderManager.droneBuilderCheckNode = droneBuilderCheckNode;
+            yawPower = builderManager.currentYawSensitivity;
             _rb = GetComponent<Rigidbody>();
             _engines = GetComponentsInChildren<DroneEngine>().ToList();
         }
