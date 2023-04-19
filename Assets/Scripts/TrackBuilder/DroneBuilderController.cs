@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using DroneRace;
@@ -35,9 +36,13 @@ namespace Builder
             builderManager = FindObjectOfType<BuilderManager>();
             builderManager.droneBuilderController = this;
             builderManager.droneBuilderCheckNode = droneBuilderCheckNode;
-            yawPower = builderManager.currentYawSensitivity;
             _rb = GetComponent<Rigidbody>();
             _engines = GetComponentsInChildren<DroneEngine>().ToList();
+        }
+
+        private void Start()
+        {
+            yawPower = builderManager.currentYawSensitivity;
         }
 
         private void FixedUpdate()

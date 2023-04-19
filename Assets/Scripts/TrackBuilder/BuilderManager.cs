@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -33,6 +34,8 @@ namespace Builder
         [HideInInspector] public Scene levelScene;
         
         private int _currentGroundIndex;
+        private bool _isTabPanel;
+        private bool _isLevelEnd;
         private Connection[] _connections;
         private RaycastHit _hit;
         private Selection _selection;
@@ -65,6 +68,8 @@ namespace Builder
 
         private void Update()
         {
+            CheckTabPanel();
+            
             Ray ray = Camera.main!.ScreenPointToRay(Input.mousePosition);
 
             if (Physics.Raycast(ray, out _hit, 10000, layerMask) && !EventSystem.current.IsPointerOverGameObject())
@@ -140,6 +145,17 @@ namespace Builder
             }
         }
 
+        private void CheckTabPanel()
+        {
+            if (Input.GetKeyDown(KeyCode.Escape) && isMove)
+            {
+                _isTabPanel = !_isTabPanel;
+                builderUI.tabPanel.SetActive(_isTabPanel);
+                builderUI.levelResultPanel.SetActive(false);
+                Time.timeScale = _isTabPanel ? 0f : 1f;
+            }
+        }
+
         private void LateUpdate()
         {
             if(droneBuilderCheckNode.nodes.Count == 0)
@@ -148,6 +164,8 @@ namespace Builder
             if (droneBuilderCheckNode.currentNode >= droneBuilderCheckNode.nodes.Count)
             {
                 builderUI.pathArrow.gameObject.SetActive(false);
+                if (!_isLevelEnd)
+                    StartCoroutine(EndLevel());
                 return;
             }
             
@@ -204,6 +222,14 @@ namespace Builder
             builderUI.pathArrow.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
         }
 
+        private IEnumerator EndLevel()
+        {
+            _isLevelEnd = true;
+            builderUI.levelResultPanel.SetActive(true);
+            yield return new WaitForSeconds(5);
+            builderUI.levelResultPanel.SetActive(false);
+        }
+
         public void TestLevel()
         {
             isMove = !isMove;
@@ -223,8 +249,7 @@ namespace Builder
                 droneBuilderController.GetComponent<Rigidbody>().useGravity = true;
                 droneBuilderController.GetComponent<CameraController>().enabled = true;
                 builderUI.createPanel.SetActive(false);
-                builderUI.editPanel.SetActive(false);
-                builderUI.returnToLevelBtn.gameObject.SetActive(true);
+                builderUI.editButtons.SetActive(false);
                 if(droneBuilderCheckNode.nodes.Count > 0)
                     builderUI.pathArrow.gameObject.SetActive(true);
                 droneBuilderCheckNode.currentNode = 0;
@@ -242,9 +267,11 @@ namespace Builder
                 droneBuilderController.GetComponent<Rigidbody>().isKinematic = true;
                 droneBuilderController.GetComponent<Rigidbody>().useGravity = false;
                 droneBuilderController.GetComponent<CameraController>().enabled = true;
+                builderUI.tabPanel.SetActive(false);
+                Time.timeScale = 1f;
+                _isTabPanel = false;
                 builderUI.createPanel.SetActive(true);
-                builderUI.editPanel.SetActive(true);
-                builderUI.returnToLevelBtn.gameObject.SetActive(false);
+                builderUI.editButtons.SetActive(true);
                 builderUI.pathArrow.gameObject.SetActive(false);
                 _selection.enabled = true;
             }

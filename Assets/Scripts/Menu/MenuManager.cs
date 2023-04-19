@@ -319,6 +319,7 @@ namespace Menu
                 builderManager.currentYawSensitivity = currentYawSensitivity;
                 builderManager.builderUI.exitBtn.onClick.AddListener(Exit);
                 builderManager.builderUI.backBtn.onClick.AddListener(BackToMenu);
+                builderManager.builderUI.backTabBtn.onClick.AddListener(BackToMenu);
                 builderManager.builderUI.saveBtn.onClick.AddListener(SaveLevel);
                 builderManager.levelName = levelName;
                 server.droneBuilderController = builderManager.droneBuilderController;

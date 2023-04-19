@@ -29,10 +29,15 @@ namespace Builder
                         Select(hit.collider.transform.root.gameObject);
             }
 
-            if ((Input.GetKeyDown(KeyCode.Escape) || Input.GetMouseButtonDown(1)) && selectedObject != null)
+            if ((Input.GetKeyDown(KeyCode.Tab) || Input.GetMouseButtonDown(1)) && selectedObject != null)
             {
                 _builderManager.PlaceObject();
                 Deselect();
+            }
+
+            if (Input.GetKeyDown(KeyCode.Delete))
+            {
+                Delete();
             }
         }
 
