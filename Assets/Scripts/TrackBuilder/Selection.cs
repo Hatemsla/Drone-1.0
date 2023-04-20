@@ -53,6 +53,7 @@ namespace Builder
         public void Delete()
         {
             if (selectedObject == null) return;
+            if (selectedObject.CompareTag("Player")) return;
             var obj = selectedObject;
             Deselect();
             _builderManager.objectsPool.Remove(obj.transform.root.gameObject);

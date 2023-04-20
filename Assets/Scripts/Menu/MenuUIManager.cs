@@ -35,6 +35,7 @@ namespace Menu
         public Toggle isFullscreenToggle;
         public TMP_Dropdown resolutionDropdown;
         public TMP_Dropdown difficultDropdown;
+        public TMP_Dropdown difficultControlDropdown;
         public Button optionsBackBtn;
         public Button optionsExitBtn;
         public Button generalSettingsBtn;
@@ -58,7 +59,6 @@ namespace Menu
         public TMP_Text yawValue;
 
         [Header("Game menu")] 
-        public Toggle difficultToggle;
         public Button raceBtn;
         public Button footballBtn;
         public Button trackBuilderBtn;

@@ -21,6 +21,7 @@ namespace Menu
         public string levelName;
         public bool isSimpleMode;
         public int currentDifficultIndex;
+        public int currentControlDifficultIndex;
         public int currentResolutionIndex;
         public float currentYawSensitivity = 1;
         public float currentVolume;
@@ -69,7 +70,7 @@ namespace Menu
             menuUIManager.createLevelBtn.onClick.AddListener(CreateLevel);
             menuUIManager.loadLevelBtn.onClick.AddListener(LoadLevel);
             menuUIManager.playBtn.onClick.AddListener(StartBuilder);
-            menuUIManager.difficultToggle.isOn = false;
+            menuUIManager.difficultControlDropdown.value = 0;
             menuUIManager.volumeSlider.value = 1;
             menuUIManager.yawSensitivitySlider.value = 2;
             botsColorPreview = menuUIManager.botColorPicker.GetComponentInChildren<ColorPreview>();
@@ -213,8 +214,8 @@ namespace Menu
                 menuUIManager.isFullscreenToggle.onValueChanged.AddListener(Fullscreen);
                 menuUIManager.difficultDropdown.onValueChanged.AddListener(SetDifficult);
                 menuUIManager.difficultDropdown.value = currentDifficultIndex;
-                menuUIManager.difficultToggle.onValueChanged.AddListener(SetGameMode);
-                menuUIManager.difficultToggle.isOn = false;
+                menuUIManager.difficultControlDropdown.onValueChanged.AddListener(SetGameMode);
+                menuUIManager.difficultControlDropdown.value = currentControlDifficultIndex;
                 menuUIManager.raceBtn.onClick.AddListener(delegate { StartGame(1); });
                 menuUIManager.footballBtn.onClick.AddListener(delegate { StartGame(2); });
                 menuUIManager.createLevelBtn.onClick.AddListener(CreateLevel);
@@ -322,6 +323,7 @@ namespace Menu
                 builderManager.builderUI.backTabBtn.onClick.AddListener(BackToMenu);
                 builderManager.builderUI.saveBtn.onClick.AddListener(SaveLevel);
                 builderManager.levelName = levelName;
+                builderManager.droneBuilderController.isSimpleMode = isSimpleMode;
                 server.droneBuilderController = builderManager.droneBuilderController;
 
                 if (_isLoadLevel)
@@ -412,7 +414,6 @@ namespace Menu
             menuUIManager.regPasswordInput.text = string.Empty;
         }
 
-
         public void OpenSubMenu(string menuName)
         {
             foreach (var menu in menuUIManager.subMenus)
@@ -452,9 +453,10 @@ namespace Menu
             Screen.fullScreen = isFullscreen;
         }
 
-        public void SetGameMode(bool mode)
+        public void SetGameMode(int value)
         {
-            isSimpleMode = !mode;
+            isSimpleMode = value == 0;
+            currentControlDifficultIndex = value;
         }
 
         public void ChangeVolume()

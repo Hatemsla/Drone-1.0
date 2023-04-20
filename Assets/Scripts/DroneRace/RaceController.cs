@@ -19,6 +19,7 @@ namespace DroneRace
         public DroneRaceAI droneRaceAI;
         public DroneRaceUIManager raceUIManager;
         public DroneRaceCheckNode playerNode;
+        public DroneRaceSoundController droneRaceSoundController;
         public Timer timer;
         public RacePath racePath;
         public List<DroneRaceCheckNode> droneRaceCheckNodes;
@@ -119,6 +120,10 @@ namespace DroneRace
             if (Input.GetKeyDown(KeyCode.Escape))
             {
                 _isTabPanel = !_isTabPanel;
+                if(_isTabPanel)
+                    droneRaceSoundController.droneFly.Stop();
+                else
+                    droneRaceSoundController.droneFly.Play();
                 raceUIManager.tabPanel.SetActive(_isTabPanel);
                 Time.timeScale = _isTabPanel ? 0f : 1f;
             }
@@ -136,6 +141,8 @@ namespace DroneRace
                 raceUIManager.descriptionPanel.SetActive(false);
                 raceUIManager.backgroundImage.SetActive(false);
                 isGameStart = true;
+                if(!droneRaceSoundController.droneFly.isPlaying && !_isTabPanel)
+                    droneRaceSoundController.droneFly.Play();
             }
         }
 

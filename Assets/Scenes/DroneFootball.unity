@@ -252,6 +252,7 @@ MonoBehaviour:
   targetCheckpoint: {fileID: 8633810405163399060}
   droneFootballController: {fileID: 1961687292831539657}
   playerCheckNode: {fileID: 0}
+  droneFootballSoundController: {fileID: 0}
   footballUIManager: {fileID: 1911565054}
   timer: {fileID: 1514429406}
   droneFootballAIList:
@@ -2828,6 +2829,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1481697785}
     m_Modifications:
+    - target: {fileID: -7706066396753686149, guid: 74c315a341f0c7045a2a0e22093bbce1, type: 3}
+      propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6458476110923224592, guid: 74c315a341f0c7045a2a0e22093bbce1, type: 3}
       propertyPath: m_Name
       value: CheckpointFootball

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using DroneFootball;
 using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -23,6 +24,7 @@ namespace Builder
         public BuilderUI builderUI;
         public DroneBuilderController droneBuilderController;
         public DroneBuilderCheckNode droneBuilderCheckNode;
+        public DroneBuilderSoundController droneBuilderSoundController;
         public Transform ground;
         public LayerMask layerMask;
         public GameObject pendingObject;
@@ -150,6 +152,10 @@ namespace Builder
             if (Input.GetKeyDown(KeyCode.Escape) && isMove)
             {
                 _isTabPanel = !_isTabPanel;
+                if(_isTabPanel)
+                    droneBuilderSoundController.droneFly.Stop();
+                else
+                    droneBuilderSoundController.droneFly.Play();
                 builderUI.tabPanel.SetActive(_isTabPanel);
                 builderUI.levelResultPanel.SetActive(false);
                 Time.timeScale = _isTabPanel ? 0f : 1f;
@@ -253,6 +259,7 @@ namespace Builder
                 if(droneBuilderCheckNode.nodes.Count > 0)
                     builderUI.pathArrow.gameObject.SetActive(true);
                 droneBuilderCheckNode.currentNode = 0;
+                droneBuilderSoundController.droneFly.Play();
                 _selection.enabled = false;
             }
             else
@@ -273,6 +280,7 @@ namespace Builder
                 builderUI.createPanel.SetActive(true);
                 builderUI.editButtons.SetActive(true);
                 builderUI.pathArrow.gameObject.SetActive(false);
+                droneBuilderSoundController.droneFly.Stop();
                 _selection.enabled = true;
             }
         }

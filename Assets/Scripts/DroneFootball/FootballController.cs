@@ -16,6 +16,7 @@ namespace DroneFootball
         public Transform targetCheckpoint;
         public DroneFootballController droneFootballController;
         public DroneFootballCheckNode playerCheckNode;
+        public DroneFootballSoundController droneFootballSoundController;
         public FootballUIManager footballUIManager;
         public Timer timer;
         public DroneFootballAI[] droneFootballAIList;
@@ -113,6 +114,10 @@ namespace DroneFootball
             if (Input.GetKeyDown(KeyCode.Escape))
             {
                 _isTabPanel = !_isTabPanel;
+                if(_isTabPanel)
+                    droneFootballSoundController.droneFly.Stop();
+                else
+                    droneFootballSoundController.droneFly.Play();
                 footballUIManager.tabPanel.SetActive(_isTabPanel);
                 Time.timeScale = _isTabPanel ? 0f : 1f;
             }
@@ -130,6 +135,8 @@ namespace DroneFootball
                 footballUIManager.descriptionPanel.SetActive(false);
                 footballUIManager.backgroundImage.SetActive(false);
                 isGameStart = true;
+                if(!droneFootballSoundController.droneFly.isPlaying && !_isTabPanel)
+                    droneFootballSoundController.droneFly.Play();
             }
         }
 
