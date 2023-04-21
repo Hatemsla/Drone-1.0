@@ -1128,7 +1128,7 @@ MonoBehaviour:
   isSimpleMode: 1
   droneBuilderCheckNode: {fileID: 0}
   builderManager: {fileID: 0}
-  droneMeshRenderer: {fileID: 6324696523093475992}
+  droneBuilderSoundController: {fileID: 0}
 --- !u!114 &3564480368219920555
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1201,10 +1201,10 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 6187882772404905622, guid: fe0c30d9137227e4a960b65f2de2cdfa, type: 2}
   m_audioClip: {fileID: 8300000, guid: db928bac1bec2734ea2f2e51a5bcd509, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0

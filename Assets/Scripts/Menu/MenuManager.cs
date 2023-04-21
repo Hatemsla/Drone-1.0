@@ -65,8 +65,8 @@ namespace Menu
             SetDropdownResolutions();
             SetDropdownDifficulties();
 
-            menuUIManager.raceBtn.onClick.AddListener(delegate { StartGame(1); });
-            menuUIManager.footballBtn.onClick.AddListener(delegate { StartGame(2); });
+            menuUIManager.raceBtn.onClick.AddListener(delegate { StartGame(2); });
+            menuUIManager.footballBtn.onClick.AddListener(delegate { StartGame(3); });
             menuUIManager.createLevelBtn.onClick.AddListener(CreateLevel);
             menuUIManager.loadLevelBtn.onClick.AddListener(LoadLevel);
             menuUIManager.playBtn.onClick.AddListener(StartBuilder);
@@ -182,7 +182,7 @@ namespace Menu
         private void OnSceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
         {
             AudioListener.volume = currentVolume;
-            if (scene.buildIndex == 0)
+            if (scene.buildIndex == 1)
             {
                 _isMenuScene = true;
                 _isRace = false;
@@ -216,8 +216,8 @@ namespace Menu
                 menuUIManager.difficultDropdown.value = currentDifficultIndex;
                 menuUIManager.difficultControlDropdown.onValueChanged.AddListener(SetGameMode);
                 menuUIManager.difficultControlDropdown.value = currentControlDifficultIndex;
-                menuUIManager.raceBtn.onClick.AddListener(delegate { StartGame(1); });
-                menuUIManager.footballBtn.onClick.AddListener(delegate { StartGame(2); });
+                menuUIManager.raceBtn.onClick.AddListener(delegate { StartGame(2); });
+                menuUIManager.footballBtn.onClick.AddListener(delegate { StartGame(3); });
                 menuUIManager.createLevelBtn.onClick.AddListener(CreateLevel);
                 menuUIManager.loadLevelBtn.onClick.AddListener(LoadLevel);
                 menuUIManager.playBtn.onClick.AddListener(StartBuilder);
@@ -261,7 +261,7 @@ namespace Menu
                 SetDropdownResolutions();
                 menuUIManager.resolutionDropdown.onValueChanged.AddListener(SetResolution);
             }
-            else if (scene.buildIndex == 1)
+            else if (scene.buildIndex == 2)
             {
                 _isMenuScene = false;
                 _isRace = true;
@@ -283,7 +283,7 @@ namespace Menu
                 
                 raceController.timer.timeForEndGame = _gameTimeInSeconds;
             }
-            else if (scene.buildIndex == 2)
+            else if (scene.buildIndex == 3)
             {
                 _isMenuScene = false;
                 _isRace = false;
@@ -311,7 +311,7 @@ namespace Menu
                 
                 footballController.timer.timeForEndGame = _gameTimeInSeconds;
             }
-            else if(scene.buildIndex == 3)
+            else if(scene.buildIndex == 4)
             {
                 _isMenuScene = false;
                 _isRace = false;
@@ -346,7 +346,7 @@ namespace Menu
             levelName = menuUIManager.levelInput.text;
             _isLoadLevel = true;
             _isStartBuilder = false;
-            SceneManager.LoadScene(3);
+            SceneManager.LoadScene(4);
         }
 
         public void CreateLevel()
@@ -358,7 +358,7 @@ namespace Menu
             levelName = menuUIManager.levelInput.text;
             _isLoadLevel = false;
             _isStartBuilder = false;
-            SceneManager.LoadScene(3);
+            SceneManager.LoadScene(4);
         }
 
         public void StartBuilder()
@@ -368,7 +368,7 @@ namespace Menu
             
             levelName = menuUIManager.levelInput.text;
             _isStartBuilder = true;
-            SceneManager.LoadScene(3);
+            SceneManager.LoadScene(4);
         }
 
         public void SaveLevel()
@@ -434,7 +434,7 @@ namespace Menu
 
         public void BackToMenu()
         {
-            SceneManager.LoadScene(0);
+            SceneManager.LoadScene(1);
             Time.timeScale = 1f;
         }
 

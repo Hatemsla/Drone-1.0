@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using DroneFootball;
 using Newtonsoft.Json;
+using Sockets;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
@@ -407,6 +408,8 @@ namespace Builder
                 // droneBuilderCheckNode.nodes.Reverse();
                 builderUI.pathArrow.gameObject.SetActive(true);
             }
+
+            FindObjectOfType<Server>().droneBuilderController = droneBuilderController;
         }
 
         public void LoadScene()

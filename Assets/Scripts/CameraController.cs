@@ -5,27 +5,27 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    public Camera camera;
+    public Camera mainCamera;
     public Transform[] camerasPositions;
 
     private void Start()
     {
-        camera = Camera.main;
-        camera.transform.localPosition = camerasPositions[0].localPosition;
-        camera.nearClipPlane = 0.3f;
+        mainCamera = Camera.main;
+        mainCamera.transform.localPosition = camerasPositions[0].localPosition;
+        mainCamera.nearClipPlane = 0.3f;
     }
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            camera.transform.localPosition = camerasPositions[0].localPosition;
-            camera.nearClipPlane = 0.3f;
+            mainCamera.transform.localPosition = camerasPositions[0].localPosition;
+            mainCamera.nearClipPlane = 0.3f;
         }
         else if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            camera.transform.localPosition = camerasPositions[1].localPosition;
-            camera.nearClipPlane = 0.05f;
+            mainCamera.transform.localPosition = camerasPositions[1].localPosition;
+            mainCamera.nearClipPlane = 0.05f;
         }
     }
 }

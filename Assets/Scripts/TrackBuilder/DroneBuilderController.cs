@@ -20,7 +20,7 @@ namespace Builder
         public bool isSimpleMode;
         public DroneBuilderCheckNode droneBuilderCheckNode;
         public BuilderManager builderManager;
-        public MeshRenderer droneMeshRenderer;
+        public DroneBuilderSoundController droneBuilderSoundController;
         
         private List<DroneEngine> _engines;
         private float _finalPitch;
@@ -33,9 +33,11 @@ namespace Builder
         private void Awake()
         {
             droneBuilderCheckNode = GetComponent<DroneBuilderCheckNode>();
+            droneBuilderSoundController = GetComponent<DroneBuilderSoundController>();
             builderManager = FindObjectOfType<BuilderManager>();
             builderManager.droneBuilderController = this;
             builderManager.droneBuilderCheckNode = droneBuilderCheckNode;
+            builderManager.droneBuilderSoundController = droneBuilderSoundController;
             _rb = GetComponent<Rigidbody>();
             _engines = GetComponentsInChildren<DroneEngine>().ToList();
         }
