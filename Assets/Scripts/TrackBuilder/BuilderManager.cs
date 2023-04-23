@@ -30,6 +30,7 @@ namespace Builder
         public Transform ground;
         public LayerMask layerMask;
         public GameObject pendingObject;
+        public GameObject copyObject;
         public TrackObject currentObjectType;
         public Vector3 mousePos;
         public Transform targetCheckpoint;
@@ -72,6 +73,24 @@ namespace Builder
         private void Update()
         {
             CheckTabPanel();
+
+            if (Input.GetKey(KeyCode.LeftControl))
+            {
+                if (Input.GetKeyDown(KeyCode.C))
+                {
+                    if (_selection.selectedObject != null)
+                    {
+                        copyObject = _selection.selectedObject;
+                    }
+                }
+                else if (Input.GetKeyDown(KeyCode.V))
+                {
+                    if (copyObject != null)
+                    {
+                        PasteObject(copyObject);
+                    }
+                }
+            }
             
             Ray ray = Camera.main!.ScreenPointToRay(Input.mousePosition);
 
@@ -97,7 +116,7 @@ namespace Builder
             {
                 PlaceObject();
             }
-                
+
             if(currentObjectType == null || pendingObject == null)
                 return;
             
@@ -364,7 +383,6 @@ namespace Builder
             }
         }
 
-        
         private void RotateObject(Vector3 axis, float rotateAmount, Space space)
         {
             if(pendingObject == null)
@@ -385,6 +403,28 @@ namespace Builder
             currentObjectType = pendingObject.GetComponent<TrackObject>();
             currentObjectType.isActive = true;
 
+            if (currentObjectType.objectType == ObjectsType.Gate)
+            {
+                currentObjectType.GetComponent<BuilderCheckpointTrigger>().checkpointId =
+                    droneBuilderCheckNode.nodes.Count;
+                droneBuilderCheckNode.AddNode(pendingObject.transform);
+            }
+        }
+
+        private void PasteObject(GameObject obj)
+        {
+            if(obj == null)
+                return;
+            
+            pendingObject = Instantiate(obj, mousePos, transform.rotation);
+            ChangeLayerRecursively(pendingObject.transform, LayerMask.NameToLayer("Track"));
+            SceneManager.MoveGameObjectToScene(pendingObject, levelScene);
+            objectsPool.Add(pendingObject);
+            _selection.Deselect();
+            _selection.Select(pendingObject);
+            currentObjectType = pendingObject.GetComponent<TrackObject>();
+            currentObjectType.isActive = true;
+            
             if (currentObjectType.objectType == ObjectsType.Gate)
             {
                 currentObjectType.GetComponent<BuilderCheckpointTrigger>().checkpointId =
