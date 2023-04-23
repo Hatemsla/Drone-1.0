@@ -11,9 +11,11 @@ namespace Builder
         public Button wallBtn;
         public Button slantBtn;
         public Button gateBtn;
-        public Button exitBtn;
+        public Button editorExitBtn;
+        public Button gameExitBtn;
         public Button backBtn;
-        public Button backTabBtn;
+        public Button backEditorTabBtn;
+        public Button backGameTabBtn;
         public Button saveBtn;
         public Button testLevelBtn;
         public Button returnToLevelBtn;
@@ -24,7 +26,8 @@ namespace Builder
 
         public GameObject createPanel;
         public GameObject editButtons;
-        public GameObject tabPanel;
+        public GameObject editorTabPanel;
+        public GameObject gameTabPanel;
         public GameObject levelResultPanel;
 
         public List<Button> createButtons;

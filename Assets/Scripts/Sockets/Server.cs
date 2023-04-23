@@ -117,26 +117,26 @@ namespace Sockets
 
         private void SetDroneFootballData(MioData data, DroneFootballController drone)
         {
-            drone.throttle = data.LeftMio.X / 1000f;
-            drone.pedals = data.LeftMio.Y / 1000f;
-            drone.cyclic.x = data.RightMio.X / 1000f;
-            drone.cyclic.y = data.RightMio.Y / 1000f;
+            drone.throttle = data.LeftMio.X / 2000f;
+            drone.pedals = data.LeftMio.Y / 2000f;
+            drone.cyclic.x = data.RightMio.X / 2000f;
+            drone.cyclic.y = data.RightMio.Y / 2000f;
         }
         
         private void SetDroneRaceData(MioData data, DroneRaceController drone)
         {
-            drone.throttle = data.LeftMio.X / 1000f;
-            drone.pedals = data.LeftMio.Y / 1000f;
-            drone.cyclic.x = data.RightMio.X / 1000f;
-            drone.cyclic.y = data.RightMio.Y / 1000f;
+            drone.throttle = data.LeftMio.X / 2000f;
+            drone.pedals = data.LeftMio.Y / 2000f;
+            drone.cyclic.x = data.RightMio.X / 2000f;
+            drone.cyclic.y = data.RightMio.Y / 2000f;
         }
 
         private void SetDroneTrackBuilderData(MioData data, DroneBuilderController drone)
         {
-            drone.throttle = data.LeftMio.X / 1000f;
-            drone.pedals = data.LeftMio.Y / 1000f;
-            drone.cyclic.x = data.RightMio.X / 1000f;
-            drone.cyclic.y = data.RightMio.Y / 1000f;
+            drone.throttle = data.LeftMio.X / 2000f;
+            drone.pedals = data.LeftMio.Y / 2000f;
+            drone.cyclic.x = data.RightMio.X / 2000f;
+            drone.cyclic.y = data.RightMio.Y / 2000f;
         }
 
         private void OnDestroy()

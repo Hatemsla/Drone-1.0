@@ -318,9 +318,11 @@ namespace Menu
                 _isFootball = false;
                 builderManager = FindObjectOfType<BuilderManager>();
                 builderManager.currentYawSensitivity = currentYawSensitivity;
-                builderManager.builderUI.exitBtn.onClick.AddListener(Exit);
+                builderManager.builderUI.editorExitBtn.onClick.AddListener(Exit);
+                builderManager.builderUI.gameExitBtn.onClick.AddListener(Exit);
                 builderManager.builderUI.backBtn.onClick.AddListener(BackToMenu);
-                builderManager.builderUI.backTabBtn.onClick.AddListener(BackToMenu);
+                builderManager.builderUI.backEditorTabBtn.onClick.AddListener(BackToMenu);
+                builderManager.builderUI.backGameTabBtn.onClick.AddListener(BackToMenu);
                 builderManager.builderUI.saveBtn.onClick.AddListener(SaveLevel);
                 builderManager.levelName = levelName;
                 builderManager.droneBuilderController.isSimpleMode = isSimpleMode;
@@ -329,11 +331,13 @@ namespace Menu
                 if (_isLoadLevel)
                 {
                     builderManager.LoadScene();
+                    builderManager.isGameMode = false;
                 }
 
                 if (_isStartBuilder)
                 {
                     builderManager.StartLevel();
+                    builderManager.isGameMode = true;
                 }
             }
         }

@@ -22,6 +22,7 @@ namespace Builder
         public float currentYawSensitivity;
         public bool canPlace;
         public bool isMove;
+        public bool isGameMode;
         public BuilderUI builderUI;
         public DroneBuilderController droneBuilderController;
         public DroneBuilderCheckNode droneBuilderCheckNode;
@@ -44,10 +45,9 @@ namespace Builder
         private Selection _selection;
         private Camera _mainCamera;
         private Vector3 _mainCameraPrevPosition;
-        private Vector3 _dronePrevPosition;
         private Vector3 _startPointerSize;
         private Quaternion _mainCameraPrevRotation;
-        private Quaternion _dronePrevRotation;
+        public float _dronePrevRotationY;
 
         private void Awake()
         {
@@ -75,7 +75,7 @@ namespace Builder
             
             Ray ray = Camera.main!.ScreenPointToRay(Input.mousePosition);
 
-            if (Physics.Raycast(ray, out _hit, 10000, layerMask) && !EventSystem.current.IsPointerOverGameObject())
+            if (Physics.Raycast(ray, out _hit, 10000, layerMask, QueryTriggerInteraction.Ignore) && !EventSystem.current.IsPointerOverGameObject())
             {
                 mousePos = _hit.point;
                 
@@ -157,7 +157,8 @@ namespace Builder
                     droneBuilderSoundController.droneFly.Stop();
                 else
                     droneBuilderSoundController.droneFly.Play();
-                builderUI.tabPanel.SetActive(_isTabPanel);
+                builderUI.editorTabPanel.SetActive(_isTabPanel && !isGameMode);
+                builderUI.gameTabPanel.SetActive(_isTabPanel && isGameMode);
                 builderUI.levelResultPanel.SetActive(false);
                 Time.timeScale = _isTabPanel ? 0f : 1f;
             }
@@ -247,14 +248,15 @@ namespace Builder
                 TurnAllConnections(false);
                 _mainCameraPrevPosition = _mainCamera.transform.position;
                 _mainCameraPrevRotation = _mainCamera.transform.rotation;
-                _dronePrevPosition = droneBuilderController.transform.position;
-                _dronePrevRotation = droneBuilderController.transform.rotation;
+                _dronePrevRotationY = droneBuilderController.transform.localRotation.eulerAngles.y;
+                droneBuilderController.yaw = _dronePrevRotationY;
                 _mainCamera.transform.SetParent(droneBuilderController.transform);
                 _mainCamera.transform.position = droneBuilderController.GetComponent<CameraController>().camerasPositions[0].position;
                 _mainCamera.transform.rotation = droneBuilderController.GetComponent<CameraController>().camerasPositions[0].rotation;
                 droneBuilderController.GetComponent<Rigidbody>().isKinematic = false;
                 droneBuilderController.GetComponent<Rigidbody>().useGravity = true;
                 droneBuilderController.GetComponent<CameraController>().enabled = true;
+                Debug.Log(droneBuilderController.transform.localRotation.eulerAngles);
                 builderUI.createPanel.SetActive(false);
                 builderUI.editButtons.SetActive(false);
                 if(droneBuilderCheckNode.nodes.Count > 0)
@@ -270,12 +272,12 @@ namespace Builder
                 TurnAllConnections(true);
                 _mainCamera.transform.position = _mainCameraPrevPosition;
                 _mainCamera.transform.rotation = _mainCameraPrevRotation;
-                droneBuilderController.transform.position = _dronePrevPosition;
-                droneBuilderController.transform.rotation = _dronePrevRotation;
+                droneBuilderController.yaw = _dronePrevRotationY;
                 droneBuilderController.GetComponent<Rigidbody>().isKinematic = true;
                 droneBuilderController.GetComponent<Rigidbody>().useGravity = false;
                 droneBuilderController.GetComponent<CameraController>().enabled = true;
-                builderUI.tabPanel.SetActive(false);
+                builderUI.editorTabPanel.SetActive(false);
+                builderUI.gameTabPanel.SetActive(false);
                 Time.timeScale = 1f;
                 _isTabPanel = false;
                 builderUI.createPanel.SetActive(true);
@@ -372,6 +374,9 @@ namespace Builder
         
         public void SelectObject(int index)
         {
+            if(pendingObject != null)
+                PlaceObject();
+            
             pendingObject = Instantiate(objects[index], mousePos, transform.rotation);
             SceneManager.MoveGameObjectToScene(pendingObject, levelScene);
             objectsPool.Add(pendingObject);
