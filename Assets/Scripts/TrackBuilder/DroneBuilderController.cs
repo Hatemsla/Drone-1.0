@@ -40,7 +40,6 @@ namespace Builder
             builderManager.droneBuilderSoundController = droneBuilderSoundController;
             _rb = GetComponent<Rigidbody>();
             _engines = GetComponentsInChildren<DroneEngine>().ToList();
-            Debug.Log(transform.localRotation.eulerAngles);
         }
 
         private void Start()

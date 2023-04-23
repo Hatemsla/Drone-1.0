@@ -256,7 +256,6 @@ namespace Builder
                 droneBuilderController.GetComponent<Rigidbody>().isKinematic = false;
                 droneBuilderController.GetComponent<Rigidbody>().useGravity = true;
                 droneBuilderController.GetComponent<CameraController>().enabled = true;
-                Debug.Log(droneBuilderController.transform.localRotation.eulerAngles);
                 builderUI.createPanel.SetActive(false);
                 builderUI.editButtons.SetActive(false);
                 if(droneBuilderCheckNode.nodes.Count > 0)
@@ -273,6 +272,7 @@ namespace Builder
                 _mainCamera.transform.position = _mainCameraPrevPosition;
                 _mainCamera.transform.rotation = _mainCameraPrevRotation;
                 droneBuilderController.yaw = _dronePrevRotationY;
+                droneBuilderController.transform.localRotation = Quaternion.Euler(0, _dronePrevRotationY, 0);
                 droneBuilderController.GetComponent<Rigidbody>().isKinematic = true;
                 droneBuilderController.GetComponent<Rigidbody>().useGravity = false;
                 droneBuilderController.GetComponent<CameraController>().enabled = true;

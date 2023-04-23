@@ -13,7 +13,6 @@ public class CameraController : MonoBehaviour
         mainCamera = Camera.main;
         mainCamera.transform.localPosition = camerasPositions[0].localPosition;
         mainCamera.nearClipPlane = 0.3f;
-        Debug.Log(transform.rotation.eulerAngles);
     }
 
     private void Update()
