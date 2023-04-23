@@ -416,7 +416,7 @@ namespace Builder
             if(obj == null)
                 return;
             
-            pendingObject = Instantiate(obj, mousePos, transform.rotation);
+            pendingObject = Instantiate(obj, mousePos, copyObject.transform.rotation);
             ChangeLayerRecursively(pendingObject.transform, LayerMask.NameToLayer("Track"));
             SceneManager.MoveGameObjectToScene(pendingObject, levelScene);
             objectsPool.Add(pendingObject);
