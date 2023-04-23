@@ -98,25 +98,23 @@ namespace Builder
                 PlaceObject();
             }
                 
-            if(currentObjectType == null)
+            if(currentObjectType == null || pendingObject == null)
                 return;
             
             if (Input.GetKeyDown(KeyCode.Q))
             {
-                RotateObject(Vector3.up, -10, Space.World);
+                RotateObject(pendingObject.transform.up, -10, Space.World);
             }
             else if (Input.GetKeyDown(KeyCode.E))
             {
-                RotateObject(Vector3.up, 10, Space.World);
+                RotateObject(pendingObject.transform.up, 10, Space.World);
             }
             else if (Input.GetAxis("Mouse ScrollWheel") != 0)
             {
                 var mouseScroll = Input.GetAxis("Mouse ScrollWheel");
                 var rotateAmount = mouseScroll > 0 ? 1 : -1;
-                if(currentObjectType.objectType == ObjectsType.Trap)
-                    RotateObject(Vector3.right, 10 * rotateAmount, Space.World);
-                else
-                    RotateObject(Vector3.up, 10 * rotateAmount, Space.World);
+                // RotateObject(pendingObject.transform.right, 10 * rotateAmount, Space.Self);
+                RotateObject(pendingObject.transform.up, 10 * rotateAmount, Space.World);
             }
 
             if (Input.GetKey(KeyCode.W))
@@ -128,23 +126,22 @@ namespace Builder
                 ChangeObjectHeight(-2 * Time.deltaTime);
             }
 
+            if (Input.GetKey(KeyCode.A))
+            {
+                ChangeObjectScale(2 * Time.deltaTime);
+            }
+            else if(Input.GetKey(KeyCode.D))
+            {
+                ChangeObjectScale(-2 * Time.deltaTime);
+            }
+
             if (Input.GetKeyDown(KeyCode.Z))
             {
-                switch (currentObjectType.objectType)
-                {
-                    case ObjectsType.Trap:
-                        RotateObject(Vector3.right, 10f, Space.World);
-                        break;
-                }
+                RotateObject(Vector3.right, 10f, Space.World);
             }
             else if (Input.GetKeyDown(KeyCode.X))
             {
-                switch (currentObjectType.objectType)
-                {
-                    case ObjectsType.Trap:
-                        RotateObject(Vector3.right, -10f, Space.World);
-                        break;
-                }
+                RotateObject(Vector3.right, -10f, Space.World);
             }
         }
 
@@ -332,12 +329,15 @@ namespace Builder
         {
             if(currentObjectType == null)
                 return;
-
-            if (currentObjectType.objectType == ObjectsType.Gate)
-            {
-                currentObjectType.yOffset += value;
+            
+            currentObjectType.yOffset += value;
                 // _mainCamera.transform.Translate(0, value, 0, Space.Self);
-            }
+        }
+
+        private void ChangeObjectScale(float value)
+        {
+            pendingObject.transform.localScale += new Vector3(value, value, value);
+            currentObjectType.yOffset += value;
         }
         
         public void ChangeLayerRecursively(Transform obj, int layer)
