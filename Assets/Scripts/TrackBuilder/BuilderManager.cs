@@ -48,7 +48,8 @@ namespace Builder
         private Vector3 _mainCameraPrevPosition;
         private Vector3 _startPointerSize;
         private Quaternion _mainCameraPrevRotation;
-        public float _dronePrevRotationY;
+        private float _dronePrevRotationY;
+        private Vector3 _dronePrevPosition;
 
         private void Awake()
         {
@@ -266,6 +267,7 @@ namespace Builder
                 _mainCameraPrevRotation = _mainCamera.transform.rotation;
                 _dronePrevRotationY = droneBuilderController.transform.localRotation.eulerAngles.y;
                 droneBuilderController.yaw = _dronePrevRotationY;
+                _dronePrevPosition = droneBuilderController.transform.position;
                 _mainCamera.transform.SetParent(droneBuilderController.transform);
                 _mainCamera.transform.position = droneBuilderController.GetComponent<CameraController>().camerasPositions[0].position;
                 _mainCamera.transform.rotation = droneBuilderController.GetComponent<CameraController>().camerasPositions[0].rotation;
@@ -288,6 +290,7 @@ namespace Builder
                 _mainCamera.transform.position = _mainCameraPrevPosition;
                 _mainCamera.transform.rotation = _mainCameraPrevRotation;
                 droneBuilderController.yaw = _dronePrevRotationY;
+                droneBuilderController.transform.position = _dronePrevPosition;
                 droneBuilderController.transform.localRotation = Quaternion.Euler(0, _dronePrevRotationY, 0);
                 droneBuilderController.GetComponent<Rigidbody>().isKinematic = true;
                 droneBuilderController.GetComponent<Rigidbody>().useGravity = false;

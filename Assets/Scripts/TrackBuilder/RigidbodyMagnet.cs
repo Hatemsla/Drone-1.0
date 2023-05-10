@@ -11,9 +11,15 @@ namespace Builder
 
         void FixedUpdate()
         {
-            for (int i = 0; i < _caughtRigidbodies.Count; i++)
+            if (_caughtRigidbodies != null)
             {
-                _caughtRigidbodies[i].velocity += (transform.position - (_caughtRigidbodies[i].transform.position + _caughtRigidbodies[i].centerOfMass)) * magnetForce * Time.deltaTime;
+                for (int i = 0; i < _caughtRigidbodies.Count; i++)
+                {
+                    _caughtRigidbodies[i].velocity +=
+                        (transform.position -
+                         (_caughtRigidbodies[i].transform.position + _caughtRigidbodies[i].centerOfMass)) *
+                        (magnetForce * Time.deltaTime);
+                }
             }
         }
 

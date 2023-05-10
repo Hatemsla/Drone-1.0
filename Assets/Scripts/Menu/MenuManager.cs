@@ -33,6 +33,7 @@ namespace Menu
         public BuilderManager builderManager;
         public ColorPreview botsColorPreview;
         public ColorPreview playerColorPreview;
+        public AsyncLoad asyncLoad;
         public Resolution[] Resolutions;
 
         private readonly List<string> _difficulties = new List<string>
@@ -203,6 +204,7 @@ namespace Menu
                         Destroy(obj);
 
                 menuUIManager = FindObjectOfType<MenuUIManager>();
+                asyncLoad = FindObjectOfType<AsyncLoad>();
                 OpenMenu("Start");
                 menuUIManager.volumeSlider.value = currentVolume;
                 menuUIManager.volumeSlider.onValueChanged.AddListener(delegate { ChangeVolume(); });
@@ -350,7 +352,9 @@ namespace Menu
             levelName = menuUIManager.levelInput.text;
             _isLoadLevel = true;
             _isStartBuilder = false;
-            SceneManager.LoadScene(4);
+            OpenMenu("Load");
+            asyncLoad.LoadScene(4, menuUIManager.loadSlider);
+            // SceneManager.LoadScene(4);
         }
 
         public void CreateLevel()
@@ -362,7 +366,9 @@ namespace Menu
             levelName = menuUIManager.levelInput.text;
             _isLoadLevel = false;
             _isStartBuilder = false;
-            SceneManager.LoadScene(4);
+            OpenMenu("Load");
+            asyncLoad.LoadScene(4, menuUIManager.loadSlider);
+            // SceneManager.LoadScene(4);
         }
 
         public void StartBuilder()
@@ -372,7 +378,9 @@ namespace Menu
             
             levelName = menuUIManager.levelInput.text;
             _isStartBuilder = true;
-            SceneManager.LoadScene(4);
+            OpenMenu("Load");
+            asyncLoad.LoadScene(4, menuUIManager.loadSlider);
+            // SceneManager.LoadScene(4);
         }
 
         public void SaveLevel()
@@ -439,6 +447,7 @@ namespace Menu
         public void BackToMenu()
         {
             SceneManager.LoadScene(1);
+            // asyncLoad.AsyncLoadScene(1);
             Time.timeScale = 1f;
         }
 
@@ -479,7 +488,9 @@ namespace Menu
         private void StartGame(int sceneIndex)
         {
             GameTimeHandler();
-            SceneManager.LoadScene(sceneIndex);
+            OpenMenu("Load");
+            asyncLoad.LoadScene(sceneIndex, menuUIManager.loadSlider);
+            // SceneManager.LoadScene(sceneIndex);
         }
 
         private bool IsValidLevelName(string input)

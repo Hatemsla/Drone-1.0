@@ -77,6 +77,10 @@ namespace Menu
         public Button playBtn;
         public Button builderBackBtn;
 
+        [Header("Load menu")]
+        public Slider loadSlider;
+        
+        
         [Header("Menus")]
         public GameObject startMenu;
         public GameObject optionMenu;

@@ -116,7 +116,7 @@ namespace DroneFootball
                 _isTabPanel = !_isTabPanel;
                 if(_isTabPanel)
                     droneFootballSoundController.droneFly.Stop();
-                else
+                else if(isGameStart)
                     droneFootballSoundController.droneFly.Play();
                 footballUIManager.tabPanel.SetActive(_isTabPanel);
                 Time.timeScale = _isTabPanel ? 0f : 1f;

@@ -122,7 +122,7 @@ namespace DroneRace
                 _isTabPanel = !_isTabPanel;
                 if(_isTabPanel)
                     droneRaceSoundController.droneFly.Stop();
-                else
+                else if(isGameStart)
                     droneRaceSoundController.droneFly.Play();
                 raceUIManager.tabPanel.SetActive(_isTabPanel);
                 Time.timeScale = _isTabPanel ? 0f : 1f;
