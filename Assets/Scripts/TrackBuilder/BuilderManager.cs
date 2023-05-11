@@ -17,9 +17,9 @@ namespace Builder
     public class BuilderManager : MonoBehaviour
     {
         public string levelName;
-        public float gridSize;
         public float interfaceScale;
         public float currentYawSensitivity;
+        public int currentSelectObjectIndex;
         public bool canPlace;
         public bool isMove;
         public bool isGameMode;
@@ -27,7 +27,7 @@ namespace Builder
         public DroneBuilderController droneBuilderController;
         public DroneBuilderCheckNode droneBuilderCheckNode;
         public DroneBuilderSoundController droneBuilderSoundController;
-        public Transform ground;
+        public UndoRedoManager undoRedoManager;
         public LayerMask layerMask;
         public GameObject pendingObject;
         public GameObject copyObject;
@@ -91,8 +91,16 @@ namespace Builder
                         PasteObject(copyObject);
                     }
                 }
+                else if (Input.GetKeyDown(KeyCode.Z))
+                {
+                    undoRedoManager.UndoCommand();
+                }
+                else if (Input.GetKeyDown(KeyCode.Y))
+                {
+                    undoRedoManager.RedoCommand();
+                }
             }
-            
+
             Ray ray = Camera.main!.ScreenPointToRay(Input.mousePosition);
 
             if (Physics.Raycast(ray, out _hit, 10000, layerMask, QueryTriggerInteraction.Ignore) && !EventSystem.current.IsPointerOverGameObject())
@@ -133,7 +141,6 @@ namespace Builder
             {
                 var mouseScroll = Input.GetAxis("Mouse ScrollWheel");
                 var rotateAmount = mouseScroll > 0 ? 1 : -1;
-                // RotateObject(pendingObject.transform.right, 10 * rotateAmount, Space.Self);
                 RotateObject(pendingObject.transform.up, 10 * rotateAmount, Space.World);
             }
 
@@ -324,7 +331,7 @@ namespace Builder
             }
         }
 
-        private void TurnAllOutlineEffects(bool turn)
+        public void TurnAllOutlineEffects(bool turn)
         {
             var outlines = FindObjectsOfType<Outline>();
             foreach (var outline in outlines)
@@ -334,6 +341,23 @@ namespace Builder
         }
 
         public void PlaceObject()
+        {
+            try
+            {
+                pendingObject = _selection.selectedObject;
+                ChangeLayerRecursively(pendingObject.transform, LayerMask.NameToLayer("TrackGround"));
+                undoRedoManager.ExecuteCommand(new PlaceCommand(objects[currentSelectObjectIndex],
+                    pendingObject.transform.position, pendingObject.transform.rotation, pendingObject));
+                currentObjectType = null;
+                pendingObject = null;
+            }
+            catch
+            {
+                // ignored
+            }
+        }
+
+        public void PutObject()
         {
             try
             {
@@ -397,7 +421,8 @@ namespace Builder
         {
             if(pendingObject != null)
                 PlaceObject();
-            
+
+            currentSelectObjectIndex = index;
             pendingObject = Instantiate(objects[index], mousePos, transform.rotation);
             SceneManager.MoveGameObjectToScene(pendingObject, levelScene);
             objectsPool.Add(pendingObject);
@@ -442,7 +467,7 @@ namespace Builder
             MoveObjectsToPoolScene();
         }
 
-        private void MoveObjectsToPoolScene()
+        public void MoveObjectsToPoolScene()
         {
             foreach (var obj in objectsPool)
             {
@@ -453,7 +478,6 @@ namespace Builder
 
             if (droneBuilderCheckNode.nodes.Count > 0)
             {
-                // droneBuilderCheckNode.nodes.Reverse();
                 builderUI.pathArrow.gameObject.SetActive(true);
             }
 
@@ -502,19 +526,6 @@ namespace Builder
                 Destroy(obj);
             }
             objectsPool.Clear();
-        }
-
-        private float RoundToNearsGrid(float pos)
-        {
-            float xDiff = pos % gridSize;
-            pos -= xDiff;
-
-            if (xDiff > (gridSize / 2))
-            {
-                pos += gridSize;
-            }
-
-            return pos;
         }
     }
 }

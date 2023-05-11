@@ -3116,6 +3116,50 @@ MonoBehaviour:
   hoverSprite: {fileID: 21300000, guid: d1d98f97f21465b40b1f04b36e6324b0, type: 3}
   pressedSprite: {fileID: 0}
   disabledSprite: {fileID: 0}
+--- !u!1 &780171830
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 780171832}
+  - component: {fileID: 780171831}
+  m_Layer: 0
+  m_Name: UndoRedoManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &780171831
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 780171830}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe2f30d21fd4493bbf2f15110415ebf1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &780171832
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 780171830}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 773.11383, y: 519.00745, z: 14.647658}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &800250425
 GameObject:
   m_ObjectHideFlags: 0
@@ -5494,11 +5538,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!4 &1363295228 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 6798339470373176016, guid: b3b3954c701c0cc4fbc912b28438e978, type: 3}
-  m_PrefabInstance: {fileID: 6798339470288877146}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1370511421
 GameObject:
   m_ObjectHideFlags: 0
@@ -9040,7 +9079,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelName: 
-  gridSize: 0.5
   interfaceScale: 80
   currentYawSensitivity: 0
   canPlace: 1
@@ -9050,7 +9088,7 @@ MonoBehaviour:
   droneBuilderController: {fileID: 6554557505293662352}
   droneBuilderCheckNode: {fileID: 6554557505293662356}
   droneBuilderSoundController: {fileID: 0}
-  ground: {fileID: 1363295228}
+  undoRedoManager: {fileID: 780171831}
   layerMask:
     serializedVersion: 2
     m_Bits: 320

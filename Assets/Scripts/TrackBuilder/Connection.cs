@@ -28,14 +28,14 @@ namespace Builder
                 if (_trackObject.objectType == ObjectsType.Floor &&
                     other.gameObject.layer == LayerMask.NameToLayer("FloorConnection"))
                 {
-                    _builderManager.PlaceObject();
+                    _builderManager.PutObject();
                     _trackObject.transform.position = other.transform.position;
                     _trackObject.transform.rotation = other.transform.rotation;
                 }
                 else if (_trackObject.objectType == ObjectsType.Wall &&
                          other.gameObject.layer == LayerMask.NameToLayer("WallConnection"))
                 {
-                    _builderManager.PlaceObject();
+                    _builderManager.PutObject();
                     _connectPosition = new Vector3(other.transform.position.x,
                         other.transform.position.y + _trackObject.yOffset, other.transform.position.z);
                     _trackObject.transform.position = _connectPosition;
@@ -43,7 +43,7 @@ namespace Builder
                 else if (_trackObject.objectType == ObjectsType.Slant && 
                          other.gameObject.layer == LayerMask.NameToLayer("SlantConnection"))
                 {
-                    _builderManager.PlaceObject();
+                    _builderManager.PutObject();
                     _trackObject.transform.position = other.transform.position;
                 }
             }

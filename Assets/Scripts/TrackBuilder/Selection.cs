@@ -29,10 +29,17 @@ namespace Builder
                         Select(hit.collider.transform.root.gameObject);
             }
 
-            if ((Input.GetKeyDown(KeyCode.Tab) || Input.GetMouseButtonDown(1) || Input.GetKeyDown(KeyCode.KeypadEnter)) && selectedObject != null)
+            if ((Input.GetKeyDown(KeyCode.F) || Input.GetMouseButtonDown(1)) && selectedObject != null)
             {
                 _builderManager.PlaceObject();
                 Deselect();
+            }
+
+            if (Input.GetKeyDown(KeyCode.T) && selectedObject != null)
+            {
+                _builderManager.PlaceObject();
+                Deselect();
+                _builderManager.SelectObject(_builderManager.currentSelectObjectIndex);
             }
 
             if (Input.GetKeyDown(KeyCode.Delete))
@@ -87,7 +94,7 @@ namespace Builder
             {
                 outline.enabled = false;
             }
-
+            
             selectedObject.GetComponent<TrackObject>().isActive = false;
             selectedObject = null;
         }

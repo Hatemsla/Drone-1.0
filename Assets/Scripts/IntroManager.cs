@@ -28,6 +28,7 @@ public class IntroManager : MonoBehaviour
     private IEnumerator WaitForLevel()
     {
         yield return new WaitForSeconds((float)gameIntro.length);
+        video.clip = studioIntro;
         SceneManager.LoadScene(1);
     }
 
