@@ -29,13 +29,13 @@ namespace Builder
                         Select(hit.collider.transform.root.gameObject);
             }
 
-            if ((Input.GetKeyDown(KeyCode.F) || Input.GetMouseButtonDown(1)) && selectedObject != null)
+            if ((Input.GetKeyDown(KeyCode.F) || Input.GetMouseButtonDown(1)) && _builderManager.pendingObject != null)
             {
                 _builderManager.PlaceObject();
                 Deselect();
             }
 
-            if (Input.GetKeyDown(KeyCode.T) && selectedObject != null)
+            if (Input.GetKeyDown(KeyCode.T) && _builderManager.pendingObject != null)
             {
                 _builderManager.PlaceObject();
                 Deselect();
@@ -51,7 +51,7 @@ namespace Builder
         public void Move()
         {
             if (selectedObject == null) return;
-            _builderManager.ChangeLayerRecursively(selectedObject.transform.root.transform, LayerMask.NameToLayer("Track"));
+            TrackBuilderUtils.ChangeLayerRecursively(selectedObject.transform.root.transform, LayerMask.NameToLayer("Track"));
             _builderManager.pendingObject = selectedObject.transform.root.gameObject;
             _builderManager.currentObjectType = selectedObject.GetComponentInParent<TrackObject>();
             _builderManager.currentObjectType.isActive = true;

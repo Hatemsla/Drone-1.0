@@ -268,8 +268,10 @@ namespace Builder
             if (isMove)
             {
                 _mainCamera.GetComponent<FreeFlyCamera>().enabled = false;
-                TurnAllOutlineEffects(false);
-                TurnAllConnections(false);
+                var outlines = FindObjectsOfType<Outline>();
+                TrackBuilderUtils.TurnAllOutlineEffects(outlines, false);
+                _connections = FindObjectsOfType<Connection>();
+                TrackBuilderUtils.TurnAllConnections(_connections, false);
                 _mainCameraPrevPosition = _mainCamera.transform.position;
                 _mainCameraPrevRotation = _mainCamera.transform.rotation;
                 _dronePrevRotationY = droneBuilderController.transform.localRotation.eulerAngles.y;
@@ -293,7 +295,7 @@ namespace Builder
             {
                 _mainCamera.transform.parent = null;
                 _mainCamera.GetComponent<FreeFlyCamera>().enabled = true;
-                TurnAllConnections(true);
+                TrackBuilderUtils.TurnAllConnections(_connections, true);
                 _mainCamera.transform.position = _mainCameraPrevPosition;
                 _mainCamera.transform.rotation = _mainCameraPrevRotation;
                 droneBuilderController.yaw = _dronePrevRotationY;
@@ -320,34 +322,15 @@ namespace Builder
             TestLevel();
         }
 
-        private void TurnAllConnections(bool turn)
-        {
-            if(!turn)
-                _connections = FindObjectsOfType<Connection>();
-            
-            foreach (var connection in _connections)
-            {
-                connection.gameObject.SetActive(turn);
-            }
-        }
-
-        public void TurnAllOutlineEffects(bool turn)
-        {
-            var outlines = FindObjectsOfType<Outline>();
-            foreach (var outline in outlines)
-            {
-                outline.enabled = turn;
-            }
-        }
-
         public void PlaceObject()
         {
             try
             {
                 pendingObject = _selection.selectedObject;
-                ChangeLayerRecursively(pendingObject.transform, LayerMask.NameToLayer("TrackGround"));
+                currentObjectType = _selection.selectedObject.GetComponent<TrackObject>();
+                TrackBuilderUtils.ChangeLayerRecursively(pendingObject.transform, LayerMask.NameToLayer("TrackGround"));
                 undoRedoManager.ExecuteCommand(new PlaceCommand(objects[currentSelectObjectIndex],
-                    pendingObject.transform.position, pendingObject.transform.rotation, pendingObject));
+                    pendingObject.transform.position, pendingObject.transform.rotation, pendingObject, currentObjectType.yOffset));
                 currentObjectType = null;
                 pendingObject = null;
             }
@@ -361,7 +344,7 @@ namespace Builder
         {
             try
             {
-                ChangeLayerRecursively(pendingObject.transform, LayerMask.NameToLayer("TrackGround"));
+                TrackBuilderUtils.ChangeLayerRecursively(pendingObject.transform, LayerMask.NameToLayer("TrackGround"));
                 currentObjectType = null;
                 pendingObject = null;
             }
@@ -384,30 +367,6 @@ namespace Builder
         {
             pendingObject.transform.localScale += new Vector3(value, value, value);
             currentObjectType.yOffset += value;
-        }
-        
-        public void ChangeLayerRecursively(Transform obj, int layer)
-        {
-            if (LayerMask.LayerToName(obj.gameObject.layer) != "FloorConnection" && LayerMask.LayerToName(obj.gameObject.layer) != "WallConnection" && LayerMask.LayerToName(obj.gameObject.layer) != "SlantConnection")
-            {
-                obj.gameObject.layer = layer;
-            }
-
-            foreach (Transform child in obj)
-            {
-                ChangeLayerRecursively(child, layer);
-            }
-        }
-
-        public void OffOutlineRecursively(Transform obj)
-        {
-            if(obj.gameObject.GetComponent<Outline>())
-                obj.gameObject.GetComponent<Outline>().enabled = false;
-
-            foreach (Transform child in obj)
-            {
-                OffOutlineRecursively(child);
-            }
         }
 
         private void RotateObject(Vector3 axis, float rotateAmount, Space space)
@@ -445,7 +404,7 @@ namespace Builder
                 return;
             
             pendingObject = Instantiate(obj, mousePos, copyObject.transform.rotation);
-            ChangeLayerRecursively(pendingObject.transform, LayerMask.NameToLayer("Track"));
+            TrackBuilderUtils.ChangeLayerRecursively(pendingObject.transform, LayerMask.NameToLayer("Track"));
             SceneManager.MoveGameObjectToScene(pendingObject, levelScene);
             objectsPool.Add(pendingObject);
             _selection.Deselect();
@@ -497,28 +456,19 @@ namespace Builder
             foreach (KeyValuePair<string, Dictionary<string, string>> kvp in loadedData)
             {
                 string objectName = kvp.Value["name"].Substring(0, kvp.Value["name"].IndexOf('('));
-                Vector3 position = ParseVector3(kvp.Value["position"]);
-                Vector3 rotation = ParseVector3(kvp.Value["rotation"]);
-                Vector3 scale = ParseVector3(kvp.Value["scale"]);
+                Vector3 position = TrackBuilderUtils.ParseVector3(kvp.Value["position"]);
+                Vector3 rotation = TrackBuilderUtils.ParseVector3(kvp.Value["rotation"]);
+                Vector3 scale = TrackBuilderUtils.ParseVector3(kvp.Value["scale"]);
                 int layer = Convert.ToInt32(kvp.Value["layer"]);
                 GameObject newObj = Instantiate(Resources.Load<GameObject>("TrackObjects/" + objectName), position, Quaternion.Euler(rotation));
-                ChangeLayerRecursively(newObj.transform, layer);
-                OffOutlineRecursively(newObj.transform);
+                TrackBuilderUtils.ChangeLayerRecursively(newObj.transform, layer);
+                TrackBuilderUtils.OffOutlineRecursively(newObj.transform);
                 newObj.transform.localScale = scale;
                 newObj.name = kvp.Value["name"];
                 objectsPool.Add(newObj);
             }
         }
 
-        private Vector3 ParseVector3(string str)
-        {
-            string[] values = str.Split(' ');
-            float x = float.Parse(values[0]);
-            float y = float.Parse(values[1]);
-            float z = float.Parse(values[2]);
-            return new Vector3(x, y, z);
-        }
-        
         private void ClearObject()
         {
             foreach (var obj in objectsPool)

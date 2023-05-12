@@ -16,6 +16,7 @@
         Billboard,
         WindZone,
         Magnet,
-        FreezingBall
+        FreezingBall,
+        Rope
     }
 }

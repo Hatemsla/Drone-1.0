@@ -10,7 +10,10 @@ public class BoostTrigger : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            StartCoroutine(BoostDrone(other.GetComponent<Rigidbody>()));
+            if (other.GetComponent<DroneBuilderController>().boostsCount < 3)
+            {
+                StartCoroutine(BoostDrone(other.GetComponent<Rigidbody>()));
+            }
         }
     }
 

@@ -19,6 +19,7 @@ namespace Builder
         public float lerpSpeed;
         public float yaw;
         public bool isSimpleMode;
+        public int boostsCount;
         public DroneBuilderCheckNode droneBuilderCheckNode;
         public BuilderManager builderManager;
         public DroneBuilderSoundController droneBuilderSoundController;

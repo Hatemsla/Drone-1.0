@@ -1055,7 +1055,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3564480367106820801}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 100
   m_Drag: 0.5
   m_AngularDrag: 0.5
   m_UseGravity: 0
@@ -1125,6 +1125,7 @@ MonoBehaviour:
   pedals: 0
   throttle: 0
   lerpSpeed: 5
+  yaw: 0
   isSimpleMode: 1
   droneBuilderCheckNode: {fileID: 0}
   builderManager: {fileID: 0}
@@ -1330,7 +1331,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cf6d69a1e9c68d438217041432a4858, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxPower: 6
+  maxPower: 300
   propellerRotSpeed: 300
   propeller: {fileID: 2212498860107428383}
 --- !u!1 &3564480368106597854
@@ -1377,7 +1378,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cf6d69a1e9c68d438217041432a4858, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxPower: 6
+  maxPower: 300
   propellerRotSpeed: 300
   propeller: {fileID: 7722546070967461380}
 --- !u!1 &3564480368310213033
@@ -1424,7 +1425,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cf6d69a1e9c68d438217041432a4858, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxPower: 6
+  maxPower: 300
   propellerRotSpeed: 300
   propeller: {fileID: 495835769490383457}
 --- !u!1 &3564480368412183325
@@ -1471,7 +1472,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cf6d69a1e9c68d438217041432a4858, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxPower: 6
+  maxPower: 300
   propellerRotSpeed: 300
   propeller: {fileID: 240314937184430509}
 --- !u!1 &3564480368483056995

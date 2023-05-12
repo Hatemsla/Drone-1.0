@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Builder.Interfaces;
+using cakeslice;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -8,14 +9,12 @@ namespace Builder
 {
     public class UndoRedoManager : MonoBehaviour
     {
-        private Stack<IAction> _historyStack = new Stack<IAction>();
-        private Stack<IAction> _redoHistoryStack = new Stack<IAction>();
-        private Selection _selection;
+        public Stack<IAction> _historyStack = new Stack<IAction>();
+        public Stack<IAction> _redoHistoryStack = new Stack<IAction>();
         private BuilderManager _builderManager;
 
         private void Start()
         {
-            _selection = FindObjectOfType<Selection>();
             _builderManager = FindObjectOfType<BuilderManager>();
         }
 
@@ -32,7 +31,10 @@ namespace Builder
                 _redoHistoryStack.Push(_historyStack.Peek());
                 var obj = _historyStack.Peek().GetCommand();
                 _builderManager.objectsPool.RemoveAt(_builderManager.objectsPool.IndexOf(obj));
-                _builderManager.droneBuilderCheckNode.RemoveNode(obj.transform);
+                if (obj.GetComponent<TrackObject>().objectType == ObjectsType.Gate)
+                {
+                    _builderManager.droneBuilderCheckNode.RemoveNode(obj.transform);
+                }
                 _historyStack.Pop().UndoCommand();
             }
         }
@@ -44,8 +46,13 @@ namespace Builder
                 _historyStack.Push(_redoHistoryStack.Peek());
                 var obj = _redoHistoryStack.Pop().ExecuteCommand();
                 _builderManager.objectsPool.Add(obj);
-                _builderManager.ChangeLayerRecursively(obj.transform, LayerMask.NameToLayer("TrackGround"));
-                _builderManager.TurnAllOutlineEffects(false);
+                if (obj.GetComponent<TrackObject>().objectType == ObjectsType.Gate)
+                {
+                    _builderManager.droneBuilderCheckNode.AddNode(obj.transform);
+                }
+                TrackBuilderUtils.ChangeLayerRecursively(obj.transform, LayerMask.NameToLayer("TrackGround"));
+                var outlines = FindObjectsOfType<Outline>();
+                TrackBuilderUtils.TurnAllOutlineEffects(outlines, false);
                 SceneManager.MoveGameObjectToScene(obj, _builderManager.levelScene);
             }
         }

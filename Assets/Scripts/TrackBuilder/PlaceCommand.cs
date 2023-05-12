@@ -8,20 +8,23 @@ namespace Builder
         private GameObject _spawnGameObject;
         private Vector3 _objectPosition;
         private Quaternion _objectRotation;
+        private float _yOffset;
 
         private GameObject _spawnedGameObject;
 
-        public PlaceCommand(GameObject spawnGameObject, Vector3 objectPosition, Quaternion objectRotation, GameObject spawnedGameObject)
+        public PlaceCommand(GameObject spawnGameObject, Vector3 objectPosition, Quaternion objectRotation, GameObject spawnedGameObject, float yOffset)
         {
             _spawnGameObject = spawnGameObject;
             _objectPosition = objectPosition;
             _objectRotation = objectRotation;
             _spawnedGameObject = spawnedGameObject;
+            _yOffset = yOffset;
         }
 
         public GameObject ExecuteCommand()
         {
             _spawnedGameObject = GameObject.Instantiate(_spawnGameObject, _objectPosition, _objectRotation);
+            // _spawnedGameObject.GetComponent<TrackObject>().yOffset = _yOffset;
             return _spawnedGameObject;
         }
 
