@@ -9,8 +9,8 @@ namespace Builder
 {
     public class UndoRedoManager : MonoBehaviour
     {
-        public Stack<IAction> _historyStack = new Stack<IAction>();
-        public Stack<IAction> _redoHistoryStack = new Stack<IAction>();
+        private Stack<IAction> _historyStack = new Stack<IAction>();
+        private Stack<IAction> _redoHistoryStack = new Stack<IAction>();
         private BuilderManager _builderManager;
 
         private void Start()
@@ -30,12 +30,15 @@ namespace Builder
             {
                 _redoHistoryStack.Push(_historyStack.Peek());
                 var obj = _historyStack.Peek().GetCommand();
-                _builderManager.objectsPool.RemoveAt(_builderManager.objectsPool.IndexOf(obj));
-                if (obj.GetComponent<TrackObject>().objectType == ObjectsType.Gate)
+                if (_builderManager.objectsPool.IndexOf(obj) != -1)
                 {
-                    _builderManager.droneBuilderCheckNode.RemoveNode(obj.transform);
+                    _builderManager.objectsPool.RemoveAt(_builderManager.objectsPool.IndexOf(obj));
+                    if (obj.GetComponent<TrackObject>().objectType == ObjectsType.Gate)
+                    {
+                        _builderManager.droneBuilderCheckNode.RemoveNode(obj.transform);
+                    }
+                    _historyStack.Pop().UndoCommand();
                 }
-                _historyStack.Pop().UndoCommand();
             }
         }
         

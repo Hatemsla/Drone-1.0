@@ -330,7 +330,7 @@ namespace Builder
                 currentObjectType = _selection.selectedObject.GetComponent<TrackObject>();
                 TrackBuilderUtils.ChangeLayerRecursively(pendingObject.transform, LayerMask.NameToLayer("TrackGround"));
                 undoRedoManager.ExecuteCommand(new PlaceCommand(objects[currentSelectObjectIndex],
-                    pendingObject.transform.position, pendingObject.transform.rotation, pendingObject, currentObjectType.yOffset));
+                    currentObjectType.Position, currentObjectType.Scale, currentObjectType.Rotation, pendingObject, currentObjectType.yOffset));
                 currentObjectType = null;
                 pendingObject = null;
             }

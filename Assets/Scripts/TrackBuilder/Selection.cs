@@ -29,13 +29,13 @@ namespace Builder
                         Select(hit.collider.transform.root.gameObject);
             }
 
-            if ((Input.GetKeyDown(KeyCode.F) || Input.GetMouseButtonDown(1)) && _builderManager.pendingObject != null)
+            if ((Input.GetKeyDown(KeyCode.F) || Input.GetMouseButtonDown(1)) && selectedObject != null)
             {
                 _builderManager.PlaceObject();
                 Deselect();
             }
 
-            if (Input.GetKeyDown(KeyCode.T) && _builderManager.pendingObject != null)
+            if (Input.GetKeyDown(KeyCode.T) && selectedObject != null)
             {
                 _builderManager.PlaceObject();
                 Deselect();
@@ -63,9 +63,12 @@ namespace Builder
             if (selectedObject.CompareTag("Player")) return;
             var obj = selectedObject;
             Deselect();
-            _builderManager.objectsPool.Remove(obj.transform.root.gameObject);
-            _builderManager.droneBuilderCheckNode.RemoveNode(obj.transform.root.transform);
-            Destroy(obj.transform.root.gameObject);
+
+            // var trackObject = obj.GetComponent<TrackObject>();
+            // _builderManager.undoRedoManager.ExecuteCommand(new PlaceCommand(_builderManager.objects[trackObject.id], trackObject.Position, trackObject.Scale, trackObject.Rotation, obj, trackObject.yOffset));
+            _builderManager.objectsPool.Remove(obj);
+            _builderManager.droneBuilderCheckNode.RemoveNode(obj.transform);
+            Destroy(obj);
         }
 
         public void Select(GameObject obj)
