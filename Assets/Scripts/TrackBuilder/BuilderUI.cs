@@ -29,6 +29,8 @@ namespace Builder
         public GameObject editorTabPanel;
         public GameObject gameTabPanel;
         public GameObject levelResultPanel;
+        public GameObject loadLevelPanel;
+        public GameObject uiPanel;
 
         public List<Button> createButtons;
     }

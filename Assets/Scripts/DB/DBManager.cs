@@ -107,9 +107,9 @@ namespace DB
 
         public void SaveUserResolution()
         {
-            UserResolutions.Width = menuManager.Resolutions[menuManager.currentResolutionIndex].width;
-            UserResolutions.Height = menuManager.Resolutions[menuManager.currentResolutionIndex].height;
-            UserResolutions.FrameRate = menuManager.Resolutions[menuManager.currentResolutionIndex].refreshRate;
+            UserResolutions.Width = menuManager.resolutions[menuManager.currentResolutionIndex].width;
+            UserResolutions.Height = menuManager.resolutions[menuManager.currentResolutionIndex].height;
+            UserResolutions.FrameRate = menuManager.resolutions[menuManager.currentResolutionIndex].refreshRate;
             if (IsResolutionExist(UserResolutions.Width, UserResolutions.Height, UserResolutions.FrameRate))
             {
                 var resId = 1;
@@ -214,26 +214,26 @@ namespace DB
         {
             UserDifficultlyLevels = new UserDifficultlyLevels(menuManager.currentDifficultIndex + 1,
                 menuManager.menuUIManager.difficultDropdown.options[menuManager.currentDifficultIndex].text);
-            if (IsResolutionExist(menuManager.Resolutions[menuManager.currentResolutionIndex].width,
-                menuManager.Resolutions[menuManager.currentResolutionIndex].height,
-                menuManager.Resolutions[menuManager.currentResolutionIndex].refreshRate))
+            if (IsResolutionExist(menuManager.resolutions[menuManager.currentResolutionIndex].width,
+                menuManager.resolutions[menuManager.currentResolutionIndex].height,
+                menuManager.resolutions[menuManager.currentResolutionIndex].refreshRate))
             {
                 var resId = SelectIdWhere("resolution_id", "resolutions", "width", "height", "refresh_rate",
-                    menuManager.Resolutions[menuManager.currentResolutionIndex].width.ToString(),
-                    menuManager.Resolutions[menuManager.currentResolutionIndex].height.ToString(),
-                    menuManager.Resolutions[menuManager.currentResolutionIndex].refreshRate.ToString());
+                    menuManager.resolutions[menuManager.currentResolutionIndex].width.ToString(),
+                    menuManager.resolutions[menuManager.currentResolutionIndex].height.ToString(),
+                    menuManager.resolutions[menuManager.currentResolutionIndex].refreshRate.ToString());
                 UserResolutions = new UserResolutions(resId,
-                    menuManager.Resolutions[menuManager.currentResolutionIndex].width,
-                    menuManager.Resolutions[menuManager.currentResolutionIndex].height,
-                    menuManager.Resolutions[menuManager.currentResolutionIndex].refreshRate);
+                    menuManager.resolutions[menuManager.currentResolutionIndex].width,
+                    menuManager.resolutions[menuManager.currentResolutionIndex].height,
+                    menuManager.resolutions[menuManager.currentResolutionIndex].refreshRate);
             }
             else
             {
                 var resId = SelectNewId("resolution_id", "resolutions");
                 UserResolutions = new UserResolutions(resId,
-                    menuManager.Resolutions[menuManager.currentResolutionIndex].width,
-                    menuManager.Resolutions[menuManager.currentResolutionIndex].height,
-                    menuManager.Resolutions[menuManager.currentResolutionIndex].refreshRate);
+                    menuManager.resolutions[menuManager.currentResolutionIndex].width,
+                    menuManager.resolutions[menuManager.currentResolutionIndex].height,
+                    menuManager.resolutions[menuManager.currentResolutionIndex].refreshRate);
             }
 
             PlayerColor =
@@ -351,14 +351,14 @@ namespace DB
             botsImage.color = new Color32(botsRgba[0], botsRgba[1], botsRgba[2], botsRgba[3]);
             playerImage.color = new Color32(playerRgba[0], playerRgba[1], playerRgba[2], playerRgba[3]);
 
-            for (var i = 0; i < menuManager.Resolutions.Length; i++)
-                if (menuManager.Resolutions[i].width == UserResolutions.Width &&
-                    menuManager.Resolutions[i].height == UserResolutions.Height &&
-                    menuManager.Resolutions[i].refreshRate == UserResolutions.FrameRate)
+            for (var i = 0; i < menuManager.resolutions.Length; i++)
+                if (menuManager.resolutions[i].width == UserResolutions.Width &&
+                    menuManager.resolutions[i].height == UserResolutions.Height &&
+                    menuManager.resolutions[i].refreshRate == UserResolutions.FrameRate)
                     menuManager.currentResolutionIndex = i;
 
             menuManager.menuUIManager.resolutionDropdown.value = menuManager.currentResolutionIndex;
-            var resolution = menuManager.Resolutions[menuManager.currentResolutionIndex];
+            var resolution = menuManager.resolutions[menuManager.currentResolutionIndex];
             Screen.SetResolution(resolution.width, resolution.height, UserSettings.IsFullscreen);
         }
 

@@ -11,9 +11,13 @@ namespace Builder
         private Selection _selection;
         private Vector3 _connectPosition;
 
-        private void Start()
+        private void Awake()
         {
             _trackObject = GetComponentInParent<TrackObject>();
+        }
+
+        private void Start()
+        {
             _builderManager = FindObjectOfType<BuilderManager>();
             _selection = FindObjectOfType<Selection>();
         }

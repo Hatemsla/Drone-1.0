@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using DroneFootball;
 using Newtonsoft.Json;
 using Sockets;
@@ -23,11 +22,15 @@ namespace Builder
         public bool canPlace;
         public bool isMove;
         public bool isGameMode;
+        public bool isLoadLevel;
+        public bool isGameLevel;
         public BuilderUI builderUI;
+        public BuilderAudioManager audioManager;
         public DroneBuilderController droneBuilderController;
         public DroneBuilderCheckNode droneBuilderCheckNode;
         public DroneBuilderSoundController droneBuilderSoundController;
         public UndoRedoManager undoRedoManager;
+        public AsyncLoad asyncLoad;
         public LayerMask layerMask;
         public GameObject pendingObject;
         public GameObject copyObject;
@@ -51,6 +54,8 @@ namespace Builder
         private float _dronePrevRotationY;
         private Vector3 _dronePrevPosition;
 
+        public Action loadingComplete;
+
         private void Awake()
         {
             _mainCamera = Camera.main;
@@ -58,7 +63,7 @@ namespace Builder
             _selection = FindObjectOfType<Selection>();
             _selection.Select(droneBuilderController.gameObject);
             _selection.Deselect();
-            
+
             for (int i = 0; i < builderUI.createButtons.Count; i++)
             {
                 var i1 = i;
@@ -68,7 +73,16 @@ namespace Builder
 
         private void Start()
         {
-            CreateObjectsPoolScene();
+            if (isLoadLevel)
+            {
+                StartCoroutine(LoadScene());
+            }
+
+            if (isGameLevel)
+            {
+                loadingComplete += TestLevel;
+                StartLevel();
+            }
         }
 
         private void Update()
@@ -318,9 +332,49 @@ namespace Builder
 
         public void StartLevel()
         {
-            LoadScene();
-            TestLevel();
+            StartCoroutine(LoadScene());
         }
+        
+        public IEnumerator LoadScene()
+        {
+            builderUI.editButtons.SetActive(false);
+            builderUI.createPanel.SetActive(false);
+            builderUI.loadLevelPanel.SetActive(true);
+            audioManager.StartPlay();
+            Dictionary<string, Dictionary<string, string>> loadedData;
+            
+            if(objectsPool.Count > 0)
+                ClearObject();
+
+            var filePath = Application.dataPath + "/Levels/" + levelName + ".json";
+
+            var jsonData = File.ReadAllText(filePath);
+            loadedData = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, string>>>(jsonData);
+            
+            foreach (KeyValuePair<string, Dictionary<string, string>> kvp in loadedData)
+            {
+                string objectName = kvp.Value["name"].Substring(0, kvp.Value["name"].IndexOf('('));
+                Vector3 position = TrackBuilderUtils.ParseVector3(kvp.Value["position"]);
+                Vector3 rotation = TrackBuilderUtils.ParseVector3(kvp.Value["rotation"]);
+                Vector3 scale = TrackBuilderUtils.ParseVector3(kvp.Value["scale"]);
+                int layer = Convert.ToInt32(kvp.Value["layer"]);
+                GameObject newObj = Instantiate(Resources.Load<GameObject>("TrackObjects/" + objectName), position, Quaternion.Euler(rotation));
+                yield return new WaitForSeconds(0.01f);
+                TrackBuilderUtils.ChangeLayerRecursively(newObj.transform, layer);
+                TrackBuilderUtils.OffOutlineRecursively(newObj.transform);
+                newObj.transform.localScale = scale;
+                newObj.name = kvp.Value["name"];
+                objectsPool.Add(newObj);
+            }
+            
+            builderUI.editButtons.SetActive(true);
+            builderUI.createPanel.SetActive(true);
+            builderUI.loadLevelPanel.SetActive(false);
+            audioManager.EndPlay();
+            CreateObjectsPoolScene();
+            loadingComplete?.Invoke();
+        }
+
 
         public void PlaceObject()
         {
@@ -442,33 +496,7 @@ namespace Builder
 
             FindObjectOfType<Server>().droneBuilderController = droneBuilderController;
         }
-
-        public void LoadScene()
-        {
-            Dictionary<string, Dictionary<string, string>> loadedData =
-                new Dictionary<string, Dictionary<string, string>>();
-            
-            if(objectsPool.Count > 0)
-                ClearObject();
-            
-            string jsonData = File.ReadAllText(Application.dataPath + "/Levels/" + levelName + ".json");
-            loadedData = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, string>>>(jsonData);
-            foreach (KeyValuePair<string, Dictionary<string, string>> kvp in loadedData)
-            {
-                string objectName = kvp.Value["name"].Substring(0, kvp.Value["name"].IndexOf('('));
-                Vector3 position = TrackBuilderUtils.ParseVector3(kvp.Value["position"]);
-                Vector3 rotation = TrackBuilderUtils.ParseVector3(kvp.Value["rotation"]);
-                Vector3 scale = TrackBuilderUtils.ParseVector3(kvp.Value["scale"]);
-                int layer = Convert.ToInt32(kvp.Value["layer"]);
-                GameObject newObj = Instantiate(Resources.Load<GameObject>("TrackObjects/" + objectName), position, Quaternion.Euler(rotation));
-                TrackBuilderUtils.ChangeLayerRecursively(newObj.transform, layer);
-                TrackBuilderUtils.OffOutlineRecursively(newObj.transform);
-                newObj.transform.localScale = scale;
-                newObj.name = kvp.Value["name"];
-                objectsPool.Add(newObj);
-            }
-        }
-
+        
         private void ClearObject()
         {
             foreach (var obj in objectsPool)
@@ -476,6 +504,11 @@ namespace Builder
                 Destroy(obj);
             }
             objectsPool.Clear();
+        }
+
+        public void TurnUI()
+        {
+            builderUI.uiPanel.SetActive(false);
         }
     }
 }

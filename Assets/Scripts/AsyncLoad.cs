@@ -1,36 +1,38 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
+using Menu;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
+using UnityEngine.Video;
 
 namespace DroneFootball
 {
     public class AsyncLoad : MonoBehaviour
     {
-        public float loadingProgress;
-        public Slider loadSlider;
+        public VideoPlayer loadVideo;
+        public AudioSource loadAudio;
+        public AudioMixer audioMixer;
         private AsyncOperation _asyncOperation;
 
-        public void LoadScene(int buildIndex, Slider slider)
+        public void LoadScene(int buildIndex)
         {
-            StartCoroutine(LoadSceneAsync(buildIndex, slider));
+            StartCoroutine(LoadSceneAsync(buildIndex));
         }
 
-        private IEnumerator LoadSceneAsync(int buildIndex, Slider slider)
+        private IEnumerator LoadSceneAsync(int buildIndex)
         {
+            audioMixer.SetFloat("Effects", -80);
+            audioMixer.SetFloat("Music", -80);
+            loadVideo.Play();
+            loadAudio.Play();
             yield return new WaitForSeconds(0.5f);
-            slider.value = 0;
             _asyncOperation = SceneManager.LoadSceneAsync(buildIndex);
-            float progress = 0;
 
             while (!_asyncOperation.isDone)
             {
-                progress = _asyncOperation.progress;
-                slider.value = progress;
+                var progress = _asyncOperation.progress;
                 if (progress >= 0.9f)
                 {
-                    slider.value = 1;
                     _asyncOperation.allowSceneActivation = true;
                 }
                 yield return null;

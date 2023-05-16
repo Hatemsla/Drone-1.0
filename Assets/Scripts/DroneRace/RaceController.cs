@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using DB;
+using DroneFootball;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -19,9 +20,10 @@ namespace DroneRace
         public DroneRaceAI droneRaceAI;
         public DroneRaceUIManager raceUIManager;
         public DroneRaceCheckNode playerNode;
-        public DroneRaceSoundController droneRaceSoundController;
+        public DroneRaceAudioController droneRaceAudioController;
         public Timer timer;
         public RacePath racePath;
+        public AsyncLoad asyncLoad;
         public List<DroneRaceCheckNode> droneRaceCheckNodes;
         
         private Camera _mainCamera;
@@ -121,9 +123,9 @@ namespace DroneRace
             {
                 _isTabPanel = !_isTabPanel;
                 if(_isTabPanel)
-                    droneRaceSoundController.droneFly.Stop();
+                    droneRaceAudioController.droneFly.Stop();
                 else if(isGameStart)
-                    droneRaceSoundController.droneFly.Play();
+                    droneRaceAudioController.droneFly.Play();
                 raceUIManager.tabPanel.SetActive(_isTabPanel);
                 Time.timeScale = _isTabPanel ? 0f : 1f;
             }
@@ -141,8 +143,8 @@ namespace DroneRace
                 raceUIManager.descriptionPanel.SetActive(false);
                 raceUIManager.backgroundImage.SetActive(false);
                 isGameStart = true;
-                if(!droneRaceSoundController.droneFly.isPlaying && !_isTabPanel)
-                    droneRaceSoundController.droneFly.Play();
+                if(!droneRaceAudioController.droneFly.isPlaying && !_isTabPanel)
+                    droneRaceAudioController.droneFly.Play();
             }
         }
 
@@ -178,6 +180,11 @@ namespace DroneRace
                     _isResult = true;
                 }
             }
+        }
+
+        public void TurnUI()
+        {
+            raceUIManager.uiPanel.SetActive(false);
         }
 
         private IEnumerator BackToMenu()

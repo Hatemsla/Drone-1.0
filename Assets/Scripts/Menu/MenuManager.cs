@@ -34,7 +34,7 @@ namespace Menu
         public ColorPreview botsColorPreview;
         public ColorPreview playerColorPreview;
         public AsyncLoad asyncLoad;
-        public Resolution[] Resolutions;
+        public Resolution[] resolutions;
 
         private readonly List<string> _difficulties = new List<string>
             {"Супер легко", "Легко", "Нормально", "Сложно", "Невозможно"};
@@ -62,7 +62,7 @@ namespace Menu
 
             dbManager = GetComponent<DBManager>();
             server = GetComponent<Server>();
-            Resolutions = Screen.resolutions.Distinct().ToArray();
+            resolutions = Screen.resolutions.Distinct().ToArray();
             SetDropdownResolutions();
             SetDropdownDifficulties();
 
@@ -99,12 +99,12 @@ namespace Menu
         private void SetDropdownResolutions()
         {
             var options = new List<string>();
-            for (var i = 0; i < Resolutions.Length; i++)
+            for (var i = 0; i < resolutions.Length; i++)
             {
-                options.Add($"{Resolutions[i].width} x {Resolutions[i].height} {Resolutions[i].refreshRate}Hz");
+                options.Add($"{resolutions[i].width} x {resolutions[i].height} {resolutions[i].refreshRate}Hz");
 
-                if (Resolutions[i].width == Screen.currentResolution.width ||
-                    Resolutions[i].height == Screen.currentResolution.height)
+                if (resolutions[i].width == Screen.currentResolution.width ||
+                    resolutions[i].height == Screen.currentResolution.height)
                     currentResolutionIndex = i;
             }
 
@@ -166,9 +166,9 @@ namespace Menu
 
         public void SetResolution(int resolutionIndex)
         {
-            if (Resolutions == null)
-                Resolutions = Screen.resolutions.Distinct().ToArray();
-            var resolution = Resolutions[resolutionIndex];
+            if (resolutions == null)
+                resolutions = Screen.resolutions.Distinct().ToArray();
+            var resolution = resolutions[resolutionIndex];
             currentResolutionIndex = resolutionIndex;
             Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
         }
@@ -284,6 +284,7 @@ namespace Menu
                 server.droneRaceController = raceController.droneRaceController;
                 
                 raceController.timer.timeForEndGame = _gameTimeInSeconds;
+                asyncLoad = raceController.asyncLoad;
             }
             else if (scene.buildIndex == 3)
             {
@@ -312,6 +313,7 @@ namespace Menu
                 server.droneFootballController = footballController.droneFootballController;
                 
                 footballController.timer.timeForEndGame = _gameTimeInSeconds;
+                asyncLoad = footballController.asyncLoad;
             }
             else if(scene.buildIndex == 4)
             {
@@ -327,19 +329,22 @@ namespace Menu
                 builderManager.builderUI.backGameTabBtn.onClick.AddListener(BackToMenu);
                 builderManager.builderUI.saveBtn.onClick.AddListener(SaveLevel);
                 builderManager.levelName = levelName;
-                builderManager.droneBuilderController.isSimpleMode = isSimpleMode;
+                builderManager.droneBuilderController.isSimpleMode = isSimpleMode; 
                 server.droneBuilderController = builderManager.droneBuilderController;
+                asyncLoad = builderManager.asyncLoad;
 
                 if (_isLoadLevel)
                 {
-                    builderManager.LoadScene();
+                    // builderManager.LoadScene();
                     builderManager.isGameMode = false;
+                    builderManager.isLoadLevel = _isLoadLevel;
                 }
 
                 if (_isStartBuilder)
                 {
-                    builderManager.StartLevel();
+                    // builderManager.StartLevel();
                     builderManager.isGameMode = true;
+                    builderManager.isGameLevel = true;
                 }
             }
         }
@@ -352,9 +357,7 @@ namespace Menu
             levelName = menuUIManager.levelInput.text;
             _isLoadLevel = true;
             _isStartBuilder = false;
-            OpenMenu("Load");
-            asyncLoad.LoadScene(4, menuUIManager.loadSlider);
-            // SceneManager.LoadScene(4);
+            SceneManager.LoadScene(4);
         }
 
         public void CreateLevel()
@@ -366,9 +369,7 @@ namespace Menu
             levelName = menuUIManager.levelInput.text;
             _isLoadLevel = false;
             _isStartBuilder = false;
-            OpenMenu("Load");
-            asyncLoad.LoadScene(4, menuUIManager.loadSlider);
-            // SceneManager.LoadScene(4);
+            SceneManager.LoadScene(4);
         }
 
         public void StartBuilder()
@@ -378,9 +379,7 @@ namespace Menu
             
             levelName = menuUIManager.levelInput.text;
             _isStartBuilder = true;
-            OpenMenu("Load");
-            asyncLoad.LoadScene(4, menuUIManager.loadSlider);
-            // SceneManager.LoadScene(4);
+            SceneManager.LoadScene(4);
         }
 
         public void SaveLevel()
@@ -446,8 +445,7 @@ namespace Menu
 
         public void BackToMenu()
         {
-            SceneManager.LoadScene(1);
-            // asyncLoad.AsyncLoadScene(1);
+            asyncLoad.LoadScene(1);
             Time.timeScale = 1f;
         }
 
@@ -489,7 +487,7 @@ namespace Menu
         {
             GameTimeHandler();
             OpenMenu("Load");
-            asyncLoad.LoadScene(sceneIndex, menuUIManager.loadSlider);
+            asyncLoad.LoadScene(sceneIndex);
             // SceneManager.LoadScene(sceneIndex);
         }
 

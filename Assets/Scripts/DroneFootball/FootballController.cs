@@ -19,6 +19,7 @@ namespace DroneFootball
         public DroneFootballSoundController droneFootballSoundController;
         public FootballUIManager footballUIManager;
         public Timer timer;
+        public AsyncLoad asyncLoad;
         public DroneFootballAI[] droneFootballAIList;
         public FootballCheckpointTrigger footballCheckpointTrigger;
         public Camera playerCamera;
@@ -177,6 +178,11 @@ namespace DroneFootball
         public void CheckScore()
         {
             footballUIManager.scoreText.text = $"Счет: {playerCheckNode.currentNode}";
+        }
+
+        public void TurnUI()
+        {
+            footballUIManager.uiPanel.SetActive(false);
         }
 
         private IEnumerator BackToMenu()
