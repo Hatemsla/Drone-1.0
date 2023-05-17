@@ -77,11 +77,14 @@ namespace Builder
             {
                 StartCoroutine(LoadScene());
             }
-
-            if (isGameLevel)
+            else if (isGameLevel)
             {
                 loadingComplete += TestLevel;
                 StartLevel();
+            }
+            else
+            {
+                CreateObjectsPoolScene();
             }
         }
 
