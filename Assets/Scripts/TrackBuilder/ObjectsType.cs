@@ -17,6 +17,7 @@
         WindZone,
         Magnet,
         FreezingBall,
-        Rope
+        Rope,
+        Laser
     }
 }
