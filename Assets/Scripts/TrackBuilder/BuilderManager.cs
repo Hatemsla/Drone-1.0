@@ -33,6 +33,8 @@ namespace Builder
         public AsyncLoad asyncLoad;
         public LayerMask layerMask;
         public GameObject pendingObject;
+        public List<GameObject> pendingObjects = new();
+        public List<Vector3> pendingObjectsPoses = new();
         public GameObject copyObject;
         public TrackObject currentObjectType;
         public Vector3 mousePos;
@@ -53,6 +55,7 @@ namespace Builder
         private Quaternion _mainCameraPrevRotation;
         private float _dronePrevRotationY;
         private Vector3 _dronePrevPosition;
+        private Vector3 _prevMousePos;
 
         public Action loadingComplete;
 
@@ -103,10 +106,13 @@ namespace Builder
                 }
                 else if (Input.GetKeyDown(KeyCode.V))
                 {
+                    if(pendingObject != null)
+                        PlaceObjects();
+                
                     if (copyObject != null)
                     {
                         PasteObject(copyObject);
-                    }
+                    } 
                 }
                 else if (Input.GetKeyDown(KeyCode.Z))
                 {
@@ -124,28 +130,45 @@ namespace Builder
             {
                 mousePos = _hit.point;
                 
-                if (pendingObject == null) return;
-                
-                switch (currentObjectType.objectType)
+                if (pendingObjects.Count == 0 || pendingObject == null) return;
+
+                if (pendingObjects.Count > 1)
                 {
-                    case ObjectsType.Floor:
-                        pendingObject.transform.position = _hit.point;
-                        break;
-                    default:
-                        pendingObject.transform.position =
-                            new Vector3(_hit.point.x, _hit.point.y + currentObjectType.yOffset, _hit.point.z);
-                        break;
+                    if (_prevMousePos != Vector3.zero)
+                    {
+                        // pendingObjectsPoses = GetPendingObjectsPositions();
+                        var deltaMousePos = mousePos - _prevMousePos;
+                        for (int i = 0; i < pendingObjects.Count; i++)
+                        {
+                            pendingObjects[i].transform.position += deltaMousePos;
+                        }
+                    }
+
+                    _prevMousePos = mousePos;
+                }
+                else
+                {
+                    switch (currentObjectType.objectType)
+                    {
+                        case ObjectsType.Floor:
+                            pendingObject.transform.position = mousePos;
+                            break;
+                        default:
+                            pendingObject.transform.position =
+                                new Vector3(mousePos.x, mousePos.y + currentObjectType.yOffset, mousePos.z);
+                            break;
+                    }
                 }
             }
 
             if (Input.GetMouseButtonDown(0) && canPlace)
             {
-                PlaceObject();
+                PlaceObjects();
             }
 
-            if(currentObjectType == null || pendingObject == null)
+            if(currentObjectType == null || pendingObject == null || pendingObjects.Count > 1)
                 return;
-            
+
             if (Input.GetKeyDown(KeyCode.Q))
             {
                 RotateObject(pendingObject.transform.up, -10, Space.World);
@@ -379,15 +402,30 @@ namespace Builder
         }
 
 
-        public void PlaceObject()
+        public void PlaceObjects()
         {
             try
             {
-                pendingObject = _selection.selectedObject;
-                currentObjectType = _selection.selectedObject.GetComponent<TrackObject>();
-                TrackBuilderUtils.ChangeLayerRecursively(pendingObject.transform, LayerMask.NameToLayer("TrackGround"));
-                undoRedoManager.ExecuteCommand(new PlaceCommand(objects[currentSelectObjectIndex],
-                    currentObjectType.Position, currentObjectType.Scale, currentObjectType.Rotation, pendingObject, currentObjectType.yOffset));
+                if (pendingObjects.Count > 1)
+                {
+                    pendingObjects = _selection.selectedObjects;
+                    foreach (var pendingObj in pendingObjects)
+                    {
+                        TrackBuilderUtils.ChangeLayerRecursively(pendingObj.transform, LayerMask.NameToLayer("TrackGround"));
+                    }
+                }
+                else
+                {
+                    pendingObject = _selection.selectedObject;
+                    currentObjectType = _selection.selectedObject.GetComponent<TrackObject>();
+                    TrackBuilderUtils.ChangeLayerRecursively(pendingObject.transform,
+                        LayerMask.NameToLayer("TrackGround"));
+                    undoRedoManager.ExecuteCommand(new PlaceCommand(objects[currentSelectObjectIndex],
+                        currentObjectType.Position, currentObjectType.Scale, currentObjectType.Rotation, pendingObject,
+                        currentObjectType.yOffset));
+                }
+                pendingObjects.Clear();
+                pendingObjectsPoses.Clear();
                 currentObjectType = null;
                 pendingObject = null;
             }
@@ -401,6 +439,7 @@ namespace Builder
         {
             try
             {
+                if (pendingObjects.Count != 1) return;
                 TrackBuilderUtils.ChangeLayerRecursively(pendingObject.transform, LayerMask.NameToLayer("TrackGround"));
                 currentObjectType = null;
                 pendingObject = null;
@@ -436,10 +475,11 @@ namespace Builder
         public void SelectObject(int index)
         {
             if(pendingObject != null)
-                PlaceObject();
+                PlaceObjects();
 
             currentSelectObjectIndex = index;
             pendingObject = Instantiate(objects[index], mousePos, transform.rotation);
+            pendingObjects.Add(pendingObject);
             SceneManager.MoveGameObjectToScene(pendingObject, levelScene);
             objectsPool.Add(pendingObject);
             _selection.Deselect();
@@ -507,6 +547,8 @@ namespace Builder
                 Destroy(obj);
             }
             objectsPool.Clear();
+            pendingObjects.Clear();
+            pendingObjectsPoses.Clear();
         }
 
         public void TurnUI()

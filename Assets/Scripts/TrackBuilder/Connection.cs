@@ -24,7 +24,7 @@ namespace Builder
 
         private void OnTriggerEnter(Collider other)
         {
-            if (_trackObject.isActive)
+            if (_trackObject.isActive && _builderManager.pendingObjects.Count == 1)
             {
                 if(_builderManager.pendingObject == null)
                     return;
@@ -55,7 +55,7 @@ namespace Builder
 
         private void OnTriggerStay(Collider other)
         {
-            if (_trackObject.isActive)
+            if (_trackObject.isActive && _builderManager.pendingObjects.Count == 1)
             {
                 if (_trackObject.objectType == ObjectsType.Floor &&
                     other.gameObject.layer == LayerMask.NameToLayer("FloorConnection"))

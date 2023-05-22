@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using cakeslice;
@@ -10,6 +12,7 @@ namespace Builder
     public class Selection : MonoBehaviour
     {
         public GameObject selectedObject;
+        public List<GameObject> selectedObjects = new();
         public LayerMask layerMask;
         private BuilderManager _builderManager;
 
@@ -25,20 +28,27 @@ namespace Builder
                 var ray = Camera.main!.ScreenPointToRay(Input.mousePosition);
                 RaycastHit hit;
                 if (Physics.Raycast(ray, out hit, 10000, layerMask))
-                    if (hit.collider.gameObject.layer == LayerMask.NameToLayer("TrackGround"))
-                        Select(hit.collider.transform.root.gameObject);
+                    if (Input.GetKey(KeyCode.LeftControl))
+                    {
+                        if (hit.collider.gameObject.layer == LayerMask.NameToLayer("TrackGround"))
+                            AddSelection(hit.collider.transform.root.gameObject);
+                    }
+                    else
+                    {
+                        if (hit.collider.gameObject.layer == LayerMask.NameToLayer("TrackGround"))
+                            Select(hit.collider.transform.root.gameObject);
+                    }
             }
 
             if ((Input.GetKeyDown(KeyCode.F) || Input.GetMouseButtonDown(1)) && selectedObject != null)
             {
-                _builderManager.PlaceObject();
+                _builderManager.PlaceObjects();
                 Deselect();
             }
 
-            if (Input.GetKeyDown(KeyCode.T) && selectedObject != null)
+            if (Input.GetKeyDown(KeyCode.T) && selectedObjects.Count > 0)
             {
-                _builderManager.PlaceObject();
-                Deselect();
+                _builderManager.PlaceObjects();
                 _builderManager.SelectObject(_builderManager.currentSelectObjectIndex);
             }
 
@@ -52,7 +62,8 @@ namespace Builder
         {
             if (selectedObject == null) return;
             TrackBuilderUtils.ChangeLayerRecursively(selectedObject.transform.root.transform, LayerMask.NameToLayer("Track"));
-            _builderManager.pendingObject = selectedObject.transform.root.gameObject;
+            _builderManager.pendingObject = selectedObject.gameObject;
+            _builderManager.pendingObjects = selectedObjects;
             _builderManager.currentObjectType = selectedObject.GetComponentInParent<TrackObject>();
             _builderManager.currentObjectType.isActive = true;
         }
@@ -71,35 +82,89 @@ namespace Builder
             Destroy(obj);
         }
 
+        public void AddSelection(GameObject obj)
+        {
+            if (selectedObjects.Contains(obj))
+            {
+                RemoveSelection(obj);
+                return;
+            }
+
+            var outlines = obj.GetComponentsInChildren<Outline>();
+            foreach (var outline in outlines)
+            {
+                outline.enabled = true;
+            }
+            selectedObjects.Add(obj);
+            selectedObject = obj;
+        }
+
         public void Select(GameObject obj)
         {
             if (obj == selectedObject)
+            {
+                foreach (var selectedObj in selectedObjects)
+                {
+                    if (selectedObj != obj)
+                    {
+                        var objOutlines = selectedObj.GetComponentsInChildren<Outline>();
+                        foreach (var outline in objOutlines)
+                        {
+                            outline.enabled = false;
+                        }
+                    }
+                }
+
+                selectedObjects = selectedObjects.Where(selectedObj => selectedObj == obj).ToList();
+                
                 return;
-            
+            }
+
             if(selectedObject != null)
                 Deselect();
 
-            var outlines = obj.transform.root.GetComponentsInChildren<Outline>();
+            var outlines = obj.GetComponentsInChildren<Outline>();
             foreach (var outline in outlines)
             {
                 outline.enabled = true;
             }
             selectedObject = obj;
+            selectedObjects.Add(selectedObject);
         }
 
         public void Deselect()
         {
             if (selectedObject == null)
                 return;
-
-            var outlines = selectedObject!.transform.root.GetComponentsInChildren<Outline>();
-            foreach (var outline in outlines)
+            
+            foreach (var selectedObj in selectedObjects)
             {
-                outline.enabled = false;
+                var objOutlines = selectedObj.GetComponentsInChildren<Outline>();
+                foreach (var outline in objOutlines)
+                {
+                    outline.enabled = false;
+                }
             }
             
             selectedObject.GetComponent<TrackObject>().isActive = false;
             selectedObject = null;
+            selectedObjects.Clear();
+        }
+        
+        public void RemoveSelection(GameObject obj)
+        {
+            if (selectedObjects.Count == 0)
+                return;
+
+            var outlines = obj!.GetComponentsInChildren<Outline>();
+            foreach (var outline in outlines)
+            {
+                outline.enabled = false;
+            }
+
+            obj.GetComponent<TrackObject>().isActive = false;
+            selectedObjects.Remove(obj);
+            selectedObject = selectedObjects.Count == 0 ? null : selectedObject;
         }
     }
 }
