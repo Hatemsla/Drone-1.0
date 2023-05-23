@@ -396,6 +396,7 @@ namespace Menu
                 objData["rotation"] = FormatVector3(obj.transform.rotation.eulerAngles);
                 objData["scale"] = FormatVector3(obj.transform.localScale);
                 objData["layer"] = obj.layer.ToString();
+                objData["yOffset"] = obj.GetComponent<TrackObject>().yOffset.ToString();
                 data[obj.GetInstanceID() + ""] = objData;
             }
             string json = JsonConvert.SerializeObject(data, Formatting.Indented);

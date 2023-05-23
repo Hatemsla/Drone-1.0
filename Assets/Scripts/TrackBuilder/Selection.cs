@@ -40,13 +40,13 @@ namespace Builder
                     }
             }
 
-            if ((Input.GetKeyDown(KeyCode.F) || Input.GetMouseButtonDown(1)) && selectedObject != null)
+            if ((Input.GetKeyDown(KeyCode.F) || Input.GetMouseButtonDown(1)) && selectedObjects.Count > 0 && selectedObject != null)
             {
                 _builderManager.PlaceObjects();
                 Deselect();
             }
 
-            if (Input.GetKeyDown(KeyCode.T) && selectedObjects.Count > 0)
+            if (Input.GetKeyDown(KeyCode.T) && selectedObjects.Count > 0 && selectedObject != null)
             {
                 _builderManager.PlaceObjects();
                 _builderManager.SelectObject(_builderManager.currentSelectObjectIndex);
@@ -63,7 +63,7 @@ namespace Builder
             if (selectedObject == null) return;
             TrackBuilderUtils.ChangeLayerRecursively(selectedObject.transform.root.transform, LayerMask.NameToLayer("Track"));
             _builderManager.pendingObject = selectedObject.gameObject;
-            _builderManager.pendingObjects = selectedObjects;
+            _builderManager.pendingObjects = new List<GameObject>(selectedObjects);
             _builderManager.currentObjectType = selectedObject.GetComponentInParent<TrackObject>();
             _builderManager.currentObjectType.isActive = true;
         }

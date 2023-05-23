@@ -34,7 +34,6 @@ namespace Builder
         public LayerMask layerMask;
         public GameObject pendingObject;
         public List<GameObject> pendingObjects = new();
-        public List<Vector3> pendingObjectsPoses = new();
         public GameObject copyObject;
         public TrackObject currentObjectType;
         public Vector3 mousePos;
@@ -134,17 +133,13 @@ namespace Builder
 
                 if (pendingObjects.Count > 1)
                 {
-                    if (_prevMousePos != Vector3.zero)
-                    {
-                        // pendingObjectsPoses = GetPendingObjectsPositions();
-                        var deltaMousePos = mousePos - _prevMousePos;
-                        for (int i = 0; i < pendingObjects.Count; i++)
-                        {
-                            pendingObjects[i].transform.position += deltaMousePos;
-                        }
-                    }
+                    var commonCenter = CalculateCommonCenter(pendingObjects);
+                    var offset = mousePos - commonCenter;
 
-                    _prevMousePos = mousePos;
+                    foreach (var pendingObj in pendingObjects)
+                    {
+                        pendingObj.transform.position += new Vector3(offset.x, 0, offset.z);
+                    }
                 }
                 else
                 {
@@ -210,6 +205,20 @@ namespace Builder
             {
                 RotateObject(Vector3.right, -10f, Space.World);
             }
+        }
+
+        private Vector3 CalculateCommonCenter(List<GameObject> objects)
+        {
+            Vector3 center = Vector3.zero;
+
+            foreach (var obj in objects)
+            {
+                center += obj.transform.position;
+            }
+
+            center /= objects.Count;
+
+            return center;
         }
 
         private void CheckTabPanel()
@@ -379,17 +388,19 @@ namespace Builder
             
             foreach (KeyValuePair<string, Dictionary<string, string>> kvp in loadedData)
             {
-                string objectName = kvp.Value["name"].Substring(0, kvp.Value["name"].IndexOf('('));
-                Vector3 position = TrackBuilderUtils.ParseVector3(kvp.Value["position"]);
-                Vector3 rotation = TrackBuilderUtils.ParseVector3(kvp.Value["rotation"]);
-                Vector3 scale = TrackBuilderUtils.ParseVector3(kvp.Value["scale"]);
-                int layer = Convert.ToInt32(kvp.Value["layer"]);
-                GameObject newObj = Instantiate(Resources.Load<GameObject>("TrackObjects/" + objectName), position, Quaternion.Euler(rotation));
+                var objectName = kvp.Value["name"].Substring(0, kvp.Value["name"].IndexOf('('));
+                var position = TrackBuilderUtils.ParseVector3(kvp.Value["position"]);
+                var rotation = TrackBuilderUtils.ParseVector3(kvp.Value["rotation"]);
+                var scale = TrackBuilderUtils.ParseVector3(kvp.Value["scale"]);
+                var layer = Convert.ToInt32(kvp.Value["layer"]);
+                var yOffset = Convert.ToSingle(kvp.Value["yOffset"]);
+                var newObj = Instantiate(Resources.Load<GameObject>("TrackObjects/" + objectName), position, Quaternion.Euler(rotation));
                 yield return new WaitForSeconds(0.01f);
                 TrackBuilderUtils.ChangeLayerRecursively(newObj.transform, layer);
                 TrackBuilderUtils.OffOutlineRecursively(newObj.transform);
                 newObj.transform.localScale = scale;
                 newObj.name = kvp.Value["name"];
+                newObj.GetComponent<TrackObject>().yOffset = yOffset;
                 objectsPool.Add(newObj);
             }
             
@@ -408,7 +419,7 @@ namespace Builder
             {
                 if (pendingObjects.Count > 1)
                 {
-                    pendingObjects = _selection.selectedObjects;
+                    pendingObjects = new List<GameObject>(_selection.selectedObjects);
                     foreach (var pendingObj in pendingObjects)
                     {
                         TrackBuilderUtils.ChangeLayerRecursively(pendingObj.transform, LayerMask.NameToLayer("TrackGround"));
@@ -425,7 +436,6 @@ namespace Builder
                         currentObjectType.yOffset));
                 }
                 pendingObjects.Clear();
-                pendingObjectsPoses.Clear();
                 currentObjectType = null;
                 pendingObject = null;
             }
@@ -501,6 +511,8 @@ namespace Builder
                 return;
             
             pendingObject = Instantiate(obj, mousePos, copyObject.transform.rotation);
+            pendingObjects.Add(pendingObject);
+            pendingObjects.Add(pendingObject);
             TrackBuilderUtils.ChangeLayerRecursively(pendingObject.transform, LayerMask.NameToLayer("Track"));
             SceneManager.MoveGameObjectToScene(pendingObject, levelScene);
             objectsPool.Add(pendingObject);
@@ -548,7 +560,6 @@ namespace Builder
             }
             objectsPool.Clear();
             pendingObjects.Clear();
-            pendingObjectsPoses.Clear();
         }
 
         public void TurnUI()
