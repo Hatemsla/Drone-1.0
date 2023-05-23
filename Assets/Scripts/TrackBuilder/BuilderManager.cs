@@ -105,7 +105,7 @@ namespace Builder
                 }
                 else if (Input.GetKeyDown(KeyCode.V))
                 {
-                    if(pendingObject != null)
+                    if(pendingObject != null || pendingObjects.Count > 0)
                         PlaceObjects();
                 
                     if (copyObject != null)
@@ -188,13 +188,16 @@ namespace Builder
                 ChangeObjectHeight(-2 * Time.deltaTime);
             }
 
-            if (Input.GetKey(KeyCode.A))
+            if (currentObjectType.objectType != ObjectsType.Drone && currentObjectType.objectType != ObjectsType.Gate)
             {
-                ChangeObjectScale(2 * Time.deltaTime);
-            }
-            else if(Input.GetKey(KeyCode.D))
-            {
-                ChangeObjectScale(-2 * Time.deltaTime);
+                if (Input.GetKeyDown(KeyCode.A))
+                {
+                    ChangeObjectScale(2);
+                }
+                else if (Input.GetKeyDown(KeyCode.D))
+                {
+                    ChangeObjectScale(0.5f);
+                }
             }
 
             if (Input.GetKeyDown(KeyCode.Z))
@@ -209,7 +212,7 @@ namespace Builder
 
         private Vector3 CalculateCommonCenter(List<GameObject> objects)
         {
-            Vector3 center = Vector3.zero;
+            var center = Vector3.zero;
 
             foreach (var obj in objects)
             {
@@ -394,13 +397,15 @@ namespace Builder
                 var scale = TrackBuilderUtils.ParseVector3(kvp.Value["scale"]);
                 var layer = Convert.ToInt32(kvp.Value["layer"]);
                 var yOffset = Convert.ToSingle(kvp.Value["yOffset"]);
+                var maxMouseDistance = Convert.ToInt32(kvp.Value["maxMouseDistance"]);
                 var newObj = Instantiate(Resources.Load<GameObject>("TrackObjects/" + objectName), position, Quaternion.Euler(rotation));
                 yield return new WaitForSeconds(0.01f);
                 TrackBuilderUtils.ChangeLayerRecursively(newObj.transform, layer);
                 TrackBuilderUtils.OffOutlineRecursively(newObj.transform);
                 newObj.transform.localScale = scale;
                 newObj.name = kvp.Value["name"];
-                newObj.GetComponent<TrackObject>().yOffset = yOffset;
+                var trackObj = newObj.GetComponent<TrackObject>();
+                trackObj.yOffset = yOffset;
                 objectsPool.Add(newObj);
             }
             
@@ -471,8 +476,15 @@ namespace Builder
 
         private void ChangeObjectScale(float value)
         {
-            pendingObject.transform.localScale += new Vector3(value, value, value);
-            currentObjectType.yOffset += value;
+            var newScale = pendingObject.transform.localScale * value;
+            var newOffset = currentObjectType.yOffset * value;
+
+            if (newScale.magnitude <= 8f && newScale.magnitude >= 0.125f)
+            {
+                pendingObject.transform.localScale = newScale;
+                currentObjectType.yOffset = newOffset;
+                currentObjectType.maxMouseDistance *= value;
+            }
         }
 
         private void RotateObject(Vector3 axis, float rotateAmount, Space space)
@@ -511,7 +523,6 @@ namespace Builder
                 return;
             
             pendingObject = Instantiate(obj, mousePos, copyObject.transform.rotation);
-            pendingObjects.Add(pendingObject);
             pendingObjects.Add(pendingObject);
             TrackBuilderUtils.ChangeLayerRecursively(pendingObject.transform, LayerMask.NameToLayer("Track"));
             SceneManager.MoveGameObjectToScene(pendingObject, levelScene);

@@ -4,6 +4,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using cakeslice;
+using Unity.VisualScripting;
 using UnityEngine.EventSystems;
 using Outline = cakeslice.Outline;
 
@@ -72,14 +73,17 @@ namespace Builder
         {
             if (selectedObject == null) return;
             if (selectedObject.CompareTag("Player")) return;
-            var obj = selectedObject;
-            Deselect();
+            
+            foreach (var selectedObj in selectedObjects)
+            {
+                _builderManager.objectsPool.Remove(selectedObj);
+                _builderManager.droneBuilderCheckNode.RemoveNode(selectedObj.transform);
+                Destroy(selectedObj);
+            }
 
-            // var trackObject = obj.GetComponent<TrackObject>();
-            // _builderManager.undoRedoManager.ExecuteCommand(new PlaceCommand(_builderManager.objects[trackObject.id], trackObject.Position, trackObject.Scale, trackObject.Rotation, obj, trackObject.yOffset));
-            _builderManager.objectsPool.Remove(obj);
-            _builderManager.droneBuilderCheckNode.RemoveNode(obj.transform);
-            Destroy(obj);
+            _builderManager.pendingObjects.Clear();
+            selectedObjects.Clear();
+            _builderManager.pendingObject = null;
         }
 
         public void AddSelection(GameObject obj)

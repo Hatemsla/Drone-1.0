@@ -12,6 +12,7 @@ namespace Builder
         public ObjectsType objectType;
         public float yOffset;
         public bool isActive;
+        public float maxMouseDistance = 3f;
         public Vector3 Scale => transform.localScale;
         public Vector3 Position => transform.localPosition;
         public Quaternion Rotation => transform.localRotation;

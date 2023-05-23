@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -396,7 +397,9 @@ namespace Menu
                 objData["rotation"] = FormatVector3(obj.transform.rotation.eulerAngles);
                 objData["scale"] = FormatVector3(obj.transform.localScale);
                 objData["layer"] = obj.layer.ToString();
-                objData["yOffset"] = obj.GetComponent<TrackObject>().yOffset.ToString();
+                var trackObj = obj.GetComponent<TrackObject>();
+                objData["yOffset"] = trackObj.yOffset.ToString(CultureInfo.CurrentCulture);
+                objData["maxMouseDistance"] = trackObj.maxMouseDistance.ToString(CultureInfo.CurrentCulture);
                 data[obj.GetInstanceID() + ""] = objData;
             }
             string json = JsonConvert.SerializeObject(data, Formatting.Indented);

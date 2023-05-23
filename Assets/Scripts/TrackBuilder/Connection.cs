@@ -60,7 +60,7 @@ namespace Builder
                 if (_trackObject.objectType == ObjectsType.Floor &&
                     other.gameObject.layer == LayerMask.NameToLayer("FloorConnection"))
                 {
-                    if (Vector3.Distance(other.transform.position, _builderManager.mousePos) > 3)
+                    if (Vector3.Distance(other.transform.position, _builderManager.mousePos) > _trackObject.maxMouseDistance)
                     {
                         _selection.Move();
                     }
@@ -68,7 +68,7 @@ namespace Builder
                 else if (_trackObject.objectType == ObjectsType.Wall &&
                          other.gameObject.layer == LayerMask.NameToLayer("WallConnection"))
                 {
-                    if (Vector3.Distance(other.transform.position, _builderManager.mousePos) > 3)
+                    if (Vector3.Distance(other.transform.position, _builderManager.mousePos) > _trackObject.maxMouseDistance)
                     {
                         _selection.Move();
                     }
@@ -76,7 +76,7 @@ namespace Builder
                 else if (_trackObject.objectType == ObjectsType.Slant &&
                          other.gameObject.layer == LayerMask.NameToLayer("SlantConnection"))
                 {
-                    if (Vector3.Distance(other.transform.position, _builderManager.mousePos) > 3)
+                    if (Vector3.Distance(other.transform.position, _builderManager.mousePos) > _trackObject.maxMouseDistance)
                     {
                         _selection.Move();
                     }
