@@ -50,6 +50,8 @@ namespace DroneRace
                 drone.CheckWaypoint();
                 if(!_isSpawned)
                     drone.CreateNewCheckpoint();
+                
+                _isSpawned = true;
             }
             else if (other.gameObject.CompareTag("Bot"))
             {
@@ -68,9 +70,10 @@ namespace DroneRace
                     if(!_isSpawned)
                         droneRaceCheckNode.CreateNewCheckpoint();
                 }
+                
+                _isSpawned = true;
             }
-            _isSpawned = true;
-            
+
             if (_countToDestroy >= 2)
             {
                 StartCoroutine(DestroyGate());
