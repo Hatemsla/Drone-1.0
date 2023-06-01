@@ -25,7 +25,7 @@ namespace Builder
         public Vector3 Position
         {
             get => transform.position;
-            set => transform.position = new Vector3(value.x, value.y + yOffset, value.z);
+            set => transform.position = value;
         }
 
         public Quaternion Rotation

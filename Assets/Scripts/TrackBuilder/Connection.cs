@@ -83,5 +83,13 @@ namespace Builder
                 }
             }
         }
+
+        private void OnTriggerExit(Collider other)
+        {
+            if (_trackObject.objectType == ObjectsType.Slant && _selection.selectedObject.GetComponent<TrackObject>().objectType == ObjectsType.Slant)
+            {
+                _selection.Move();
+            }
+        }
     }
 }

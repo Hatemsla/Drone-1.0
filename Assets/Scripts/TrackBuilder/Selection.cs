@@ -125,6 +125,7 @@ namespace Builder
             TrackBuilderUtils.TurnAllOutlineEffects(outlines, true);
             selectedObject = obj;
             selectedObjects.Add(selectedObject);
+            editObject.ShowEditMenu();
         }
 
         public void Deselect()
@@ -141,6 +142,7 @@ namespace Builder
             selectedObject.GetComponent<TrackObject>().isActive = false;
             selectedObject = null;
             selectedObjects.Clear();
+            editObject.HideEditMenu();
         }
         
         public void RemoveSelection(GameObject obj)

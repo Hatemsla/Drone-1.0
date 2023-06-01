@@ -38,7 +38,7 @@ namespace Builder
             { 8f, 6 },
         };
 
-        public void SetEditPanelParams(string objName, string objDesc, float xP, float yP, float zP, float xR, float yR, float zR, float xyzS, float xS, float yS, float zS)
+        public void SetEditPanelParams(string objName, string objDesc, float xP, float yP, float zP, float xR, float yR, float zR, float xyzS, float xS, float yS, float zS, ObjectsType type)
         {
             objectName.text = objName;
             objectDescription.text = objDesc;
@@ -49,6 +49,8 @@ namespace Builder
             yRot.text = yR.ToString(CultureInfo.CurrentCulture);
             zRot.text = zR.ToString(CultureInfo.CurrentCulture);
             
+            if(type is ObjectsType.Gate or ObjectsType.Drone)
+                return;
             if((int)xyzScale.value != (int)xyzS)
                 xyzScale.value = ConvertScaleToSliderValue(xyzS);
             xScale.value = ConvertScaleToSliderValue(xS);

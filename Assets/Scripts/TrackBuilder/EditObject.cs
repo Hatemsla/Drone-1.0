@@ -9,6 +9,11 @@ namespace Builder
         public TrackObject currentObject;
         [SerializeField] private EditMenu editMenu;
 
+        private void Start()
+        {
+            HideEditMenu();
+        }
+
         private Dictionary<int, float> _sliderValues = new Dictionary<int, float>()
         {
             { 0, 0.125f },
@@ -20,7 +25,15 @@ namespace Builder
             { 6, 8f },
         };
 
-        private bool _isAxisScaleChange;
+        public void ShowEditMenu()
+        {
+            editMenu.gameObject.SetActive(true);
+        }
+
+        public void HideEditMenu()
+        {
+            editMenu.gameObject.SetActive(false);
+        }
         
         public void OnSelectObject(TrackObject obj)
         {
@@ -33,7 +46,7 @@ namespace Builder
                 currentObject.Position.x, currentObject.Position.y, currentObject.Position.z, 
                 angleX, angleY, angleZ,
                 editMenu.XYZValue, currentObject.Scale.x,
-                currentObject.Scale.y, currentObject.Scale.z);
+                currentObject.Scale.y, currentObject.Scale.z, currentObject.objectType);
         }
 
         public void OnXPositionChanged(string value)
@@ -74,33 +87,26 @@ namespace Builder
 
         public void OnXYZScaleChanged(float value)
         {
-            if(!_isAxisScaleChange)
-                currentObject.Scale = new Vector3(_sliderValues[(int)value], _sliderValues[(int)value],
+            currentObject.Scale = new Vector3(_sliderValues[(int)value], _sliderValues[(int)value],
                 _sliderValues[(int)value]);
         }
         
         public void OnXScaleChanged(float value)
         {
-            _isAxisScaleChange = true;
             currentObject.Scale = new Vector3(_sliderValues[(int)value], currentObject.Scale.y,
                 currentObject.Scale.z);
-            _isAxisScaleChange = false;
         }
         
         public void OnYScaleChanged(float value)
         {
-            _isAxisScaleChange = true;
             currentObject.Scale = new Vector3(currentObject.Scale.x, _sliderValues[(int)value],
                 currentObject.Scale.z);
-            _isAxisScaleChange = false;
         }
         
         public void OnZScaleChanged(float value)
         {
-            _isAxisScaleChange = true;
             currentObject.Scale = new Vector3(currentObject.Scale.x, currentObject.Scale.y,
                 _sliderValues[(int)value]);
-            _isAxisScaleChange = false;
         }
     }
 }
