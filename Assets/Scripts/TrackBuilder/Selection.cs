@@ -14,21 +14,16 @@ namespace Builder
     {
         public GameObject selectedObject;
         public List<GameObject> selectedObjects = new();
-        public LayerMask layerMask;
-        private BuilderManager _builderManager;
-
-        private void Start()
-        {
-            _builderManager = FindObjectOfType<BuilderManager>();
-        }
+        [SerializeField] private LayerMask layerMask;
+        [SerializeField] private EditObject editObject;
+        [SerializeField] private BuilderManager builderManager;
 
         private void Update()
         {
             if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
             {
                 var ray = Camera.main!.ScreenPointToRay(Input.mousePosition);
-                RaycastHit hit;
-                if (Physics.Raycast(ray, out hit, 10000, layerMask))
+                if (Physics.Raycast(ray, out var hit, 10000, layerMask))
                     if (Input.GetKey(KeyCode.LeftControl))
                     {
                         if (hit.collider.gameObject.layer == LayerMask.NameToLayer("TrackGround"))
@@ -43,19 +38,24 @@ namespace Builder
 
             if ((Input.GetKeyDown(KeyCode.F) || Input.GetMouseButtonDown(1)) && selectedObjects.Count > 0 && selectedObject != null)
             {
-                _builderManager.PlaceObjects();
+                builderManager.PlaceObjects();
                 Deselect();
             }
 
             if (Input.GetKeyDown(KeyCode.T) && selectedObjects.Count > 0 && selectedObject != null)
             {
-                _builderManager.PlaceObjects();
-                _builderManager.SelectObject(_builderManager.currentSelectObjectIndex);
+                builderManager.PlaceObjects();
+                builderManager.SelectObject(builderManager.currentSelectObjectIndex);
             }
 
             if (Input.GetKeyDown(KeyCode.Delete))
             {
                 Delete();
+            }
+
+            if (selectedObject)
+            {
+                editObject.OnSelectObject(selectedObject.GetComponent<TrackObject>());
             }
         }
 
@@ -63,10 +63,10 @@ namespace Builder
         {
             if (selectedObject == null) return;
             TrackBuilderUtils.ChangeLayerRecursively(selectedObject.transform.root.transform, LayerMask.NameToLayer("Track"));
-            _builderManager.pendingObject = selectedObject.gameObject;
-            _builderManager.pendingObjects = new List<GameObject>(selectedObjects);
-            _builderManager.currentObjectType = selectedObject.GetComponentInParent<TrackObject>();
-            _builderManager.currentObjectType.isActive = true;
+            builderManager.pendingObject = selectedObject.gameObject;
+            builderManager.pendingObjects = new List<GameObject>(selectedObjects);
+            builderManager.currentObjectType = selectedObject.GetComponentInParent<TrackObject>();
+            builderManager.currentObjectType.isActive = true;
         }
 
         public void Delete()
@@ -76,14 +76,14 @@ namespace Builder
             
             foreach (var selectedObj in selectedObjects)
             {
-                _builderManager.objectsPool.Remove(selectedObj);
-                _builderManager.droneBuilderCheckNode.RemoveNode(selectedObj.transform);
+                builderManager.objectsPool.Remove(selectedObj);
+                builderManager.droneBuilderCheckNode.RemoveNode(selectedObj.transform);
                 Destroy(selectedObj);
             }
 
-            _builderManager.pendingObjects.Clear();
+            builderManager.pendingObjects.Clear();
             selectedObjects.Clear();
-            _builderManager.pendingObject = null;
+            builderManager.pendingObject = null;
         }
 
         public void AddSelection(GameObject obj)
@@ -95,10 +95,7 @@ namespace Builder
             }
 
             var outlines = obj.GetComponentsInChildren<Outline>();
-            foreach (var outline in outlines)
-            {
-                outline.enabled = true;
-            }
+            TrackBuilderUtils.TurnAllOutlineEffects(outlines, true);
             selectedObjects.Add(obj);
             selectedObject = obj;
         }
@@ -112,10 +109,7 @@ namespace Builder
                     if (selectedObj != obj)
                     {
                         var objOutlines = selectedObj.GetComponentsInChildren<Outline>();
-                        foreach (var outline in objOutlines)
-                        {
-                            outline.enabled = false;
-                        }
+                        TrackBuilderUtils.TurnAllOutlineEffects(objOutlines, false);
                     }
                 }
 
@@ -128,10 +122,7 @@ namespace Builder
                 Deselect();
 
             var outlines = obj.GetComponentsInChildren<Outline>();
-            foreach (var outline in outlines)
-            {
-                outline.enabled = true;
-            }
+            TrackBuilderUtils.TurnAllOutlineEffects(outlines, true);
             selectedObject = obj;
             selectedObjects.Add(selectedObject);
         }
@@ -143,11 +134,8 @@ namespace Builder
             
             foreach (var selectedObj in selectedObjects)
             {
-                var objOutlines = selectedObj.GetComponentsInChildren<Outline>();
-                foreach (var outline in objOutlines)
-                {
-                    outline.enabled = false;
-                }
+                var outlines = selectedObj.GetComponentsInChildren<Outline>();
+                TrackBuilderUtils.TurnAllOutlineEffects(outlines, false);
             }
             
             selectedObject.GetComponent<TrackObject>().isActive = false;
@@ -161,10 +149,7 @@ namespace Builder
                 return;
 
             var outlines = obj!.GetComponentsInChildren<Outline>();
-            foreach (var outline in outlines)
-            {
-                outline.enabled = false;
-            }
+            TrackBuilderUtils.TurnAllOutlineEffects(outlines, false);
 
             obj.GetComponent<TrackObject>().isActive = false;
             selectedObjects.Remove(obj);

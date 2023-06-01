@@ -103,6 +103,7 @@ namespace Sockets
             {
                 if (_data.Length > 1)
                 {
+                    Debug.Log(_data);
                     MioData = JsonConvert.DeserializeObject<MioData>(_data);
                     if(droneFootballController)
                         SetDroneFootballData(MioData, droneFootballController);

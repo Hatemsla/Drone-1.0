@@ -5,7 +5,6 @@
 
 using UnityEngine;
 
-[RequireComponent(typeof(Camera))]
 public class FreeFlyCamera : MonoBehaviour
 {
     private float _currentIncrease = 1;

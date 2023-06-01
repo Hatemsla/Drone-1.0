@@ -1,4 +1,5 @@
 using System.Collections;
+using Cinemachine;
 using DB;
 using Menu;
 using UnityEngine;
@@ -22,7 +23,7 @@ namespace DroneFootball
         public AsyncLoad asyncLoad;
         public DroneFootballAI[] droneFootballAIList;
         public FootballCheckpointTrigger footballCheckpointTrigger;
-        public Camera playerCamera;
+        public CinemachineBrain playerCamera;
 
         private Vector3 _startPointerSize;
         private bool _isResult;
@@ -31,7 +32,6 @@ namespace DroneFootball
         private void Awake()
         {
             _startPointerSize = footballUIManager.pathArrow.sizeDelta;
-            playerCamera = Camera.main;
         }
 
         private void Start()
@@ -47,6 +47,8 @@ namespace DroneFootball
                 droneAI.footballController = this;
                 droneAI.speed *= currentAIDroneSpeed;
             }
+
+            playerCamera = FindObjectOfType<CinemachineBrain>();
         }
 
         private void Update()
@@ -58,7 +60,7 @@ namespace DroneFootball
 
         private void LateUpdate()
         {
-            Vector3 realPos = playerCamera.WorldToScreenPoint(targetCheckpoint.position);
+            Vector3 realPos = playerCamera.OutputCamera.WorldToScreenPoint(targetCheckpoint.position);
             Rect rect = new Rect(0, 0, Screen.width, Screen.height);
 
             Vector3 outPos = realPos;

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using Cinemachine;
 using DroneFootball;
 using Newtonsoft.Json;
 using Sockets;
@@ -31,6 +32,9 @@ namespace Builder
         public DroneBuilderSoundController droneBuilderSoundController;
         public UndoRedoManager undoRedoManager;
         public AsyncLoad asyncLoad;
+        public CinemachineBrain cameraBrain;
+        public BuilderCameraController cameraController;
+        public FreeFlyCamera freeFlyCamera;
         public LayerMask layerMask;
         public GameObject pendingObject;
         public List<GameObject> pendingObjects = new();
@@ -48,7 +52,6 @@ namespace Builder
         private Connection[] _connections;
         private RaycastHit _hit;
         private Selection _selection;
-        private Camera _mainCamera;
         private Vector3 _mainCameraPrevPosition;
         private Vector3 _startPointerSize;
         private Quaternion _mainCameraPrevRotation;
@@ -60,7 +63,6 @@ namespace Builder
 
         private void Awake()
         {
-            _mainCamera = Camera.main;
             _startPointerSize = builderUI.pathArrow.sizeDelta;
             _selection = FindObjectOfType<Selection>();
             _selection.Select(droneBuilderController.gameObject);
@@ -210,16 +212,16 @@ namespace Builder
             }
         }
 
-        private Vector3 CalculateCommonCenter(List<GameObject> objects)
+        private Vector3 CalculateCommonCenter(List<GameObject> objectsList)
         {
             var center = Vector3.zero;
 
-            foreach (var obj in objects)
+            foreach (var obj in objectsList)
             {
                 center += obj.transform.position;
             }
 
-            center /= objects.Count;
+            center /= objectsList.Count;
 
             return center;
         }
@@ -254,7 +256,7 @@ namespace Builder
             }
             
             targetCheckpoint = droneBuilderCheckNode.nodes[droneBuilderCheckNode.currentNode].transform;
-            Vector3 realPos = _mainCamera.WorldToScreenPoint(targetCheckpoint.position);
+            Vector3 realPos = cameraBrain.OutputCamera.WorldToScreenPoint(targetCheckpoint.position);
             Rect rect = new Rect(0, 0, Screen.width, Screen.height);
 
             Vector3 outPos = realPos;
@@ -273,7 +275,7 @@ namespace Builder
             {
                 realPos = -realPos;
                 outPos = new Vector3(realPos.x, 0, 0); // позиция иконки - снизу
-                if (_mainCamera.transform.position.y < targetCheckpoint.position.y)
+                if (cameraBrain.transform.position.y < targetCheckpoint.position.y)
                 {
                     direction = -1;
                     outPos.y = Screen.height; // позиция иконки - сверху				
@@ -294,8 +296,8 @@ namespace Builder
         
         private bool IsBehind(Vector3 point) // true если point сзади камеры
         {
-            Vector3 forward = _mainCamera.transform.TransformDirection(Vector3.forward);
-            Vector3 toOther = point - _mainCamera.transform.position;
+            Vector3 forward = cameraBrain.transform.TransformDirection(Vector3.forward);
+            Vector3 toOther = point - cameraBrain.transform.position;
             if (Vector3.Dot(forward, toOther) < 0) return true;
             return false;
         }
@@ -319,22 +321,20 @@ namespace Builder
             isMove = !isMove;
             if (isMove)
             {
-                _mainCamera.GetComponent<FreeFlyCamera>().enabled = false;
+                freeFlyCamera.enabled = false;
+                freeFlyCamera.GetComponent<CinemachineVirtualCamera>().Priority = 0;
+                cameraController.isSwitch = true;
+                cameraController.SetUpCamerasDefaultPriority();
                 var outlines = FindObjectsOfType<Outline>();
                 TrackBuilderUtils.TurnAllOutlineEffects(outlines, false);
                 _connections = FindObjectsOfType<Connection>();
                 TrackBuilderUtils.TurnAllConnections(_connections, false);
-                _mainCameraPrevPosition = _mainCamera.transform.position;
-                _mainCameraPrevRotation = _mainCamera.transform.rotation;
                 _dronePrevRotationY = droneBuilderController.transform.localRotation.eulerAngles.y;
                 droneBuilderController.yaw = _dronePrevRotationY;
                 _dronePrevPosition = droneBuilderController.transform.position;
-                _mainCamera.transform.SetParent(droneBuilderController.transform);
-                _mainCamera.transform.position = droneBuilderController.GetComponent<CameraController>().camerasPositions[0].position;
-                _mainCamera.transform.rotation = droneBuilderController.GetComponent<CameraController>().camerasPositions[0].rotation;
+                cameraBrain.transform.SetParent(droneBuilderController.transform);
                 droneBuilderController.GetComponent<Rigidbody>().isKinematic = false;
                 droneBuilderController.GetComponent<Rigidbody>().useGravity = true;
-                droneBuilderController.GetComponent<CameraController>().enabled = true;
                 builderUI.createPanel.SetActive(false);
                 builderUI.editButtons.SetActive(false);
                 if(droneBuilderCheckNode.nodes.Count > 0)
@@ -345,17 +345,16 @@ namespace Builder
             }
             else
             {
-                _mainCamera.transform.parent = null;
-                _mainCamera.GetComponent<FreeFlyCamera>().enabled = true;
+                freeFlyCamera.enabled = true;
+                freeFlyCamera.GetComponent<CinemachineVirtualCamera>().Priority = 10;
+                cameraController.isSwitch = false;
+                cameraController.SetUpCamerasZeroPriority();
                 TrackBuilderUtils.TurnAllConnections(_connections, true);
-                _mainCamera.transform.position = _mainCameraPrevPosition;
-                _mainCamera.transform.rotation = _mainCameraPrevRotation;
                 droneBuilderController.yaw = _dronePrevRotationY;
                 droneBuilderController.transform.position = _dronePrevPosition;
                 droneBuilderController.transform.localRotation = Quaternion.Euler(0, _dronePrevRotationY, 0);
                 droneBuilderController.GetComponent<Rigidbody>().isKinematic = true;
                 droneBuilderController.GetComponent<Rigidbody>().useGravity = false;
-                droneBuilderController.GetComponent<CameraController>().enabled = true;
                 builderUI.editorTabPanel.SetActive(false);
                 builderUI.gameTabPanel.SetActive(false);
                 Time.timeScale = 1f;
@@ -479,7 +478,7 @@ namespace Builder
             var newScale = pendingObject.transform.localScale * value;
             var newOffset = currentObjectType.yOffset * value;
 
-            if (newScale.magnitude <= 8f && newScale.magnitude >= 0.125f)
+            if (newScale.magnitude is <= 16f and >= 0.125f)
             {
                 pendingObject.transform.localScale = newScale;
                 currentObjectType.yOffset = newOffset;

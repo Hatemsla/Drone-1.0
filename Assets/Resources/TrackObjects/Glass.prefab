@@ -66,6 +66,7 @@ MonoBehaviour:
   objectType: 1
   yOffset: 1.14
   isActive: 0
+  maxMouseDistance: 0
 --- !u!1001 &8795635200586926278
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -124,6 +125,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 5e009109d92a98e4795ea57dbc518e25, type: 3}
       propertyPath: m_Layer
       value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 5e009109d92a98e4795ea57dbc518e25, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 18
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5e009109d92a98e4795ea57dbc518e25, type: 3}

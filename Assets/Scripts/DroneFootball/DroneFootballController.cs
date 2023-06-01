@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Cinemachine;
 using Sockets;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -39,7 +40,7 @@ namespace DroneFootball
             footballController = FindObjectOfType<FootballController>();
             footballController.droneFootballController = this;
             isSimpleMode = footballController.isSimpleMode;
-            footballController.playerCamera = GetComponentInChildren<Camera>();
+            footballController.playerCamera = FindObjectOfType<CinemachineBrain>();
             FindObjectOfType<Server>().droneFootballController = this;
         }
 

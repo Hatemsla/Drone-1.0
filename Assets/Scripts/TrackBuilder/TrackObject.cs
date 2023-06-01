@@ -13,8 +13,25 @@ namespace Builder
         public float yOffset;
         public bool isActive;
         public float maxMouseDistance = 3f;
-        public Vector3 Scale => transform.localScale;
-        public Vector3 Position => transform.localPosition;
-        public Quaternion Rotation => transform.localRotation;
+        public string objectName; 
+        public string objectDescription; 
+        
+        public Vector3 Scale
+        {
+            get => transform.localScale;
+            set => transform.localScale = value;
+        }
+
+        public Vector3 Position
+        {
+            get => transform.position;
+            set => transform.position = new Vector3(value.x, value.y + yOffset, value.z);
+        }
+
+        public Quaternion Rotation
+        {
+            get => transform.rotation;
+            set => transform.rotation = value;
+        }
     }
 }

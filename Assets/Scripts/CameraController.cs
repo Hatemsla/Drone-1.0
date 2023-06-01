@@ -1,31 +1,23 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Cinemachine;
 using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    public Camera mainCamera;
-    public Transform[] camerasPositions;
+    [SerializeField] private CinemachineVirtualCamera thirdView;
+    [SerializeField] private CinemachineVirtualCamera firstView;
 
-    private void Start()
-    {
-        mainCamera = Camera.main;
-        mainCamera.transform.localPosition = camerasPositions[0].localPosition;
-        mainCamera.nearClipPlane = 0.3f;
-    }
+    private int _tempView = 10;
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        if (Input.GetKeyDown(KeyCode.V))
         {
-            mainCamera.transform.localPosition = camerasPositions[0].localPosition;
-            mainCamera.nearClipPlane = 0.3f;
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            mainCamera.transform.localPosition = camerasPositions[1].localPosition;
-            mainCamera.nearClipPlane = 0.05f;
+            thirdView.Priority = firstView.Priority;
+            firstView.Priority = _tempView;
+            _tempView = thirdView.Priority;
         }
     }
 }
