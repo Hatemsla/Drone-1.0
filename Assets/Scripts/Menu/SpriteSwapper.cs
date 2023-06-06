@@ -7,15 +7,17 @@ namespace Menu
 {
     public class SpriteSwapper : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler, IPointerDownHandler, IPointerUpHandler
     {
+        public Button button;
         public Image objectImage;
         public Sprite defaultSprite;
         public Sprite hoverSprite;
         public Sprite pressedSprite;
         public Sprite disabledSprite;
 
-        private void Start()
+        private void Awake()
         {
             objectImage = GetComponent<Image>();
+            button = GetComponent<Button>();
         }
 
         public void OnPointerExit(PointerEventData eventData)

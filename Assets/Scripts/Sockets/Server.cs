@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
@@ -8,7 +7,6 @@ using System.Threading.Tasks;
 using Builder;
 using DroneFootball;
 using DroneRace;
-using Menu;
 using Newtonsoft.Json;
 using UnityEngine;
 
@@ -17,7 +15,6 @@ namespace Sockets
     public class Server : MonoBehaviour
     {
         public MioData MioData;
-        public MenuManager menuManager;
         public DroneFootballController droneFootballController;
         public DroneRaceController droneRaceController;
         public DroneBuilderController droneBuilderController;

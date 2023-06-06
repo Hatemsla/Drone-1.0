@@ -1,4 +1,5 @@
 using System;
+using DroneFootball;
 using Menu;
 using Npgsql;
 using Unity.VisualScripting;
@@ -107,9 +108,9 @@ namespace DB
 
         public void SaveUserResolution()
         {
-            UserResolutions.Width = menuManager.resolutions[menuManager.currentResolutionIndex].width;
-            UserResolutions.Height = menuManager.resolutions[menuManager.currentResolutionIndex].height;
-            UserResolutions.FrameRate = menuManager.resolutions[menuManager.currentResolutionIndex].refreshRate;
+            UserResolutions.Width = menuManager.resolutions[GameManager.Instance.gameData.currentResolutionIndex].width;
+            UserResolutions.Height = menuManager.resolutions[GameManager.Instance.gameData.currentResolutionIndex].height;
+            UserResolutions.FrameRate = menuManager.resolutions[GameManager.Instance.gameData.currentResolutionIndex].refreshRate;
             if (IsResolutionExist(UserResolutions.Width, UserResolutions.Height, UserResolutions.FrameRate))
             {
                 var resId = 1;
@@ -144,22 +145,22 @@ namespace DB
 
         public void SaveUserSettings()
         {
-            PlayerColor =
-                new UserColors(
-                    SelectIdWhere("color_id", "colors", "color",
-                        $"{menuManager.playerColorPreview.color.ToHexString()}"),
-                    menuManager.playerColorPreview.color.ToHexString());
-            BotsColor = new UserColors(
-                SelectIdWhere("color_id", "colors", "color",
-                    $"{menuManager.botsColorPreview.color.ToHexString()}"),
-                menuManager.botsColorPreview.color.ToHexString());
+            // PlayerColor =
+            //     new UserColors(
+            //         SelectIdWhere("color_id", "colors", "color",
+            //             $"{GameManager.Instance.playerColorPreview.color.ToHexString()}"),
+            //         GameManager.Instance.playerColorPreview.color.ToHexString());
+            // BotsColor = new UserColors(
+            //     SelectIdWhere("color_id", "colors", "color",
+            //         $"{menuManager.botsColorPreview.color.ToHexString()}"),
+            //     menuManager.botsColorPreview.color.ToHexString());
 
             UserSettings.IsFullscreen = menuManager.menuUIManager.isFullscreenToggle.isOn;
-            UserSettings.SoundLevel = menuManager.currentVolume;
-            UserSettings.YawRotationSensitivity = menuManager.currentYawSensitivity;
+            UserSettings.SoundLevel = GameManager.Instance.gameData.currentVolume;
+            UserSettings.YawRotationSensitivity = GameManager.Instance.gameData.currentYawSensitivity;
             UserSettings.BotsColorId = BotsColor.ColorId;
             UserSettings.PlayerColorId = PlayerColor.ColorId;
-            UserSettings.DifficultId = menuManager.currentDifficultIndex + 1;
+            UserSettings.DifficultId = GameManager.Instance.gameData.currentDifficultIndex + 1;
             if (IsSettingsExist())
             {
                 using (var conn = new NpgsqlConnection(_connectionString))
@@ -212,43 +213,43 @@ namespace DB
 
         public void Registration()
         {
-            UserDifficultlyLevels = new UserDifficultlyLevels(menuManager.currentDifficultIndex + 1,
-                menuManager.menuUIManager.difficultDropdown.options[menuManager.currentDifficultIndex].text);
-            if (IsResolutionExist(menuManager.resolutions[menuManager.currentResolutionIndex].width,
-                menuManager.resolutions[menuManager.currentResolutionIndex].height,
-                menuManager.resolutions[menuManager.currentResolutionIndex].refreshRate))
+            UserDifficultlyLevels = new UserDifficultlyLevels(GameManager.Instance.gameData.currentDifficultIndex + 1,
+                menuManager.menuUIManager.difficultDropdown.options[GameManager.Instance.gameData.currentDifficultIndex].text);
+            if (IsResolutionExist(menuManager.resolutions[GameManager.Instance.gameData.currentResolutionIndex].width,
+                menuManager.resolutions[GameManager.Instance.gameData.currentResolutionIndex].height,
+                menuManager.resolutions[GameManager.Instance.gameData.currentResolutionIndex].refreshRate))
             {
                 var resId = SelectIdWhere("resolution_id", "resolutions", "width", "height", "refresh_rate",
-                    menuManager.resolutions[menuManager.currentResolutionIndex].width.ToString(),
-                    menuManager.resolutions[menuManager.currentResolutionIndex].height.ToString(),
-                    menuManager.resolutions[menuManager.currentResolutionIndex].refreshRate.ToString());
+                    menuManager.resolutions[GameManager.Instance.gameData.currentResolutionIndex].width.ToString(),
+                    menuManager.resolutions[GameManager.Instance.gameData.currentResolutionIndex].height.ToString(),
+                    menuManager.resolutions[GameManager.Instance.gameData.currentResolutionIndex].refreshRate.ToString());
                 UserResolutions = new UserResolutions(resId,
-                    menuManager.resolutions[menuManager.currentResolutionIndex].width,
-                    menuManager.resolutions[menuManager.currentResolutionIndex].height,
-                    menuManager.resolutions[menuManager.currentResolutionIndex].refreshRate);
+                    menuManager.resolutions[GameManager.Instance.gameData.currentResolutionIndex].width,
+                    menuManager.resolutions[GameManager.Instance.gameData.currentResolutionIndex].height,
+                    menuManager.resolutions[GameManager.Instance.gameData.currentResolutionIndex].refreshRate);
             }
             else
             {
                 var resId = SelectNewId("resolution_id", "resolutions");
                 UserResolutions = new UserResolutions(resId,
-                    menuManager.resolutions[menuManager.currentResolutionIndex].width,
-                    menuManager.resolutions[menuManager.currentResolutionIndex].height,
-                    menuManager.resolutions[menuManager.currentResolutionIndex].refreshRate);
+                    menuManager.resolutions[GameManager.Instance.gameData.currentResolutionIndex].width,
+                    menuManager.resolutions[GameManager.Instance.gameData.currentResolutionIndex].height,
+                    menuManager.resolutions[GameManager.Instance.gameData.currentResolutionIndex].refreshRate);
             }
 
-            PlayerColor =
-                new UserColors(
-                    SelectIdWhere("color_id", "colors", "color",
-                        $"{menuManager.playerColorPreview.color.ToHexString()}"),
-                    menuManager.playerColorPreview.color.ToHexString());
-            BotsColor = new UserColors(
-                SelectIdWhere("color_id", "colors", "color",
-                    $"{menuManager.botsColorPreview.color.ToHexString()}"),
-                menuManager.botsColorPreview.color.ToHexString());
+            // PlayerColor =
+            //     new UserColors(
+            //         SelectIdWhere("color_id", "colors", "color",
+            //             $"{menuManager.playerColorPreview.color.ToHexString()}"),
+            //         menuManager.playerColorPreview.color.ToHexString());
+            // BotsColor = new UserColors(
+            //     SelectIdWhere("color_id", "colors", "color",
+            //         $"{menuManager.botsColorPreview.color.ToHexString()}"),
+            //     menuManager.botsColorPreview.color.ToHexString());
             UserSettings = new UserSettings(SelectNewId("settings_id", "settings"),
                 menuManager.menuUIManager.isFullscreenToggle.isOn,
-                menuManager.currentVolume,
-                menuManager.currentYawSensitivity,
+                GameManager.Instance.gameData.currentVolume,
+                GameManager.Instance.gameData.currentYawSensitivity,
                 UserResolutions.ResolutionId,
                 BotsColor.ColorId,
                 PlayerColor.ColorId,
@@ -329,8 +330,8 @@ namespace DB
             menuManager.menuUIManager.yawSensitivitySlider.value = UserSettings.YawRotationSensitivity - 1;
             menuManager.menuUIManager.isFullscreenToggle.isOn = UserSettings.IsFullscreen;
             menuManager.menuUIManager.difficultDropdown.value = UserSettings.DifficultId - 1;
-            var botsImage = menuManager.botsColorPreview.GetComponent<Image>();
-            var playerImage = menuManager.playerColorPreview.GetComponent<Image>();
+            // var botsImage = menuManager.botsColorPreview.GetComponent<Image>();
+            // var playerImage = menuManager.playerColorPreview.GetComponent<Image>();
 
             byte[] botsRgba =
             {
@@ -348,17 +349,17 @@ namespace DB
                 Convert.ToByte(PlayerColor.ColorName.Substring(6, 2), 16)
             };
 
-            botsImage.color = new Color32(botsRgba[0], botsRgba[1], botsRgba[2], botsRgba[3]);
-            playerImage.color = new Color32(playerRgba[0], playerRgba[1], playerRgba[2], playerRgba[3]);
+            // botsImage.color = new Color32(botsRgba[0], botsRgba[1], botsRgba[2], botsRgba[3]);
+            // playerImage.color = new Color32(playerRgba[0], playerRgba[1], playerRgba[2], playerRgba[3]);
 
             for (var i = 0; i < menuManager.resolutions.Length; i++)
                 if (menuManager.resolutions[i].width == UserResolutions.Width &&
                     menuManager.resolutions[i].height == UserResolutions.Height &&
                     menuManager.resolutions[i].refreshRate == UserResolutions.FrameRate)
-                    menuManager.currentResolutionIndex = i;
+                    GameManager.Instance.gameData.currentResolutionIndex = i;
 
-            menuManager.menuUIManager.resolutionDropdown.value = menuManager.currentResolutionIndex;
-            var resolution = menuManager.resolutions[menuManager.currentResolutionIndex];
+            menuManager.menuUIManager.resolutionDropdown.value = GameManager.Instance.gameData.currentResolutionIndex;
+            var resolution = menuManager.resolutions[GameManager.Instance.gameData.currentResolutionIndex];
             Screen.SetResolution(resolution.width, resolution.height, UserSettings.IsFullscreen);
         }
 

@@ -7,47 +7,36 @@ namespace Builder
     {
         public float magnetForce = 100;
 
-        private List<Rigidbody> _caughtRigidbodies = new List<Rigidbody>();
+        private List<Rigidbody> _caughtRigidbodies = new();
 
-        void FixedUpdate()
+        private void FixedUpdate()
         {
             if (_caughtRigidbodies != null)
-            {
-                for (int i = 0; i < _caughtRigidbodies.Count; i++)
-                {
-                    _caughtRigidbodies[i].velocity +=
+                foreach (var caughtRb in _caughtRigidbodies)
+                    caughtRb.velocity +=
                         (transform.position -
-                         (_caughtRigidbodies[i].transform.position + _caughtRigidbodies[i].centerOfMass)) *
+                         (caughtRb.transform.position + caughtRb.centerOfMass)) *
                         (magnetForce * Time.deltaTime);
-                }
-            }
         }
 
-        void OnTriggerEnter(Collider other)
+        private void OnTriggerEnter(Collider other)
         {
             if (other.GetComponent<Rigidbody>())
             {
-                Rigidbody r = other.GetComponent<Rigidbody>();
+                var r = other.GetComponent<Rigidbody>();
 
-                if(!_caughtRigidbodies.Contains(r))
-                {
-                    //Add Rigidbody
-                    _caughtRigidbodies.Add(r);
-                }
+                if (!_caughtRigidbodies.Contains(r)) _caughtRigidbodies.Add(r);
             }
         }
 
-        void OnTriggerExit(Collider other)
+        private void OnTriggerExit(Collider other)
         {
             if (other.GetComponent<Rigidbody>())
             {
-                Rigidbody r = other.GetComponent<Rigidbody>();
+                var r = other.GetComponent<Rigidbody>();
 
                 if (_caughtRigidbodies.Contains(r))
-                {
-                    //Remove Rigidbody
                     _caughtRigidbodies.Remove(r);
-                }
             }
         }
     }

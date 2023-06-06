@@ -27,12 +27,20 @@
   <component name="ChangeListManager">
     <list default="true" id="2b7fdc50-160f-488f-bb8d-47a059ac380e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.DroneGames/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.DroneGames/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/TrackObjects/Slant.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/TrackObjects/Slant.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TrackBuilder/Connection.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TrackBuilder/Connection.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Levels/test.json" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Levels/test.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Materials/Lamps/Lamp6/gradient_emission.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Materials/Lamps/Lamp6/gradient_emission.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Menu.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Menu.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/DB/DBManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/DB/DBManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/DroneFootball/DroneFootballController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/DroneFootball/DroneFootballController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Menu/MenuManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Menu/MenuManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Sockets/Server.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Sockets/Server.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/TrackBuilder/EditMenu.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TrackBuilder/EditMenu.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TrackBuilder/EditObject.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TrackBuilder/EditObject.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TrackBuilder/Selection.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TrackBuilder/Selection.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TrackBuilder/TrackObject.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TrackBuilder/TrackObject.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TrackBuilder/RigidbodyMagnet.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TrackBuilder/RigidbodyMagnet.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Fallback.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Fallback.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Packages/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/manifest.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Packages/packages-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/packages-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserSettings/EditorUserSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/EditorUserSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserSettings/Layouts/default-2021.dwlt" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/Layouts/default-2021.dwlt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -140,7 +148,7 @@
 }</component>
   <component name="RunManager" selected="Attach to Unity Editor.Attach to Unity Editor">
     <configuration name="Standalone Player" type="RunUnityExe" factoryName="Unity Executable">
-      <option name="EXE_PATH" value="$USER_HOME$/YandexDisk/DroneExe/DroneFootball.exe" />
+      <option name="EXE_PATH" value="$USER_HOME$/YandexDisk/DroneExe\DroneFootball.exe" />
       <option name="PROGRAM_PARAMETERS" value="" />
       <option name="WORKING_DIRECTORY" value="C:\Work\Unity\DroneExe" />
       <option name="PASS_PARENT_ENVS" value="1" />
@@ -181,10 +189,10 @@
       </option>
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="12848">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="5460">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" value="12848" />
+      <option name="pid" value="5460" />
       <option name="projectPathOnTarget" />
       <option name="selectedOptions">
         <list />
@@ -299,7 +307,9 @@
       <workItem from="1685365266275" duration="1245000" />
       <workItem from="1685443349809" duration="80000" />
       <workItem from="1685443453293" duration="5867000" />
-      <workItem from="1685614762737" duration="14824000" />
+      <workItem from="1685614762737" duration="14894000" />
+      <workItem from="1685700332511" duration="3237000" />
+      <workItem from="1686051157111" duration="7841000" />
     </task>
     <task id="LOCAL-00001" summary="Add checkpoint spawn in droneRace">
       <created>1673510278765</created>
@@ -478,6 +488,23 @@
     <option name="LAST_COMMIT_MESSAGE" value="Add identity rotation on paste object" />
   </component>
   <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/LevelManager.cs</url>
+          <line>25</line>
+          <properties documentPath="C:\Work\Unity\DroneGames\Assets\Scripts\LevelManager.cs" initialLine="25" containingFunctionPresentation="Method 'SaveLevel'">
+            <startOffsets>
+              <option value="725" />
+            </startOffsets>
+            <endOffsets>
+              <option value="789" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="10" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
     <pin-to-top-manager>
       <pinned-members>
         <PinnedItemInfo parentTag="Type#UnityEngine.Events.UnityEventBase" memberName="m_PersistentCalls" />

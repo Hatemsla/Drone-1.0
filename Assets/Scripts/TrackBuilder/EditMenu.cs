@@ -42,12 +42,12 @@ namespace Builder
         {
             objectName.text = objName;
             objectDescription.text = objDesc;
-            xPos.text = xP.ToString(CultureInfo.CurrentCulture);
-            yPos.text = yP.ToString(CultureInfo.CurrentCulture);
-            zPos.text = zP.ToString(CultureInfo.CurrentCulture);
-            xRot.text = xR.ToString(CultureInfo.CurrentCulture);
-            yRot.text = yR.ToString(CultureInfo.CurrentCulture);
-            zRot.text = zR.ToString(CultureInfo.CurrentCulture);
+            xPos.text = xP.ToString("f2", CultureInfo.CurrentCulture);
+            yPos.text = yP.ToString("f2", CultureInfo.CurrentCulture);
+            zPos.text = zP.ToString("f2", CultureInfo.CurrentCulture);
+            xRot.text = xR.ToString("f2", CultureInfo.CurrentCulture);
+            yRot.text = yR.ToString("f2", CultureInfo.CurrentCulture);
+            zRot.text = zR.ToString("f2", CultureInfo.CurrentCulture);
             
             if(type is ObjectsType.Gate or ObjectsType.Drone)
                 return;

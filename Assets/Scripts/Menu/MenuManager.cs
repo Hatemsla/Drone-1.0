@@ -1,41 +1,22 @@
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using Builder;
-using DB;
 using DroneFootball;
-using DroneRace;
-using Newtonsoft.Json;
-using Sockets;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 namespace Menu
 {
     public class MenuManager : MonoBehaviour
     {
-        public string levelName;
-        public bool isSimpleMode;
-        public int currentDifficultIndex;
-        public int currentControlDifficultIndex;
-        public int currentResolutionIndex;
-        public float currentYawSensitivity = 1;
-        public float currentVolume;
-        public DBManager dbManager;
-        public Server server;
+        public static MenuManager Instance;
         public MenuUIManager menuUIManager;
-        public RaceController raceController;
-        public FootballController footballController;
-        public BuilderManager builderManager;
-        public ColorPreview botsColorPreview;
-        public ColorPreview playerColorPreview;
-        public AsyncLoad asyncLoad;
+        public GameData gameData;
         public Resolution[] resolutions;
+
+        public delegate void LevelNameChangedEventHandler(string level);
+        public event LevelNameChangedEventHandler LevelNameChanged; 
 
         private readonly List<string> _difficulties = new List<string>
             {"Супер легко", "Легко", "Нормально", "Сложно", "Невозможно"};
@@ -43,26 +24,14 @@ namespace Menu
         private readonly List<float> _droneSpeed = new List<float> {0.5f, 0.75f, 1f, 1.5f, 2f};
 
         private readonly List<float> _gatesSize = new List<float> {3f, 2f, 1.5f, 1.25f, 1f};
-        private float _currentAIDroneSpeed;
-        private float _currentGateScale;
-        private int _gameTimeInSeconds;
-        private bool _isFootball;
-        private bool _isMenuScene = true;
-        private bool _isRace;
-        private bool _isLoadLevel;
-        private bool _isStartBuilder;
-        private StringBuilder _statText1;
-        private StringBuilder _statText2;
-        private Color _botsColorPreview;
-        private Color _playerColorPreview;
-        private static readonly int EmissionColor = Shader.PropertyToID("_EmissionColor");
+
+        private void Awake()
+        {
+            Instance = this;
+        }
 
         private void Start()
         {
-            DontDestroyOnLoad(gameObject);
-
-            dbManager = GetComponent<DBManager>();
-            server = GetComponent<Server>();
             resolutions = Screen.resolutions.Distinct().ToArray();
             SetDropdownResolutions();
             SetDropdownDifficulties();
@@ -75,26 +44,59 @@ namespace Menu
             menuUIManager.difficultControlDropdown.value = 0;
             menuUIManager.volumeSlider.value = 1;
             menuUIManager.yawSensitivitySlider.value = 2;
-            botsColorPreview = menuUIManager.botColorPicker.GetComponentInChildren<ColorPreview>();
-            playerColorPreview = menuUIManager.playerColorPicker.GetComponentInChildren<ColorPreview>();
+            
+            OpenMenu("Start");
+            menuUIManager.volumeSlider.value = gameData.currentVolume;
+            menuUIManager.volumeSlider.onValueChanged.AddListener(delegate { ChangeVolume(); });
+            menuUIManager.yawSensitivitySlider.value = gameData.currentYawSensitivity - 1;
+            menuUIManager.yawSensitivitySlider.onValueChanged.AddListener(delegate { ChangeYawSensitivity(); });
+            menuUIManager.startExitBtn.onClick.AddListener(GameManagerUtils.Exit);
+            menuUIManager.optionsExitBtn.onClick.AddListener(GameManagerUtils.Exit);
+            menuUIManager.gameExitBtn.onClick.AddListener(GameManagerUtils.Exit);
+            menuUIManager.isFullscreenToggle.onValueChanged.AddListener(Fullscreen);
+            menuUIManager.difficultDropdown.onValueChanged.AddListener(SetDifficult);
+            menuUIManager.difficultDropdown.value = gameData.currentDifficultIndex;
+            menuUIManager.difficultControlDropdown.onValueChanged.AddListener(SetGameMode);
+            menuUIManager.difficultControlDropdown.value = gameData.currentControlDifficultIndex;
+            menuUIManager.authExitBtn.onClick.AddListener(GameManagerUtils.Exit);
+            menuUIManager.gameBtn.onClick.AddListener(delegate { OpenMenu("Game"); });
+            menuUIManager.statBtn.onClick.AddListener(delegate { OpenMenu("Statistics"); });
+            menuUIManager.optionsBtn.onClick.AddListener(delegate { OpenMenu("Options"); });
+            menuUIManager.gameBackBtn.onClick.AddListener(delegate { OpenMenu("Start"); });
+            menuUIManager.optionsBackBtn.onClick.AddListener(delegate { OpenMenu("Start"); });
+            menuUIManager.trackBuilderBtn.onClick.AddListener(delegate { OpenMenu("Builder"); });
+            menuUIManager.generalSettingsBtn.onClick.AddListener(delegate { OpenSubMenu("GeneralOpt"); });
+            menuUIManager.soundSettingsBtn.onClick.AddListener(delegate { OpenSubMenu("SoundOpt"); });
+            menuUIManager.controlSettingsBtn.onClick.AddListener(delegate { OpenSubMenu("ControlOpt"); });
+            menuUIManager.difficultSettingsBtn.onClick.AddListener(delegate { OpenSubMenu("DifficultOpt"); });
+            menuUIManager.customizationSettingsBtn.onClick.AddListener(delegate { OpenSubMenu("CustOpt"); });
+            menuUIManager.builderBackBtn.onClick.AddListener(delegate { OpenMenu("Game"); });
+            menuUIManager.authLogBtn.onClick.AddListener(delegate { OpenMenu("Log"); });
+            menuUIManager.authRegBtn.onClick.AddListener(delegate { OpenMenu("Reg"); });
+            menuUIManager.logBackBtn.onClick.AddListener(delegate { OpenMenu("Auth"); });
+            menuUIManager.logBackBtn.onClick.AddListener(ClearLogInputs);
+            menuUIManager.regBackBtn.onClick.AddListener(delegate { OpenMenu("Auth"); });
+            menuUIManager.regBackBtn.onClick.AddListener(ClearRegInputs);
+            menuUIManager.startExitAccBtn.onClick.AddListener(delegate { OpenMenu("Auth"); });
+            menuUIManager.statBackBtn.onClick.AddListener(delegate { OpenMenu("Start"); });
+            menuUIManager.gameTimeInput.text = gameData.gameTimeInSeconds > 0 ? gameData.gameTimeInSeconds.ToString() : "300";
 
-            SceneManager.sceneLoaded += OnSceneLoaded;
+            SetDropdownResolutions();
+            menuUIManager.resolutionDropdown.onValueChanged.AddListener(SetResolution);
         }
 
         private void Update()
         {
-            if (_isMenuScene)
-                dbManager.UserData.SecondsInGame += Time.deltaTime;
+            // if (_isMenuScene)
+            //     dbManager.UserData.SecondsInGame += Time.deltaTime;
+            //
+            // if (_isRace)
+            //     dbManager.UserStatisticRace.SecondsInGame += Time.deltaTime;
+            //
+            // if (_isFootball)
+            //     dbManager.UserStatisticFootball.SecondsInGame += Time.deltaTime;
 
-            if (_isRace)
-                dbManager.UserStatisticRace.SecondsInGame += Time.deltaTime;
-
-            if (_isFootball)
-                dbManager.UserStatisticFootball.SecondsInGame += Time.deltaTime;
-
-            SetStatistics();
-            _botsColorPreview = botsColorPreview.color;
-            _playerColorPreview = playerColorPreview.color;
+            // SetStatistics();
         }
 
         private void SetDropdownResolutions()
@@ -106,11 +108,11 @@ namespace Menu
 
                 if (resolutions[i].width == Screen.currentResolution.width ||
                     resolutions[i].height == Screen.currentResolution.height)
-                    currentResolutionIndex = i;
+                    gameData.currentResolutionIndex = i;
             }
 
             menuUIManager.resolutionDropdown.AddOptions(options);
-            menuUIManager.resolutionDropdown.value = currentResolutionIndex;
+            menuUIManager.resolutionDropdown.value = gameData.currentResolutionIndex;
             menuUIManager.resolutionDropdown.RefreshShownValue();
         }
 
@@ -121,300 +123,98 @@ namespace Menu
             menuUIManager.difficultDropdown.value = 2;
         }
 
-        public void SetStatistics()
-        {
-            _statText1 = new StringBuilder();
-            _statText1.AppendLine("Всего сыграно игр: " + (dbManager.UserStatisticFootball.GamesCount +
-                                                          dbManager.UserStatisticRace.GamesCount));
-            _statText1.AppendLine("Игр в дроногонках: " + dbManager.UserStatisticRace.GamesCount);
-            _statText1.AppendLine("Игр в дронофутболе: " + dbManager.UserStatisticFootball.GamesCount);
-            _statText1.AppendLine("Всего побед: " + (dbManager.UserStatisticFootball.WinsCount +
-                                                    dbManager.UserStatisticRace.WinsCount));
-            _statText1.AppendLine("Побед в дроногонках: " + dbManager.UserStatisticFootball.WinsCount);
-            _statText1.AppendLine("Побед в дронофутболе: " + dbManager.UserStatisticRace.WinsCount);
-            _statText1.AppendLine("Всего поражений: " + (dbManager.UserStatisticFootball.LosesCount +
-                                                        dbManager.UserStatisticRace.LosesCount));
-            _statText1.AppendLine("Поражений в дроногонках: " + dbManager.UserStatisticFootball.LosesCount);
-            _statText1.AppendLine("Поражений в дронофутболе: " + dbManager.UserStatisticRace.LosesCount);
-            _statText1.AppendLine("Всего ничьей: " + (dbManager.UserStatisticFootball.GamesCount +
-                dbManager.UserStatisticRace.GamesCount - (dbManager.UserStatisticFootball.LosesCount +
-                                                          dbManager.UserStatisticRace.LosesCount +
-                                                          dbManager.UserStatisticFootball.WinsCount +
-                                                          dbManager.UserStatisticRace.WinsCount)));
-            _statText1.AppendLine("Ничьей в дроногонках: " + (dbManager.UserStatisticRace.GamesCount -
-                                                             (dbManager.UserStatisticRace.LosesCount +
-                                                              dbManager.UserStatisticRace.WinsCount)));
-            _statText1.AppendLine("Ничьей в дронофутболе: " + (dbManager.UserStatisticFootball.GamesCount -
-                dbManager.UserStatisticFootball.LosesCount + dbManager.UserStatisticFootball.WinsCount));
-            menuUIManager.statText1.text = _statText1.ToString();
+        // public void SetStatistics()
+        // {
+        //     _statText1 = new StringBuilder();
+        //     _statText1.AppendLine("Всего сыграно игр: " + (dbManager.UserStatisticFootball.GamesCount +
+        //                                                   dbManager.UserStatisticRace.GamesCount));
+        //     _statText1.AppendLine("Игр в дроногонках: " + dbManager.UserStatisticRace.GamesCount);
+        //     _statText1.AppendLine("Игр в дронофутболе: " + dbManager.UserStatisticFootball.GamesCount);
+        //     _statText1.AppendLine("Всего побед: " + (dbManager.UserStatisticFootball.WinsCount +
+        //                                             dbManager.UserStatisticRace.WinsCount));
+        //     _statText1.AppendLine("Побед в дроногонках: " + dbManager.UserStatisticFootball.WinsCount);
+        //     _statText1.AppendLine("Побед в дронофутболе: " + dbManager.UserStatisticRace.WinsCount);
+        //     _statText1.AppendLine("Всего поражений: " + (dbManager.UserStatisticFootball.LosesCount +
+        //                                                 dbManager.UserStatisticRace.LosesCount));
+        //     _statText1.AppendLine("Поражений в дроногонках: " + dbManager.UserStatisticFootball.LosesCount);
+        //     _statText1.AppendLine("Поражений в дронофутболе: " + dbManager.UserStatisticRace.LosesCount);
+        //     _statText1.AppendLine("Всего ничьей: " + (dbManager.UserStatisticFootball.GamesCount +
+        //         dbManager.UserStatisticRace.GamesCount - (dbManager.UserStatisticFootball.LosesCount +
+        //                                                   dbManager.UserStatisticRace.LosesCount +
+        //                                                   dbManager.UserStatisticFootball.WinsCount +
+        //                                                   dbManager.UserStatisticRace.WinsCount)));
+        //     _statText1.AppendLine("Ничьей в дроногонках: " + (dbManager.UserStatisticRace.GamesCount -
+        //                                                      (dbManager.UserStatisticRace.LosesCount +
+        //                                                       dbManager.UserStatisticRace.WinsCount)));
+        //     _statText1.AppendLine("Ничьей в дронофутболе: " + (dbManager.UserStatisticFootball.GamesCount -
+        //         dbManager.UserStatisticFootball.LosesCount + dbManager.UserStatisticFootball.WinsCount));
+        //     menuUIManager.statText1.text = _statText1.ToString();
+        //
+        //     _statText2 = new StringBuilder();
+        //     _statText2.AppendLine("Всего времени в игре: " + TimeFormat(
+        //         dbManager.UserStatisticFootball.SecondsInGame + dbManager.UserStatisticRace.SecondsInGame +
+        //         dbManager.UserData.SecondsInGame));
+        //     _statText2.AppendLine("Времени в дроногонках: " + TimeFormat(dbManager.UserStatisticRace.SecondsInGame));
+        //     _statText2.AppendLine("Времени в дронофутболе: " + TimeFormat(dbManager.UserStatisticFootball.SecondsInGame));
+        //     menuUIManager.statText2.text = _statText2.ToString();
+        // }
 
-            _statText2 = new StringBuilder();
-            _statText2.AppendLine("Всего времени в игре: " + TimeFormat(
-                dbManager.UserStatisticFootball.SecondsInGame + dbManager.UserStatisticRace.SecondsInGame +
-                dbManager.UserData.SecondsInGame));
-            _statText2.AppendLine("Времени в дроногонках: " + TimeFormat(dbManager.UserStatisticRace.SecondsInGame));
-            _statText2.AppendLine("Времени в дронофутболе: " + TimeFormat(dbManager.UserStatisticFootball.SecondsInGame));
-            menuUIManager.statText2.text = _statText2.ToString();
-        }
-
-        private string TimeFormat(float time)
-        {
-            float hours = Mathf.FloorToInt(time / 3600);
-            float minutes = Mathf.FloorToInt(time / 60);
-            float seconds = Mathf.FloorToInt(time % 60);
-            return $"{hours:00}:{minutes:00}:{seconds:00}";
-        }
+        // private string TimeFormat(float time)
+        // {
+        //     float hours = Mathf.FloorToInt(time / 3600);
+        //     float minutes = Mathf.FloorToInt(time / 60);
+        //     float seconds = Mathf.FloorToInt(time % 60);
+        //     return $"{hours:00}:{minutes:00}:{seconds:00}";
+        // }
 
         public void SetResolution(int resolutionIndex)
         {
             if (resolutions == null)
                 resolutions = Screen.resolutions.Distinct().ToArray();
             var resolution = resolutions[resolutionIndex];
-            currentResolutionIndex = resolutionIndex;
+            gameData.currentResolutionIndex = resolutionIndex;
             Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
         }
 
         public void SetDifficult(int difficultIndex)
         {
-            _currentGateScale = _gatesSize[difficultIndex];
-            _currentAIDroneSpeed = _droneSpeed[difficultIndex];
-            currentDifficultIndex = difficultIndex;
+            gameData.currentGateScale = _gatesSize[difficultIndex];
+            gameData.currentAIDroneSpeed = _droneSpeed[difficultIndex];
+            gameData.currentDifficultIndex = difficultIndex;
         }
-
-        private void OnSceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
-        {
-            AudioListener.volume = currentVolume;
-            if (scene.buildIndex == 1)
-            {
-                _isMenuScene = true;
-                _isRace = false;
-                _isFootball = false;
-                var dontDestroyMenuManager = FindObjectsOfType<MenuManager>();
-                var dontDestroyDbManager = FindObjectsOfType<DBManager>();
-                var dontDestroyServer = FindObjectsOfType<Server>();
-                foreach (var obj in dontDestroyMenuManager)
-                    if (obj.transform.gameObject != transform.gameObject)
-                        Destroy(obj);
-
-                foreach (var obj in dontDestroyDbManager)
-                    if (obj.transform.gameObject != transform.gameObject)
-                        Destroy(obj);
-
-                foreach (var obj in dontDestroyServer)
-                    if (obj.transform.gameObject != transform.gameObject)
-                        Destroy(obj);
-
-                menuUIManager = FindObjectOfType<MenuUIManager>();
-                asyncLoad = FindObjectOfType<AsyncLoad>();
-                OpenMenu("Start");
-                menuUIManager.volumeSlider.value = currentVolume;
-                menuUIManager.volumeSlider.onValueChanged.AddListener(delegate { ChangeVolume(); });
-                menuUIManager.yawSensitivitySlider.value = currentYawSensitivity - 1;
-                menuUIManager.yawSensitivitySlider.onValueChanged.AddListener(delegate { ChangeYawSensitivity(); });
-                menuUIManager.startExitBtn.onClick.AddListener(Exit);
-                menuUIManager.optionsExitBtn.onClick.AddListener(Exit);
-                menuUIManager.gameExitBtn.onClick.AddListener(Exit);
-                menuUIManager.isFullscreenToggle.onValueChanged.AddListener(Fullscreen);
-                menuUIManager.difficultDropdown.onValueChanged.AddListener(SetDifficult);
-                menuUIManager.difficultDropdown.value = currentDifficultIndex;
-                menuUIManager.difficultControlDropdown.onValueChanged.AddListener(SetGameMode);
-                menuUIManager.difficultControlDropdown.value = currentControlDifficultIndex;
-                menuUIManager.raceBtn.onClick.AddListener(delegate { StartGame(2); });
-                menuUIManager.footballBtn.onClick.AddListener(delegate { StartGame(3); });
-                menuUIManager.createLevelBtn.onClick.AddListener(CreateLevel);
-                menuUIManager.loadLevelBtn.onClick.AddListener(LoadLevel);
-                menuUIManager.playBtn.onClick.AddListener(StartBuilder);
-                botsColorPreview = menuUIManager.botColorPicker.GetComponentInChildren<ColorPreview>();
-                playerColorPreview = menuUIManager.playerColorPicker.GetComponentInChildren<ColorPreview>();
-                botsColorPreview.GetComponent<Image>().color = _botsColorPreview;
-                playerColorPreview.GetComponent<Image>().color = _playerColorPreview;
-                menuUIManager.authExitBtn.onClick.AddListener(Exit);
-                menuUIManager.gameBtn.onClick.AddListener(delegate { OpenMenu("Game"); });
-                menuUIManager.statBtn.onClick.AddListener(delegate { OpenMenu("Statistics"); });
-                menuUIManager.optionsBtn.onClick.AddListener(delegate { OpenMenu("Options"); });
-                menuUIManager.gameBackBtn.onClick.AddListener(delegate { OpenMenu("Start"); });
-                menuUIManager.optionsBackBtn.onClick.AddListener(delegate { OpenMenu("Start"); });
-                menuUIManager.trackBuilderBtn.onClick.AddListener(delegate { OpenMenu("Builder"); });
-                menuUIManager.generalSettingsBtn.onClick.AddListener(delegate { OpenSubMenu("GeneralOpt"); });
-                menuUIManager.soundSettingsBtn.onClick.AddListener(delegate { OpenSubMenu("SoundOpt"); });
-                menuUIManager.controlSettingsBtn.onClick.AddListener(delegate { OpenSubMenu("ControlOpt"); });
-                menuUIManager.difficultSettingsBtn.onClick.AddListener(delegate { OpenSubMenu("DifficultOpt"); });
-                menuUIManager.customizationSettingsBtn.onClick.AddListener(delegate { OpenSubMenu("CustOpt"); });
-                menuUIManager.builderBackBtn.onClick.AddListener(delegate { OpenMenu("Game"); });
-                menuUIManager.authLogBtn.onClick.AddListener(delegate { OpenMenu("Log"); });
-                menuUIManager.authRegBtn.onClick.AddListener(delegate { OpenMenu("Reg"); });
-                menuUIManager.logBackBtn.onClick.AddListener(delegate { OpenMenu("Auth"); });
-                menuUIManager.logBackBtn.onClick.AddListener(ClearLogInputs);
-                menuUIManager.logBtn.onClick.AddListener(delegate { dbManager.Login(); });
-                menuUIManager.regBtn.onClick.AddListener(delegate { dbManager.Registration(); });
-                menuUIManager.regBackBtn.onClick.AddListener(delegate { OpenMenu("Auth"); });
-                menuUIManager.regBackBtn.onClick.AddListener(ClearRegInputs);
-                menuUIManager.startExitAccBtn.onClick.AddListener(delegate { OpenMenu("Auth"); });
-                // menuUIManager.startExitAccBtn.onClick.AddListener(dbManager.SaveUserFootballStatistic);
-                // menuUIManager.startExitAccBtn.onClick.AddListener(dbManager.SaveUserRaceStatistic);
-                // menuUIManager.startExitAccBtn.onClick.AddListener(dbManager.SaveUserResolution);
-                // menuUIManager.startExitAccBtn.onClick.AddListener(dbManager.SaveUserSettings);
-                // menuUIManager.startExitAccBtn.onClick.AddListener(dbManager.SaveUserData);
-                menuUIManager.statBackBtn.onClick.AddListener(delegate { OpenMenu("Start"); });
-                if (_gameTimeInSeconds > 0)
-                    menuUIManager.gameTimeInput.text = _gameTimeInSeconds.ToString();
-                else
-                    menuUIManager.gameTimeInput.text = "300";
-
-                SetDropdownResolutions();
-                menuUIManager.resolutionDropdown.onValueChanged.AddListener(SetResolution);
-            }
-            else if (scene.buildIndex == 2)
-            {
-                _isMenuScene = false;
-                _isRace = true;
-                _isFootball = false;
-                raceController = FindObjectOfType<RaceController>();
-                raceController.currentAIDroneSpeed = _currentAIDroneSpeed;
-                raceController.raceUIManager.backBtn.onClick.AddListener(BackToMenu);
-                raceController.raceUIManager.exitBtn.onClick.AddListener(Exit);
-                raceController.isSimpleMode = isSimpleMode;
-                raceController.droneRaceController.yawPower = currentYawSensitivity;
-                raceController.droneRaceController.droneMeshRenderer.material.SetColor("_Color",
-                    _playerColorPreview);
-                raceController.droneRaceController.droneMeshRenderer.material.SetColor("_EmissionColor",
-                    _playerColorPreview);
-                raceController.droneRaceAI.droneMeshRenderer.material.SetColor("_Color", _botsColorPreview);
-                raceController.droneRaceAI.droneMeshRenderer.material.SetColor("_EmissionColor",
-                    _botsColorPreview);
-                server.droneRaceController = raceController.droneRaceController;
-                
-                raceController.timer.timeForEndGame = _gameTimeInSeconds;
-                asyncLoad = raceController.asyncLoad;
-            }
-            else if (scene.buildIndex == 3)
-            {
-                _isMenuScene = false;
-                _isRace = false;
-                _isFootball = true;
-                footballController = FindObjectOfType<FootballController>();
-                footballController.currentGateScale = _currentGateScale;
-                footballController.currentAIDroneSpeed = _currentAIDroneSpeed;
-                footballController.footballUIManager.backBtn.onClick.AddListener(BackToMenu);
-                footballController.footballUIManager.exitBtn.onClick.AddListener(Exit);
-                footballController.isSimpleMode = isSimpleMode;
-                footballController.droneFootballController.yawPower = currentYawSensitivity;
-                footballController.droneFootballController.droneMeshRenderer.material.SetColor("_Color",
-                    _playerColorPreview);
-                footballController.droneFootballController.droneMeshRenderer.material.SetColor("_EmissionColor",
-                    _playerColorPreview);
-                footballController.droneFootballAIList[0].droneMeshRenderer.material
-                    .SetColor("_Color", _botsColorPreview);
-                footballController.droneFootballAIList[0].droneMeshRenderer.material
-                    .SetColor(EmissionColor, _botsColorPreview);
-                footballController.droneFootballAIList[1].droneMeshRenderer.material
-                    .SetColor("_Color", _botsColorPreview);
-                footballController.droneFootballAIList[1].droneMeshRenderer.material
-                    .SetColor("_EmissionColor", _botsColorPreview);
-                server.droneFootballController = footballController.droneFootballController;
-                
-                footballController.timer.timeForEndGame = _gameTimeInSeconds;
-                asyncLoad = footballController.asyncLoad;
-            }
-            else if(scene.buildIndex == 4)
-            {
-                _isMenuScene = false;
-                _isRace = false;
-                _isFootball = false;
-                builderManager = FindObjectOfType<BuilderManager>();
-                builderManager.currentYawSensitivity = currentYawSensitivity;
-                builderManager.builderUI.editorExitBtn.onClick.AddListener(Exit);
-                builderManager.builderUI.gameExitBtn.onClick.AddListener(Exit);
-                builderManager.builderUI.backBtn.onClick.AddListener(BackToMenu);
-                builderManager.builderUI.backEditorTabBtn.onClick.AddListener(BackToMenu);
-                builderManager.builderUI.backGameTabBtn.onClick.AddListener(BackToMenu);
-                builderManager.builderUI.saveBtn.onClick.AddListener(SaveLevel);
-                builderManager.levelName = levelName;
-                builderManager.droneBuilderController.isSimpleMode = isSimpleMode; 
-                server.droneBuilderController = builderManager.droneBuilderController;
-                asyncLoad = builderManager.asyncLoad;
-
-                if (_isLoadLevel)
-                {
-                    // builderManager.LoadScene();
-                    builderManager.isGameMode = false;
-                    builderManager.isLoadLevel = _isLoadLevel;
-                }
-
-                if (_isStartBuilder)
-                {
-                    // builderManager.StartLevel();
-                    builderManager.isGameMode = true;
-                    builderManager.isGameLevel = true;
-                }
-            }
-        }
-
+        
         public void LoadLevel()
         {
-            if(!File.Exists(Application.dataPath + "/Levels/" + menuUIManager.levelInput.text + ".json"))
+            if(!LevelManager.LoadLevel(menuUIManager.levelInput.text))
                 return;
 
-            levelName = menuUIManager.levelInput.text;
-            _isLoadLevel = true;
-            _isStartBuilder = false;
+            gameData.levelName = menuUIManager.levelInput.text;
+            gameData.isLoadLevel = true;
+            gameData.isStartBuilder = false;
             SceneManager.LoadScene(4);
         }
 
         public void CreateLevel()
         {
-            if(!IsValidLevelName(menuUIManager.levelInput.text))
+            if(!LevelManager.IsValidLevelName(menuUIManager.levelInput.text))
                 return;
             
             Directory.CreateDirectory(Application.dataPath + "/Levels");
-            levelName = menuUIManager.levelInput.text;
-            _isLoadLevel = false;
-            _isStartBuilder = false;
+            gameData.levelName = menuUIManager.levelInput.text;
+            gameData.isLoadLevel = false;
+            gameData.isStartBuilder = false;
             SceneManager.LoadScene(4);
         }
 
         public void StartBuilder()
         {
-            if(!File.Exists(Application.dataPath + "/Levels/" + menuUIManager.levelInput.text + ".json"))
+            if(!LevelManager.LoadLevel(menuUIManager.levelInput.text))
                 return;
             
-            levelName = menuUIManager.levelInput.text;
-            _isStartBuilder = true;
+            gameData.levelName = menuUIManager.levelInput.text;
+            gameData.isLoadLevel = false;
+            gameData.isStartBuilder = true;
             SceneManager.LoadScene(4);
-        }
-
-        public void SaveLevel()
-        {
-            Dictionary<string, Dictionary<string, string>> data = new Dictionary<string, Dictionary<string, string>>();
-            foreach (GameObject obj in builderManager.levelScene.GetRootGameObjects())
-            {
-                if (obj.layer != LayerMask.NameToLayer("TrackGround") && obj.layer != LayerMask.NameToLayer("Track"))
-                    continue;
-                
-                Dictionary<string, string> objData = new Dictionary<string, string>();
-                objData["name"] = obj.name;
-                objData["position"] = FormatVector3(obj.transform.position);
-                objData["rotation"] = FormatVector3(obj.transform.rotation.eulerAngles);
-                objData["scale"] = FormatVector3(obj.transform.localScale);
-                objData["layer"] = obj.layer.ToString();
-                var trackObj = obj.GetComponent<TrackObject>();
-                objData["yOffset"] = trackObj.yOffset.ToString(CultureInfo.CurrentCulture);
-                objData["maxMouseDistance"] = trackObj.maxMouseDistance.ToString(CultureInfo.CurrentCulture);
-                data[obj.GetInstanceID() + ""] = objData;
-            }
-            string json = JsonConvert.SerializeObject(data, Formatting.Indented);
-            File.WriteAllText(Application.dataPath + "/Levels/" + levelName + ".json", json);
-        }
-        
-        private string FormatVector3(Vector3 vector)
-        {
-            return vector.x + " " + vector.y + " " + vector.z;
-        }
-
-        public void CloseColorPickers()
-        {
-            botsColorPreview.CloseColorPicker();
-            playerColorPreview.CloseColorPicker();
         }
 
         public void ClearLogInputs()
@@ -447,22 +247,6 @@ namespace Menu
                     menu.Close();
         }
 
-        public void BackToMenu()
-        {
-            asyncLoad.LoadScene(1);
-            Time.timeScale = 1f;
-        }
-
-        public void Exit()
-        {
-            // dbManager.SaveUserFootballStatistic();
-            // dbManager.SaveUserRaceStatistic();
-            // dbManager.SaveUserResolution();
-            // dbManager.SaveUserSettings();
-            // dbManager.SaveUserData();
-            Application.Quit();
-        }
-
         public void Fullscreen(bool isFullscreen)
         {
             Screen.fullScreen = isFullscreen;
@@ -470,43 +254,41 @@ namespace Menu
 
         public void SetGameMode(int value)
         {
-            isSimpleMode = value == 0;
-            currentControlDifficultIndex = value;
+            gameData.isSimpleMode = value == 0;
+            gameData.currentControlDifficultIndex = value;
         }
 
         public void ChangeVolume()
         {
             AudioListener.volume = menuUIManager.volumeSlider.value;
-            currentVolume = menuUIManager.volumeSlider.value;
-            menuUIManager.volumeValue.text = (currentVolume * 100).ToString("0");
+            gameData.currentVolume = menuUIManager.volumeSlider.value;
+            menuUIManager.volumeValue.text = (gameData.currentVolume * 100).ToString("0");
         }
 
         public void ChangeYawSensitivity()
         {
-            currentYawSensitivity = menuUIManager.yawSensitivitySlider.value + 1;
-            menuUIManager.yawValue.text = currentYawSensitivity.ToString("0.0");
+            gameData.currentYawSensitivity = menuUIManager.yawSensitivitySlider.value + 1;
+            menuUIManager.yawValue.text = gameData.currentYawSensitivity.ToString("0.0");
+        }
+
+        public void OnLevelNameChanged(string level)
+        {
+            LevelNameChanged?.Invoke(level);
         }
 
         private void StartGame(int sceneIndex)
         {
             GameTimeHandler();
             OpenMenu("Load");
-            asyncLoad.LoadScene(sceneIndex);
-            // SceneManager.LoadScene(sceneIndex);
-        }
-
-        private bool IsValidLevelName(string input)
-        {
-            string pattern = @"^(?=.*[a-zA-Z])[a-zA-Z0-9]{2,}$";
-            return Regex.IsMatch(input, pattern);
+            GameManager.Instance.asyncLoad.LoadScene(sceneIndex);
         }
 
         private void GameTimeHandler()
         {
             if (!string.IsNullOrEmpty(menuUIManager.gameTimeInput.text))
-                _gameTimeInSeconds = Convert.ToInt32(menuUIManager.gameTimeInput.text);
+                gameData.gameTimeInSeconds = Convert.ToInt32(menuUIManager.gameTimeInput.text);
             else
-                _gameTimeInSeconds = 300;
+                gameData.gameTimeInSeconds = 300;
         }
     }
 }

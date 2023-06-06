@@ -20,5 +20,6 @@ namespace DroneFootball
         public GameObject backgroundImage;
         public GameObject tabPanel;
         public GameObject uiPanel;
+        public GameObject loadPanel;
     }
 }

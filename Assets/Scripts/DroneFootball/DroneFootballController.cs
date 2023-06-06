@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,6 +42,10 @@ namespace DroneFootball
             footballController.droneFootballController = this;
             isSimpleMode = footballController.isSimpleMode;
             footballController.playerCamera = FindObjectOfType<CinemachineBrain>();
+        }
+
+        private void Start()
+        {
             FindObjectOfType<Server>().droneFootballController = this;
         }
 
