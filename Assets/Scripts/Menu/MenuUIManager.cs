@@ -37,25 +37,22 @@ namespace Menu
         public TMP_Dropdown difficultDropdown;
         public TMP_Dropdown difficultControlDropdown;
         public Button optionsBackBtn;
-        public Button optionsExitBtn;
         public Button generalSettingsBtn;
         public Button soundSettingsBtn;
         public Button controlSettingsBtn;
         public Button difficultSettingsBtn;
         public Button customizationSettingsBtn;
-        public Slider volumeSlider;
+        public Slider volumeEffectsSlider;
+        public Slider volumeMusicsSlider;
         public Slider yawSensitivitySlider;
         public GameObject generalSettings;
         public GameObject soundSettings;
         public GameObject controlSettings;
         public GameObject difficultSettings;
         public GameObject customizationSettings;
-        public GameObject botColorPicker;
-        public GameObject playerColorPicker;
-        public GameObject botColorImage;
-        public GameObject playerColorImage;
         public TMP_InputField gameTimeInput;
-        public TMP_Text volumeValue;
+        public TMP_Text effectsVolumeValue;
+        public TMP_Text musicsVolumeValue;
         public TMP_Text yawValue;
 
         [Header("Game menu")] 
@@ -63,7 +60,6 @@ namespace Menu
         public Button footballBtn;
         public Button trackBuilderBtn;
         public Button gameBackBtn;
-        public Button gameExitBtn;
 
         [Header("Statistic menu")] 
         public TMP_Text statText1;
@@ -77,10 +73,6 @@ namespace Menu
         public Button playBtn;
         public Button builderBackBtn;
 
-        [Header("Load menu")]
-        public Slider loadSlider;
-        
-        
         [Header("Menus")]
         public GameObject startMenu;
         public GameObject optionMenu;

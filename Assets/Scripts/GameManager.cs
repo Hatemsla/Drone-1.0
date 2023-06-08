@@ -36,7 +36,7 @@ namespace DroneFootball
 
         private void OnSceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
         {
-            AudioListener.volume = gameData.currentVolume;
+            AudioListener.volume = gameData.currentEffectsVolume;
             switch (scene.buildIndex)
             {
                 case 1:

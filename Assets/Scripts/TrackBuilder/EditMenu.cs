@@ -29,16 +29,25 @@ namespace Builder
 
         private Dictionary<float, int> _sliderValues = new Dictionary<float, int>()
         {
-            { 0.125f, 0 },
-            { 0.25f, 1 },
-            { 0.5f, 2 },
-            { 1f, 3 },
-            { 2f, 4 },
-            { 4f, 5 },
-            { 8f, 6 },
+            { 0.5f, 0 },
+            { 1f, 1 },
+            { 1.5f, 2 },
+            { 2f, 3 },
+            { 2.5f, 4 },
+            { 3f, 5 },
+            { 3.5f, 6 },
+            { 4f, 7 },
+            { 4.5f, 8 },
+            { 5f, 9 },
+            { 5.5f, 10 },
+            { 6f, 11 },
+            { 6.5f, 12 },
+            { 7f, 13 },
+            { 7.5f, 14 },
+            { 8f, 15 },
         };
 
-        public void SetEditPanelParams(string objName, string objDesc, float xP, float yP, float zP, float xR, float yR, float zR, float xyzS, float xS, float yS, float zS, ObjectsType type)
+        public void SetEditPanelParams(string objName, string objDesc, float xP, float yP, float zP, float xR, float yR, float zR, float xyzS, ObjectsType type)
         {
             objectName.text = objName;
             objectDescription.text = objDesc;
@@ -51,11 +60,8 @@ namespace Builder
             
             if(type is ObjectsType.Gate or ObjectsType.Drone)
                 return;
-            if((int)xyzScale.value != (int)xyzS)
-                xyzScale.value = ConvertScaleToSliderValue(xyzS);
-            xScale.value = ConvertScaleToSliderValue(xS);
-            yScale.value = ConvertScaleToSliderValue(yS);
-            zScale.value = ConvertScaleToSliderValue(zS);
+            
+            xyzScale.value = ConvertScaleToSliderValue(xyzS);
         }
 
         private int ConvertScaleToSliderValue(float originValue)

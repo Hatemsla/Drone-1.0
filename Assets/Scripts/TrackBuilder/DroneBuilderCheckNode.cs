@@ -9,12 +9,7 @@ public class DroneBuilderCheckNode : MonoBehaviour
 {
     public int currentNode;
     public List<BuilderCheckpointTrigger> nodes;
-
-    private void Start()
-    {
-        SetCheckpointsId();
-    }
-
+    
     private void Update()
     {
         CalculateWayDistance();

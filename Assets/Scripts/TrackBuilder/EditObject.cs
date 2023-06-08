@@ -16,13 +16,22 @@ namespace Builder
 
         private Dictionary<int, float> _sliderValues = new Dictionary<int, float>()
         {
-            { 0, 0.125f },
-            { 1, 0.25f },
-            { 2, 0.5f },
-            { 3, 1f },
-            { 4, 2f },
-            { 5, 4f },
-            { 6, 8f },
+            { 0, 0.5f },
+            { 1, 1f },
+            { 2, 1.5f },
+            { 3, 2f },
+            { 4, 2.5f },
+            { 5, 3f },
+            { 6, 3.5f },
+            { 7, 4f },
+            { 8, 4.5f },
+            { 9, 5f },
+            { 10, 5.5f },
+            { 11, 6f },
+            { 12, 6.5f },
+            { 13, 7f },
+            { 14, 7.5f },
+            { 15, 8f },
         };
 
         public void ShowEditMenu()
@@ -45,8 +54,7 @@ namespace Builder
             editMenu.SetEditPanelParams(currentObject.objectName, currentObject.objectDescription,
                 currentObject.Position.x, currentObject.Position.y, currentObject.Position.z, 
                 angleX, angleY, angleZ,
-                editMenu.XYZValue, currentObject.Scale.x,
-                currentObject.Scale.y, currentObject.Scale.z, currentObject.objectType);
+                currentObject.Scale.x, currentObject.objectType);
         }
 
         public void OnXPositionChanged(string value)
@@ -88,24 +96,6 @@ namespace Builder
         public void OnXYZScaleChanged(float value)
         {
             currentObject.Scale = new Vector3(_sliderValues[(int)value], _sliderValues[(int)value],
-                _sliderValues[(int)value]);
-        }
-        
-        public void OnXScaleChanged(float value)
-        {
-            currentObject.Scale = new Vector3(_sliderValues[(int)value], currentObject.Scale.y,
-                currentObject.Scale.z);
-        }
-        
-        public void OnYScaleChanged(float value)
-        {
-            currentObject.Scale = new Vector3(currentObject.Scale.x, _sliderValues[(int)value],
-                currentObject.Scale.z);
-        }
-        
-        public void OnZScaleChanged(float value)
-        {
-            currentObject.Scale = new Vector3(currentObject.Scale.x, currentObject.Scale.y,
                 _sliderValues[(int)value]);
         }
     }

@@ -11,7 +11,8 @@ namespace DroneFootball
         public int currentControlDifficultIndex;
         public int currentResolutionIndex;
         public float currentYawSensitivity = 1;
-        public float currentVolume;
+        public float currentEffectsVolume;
+        public float currentMusicsVolume;
         public int gameTimeInSeconds;
         public float currentAIDroneSpeed;
         public float currentGateScale;

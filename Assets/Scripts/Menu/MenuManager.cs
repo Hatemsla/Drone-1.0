@@ -41,18 +41,13 @@ namespace Menu
             menuUIManager.createLevelBtn.onClick.AddListener(CreateLevel);
             menuUIManager.loadLevelBtn.onClick.AddListener(LoadLevel);
             menuUIManager.playBtn.onClick.AddListener(StartBuilder);
-            menuUIManager.difficultControlDropdown.value = 0;
-            menuUIManager.volumeSlider.value = 1;
-            menuUIManager.yawSensitivitySlider.value = 2;
             
             OpenMenu("Start");
-            menuUIManager.volumeSlider.value = gameData.currentVolume;
-            menuUIManager.volumeSlider.onValueChanged.AddListener(delegate { ChangeVolume(); });
+            menuUIManager.volumeEffectsSlider.value = gameData.currentEffectsVolume;
+            menuUIManager.volumeMusicsSlider.value = gameData.currentMusicsVolume;
             menuUIManager.yawSensitivitySlider.value = gameData.currentYawSensitivity - 1;
             menuUIManager.yawSensitivitySlider.onValueChanged.AddListener(delegate { ChangeYawSensitivity(); });
             menuUIManager.startExitBtn.onClick.AddListener(GameManagerUtils.Exit);
-            menuUIManager.optionsExitBtn.onClick.AddListener(GameManagerUtils.Exit);
-            menuUIManager.gameExitBtn.onClick.AddListener(GameManagerUtils.Exit);
             menuUIManager.isFullscreenToggle.onValueChanged.AddListener(Fullscreen);
             menuUIManager.difficultDropdown.onValueChanged.AddListener(SetDifficult);
             menuUIManager.difficultDropdown.value = gameData.currentDifficultIndex;
@@ -256,13 +251,6 @@ namespace Menu
         {
             gameData.isSimpleMode = value == 0;
             gameData.currentControlDifficultIndex = value;
-        }
-
-        public void ChangeVolume()
-        {
-            AudioListener.volume = menuUIManager.volumeSlider.value;
-            gameData.currentVolume = menuUIManager.volumeSlider.value;
-            menuUIManager.volumeValue.text = (gameData.currentVolume * 100).ToString("0");
         }
 
         public void ChangeYawSensitivity()

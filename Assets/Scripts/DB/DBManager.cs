@@ -156,7 +156,7 @@ namespace DB
             //     menuManager.botsColorPreview.color.ToHexString());
 
             UserSettings.IsFullscreen = menuManager.menuUIManager.isFullscreenToggle.isOn;
-            UserSettings.SoundLevel = GameManager.Instance.gameData.currentVolume;
+            UserSettings.SoundLevel = GameManager.Instance.gameData.currentEffectsVolume;
             UserSettings.YawRotationSensitivity = GameManager.Instance.gameData.currentYawSensitivity;
             UserSettings.BotsColorId = BotsColor.ColorId;
             UserSettings.PlayerColorId = PlayerColor.ColorId;
@@ -248,7 +248,7 @@ namespace DB
             //     menuManager.botsColorPreview.color.ToHexString());
             UserSettings = new UserSettings(SelectNewId("settings_id", "settings"),
                 menuManager.menuUIManager.isFullscreenToggle.isOn,
-                GameManager.Instance.gameData.currentVolume,
+                GameManager.Instance.gameData.currentEffectsVolume,
                 GameManager.Instance.gameData.currentYawSensitivity,
                 UserResolutions.ResolutionId,
                 BotsColor.ColorId,
@@ -326,7 +326,7 @@ namespace DB
 
         private void ApplySettings()
         {
-            menuManager.menuUIManager.volumeSlider.value = UserSettings.SoundLevel;
+            menuManager.menuUIManager.volumeEffectsSlider.value = UserSettings.SoundLevel;
             menuManager.menuUIManager.yawSensitivitySlider.value = UserSettings.YawRotationSensitivity - 1;
             menuManager.menuUIManager.isFullscreenToggle.isOn = UserSettings.IsFullscreen;
             menuManager.menuUIManager.difficultDropdown.value = UserSettings.DifficultId - 1;

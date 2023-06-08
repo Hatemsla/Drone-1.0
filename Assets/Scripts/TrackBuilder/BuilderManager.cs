@@ -337,10 +337,12 @@ namespace Builder
                 droneBuilderController.GetComponent<Rigidbody>().useGravity = true;
                 builderUI.createPanel.SetActive(false);
                 builderUI.editButtons.SetActive(false);
+                builderUI.objectEditPanel.SetActive(false);
                 if(droneBuilderCheckNode.nodes.Count > 0)
                     builderUI.pathArrow.gameObject.SetActive(true);
                 droneBuilderCheckNode.currentNode = 0;
                 droneBuilderSoundController.droneFly.Play();
+                _selection.Deselect();
                 _selection.enabled = false;
             }
             else
@@ -361,6 +363,7 @@ namespace Builder
                 _isTabPanel = false;
                 builderUI.createPanel.SetActive(true);
                 builderUI.editButtons.SetActive(true);
+                builderUI.objectEditPanel.SetActive(true);
                 builderUI.pathArrow.gameObject.SetActive(false);
                 droneBuilderSoundController.droneFly.Stop();
                 _selection.enabled = true;
@@ -374,6 +377,7 @@ namespace Builder
         
         public IEnumerator LoadScene()
         {
+            builderUI.pathArrow.gameObject.SetActive(false);
             builderUI.editButtons.SetActive(false);
             builderUI.createPanel.SetActive(false);
             builderUI.loadLevelPanel.SetActive(true);
@@ -550,7 +554,7 @@ namespace Builder
             foreach (var obj in objectsPool)
             {
                 if(obj.GetComponent<BuilderCheckpointTrigger>())
-                    droneBuilderCheckNode.nodes.Add(obj.GetComponent<BuilderCheckpointTrigger>());
+                    droneBuilderCheckNode.AddNode(obj.transform);
                 SceneManager.MoveGameObjectToScene(obj, levelScene);
             }
 
