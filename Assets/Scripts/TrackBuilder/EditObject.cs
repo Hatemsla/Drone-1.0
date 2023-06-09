@@ -54,7 +54,7 @@ namespace Builder
             editMenu.SetEditPanelParams(currentObject.objectName, currentObject.objectDescription,
                 currentObject.Position.x, currentObject.Position.y, currentObject.Position.z, 
                 angleX, angleY, angleZ,
-                currentObject.Scale.x, currentObject.objectType);
+                currentObject.Scale.x, currentObject);
         }
 
         public void OnXPositionChanged(string value)
@@ -95,8 +95,27 @@ namespace Builder
 
         public void OnXYZScaleChanged(float value)
         {
-            currentObject.Scale = new Vector3(_sliderValues[(int)value], _sliderValues[(int)value],
-                _sliderValues[(int)value]);
+            if(currentObject.objectType is ObjectsType.Drone or ObjectsType.Gate)
+                return;
+
+            var newScale = _sliderValues[(int)value];
+            var oldScale = currentObject.Scale.x;
+            currentObject.Scale = new Vector3(newScale, newScale, newScale);
+
+            if (newScale < oldScale)
+            {
+                var currentObjectYOffset = (oldScale - newScale);
+                currentObject.Position = new Vector3(currentObject.Position.x,
+                    currentObject.Position.y - currentObjectYOffset, currentObject.Position.z);
+                currentObject.yOffset -= currentObjectYOffset;
+            }
+            else if (newScale > oldScale)
+            {
+                var currentObjectYOffset = (newScale - oldScale);
+                currentObject.Position = new Vector3(currentObject.Position.x,
+                    currentObject.Position.y + currentObjectYOffset, currentObject.Position.z);
+                currentObject.yOffset += currentObjectYOffset;
+            }
         }
     }
 }

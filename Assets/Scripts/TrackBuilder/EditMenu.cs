@@ -17,15 +17,7 @@ namespace Builder
         [SerializeField] private TMP_InputField yRot;
         [SerializeField] private TMP_InputField zRot;
         [SerializeField] private Slider xyzScale;
-        [SerializeField] private Slider xScale;
-        [SerializeField] private Slider yScale;
-        [SerializeField] private Slider zScale;
-
-        public int XYZValue
-        {
-            get => (int)xyzScale.value;
-            set => xyzScale.value = value;
-        }
+        
 
         private Dictionary<float, int> _sliderValues = new Dictionary<float, int>()
         {
@@ -47,7 +39,7 @@ namespace Builder
             { 8f, 15 },
         };
 
-        public void SetEditPanelParams(string objName, string objDesc, float xP, float yP, float zP, float xR, float yR, float zR, float xyzS, ObjectsType type)
+        public void SetEditPanelParams(string objName, string objDesc, float xP, float yP, float zP, float xR, float yR, float zR, float xyzS, TrackObject trackObject)
         {
             objectName.text = objName;
             objectDescription.text = objDesc;
@@ -58,15 +50,18 @@ namespace Builder
             yRot.text = yR.ToString("f2", CultureInfo.CurrentCulture);
             zRot.text = zR.ToString("f2", CultureInfo.CurrentCulture);
             
-            if(type is ObjectsType.Gate or ObjectsType.Drone)
+            if(trackObject.objectType is ObjectsType.Gate or ObjectsType.Drone)
                 return;
-            
+
             xyzScale.value = ConvertScaleToSliderValue(xyzS);
         }
 
         private int ConvertScaleToSliderValue(float originValue)
         {
-            return _sliderValues[originValue];
+            if(_sliderValues.TryGetValue(originValue, out var value))
+                return value;
+
+            return (int)xyzScale.value;
         }
     }
 }

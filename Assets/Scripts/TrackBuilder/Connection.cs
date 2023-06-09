@@ -1,6 +1,4 @@
-﻿using System;
-using Unity.VisualScripting;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Builder
 {
@@ -12,6 +10,7 @@ namespace Builder
         private BuilderManager _builderManager;
         private Selection _selection;
         private Vector3 _connectPosition;
+        public bool isOccupied;
 
         private void Awake()
         {
@@ -26,13 +25,13 @@ namespace Builder
 
         private void OnTriggerEnter(Collider other)
         {
-            if (!_trackObject.isActive || _builderManager.pendingObjects.Count != 1) return;
+            if (!_trackObject.isActive || _builderManager.pendingObjects.Count != 1 || isOccupied) return;
             if(_builderManager.pendingObject == null)
                 return;
 
             var otherConnection = other.GetComponent<Connection>();
             
-            if(otherConnection == null)
+            if(otherConnection == null || otherConnection.isOccupied)
                 return;
             
             switch (_trackObject.objectType)
@@ -60,19 +59,19 @@ namespace Builder
                     
                     _trackObject.transform.position = other.transform.position + offset;
                     _trackObject.transform.rotation = other.transform.rotation;
+                    isOccupied = otherConnection.isOccupied = true;
                     break;
                 case ObjectsType.Wall when otherConnection.connectionType == ConnectionType.Wall:
                     _builderManager.PutObject();
-                    _trackObject.connectionsCount++;
                     _connectPosition = new Vector3(other.transform.position.x,
                         other.transform.position.y + _trackObject.yOffset, other.transform.position.z);
                     _trackObject.transform.position = _connectPosition;
+                    isOccupied = otherConnection.isOccupied = true;
                     break;
                 case ObjectsType.Slant when otherConnection.connectionType == ConnectionType.Slant:
                     _builderManager.PutObject();
-                    _trackObject.connectionsCount++;
                     _trackObject.transform.position = other.transform.position;
-                    break;
+                    isOccupied = otherConnection.isOccupied = true; break;
             }
         }
 
@@ -121,15 +120,21 @@ namespace Builder
         {
             var otherConnection = other.GetComponent<Connection>();
             
-            if(otherConnection == null)
+            if(otherConnection == null || otherConnection.isOccupied)
                 return;
 
-            _trackObject.connectionsCount--;
             
-            if (_trackObject.objectType == ObjectsType.Slant && _selection.selectedObject.GetComponent<TrackObject>().objectType == ObjectsType.Slant)
+            switch (_trackObject.objectType)
             {
-                _selection.Move();
+                case ObjectsType.Slant when _selection.selectedObject.GetComponent<TrackObject>().objectType == ObjectsType.Slant:
+                    _selection.Move();
+                    break;
+                case ObjectsType.Wall when _selection.selectedObject.GetComponent<TrackObject>().objectType == ObjectsType.Wall:
+                    _selection.Move();
+                    break;
             }
+
+            isOccupied = otherConnection.isOccupied = false;
         }
     }
 }

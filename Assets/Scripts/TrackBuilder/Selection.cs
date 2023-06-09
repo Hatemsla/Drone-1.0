@@ -12,6 +12,7 @@ namespace Builder
 {
     public class Selection : MonoBehaviour
     {
+        public TrackObject selectedTrackObject;
         public GameObject selectedObject;
         public List<GameObject> selectedObjects = new();
         [SerializeField] private LayerMask layerMask;
@@ -55,7 +56,7 @@ namespace Builder
 
             if (selectedObject)
             {
-                editObject.OnSelectObject(selectedObject.GetComponent<TrackObject>());
+                editObject.OnSelectObject(selectedTrackObject);
             }
         }
 
@@ -63,6 +64,7 @@ namespace Builder
         {
             if (selectedObject == null) return;
             TrackBuilderUtils.ChangeLayerRecursively(selectedObject.transform.root.transform, LayerMask.NameToLayer("Track"));
+            TrackBuilderUtils.TurnTrackObjects(selectedObjects, true);
             builderManager.pendingObject = selectedObject.gameObject;
             builderManager.pendingObjects = new List<GameObject>(selectedObjects);
             builderManager.currentObjectType = selectedObject.GetComponentInParent<TrackObject>();
@@ -72,7 +74,7 @@ namespace Builder
         public void Delete()
         {
             if (selectedObject == null) return;
-            if (selectedObject.CompareTag("Player")) return;
+            if (selectedTrackObject.objectType == ObjectsType.Drone) return;
             
             foreach (var selectedObj in selectedObjects)
             {
@@ -98,6 +100,7 @@ namespace Builder
             TrackBuilderUtils.TurnAllOutlineEffects(outlines, true);
             selectedObjects.Add(obj);
             selectedObject = obj;
+            selectedTrackObject = obj.GetComponent<TrackObject>();
         }
 
         public void Select(GameObject obj)
@@ -124,6 +127,7 @@ namespace Builder
             var outlines = obj.GetComponentsInChildren<Outline>();
             TrackBuilderUtils.TurnAllOutlineEffects(outlines, true);
             selectedObject = obj;
+            selectedTrackObject = obj.GetComponent<TrackObject>();
             selectedObjects.Add(selectedObject);
             editObject.ShowEditMenu();
         }
@@ -141,6 +145,7 @@ namespace Builder
             
             selectedObject.GetComponent<TrackObject>().isActive = false;
             selectedObject = null;
+            selectedTrackObject = null;
             selectedObjects.Clear();
             editObject.HideEditMenu();
         }

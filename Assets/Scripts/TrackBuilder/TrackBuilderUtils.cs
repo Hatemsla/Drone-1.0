@@ -1,4 +1,5 @@
-﻿using cakeslice;
+﻿using System.Collections.Generic;
+using cakeslice;
 using UnityEngine;
 
 namespace Builder
@@ -51,6 +52,14 @@ namespace Builder
             foreach (var connection in connections)
             {
                 connection.gameObject.SetActive(turn);
+            }
+        }
+        
+        public static void TurnTrackObjects(List<GameObject> pendingObjects, bool turn)
+        {
+            foreach (var pendingObject in pendingObjects)
+            {
+                pendingObject.GetComponent<TrackObject>().isActive = turn;
             }
         }
     }

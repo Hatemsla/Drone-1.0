@@ -13,7 +13,6 @@ namespace Builder
         public ObjectsType objectType;
         public float yOffset;
         public bool isActive;
-        public int connectionsCount;
         public float maxMouseDistance = 3f;
         public string objectName;
         public string objectDescription;

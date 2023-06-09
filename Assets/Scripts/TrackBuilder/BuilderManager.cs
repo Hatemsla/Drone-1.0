@@ -26,6 +26,7 @@ namespace Builder
         public bool isLoadLevel;
         public bool isGameLevel;
         public BuilderUI builderUI;
+        public EditMenu editMenu;
         public BuilderAudioManager audioManager;
         public DroneBuilderController droneBuilderController;
         public DroneBuilderCheckNode droneBuilderCheckNode;
@@ -194,11 +195,25 @@ namespace Builder
             {
                 if (Input.GetKeyDown(KeyCode.A))
                 {
-                    ChangeObjectScale(2);
+                    var angleX = currentObjectType.Rotation.eulerAngles.x;
+                    var angleY = currentObjectType.Rotation.eulerAngles.y;
+                    var angleZ = currentObjectType.Rotation.eulerAngles.z;
+                    editMenu.SetEditPanelParams(currentObjectType.objectName, currentObjectType.objectDescription,
+                        currentObjectType.Position.x, currentObjectType.Position.y, currentObjectType.Position.z, 
+                        angleX, angleY, angleZ,
+                        currentObjectType.Scale.x + 0.5f, currentObjectType);
+                    // currentObjectType.yOffset += 0.5f;
                 }
                 else if (Input.GetKeyDown(KeyCode.D))
                 {
-                    ChangeObjectScale(0.5f);
+                    var angleX = currentObjectType.Rotation.eulerAngles.x;
+                    var angleY = currentObjectType.Rotation.eulerAngles.y;
+                    var angleZ = currentObjectType.Rotation.eulerAngles.z;
+                    editMenu.SetEditPanelParams(currentObjectType.objectName, currentObjectType.objectDescription,
+                        currentObjectType.Position.x, currentObjectType.Position.y, currentObjectType.Position.z, 
+                        angleX, angleY, angleZ,
+                        currentObjectType.Scale.x - 0.5f, currentObjectType);
+                    // currentObjectType.yOffset -= 0.5f;
                 }
             }
 
@@ -400,7 +415,6 @@ namespace Builder
                 var scale = TrackBuilderUtils.ParseVector3(kvp.Value["scale"]);
                 var layer = Convert.ToInt32(kvp.Value["layer"]);
                 var yOffset = Convert.ToSingle(kvp.Value["yOffset"]);
-                var maxMouseDistance = Convert.ToInt32(kvp.Value["maxMouseDistance"]);
                 var newObj = Instantiate(Resources.Load<GameObject>("TrackObjects/" + objectName), position, Quaternion.Euler(rotation));
                 yield return new WaitForSeconds(0.01f);
                 TrackBuilderUtils.ChangeLayerRecursively(newObj.transform, layer);
@@ -443,6 +457,7 @@ namespace Builder
                         currentObjectType.Position, currentObjectType.Scale, currentObjectType.Rotation, pendingObject,
                         currentObjectType.yOffset));
                 }
+                TrackBuilderUtils.TurnTrackObjects(pendingObjects, false);
                 pendingObjects.Clear();
                 currentObjectType = null;
                 pendingObject = null;
@@ -528,6 +543,7 @@ namespace Builder
             pendingObject = Instantiate(obj, mousePos, copyObject.transform.rotation);
             pendingObjects.Add(pendingObject);
             TrackBuilderUtils.ChangeLayerRecursively(pendingObject.transform, LayerMask.NameToLayer("Track"));
+            TrackBuilderUtils.TurnTrackObjects(pendingObjects, true);
             SceneManager.MoveGameObjectToScene(pendingObject, levelScene);
             objectsPool.Add(pendingObject);
             _selection.Deselect();
