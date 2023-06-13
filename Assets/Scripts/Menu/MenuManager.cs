@@ -99,7 +99,7 @@ namespace Menu
             var options = new List<string>();
             for (var i = 0; i < resolutions.Length; i++)
             {
-                options.Add($"{resolutions[i].width} x {resolutions[i].height} {resolutions[i].refreshRate}Hz");
+                options.Add($"{resolutions[i].width} x {resolutions[i].height} {resolutions[i].refreshRateRatio.value}Hz");
 
                 if (resolutions[i].width == Screen.currentResolution.width ||
                     resolutions[i].height == Screen.currentResolution.height)

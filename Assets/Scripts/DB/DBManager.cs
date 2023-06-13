@@ -110,7 +110,7 @@ namespace DB
         {
             UserResolutions.Width = menuManager.resolutions[GameManager.Instance.gameData.currentResolutionIndex].width;
             UserResolutions.Height = menuManager.resolutions[GameManager.Instance.gameData.currentResolutionIndex].height;
-            UserResolutions.FrameRate = menuManager.resolutions[GameManager.Instance.gameData.currentResolutionIndex].refreshRate;
+            UserResolutions.FrameRate = (int)menuManager.resolutions[GameManager.Instance.gameData.currentResolutionIndex].refreshRateRatio.value;
             if (IsResolutionExist(UserResolutions.Width, UserResolutions.Height, UserResolutions.FrameRate))
             {
                 var resId = 1;
@@ -217,16 +217,16 @@ namespace DB
                 menuManager.menuUIManager.difficultDropdown.options[GameManager.Instance.gameData.currentDifficultIndex].text);
             if (IsResolutionExist(menuManager.resolutions[GameManager.Instance.gameData.currentResolutionIndex].width,
                 menuManager.resolutions[GameManager.Instance.gameData.currentResolutionIndex].height,
-                menuManager.resolutions[GameManager.Instance.gameData.currentResolutionIndex].refreshRate))
+                (int)menuManager.resolutions[GameManager.Instance.gameData.currentResolutionIndex].refreshRateRatio.value))
             {
                 var resId = SelectIdWhere("resolution_id", "resolutions", "width", "height", "refresh_rate",
                     menuManager.resolutions[GameManager.Instance.gameData.currentResolutionIndex].width.ToString(),
                     menuManager.resolutions[GameManager.Instance.gameData.currentResolutionIndex].height.ToString(),
-                    menuManager.resolutions[GameManager.Instance.gameData.currentResolutionIndex].refreshRate.ToString());
+                    menuManager.resolutions[GameManager.Instance.gameData.currentResolutionIndex].refreshRateRatio.value.ToString());
                 UserResolutions = new UserResolutions(resId,
                     menuManager.resolutions[GameManager.Instance.gameData.currentResolutionIndex].width,
                     menuManager.resolutions[GameManager.Instance.gameData.currentResolutionIndex].height,
-                    menuManager.resolutions[GameManager.Instance.gameData.currentResolutionIndex].refreshRate);
+                    (int)menuManager.resolutions[GameManager.Instance.gameData.currentResolutionIndex].refreshRateRatio.value);
             }
             else
             {
@@ -234,7 +234,7 @@ namespace DB
                 UserResolutions = new UserResolutions(resId,
                     menuManager.resolutions[GameManager.Instance.gameData.currentResolutionIndex].width,
                     menuManager.resolutions[GameManager.Instance.gameData.currentResolutionIndex].height,
-                    menuManager.resolutions[GameManager.Instance.gameData.currentResolutionIndex].refreshRate);
+                    (int)menuManager.resolutions[GameManager.Instance.gameData.currentResolutionIndex].refreshRateRatio.value);
             }
 
             // PlayerColor =
@@ -355,7 +355,7 @@ namespace DB
             for (var i = 0; i < menuManager.resolutions.Length; i++)
                 if (menuManager.resolutions[i].width == UserResolutions.Width &&
                     menuManager.resolutions[i].height == UserResolutions.Height &&
-                    menuManager.resolutions[i].refreshRate == UserResolutions.FrameRate)
+                    menuManager.resolutions[i].refreshRateRatio.value == UserResolutions.FrameRate)
                     GameManager.Instance.gameData.currentResolutionIndex = i;
 
             menuManager.menuUIManager.resolutionDropdown.value = GameManager.Instance.gameData.currentResolutionIndex;

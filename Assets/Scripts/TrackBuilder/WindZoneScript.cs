@@ -4,7 +4,7 @@ using UnityEngine.UIElements;
 
 namespace Builder
 {
-    public class WindZone : MonoBehaviour
+    public class WindZoneScript : MonoBehaviour
     {
         public float windForce = 10;
         private void OnTriggerStay(Collider other)

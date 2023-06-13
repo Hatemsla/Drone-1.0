@@ -15,6 +15,7 @@ namespace DroneFootball
         public GameData gameData;
         public DBManager dbManager;
         public Server server;
+        public ScratchClient scratchClient;
         public RaceController raceController;
         public FootballController footballController;
         public BuilderManager builderManager;
@@ -25,7 +26,7 @@ namespace DroneFootball
             Instance = this;
             DontDestroyOnLoad(gameObject);
         }
-        
+
         private void Start()
         {
             dbManager = GetComponent<DBManager>();
@@ -44,7 +45,7 @@ namespace DroneFootball
                     var dontDestroyGameManager = FindObjectsOfType<GameManager>();
                     var dontDestroyDbManager = FindObjectsOfType<DBManager>();
                     var dontDestroyServer = FindObjectsOfType<Server>();
-                
+
                     foreach (var obj in dontDestroyGameManager)
                         if (obj.transform.gameObject != transform.gameObject)
                             Destroy(obj);
@@ -62,19 +63,27 @@ namespace DroneFootball
                 }
                 case 2:
                     raceController = FindObjectOfType<RaceController>();
-                    raceController.raceUIManager.backBtn.onClick.AddListener(delegate { GameManagerUtils.BackToMenu(asyncLoad, raceController.raceUIManager.uiPanel, raceController.raceUIManager.loadPanel); });
+                    raceController.raceUIManager.backBtn.onClick.AddListener(delegate
+                    {
+                        GameManagerUtils.BackToMenu(asyncLoad, raceController.raceUIManager.uiPanel,
+                            raceController.raceUIManager.loadPanel);
+                    });
                     raceController.raceUIManager.exitBtn.onClick.AddListener(GameManagerUtils.Exit);
                     raceController.isSimpleMode = gameData.isSimpleMode;
                     raceController.droneRaceController.yawPower = gameData.currentYawSensitivity;
                     server.droneRaceController = raceController.droneRaceController;
                     raceController.currentAIDroneSpeed = gameData.currentAIDroneSpeed;
                     raceController.timer.timeForEndGame = gameData.gameTimeInSeconds;
-                
+
                     asyncLoad = raceController.asyncLoad;
                     break;
                 case 3:
                     footballController = FindObjectOfType<FootballController>();
-                    footballController.footballUIManager.backBtn.onClick.AddListener(delegate { GameManagerUtils.BackToMenu(asyncLoad, footballController.footballUIManager.uiPanel, footballController.footballUIManager.loadPanel); });
+                    footballController.footballUIManager.backBtn.onClick.AddListener(delegate
+                    {
+                        GameManagerUtils.BackToMenu(asyncLoad, footballController.footballUIManager.uiPanel,
+                            footballController.footballUIManager.loadPanel);
+                    });
                     footballController.footballUIManager.exitBtn.onClick.AddListener(GameManagerUtils.Exit);
                     footballController.isSimpleMode = gameData.isSimpleMode;
                     footballController.droneFootballController.yawPower = gameData.currentYawSensitivity;
@@ -82,7 +91,7 @@ namespace DroneFootball
                     footballController.currentGateScale = gameData.currentGateScale;
                     footballController.currentAIDroneSpeed = gameData.currentAIDroneSpeed;
                     footballController.timer.timeForEndGame = gameData.gameTimeInSeconds;
-                
+
                     asyncLoad = footballController.asyncLoad;
                     break;
                 case 4:
@@ -91,12 +100,27 @@ namespace DroneFootball
                     builderManager.currentYawSensitivity = gameData.currentYawSensitivity;
                     builderManager.builderUI.editorExitBtn.onClick.AddListener(GameManagerUtils.Exit);
                     builderManager.builderUI.gameExitBtn.onClick.AddListener(GameManagerUtils.Exit);
-                    builderManager.builderUI.backBtn.onClick.AddListener(delegate { GameManagerUtils.BackToMenu(asyncLoad, builderManager.builderUI.uiPanel, builderManager.builderUI.loadPanel); });
-                    builderManager.builderUI.backEditorTabBtn.onClick.AddListener(delegate { GameManagerUtils.BackToMenu(asyncLoad, builderManager.builderUI.uiPanel, builderManager.builderUI.loadPanel); });
-                    builderManager.builderUI.backGameTabBtn.onClick.AddListener(delegate { GameManagerUtils.BackToMenu(asyncLoad, builderManager.builderUI.uiPanel, builderManager.builderUI.loadPanel); });
-                    builderManager.builderUI.saveBtn.onClick.AddListener(delegate { LevelManager.SaveLevel(builderManager, gameData.levelName); });
+                    builderManager.builderUI.backBtn.onClick.AddListener(delegate
+                    {
+                        GameManagerUtils.BackToMenu(asyncLoad, builderManager.builderUI.uiPanel,
+                            builderManager.builderUI.loadPanel);
+                    });
+                    builderManager.builderUI.backEditorTabBtn.onClick.AddListener(delegate
+                    {
+                        GameManagerUtils.BackToMenu(asyncLoad, builderManager.builderUI.uiPanel,
+                            builderManager.builderUI.loadPanel);
+                    });
+                    builderManager.builderUI.backGameTabBtn.onClick.AddListener(delegate
+                    {
+                        GameManagerUtils.BackToMenu(asyncLoad, builderManager.builderUI.uiPanel,
+                            builderManager.builderUI.loadPanel);
+                    });
+                    builderManager.builderUI.saveBtn.onClick.AddListener(delegate
+                    {
+                        LevelManager.SaveLevel(builderManager, gameData.levelName);
+                    });
                     builderManager.levelName = gameData.levelName;
-                    builderManager.droneBuilderController.isSimpleMode = gameData.isSimpleMode; 
+                    builderManager.droneBuilderController.isSimpleMode = gameData.isSimpleMode;
                     server.droneBuilderController = builderManager.droneBuilderController;
                     asyncLoad = builderManager.asyncLoad;
 
@@ -116,6 +140,85 @@ namespace DroneFootball
 
                     break;
                 }
+            }
+        }
+
+        public void GetScratchData(ScratchData droneData)
+        {
+            switch (droneData.Mode)
+            {
+                case DroneMode.AltHold:
+                    SetAltholdMode(droneData);
+                    break;
+                case DroneMode.Angle:
+                    SetAngleMode(droneData);
+                    break;
+                case DroneMode.Manual:
+                    break;
+            }
+        }
+        
+        private void SetAngleMode(ScratchData droneData)
+        {
+            if (footballController)
+            {
+                footballController.droneFootballController.isSimpleMode = false;
+                footballController.droneFootballController.cyclic =
+                    new Vector2(droneData.Roll / 100, droneData.Pitch / 100);
+                footballController.droneFootballController.pedals = droneData.Yaw / 100;
+                footballController.droneFootballController.throttle = droneData.Angle / 100;
+                return;
+            }
+
+            if (raceController)
+            {
+                raceController.droneRaceController.isSimpleMode = false;
+                raceController.droneRaceController.cyclic =
+                    new Vector2(droneData.Roll / 100, droneData.Pitch / 100);
+                raceController.droneRaceController.pedals = droneData.Yaw / 100;
+                raceController.droneRaceController.throttle = droneData.Angle / 100;
+                return;
+            }
+
+            if (builderManager)
+            {
+                builderManager.droneBuilderController.isSimpleMode = false;
+                builderManager.droneBuilderController.cyclic =
+                    new Vector2(droneData.Roll / 100, droneData.Pitch / 100);
+                builderManager.droneBuilderController.pedals = droneData.Yaw / 100;
+                builderManager.droneBuilderController.throttle = droneData.Angle / 100;
+            }
+        }
+
+        private void SetAltholdMode(ScratchData droneData)
+        {
+            if (footballController)
+            {
+                footballController.droneFootballController.isSimpleMode = true;
+                footballController.droneFootballController.cyclic =
+                    new Vector2(droneData.Roll / 100, droneData.Pitch / 100);
+                footballController.droneFootballController.pedals = droneData.Yaw / 100;
+                footballController.droneFootballController.throttle = droneData.Althold / 100;
+                return;
+            }
+
+            if (raceController)
+            {
+                raceController.droneRaceController.isSimpleMode = true;
+                raceController.droneRaceController.cyclic =
+                    new Vector2(droneData.Roll / 100, droneData.Pitch / 100);
+                raceController.droneRaceController.pedals = droneData.Yaw / 100;
+                raceController.droneRaceController.throttle = droneData.Althold / 100;
+                return;
+            }
+
+            if (builderManager)
+            {
+                builderManager.droneBuilderController.isSimpleMode = true;
+                builderManager.droneBuilderController.cyclic =
+                    new Vector2(droneData.Roll / 100, droneData.Pitch / 100);
+                builderManager.droneBuilderController.pedals = droneData.Yaw / 100;
+                builderManager.droneBuilderController.throttle = droneData.Althold / 100;
             }
         }
     }
