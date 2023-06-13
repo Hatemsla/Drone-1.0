@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Collections;
+using System.Text;
 using Builder;
 using DB;
 using DroneRace;
@@ -20,6 +21,7 @@ namespace DroneFootball
         public FootballController footballController;
         public BuilderManager builderManager;
         public AsyncLoad asyncLoad;
+        private static readonly int ShowPanel = Animator.StringToHash("ShowPanel");
 
         private void Awake()
         {
@@ -115,10 +117,7 @@ namespace DroneFootball
                         GameManagerUtils.BackToMenu(asyncLoad, builderManager.builderUI.uiPanel,
                             builderManager.builderUI.loadPanel);
                     });
-                    builderManager.builderUI.saveBtn.onClick.AddListener(delegate
-                    {
-                        LevelManager.SaveLevel(builderManager, gameData.levelName);
-                    });
+                    builderManager.builderUI.saveBtn.onClick.AddListener(SaveLevel);
                     builderManager.levelName = gameData.levelName;
                     builderManager.droneBuilderController.isSimpleMode = gameData.isSimpleMode;
                     server.droneBuilderController = builderManager.droneBuilderController;
@@ -141,6 +140,12 @@ namespace DroneFootball
                     break;
                 }
             }
+        }
+
+        private void SaveLevel()
+        {
+            LevelManager.SaveLevel(builderManager, gameData.levelName);
+            builderManager.builderUI.savePanelAnimator.SetTrigger(ShowPanel);
         }
 
         public void GetScratchData(ScratchData droneData)

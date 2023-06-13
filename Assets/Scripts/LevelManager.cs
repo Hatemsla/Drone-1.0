@@ -37,6 +37,7 @@ namespace DroneFootball
                 objData["layer"] = obj.layer.ToString();
                 var trackObj = obj.GetComponent<TrackObject>();
                 objData["yOffset"] = trackObj.yOffset.ToString(CultureInfo.CurrentCulture);
+                objData["maxMouseDistance"] = trackObj.maxMouseDistance.ToString(CultureInfo.CurrentCulture);
                 data[obj.GetInstanceID() + ""] = objData;
             }
             var json = JsonConvert.SerializeObject(data, Formatting.Indented);

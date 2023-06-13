@@ -7,6 +7,7 @@ namespace Builder
 {
     public class BuilderUI : MonoBehaviour
     {
+        [Header("UI")]
         public Button floorBtn;
         public Button wallBtn;
         public Button slantBtn;
@@ -33,7 +34,12 @@ namespace Builder
         public GameObject uiPanel;
         public GameObject loadPanel;
         public GameObject objectEditPanel;
+        public GameObject saveLevelPanel;
 
         public List<Button> createButtons;
+        
+        [Header("Animations")]
+        public Animator savePanelAnimator;
+        
     }
 }

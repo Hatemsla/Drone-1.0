@@ -202,7 +202,6 @@ namespace Builder
                         currentObjectType.Position.x, currentObjectType.Position.y, currentObjectType.Position.z, 
                         angleX, angleY, angleZ,
                         currentObjectType.Scale.x + 0.5f, currentObjectType);
-                    // currentObjectType.yOffset += 0.5f;
                 }
                 else if (Input.GetKeyDown(KeyCode.D))
                 {
@@ -213,7 +212,6 @@ namespace Builder
                         currentObjectType.Position.x, currentObjectType.Position.y, currentObjectType.Position.z, 
                         angleX, angleY, angleZ,
                         currentObjectType.Scale.x - 0.5f, currentObjectType);
-                    // currentObjectType.yOffset -= 0.5f;
                 }
             }
 
@@ -271,10 +269,10 @@ namespace Builder
             }
             
             targetCheckpoint = droneBuilderCheckNode.nodes[droneBuilderCheckNode.currentNode].transform;
-            Vector3 realPos = cameraBrain.OutputCamera.WorldToScreenPoint(targetCheckpoint.position);
-            Rect rect = new Rect(0, 0, Screen.width, Screen.height);
+            var realPos = cameraBrain.OutputCamera.WorldToScreenPoint(targetCheckpoint.position);
+            var rect = new Rect(0, 0, Screen.width, Screen.height);
 
-            Vector3 outPos = realPos;
+            var outPos = realPos;
             float direction = 1;
 
             builderUI.pathArrow.GetComponent<Image>().sprite = builderUI.outOfScreenIcon;
@@ -297,11 +295,11 @@ namespace Builder
                 }
             }
             // ограничиваем позицию областью экрана
-            float offset = builderUI.pathArrow.sizeDelta.x / 2;
+            var offset = builderUI.pathArrow.sizeDelta.x / 2;
             outPos.x = Mathf.Clamp(outPos.x, offset, Screen.width - offset);
             outPos.y = Mathf.Clamp(outPos.y, offset, Screen.height - offset);
 
-            Vector3 pos = realPos - outPos; // направление к цели из PointerUI 
+            var pos = realPos - outPos; // направление к цели из PointerUI 
 
             RotatePointer(direction * pos);
 
@@ -311,10 +309,9 @@ namespace Builder
         
         private bool IsBehind(Vector3 point) // true если point сзади камеры
         {
-            Vector3 forward = cameraBrain.transform.TransformDirection(Vector3.forward);
-            Vector3 toOther = point - cameraBrain.transform.position;
-            if (Vector3.Dot(forward, toOther) < 0) return true;
-            return false;
+            var forward = cameraBrain.transform.TransformDirection(Vector3.forward);
+            var toOther = point - cameraBrain.transform.position;
+            return Vector3.Dot(forward, toOther) < 0;
         }
 
         private void RotatePointer(Vector2 direction) // поворачивает PointerUI в направление direction
@@ -407,7 +404,7 @@ namespace Builder
             var jsonData = File.ReadAllText(filePath);
             loadedData = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, string>>>(jsonData);
             
-            foreach (KeyValuePair<string, Dictionary<string, string>> kvp in loadedData)
+            foreach (var kvp in loadedData)
             {
                 var objectName = kvp.Value["name"].Substring(0, kvp.Value["name"].IndexOf('('));
                 var position = TrackBuilderUtils.ParseVector3(kvp.Value["position"]);
@@ -415,6 +412,7 @@ namespace Builder
                 var scale = TrackBuilderUtils.ParseVector3(kvp.Value["scale"]);
                 var layer = Convert.ToInt32(kvp.Value["layer"]);
                 var yOffset = Convert.ToSingle(kvp.Value["yOffset"]);
+                var maxMouseDistance = Convert.ToSingle(kvp.Value["maxMouseDistance"]);
                 var newObj = Instantiate(Resources.Load<GameObject>("TrackObjects/" + objectName), position, Quaternion.Euler(rotation));
                 yield return new WaitForSeconds(0.01f);
                 TrackBuilderUtils.ChangeLayerRecursively(newObj.transform, layer);
@@ -423,6 +421,7 @@ namespace Builder
                 newObj.name = kvp.Value["name"];
                 var trackObj = newObj.GetComponent<TrackObject>();
                 trackObj.yOffset = yOffset;
+                trackObj.maxMouseDistance = maxMouseDistance;
                 objectsPool.Add(newObj);
             }
             

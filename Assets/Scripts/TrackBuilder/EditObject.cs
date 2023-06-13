@@ -108,6 +108,7 @@ namespace Builder
                 currentObject.Position = new Vector3(currentObject.Position.x,
                     currentObject.Position.y - currentObjectYOffset, currentObject.Position.z);
                 currentObject.yOffset -= currentObjectYOffset;
+                currentObject.maxMouseDistance -= currentObjectYOffset;
             }
             else if (newScale > oldScale)
             {
@@ -115,6 +116,7 @@ namespace Builder
                 currentObject.Position = new Vector3(currentObject.Position.x,
                     currentObject.Position.y + currentObjectYOffset, currentObject.Position.z);
                 currentObject.yOffset += currentObjectYOffset;
+                currentObject.maxMouseDistance += currentObjectYOffset;
             }
         }
     }
