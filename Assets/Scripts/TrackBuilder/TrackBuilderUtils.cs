@@ -62,5 +62,15 @@ namespace Builder
                 pendingObject.GetComponent<TrackObject>().isActive = turn;
             }
         }
+        
+        public static LayerMask SetLayerMask(string activeLayer)
+        {
+            var trackGroundLayer = LayerMask.NameToLayer("TrackGround");
+            var activeLayerIndex = LayerMask.NameToLayer(activeLayer);
+
+            var layerMask = (1 << trackGroundLayer) | (1 << activeLayerIndex);
+
+            return layerMask;
+        }
     }
 }

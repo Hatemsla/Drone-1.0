@@ -25,12 +25,11 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2b7fdc50-160f-488f-bb8d-47a059ac380e" name="Default Changelist" comment="">
+    <list default="true" id="2b7fdc50-160f-488f-bb8d-47a059ac380e" name="Default Changelist" comment="Fix bug with place floor with some rotation">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.DroneGames/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.DroneGames/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/TrackBuilder.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/TrackBuilder.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TrackBuilder/BuilderManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TrackBuilder/BuilderManager.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/TrackBuilder/Connection.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TrackBuilder/Connection.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/TrackBuilder/Selection.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TrackBuilder/Selection.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TrackBuilder/TrackBuilderUtils.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TrackBuilder/TrackBuilderUtils.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UserSettings/EditorUserSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/EditorUserSettings.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -310,7 +309,7 @@
       <workItem from="1686142894071" duration="2762000" />
       <workItem from="1686224937510" duration="6844000" />
       <workItem from="1686294476874" duration="12394000" />
-      <workItem from="1686650060617" duration="8495000" />
+      <workItem from="1686650060617" duration="10638000" />
     </task>
     <task id="LOCAL-00001" summary="Add checkpoint spawn in droneRace">
       <created>1673510278765</created>
@@ -459,7 +458,14 @@
       <option name="project" value="LOCAL" />
       <updated>1686233337985</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="Fix bug with place floor with some rotation">
+      <created>1686663592661</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1686663592661</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -502,7 +508,8 @@
     <MESSAGE value="Add identity rotation on paste object" />
     <MESSAGE value="Update structure and fix ui bugs" />
     <MESSAGE value="Add effects and music volume&#10;Fix bug with level menu, now buttons will be disabled if text is null&#10;Add floor universal positioning use connections" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add effects and music volume&#10;Fix bug with level menu, now buttons will be disabled if text is null&#10;Add floor universal positioning use connections" />
+    <MESSAGE value="Fix bug with place floor with some rotation" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix bug with place floor with some rotation" />
   </component>
   <component name="XDebuggerManager">
     <pin-to-top-manager>

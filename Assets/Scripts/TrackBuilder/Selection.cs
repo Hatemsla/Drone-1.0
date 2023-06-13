@@ -18,6 +18,7 @@ namespace Builder
         [SerializeField] private LayerMask layerMask;
         [SerializeField] private EditObject editObject;
         [SerializeField] private BuilderManager builderManager;
+        private Connection _selectedConnection;
 
         private void Update()
         {
@@ -26,12 +27,18 @@ namespace Builder
                 var ray = Camera.main!.ScreenPointToRay(Input.mousePosition);
                 if (Physics.Raycast(ray, out var hit, 10000, layerMask))
                 {
-                    if (hit.collider.GetComponent<Connection>())
+                    if (selectedTrackObject && selectedObjects.Count == 1)
                     {
-                        var sizeMultiplier = (selectedTrackObject.Scale.x - 1f) * 2.5f;
-                        
+                        if (hit.collider.GetComponent<Connection>())
+                        {
+                            var sizeMultiplier = (selectedTrackObject.Scale.x - 1f) * 2.5f;
+                            var otherConnection = hit.collider.GetComponent<Connection>();
+                            var offset = _selectedConnection.GetObjectOffset(otherConnection, sizeMultiplier);
+                            selectedObject.transform.position = otherConnection.transform.position + offset;
+                            selectedObject.transform.rotation = otherConnection.transform.rotation;
+                        }
                     }
-                    
+
                     if (Input.GetKey(KeyCode.LeftControl))
                     {
                         if (hit.collider.gameObject.layer == LayerMask.NameToLayer("TrackGround"))
@@ -123,7 +130,7 @@ namespace Builder
                         TrackBuilderUtils.TurnAllOutlineEffects(objOutlines, false);
                     }
                 }
-
+                
                 selectedObjects = selectedObjects.Where(selectedObj => selectedObj == obj).ToList();
                 
                 return;
@@ -136,6 +143,19 @@ namespace Builder
             TrackBuilderUtils.TurnAllOutlineEffects(outlines, true);
             selectedObject = obj;
             selectedTrackObject = obj.GetComponent<TrackObject>();
+            switch (selectedTrackObject.objectType)
+            {
+                case ObjectsType.Floor:
+                    layerMask = TrackBuilderUtils.SetLayerMask("FloorConnection");
+                    break;
+                case ObjectsType.Wall:
+                    layerMask = TrackBuilderUtils.SetLayerMask("WallConnection");
+                    break;
+                case ObjectsType.Slant:
+                    layerMask = TrackBuilderUtils.SetLayerMask("SlantConnection");
+                    break;
+            }
+            _selectedConnection = selectedObject.GetComponentInChildren<Connection>();
             selectedObjects.Add(selectedObject);
             editObject.ShowEditMenu();
         }
