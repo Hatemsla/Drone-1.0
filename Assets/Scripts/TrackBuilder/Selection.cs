@@ -25,6 +25,13 @@ namespace Builder
             {
                 var ray = Camera.main!.ScreenPointToRay(Input.mousePosition);
                 if (Physics.Raycast(ray, out var hit, 10000, layerMask))
+                {
+                    if (hit.collider.GetComponent<Connection>())
+                    {
+                        var sizeMultiplier = (selectedTrackObject.Scale.x - 1f) * 2.5f;
+                        
+                    }
+                    
                     if (Input.GetKey(KeyCode.LeftControl))
                     {
                         if (hit.collider.gameObject.layer == LayerMask.NameToLayer("TrackGround"))
@@ -35,6 +42,7 @@ namespace Builder
                         if (hit.collider.gameObject.layer == LayerMask.NameToLayer("TrackGround"))
                             Select(hit.collider.transform.root.gameObject);
                     }
+                }
             }
 
             if ((Input.GetKeyDown(KeyCode.F) || Input.GetMouseButtonDown(1)) && selectedObjects.Count > 0 && selectedObject != null)
