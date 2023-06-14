@@ -146,16 +146,11 @@ namespace Builder
                 }
                 else
                 {
-                    switch (currentObjectType.objectType)
+                    pendingObject.transform.position = currentObjectType.objectType switch
                     {
-                        case ObjectsType.Floor:
-                            pendingObject.transform.position = mousePos;
-                            break;
-                        default:
-                            pendingObject.transform.position =
-                                new Vector3(mousePos.x, mousePos.y + currentObjectType.yOffset, mousePos.z);
-                            break;
-                    }
+                        ObjectsType.Floor => mousePos,
+                        _ => new Vector3(mousePos.x, mousePos.y + currentObjectType.yOffset, mousePos.z)
+                    };
                 }
             }
 
@@ -489,19 +484,6 @@ namespace Builder
             
             currentObjectType.yOffset += value;
                 // _mainCamera.transform.Translate(0, value, 0, Space.Self);
-        }
-
-        private void ChangeObjectScale(float value)
-        {
-            var newScale = pendingObject.transform.localScale * value;
-            var newOffset = currentObjectType.yOffset * value;
-
-            if (newScale.magnitude is <= 16f and >= 0.125f)
-            {
-                pendingObject.transform.localScale = newScale;
-                currentObjectType.yOffset = newOffset;
-                currentObjectType.maxMouseDistance *= value;
-            }
         }
 
         private void RotateObject(Vector3 axis, float rotateAmount, Space space)

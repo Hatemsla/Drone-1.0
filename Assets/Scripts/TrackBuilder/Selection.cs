@@ -29,13 +29,27 @@ namespace Builder
                 {
                     if (selectedTrackObject && selectedObjects.Count == 1)
                     {
-                        if (hit.collider.GetComponent<Connection>())
+                        if (hit.collider.GetComponent<Connection>() && _selectedConnection)
                         {
-                            var sizeMultiplier = (selectedTrackObject.Scale.x - 1f) * 2.5f;
                             var otherConnection = hit.collider.GetComponent<Connection>();
-                            var offset = _selectedConnection.GetObjectOffset(otherConnection, sizeMultiplier);
-                            selectedObject.transform.position = otherConnection.transform.position + offset;
-                            selectedObject.transform.rotation = otherConnection.transform.rotation;
+                            
+                            switch (otherConnection.connectionType)
+                            {
+                                case ConnectionType.Floor:
+                                {
+                                    var sizeMultiplier = (selectedTrackObject.Scale.x - 1f) * 2.5f;
+                                    var offset = _selectedConnection.GetObjectOffset(otherConnection, sizeMultiplier);
+                                    selectedObject.transform.position = otherConnection.transform.position + offset;
+                                    selectedObject.transform.rotation = otherConnection.transform.rotation;
+                                    break;
+                                }
+                                case ConnectionType.Wall:
+                                case ConnectionType.Slant:
+                                    selectedObject.transform.position = new Vector3(otherConnection.transform.position.x,
+                                        otherConnection.transform.position.y + selectedTrackObject.yOffset,
+                                        otherConnection.transform.position.z);
+                                    break;
+                            }
                         }
                     }
 

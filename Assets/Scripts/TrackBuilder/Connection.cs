@@ -126,24 +126,5 @@ namespace Builder
                 }
             }
         }
-
-        private void OnTriggerExit(Collider other)
-        {
-            var otherConnection = other.GetComponent<Connection>();
-            
-            if(otherConnection == null)
-                return;
-
-            
-            switch (_trackObject.objectType)
-            {
-                case ObjectsType.Slant when _selection.selectedObject.GetComponent<TrackObject>().objectType == ObjectsType.Slant:
-                    _selection.Move();
-                    break;
-                case ObjectsType.Wall when _selection.selectedObject.GetComponent<TrackObject>().objectType == ObjectsType.Wall:
-                    _selection.Move();
-                    break;
-            }
-        }
     }
 }

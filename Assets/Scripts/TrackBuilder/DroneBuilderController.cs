@@ -20,6 +20,7 @@ namespace Builder
         public float yaw;
         public bool isSimpleMode;
         public int boostsCount;
+        public float currentSpeed;
         public DroneBuilderCheckNode droneBuilderCheckNode;
         public BuilderManager builderManager;
         public DroneBuilderSoundController droneBuilderSoundController;
@@ -51,6 +52,7 @@ namespace Builder
 
         private void FixedUpdate()
         {
+            currentSpeed = _rb.velocity.magnitude;
             if (builderManager.isMove)
             {
                 _isMove = 0;

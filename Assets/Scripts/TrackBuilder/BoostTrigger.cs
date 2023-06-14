@@ -12,15 +12,17 @@ public class BoostTrigger : MonoBehaviour
         {
             if (other.GetComponent<DroneBuilderController>().boostsCount < 3)
             {
-                StartCoroutine(BoostDrone(other.GetComponent<Rigidbody>()));
+                StartCoroutine(BoostDrone(other.GetComponent<Rigidbody>(), other.GetComponent<DroneBuilderController>()));
             }
         }
     }
 
-    private IEnumerator BoostDrone(Rigidbody rb)
+    private IEnumerator BoostDrone(Rigidbody rb, DroneBuilderController drone)
     {
         rb.velocity *= 2;
+        drone.boostsCount++;
         yield return new WaitForSeconds(2);
         rb.velocity /= 2;
+        drone.boostsCount--;
     }
 }
