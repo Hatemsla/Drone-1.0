@@ -8,18 +8,11 @@ namespace Builder
 {
     public class CheckPlacement : MonoBehaviour
     {
-        private BuilderManager _builderManager;
-
-        private void Awake()
-        {
-            _builderManager = FindObjectOfType<BuilderManager>();
-        }
-
         private void OnTriggerEnter(Collider other)
         {
             if (other.gameObject.layer == LayerMask.NameToLayer("TrackGround"))
             {
-                _builderManager.canPlace = false;
+                BuilderManager.Instance.canPlace = false;
             }
         }
 
@@ -27,7 +20,7 @@ namespace Builder
         {
             if (other.gameObject.layer == LayerMask.NameToLayer("TrackGround"))
             {
-                _builderManager.canPlace = true;
+                BuilderManager.Instance.canPlace = true;
             }
         }
     }

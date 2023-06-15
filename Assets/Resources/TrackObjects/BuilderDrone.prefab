@@ -411,6 +411,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
+    FocusDistance: 10
     m_SensorSize: {x: 1, y: 1}
   m_Transitions:
     m_BlendHint: 0
@@ -512,6 +513,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
+    FocusDistance: 10
     m_SensorSize: {x: 1, y: 1}
   m_Transitions:
     m_BlendHint: 0
@@ -1911,10 +1913,21 @@ Rigidbody:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5984266150220761620}
-  serializedVersion: 2
+  serializedVersion: 4
   m_Mass: 100
   m_Drag: 0.5
   m_AngularDrag: 0.5
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 1
   m_Interpolate: 0
@@ -1928,9 +1941,17 @@ SphereCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5984266150220761620}
   m_Material: {fileID: 13400000, guid: 430c8b21e6a352248b853e54ebc427a6, type: 2}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
   m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 2
+  serializedVersion: 3
   m_Radius: 0.43130174
   m_Center: {x: 0, y: 0.39725205, z: 0}
 --- !u!114 &679018503878537435
@@ -1985,8 +2006,8 @@ MonoBehaviour:
   yaw: 0
   isSimpleMode: 1
   boostsCount: 0
+  currentSpeed: 0
   droneBuilderCheckNode: {fileID: 0}
-  builderManager: {fileID: 0}
   droneBuilderSoundController: {fileID: 0}
 --- !u!114 &5984266151265704062
 MonoBehaviour:
@@ -2031,7 +2052,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: -1
   connection: {fileID: 0}
-  objectType: 10
+  objectType: 4
   yOffset: 0.2
   isActive: 0
   maxMouseDistance: 0

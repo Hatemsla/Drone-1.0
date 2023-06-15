@@ -6,18 +6,7 @@
         Wall,
         Slant,
         Gate,
-        Lamp,
-        Block,
-        Cargo,
-        Trap,
-        Checkpoint,
-        PathSpinal,
         Drone,
-        Billboard,
-        WindZone,
-        Magnet,
-        FreezingBall,
-        Rope,
-        Laser
+        Other
     }
 }

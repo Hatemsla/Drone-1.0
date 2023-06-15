@@ -12,10 +12,7 @@ namespace Sockets
     
     public class ScratchData
     {
-        [JsonProperty("Mode")]
-        public string ModeString;
-        [JsonIgnore]
-        public DroneMode Mode;
+        public string Mode;
         public float Roll;
         public float Pitch;
         public float Yaw;
@@ -29,28 +26,6 @@ namespace Sockets
         [JsonConstructor]
         private ScratchData()
         {
-        }
-        
-        public ScratchData(string modeString)
-        {
-            ModeString = modeString;
-            Mode = ParseModeString(modeString);
-        }
-
-        private DroneMode ParseModeString(string modeString)
-        {
-            switch (modeString)
-            {
-                case "AltHold":
-                    return DroneMode.AltHold;
-                case "Angle":
-                    return DroneMode.Angle;
-                case "Manual":
-                    return DroneMode.Manual;
-                default:
-                    Debug.LogError("Unknown mode: " + modeString);
-                    return DroneMode.AltHold; // Возвращаем значение по умолчанию или обработку ошибки
-            }
         }
     }
 }

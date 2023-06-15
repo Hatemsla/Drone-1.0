@@ -41,9 +41,17 @@ SphereCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 253008977299252686}
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
   m_IsTrigger: 1
+  m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 2
+  serializedVersion: 3
   m_Radius: 0.2
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &3874107339474697432
@@ -58,6 +66,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b7e5a1cfbd14bf2b40cfa9f72939948, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  connectionType: 0
+  connectionDirection: 0
 --- !u!1 &703849871534542783
 GameObject:
   m_ObjectHideFlags: 0
@@ -235,9 +245,17 @@ MeshCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1427667999063443309}
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
   m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 4
+  serializedVersion: 5
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -1550514412580984892, guid: 7fc9de9dd74ba8a4fbf7d5dc620a1075, type: 3}
@@ -349,9 +367,17 @@ MeshCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2290908553627240088}
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
   m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 4
+  serializedVersion: 5
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 4493585093827132993, guid: 7fc9de9dd74ba8a4fbf7d5dc620a1075, type: 3}
@@ -411,9 +437,17 @@ SphereCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3286156587785045154}
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
   m_IsTrigger: 1
+  m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 2
+  serializedVersion: 3
   m_Radius: 0.2
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &8768763694409201569
@@ -428,6 +462,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b7e5a1cfbd14bf2b40cfa9f72939948, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  connectionType: 0
+  connectionDirection: 0
 --- !u!1 &6308105053254880924
 GameObject:
   m_ObjectHideFlags: 0
@@ -558,10 +594,21 @@ Rigidbody:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7772627355301936089}
-  serializedVersion: 2
+  serializedVersion: 4
   m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
   m_UseGravity: 0
   m_IsKinematic: 1
   m_Interpolate: 0
@@ -580,10 +627,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 5
+  connection: {fileID: 0}
   objectType: 1
-  yOffset: 0.621
+  yOffset: 0.72
+  yOffsetIncrease: 0.31
   isActive: 0
   maxMouseDistance: 3
+  objectName: 
+  objectDescription: 
 --- !u!1 &7823000200117384428
 GameObject:
   m_ObjectHideFlags: 0
@@ -678,9 +729,17 @@ MeshCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7823000200117384428}
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
   m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 4
+  serializedVersion: 5
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -5495902117074765545, guid: 7fc9de9dd74ba8a4fbf7d5dc620a1075, type: 3}
@@ -739,9 +798,17 @@ SphereCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8045467112516421306}
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
   m_IsTrigger: 1
+  m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 2
+  serializedVersion: 3
   m_Radius: 0.2
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &2282817703541688678
@@ -756,6 +823,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b7e5a1cfbd14bf2b40cfa9f72939948, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  connectionType: 0
+  connectionDirection: 0
 --- !u!1 &8588435637197195589
 GameObject:
   m_ObjectHideFlags: 0
@@ -798,9 +867,17 @@ SphereCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8588435637197195589}
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
   m_IsTrigger: 1
+  m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 2
+  serializedVersion: 3
   m_Radius: 0.2
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &7215117011113133670
@@ -815,3 +892,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b7e5a1cfbd14bf2b40cfa9f72939948, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  connectionType: 0
+  connectionDirection: 0

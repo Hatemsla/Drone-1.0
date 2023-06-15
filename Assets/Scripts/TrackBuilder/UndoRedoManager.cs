@@ -11,12 +11,6 @@ namespace Builder
     {
         private Stack<IAction> _historyStack = new Stack<IAction>();
         private Stack<IAction> _redoHistoryStack = new Stack<IAction>();
-        private BuilderManager _builderManager;
-
-        private void Start()
-        {
-            _builderManager = FindObjectOfType<BuilderManager>();
-        }
 
         public void ExecuteCommand(IAction action)
         {
@@ -30,12 +24,12 @@ namespace Builder
             {
                 _redoHistoryStack.Push(_historyStack.Peek());
                 var obj = _historyStack.Peek().GetCommand();
-                if (_builderManager.objectsPool.IndexOf(obj) != -1)
+                if (BuilderManager.Instance.objectsPool.IndexOf(obj) != -1)
                 {
-                    _builderManager.objectsPool.RemoveAt(_builderManager.objectsPool.IndexOf(obj));
+                    BuilderManager.Instance.objectsPool.RemoveAt(BuilderManager.Instance.objectsPool.IndexOf(obj));
                     if (obj.GetComponent<TrackObject>().objectType == ObjectsType.Gate)
                     {
-                        _builderManager.droneBuilderCheckNode.RemoveNode(obj.transform);
+                        BuilderManager.Instance.droneBuilderCheckNode.RemoveNode(obj.transform);
                     }
                     _historyStack.Pop().UndoCommand();
                 }
@@ -48,15 +42,15 @@ namespace Builder
             {
                 _historyStack.Push(_redoHistoryStack.Peek());
                 var obj = _redoHistoryStack.Pop().ExecuteCommand();
-                _builderManager.objectsPool.Add(obj);
+                BuilderManager.Instance.objectsPool.Add(obj);
                 if (obj.GetComponent<TrackObject>().objectType == ObjectsType.Gate)
                 {
-                    _builderManager.droneBuilderCheckNode.AddNode(obj.transform);
+                    BuilderManager.Instance.droneBuilderCheckNode.AddNode(obj.transform);
                 }
                 TrackBuilderUtils.ChangeLayerRecursively(obj.transform, LayerMask.NameToLayer("TrackGround"));
                 var outlines = FindObjectsOfType<Outline>();
                 TrackBuilderUtils.TurnAllOutlineEffects(outlines, false);
-                SceneManager.MoveGameObjectToScene(obj, _builderManager.levelScene);
+                SceneManager.MoveGameObjectToScene(obj, BuilderManager.Instance.levelScene);
             }
         }
 

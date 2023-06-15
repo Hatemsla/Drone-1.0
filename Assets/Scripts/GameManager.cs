@@ -152,13 +152,13 @@ namespace DroneFootball
         {
             switch (droneData.Mode)
             {
-                case DroneMode.AltHold:
+                case "AltHold":
                     SetAltholdMode(droneData);
                     break;
-                case DroneMode.Angle:
+                case "Angle":
                     SetAngleMode(droneData);
                     break;
-                case DroneMode.Manual:
+                case "Ручной":
                     break;
             }
         }

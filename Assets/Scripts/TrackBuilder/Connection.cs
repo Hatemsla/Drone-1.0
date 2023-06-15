@@ -7,7 +7,6 @@ namespace Builder
         public ConnectionType connectionType;
         public ConnectionDirection connectionDirection;
         private TrackObject _trackObject;
-        private BuilderManager _builderManager;
         private Selection _selection;
         private Vector3 _connectPosition;
 
@@ -18,14 +17,13 @@ namespace Builder
 
         private void Start()
         {
-            _builderManager = FindObjectOfType<BuilderManager>();
             _selection = FindObjectOfType<Selection>();
         }
 
         private void OnTriggerEnter(Collider other)
         {
-            if (!_trackObject.isActive || _builderManager.pendingObjects.Count != 1) return;
-            if (_builderManager.pendingObject == null)
+            if (!_trackObject.isActive || BuilderManager.Instance.pendingObjects.Count != 1) return;
+            if (BuilderManager.Instance.pendingObject == null)
                 return;
 
             var otherConnection = other.GetComponent<Connection>();
@@ -41,7 +39,7 @@ namespace Builder
             switch (_trackObject.objectType)
             {
                 case ObjectsType.Floor when otherConnection.connectionType == ConnectionType.Floor:
-                    _builderManager.PutObject();
+                    BuilderManager.Instance.PutObject();
 
                     var sizeMultiplier = (_trackObject.Scale.x - 1f) * 2.5f;
                     var offset = GetObjectOffset(otherConnection, sizeMultiplier);
@@ -50,13 +48,13 @@ namespace Builder
                     _trackObject.transform.rotation = other.transform.rotation;
                     break;
                 case ObjectsType.Wall when otherConnection.connectionType == ConnectionType.Wall:
-                    _builderManager.PutObject();
+                    BuilderManager.Instance.PutObject();
                     _connectPosition = new Vector3(other.transform.position.x,
                         other.transform.position.y + _trackObject.yOffset, other.transform.position.z);
                     _trackObject.transform.position = _connectPosition;
                     break;
                 case ObjectsType.Slant when otherConnection.connectionType == ConnectionType.Slant:
-                    _builderManager.PutObject();
+                    BuilderManager.Instance.PutObject();
                     _trackObject.transform.position = other.transform.position;
                     break;
             }
@@ -88,7 +86,7 @@ namespace Builder
 
         private void OnTriggerStay(Collider other)
         {
-            if (!_trackObject.isActive || _builderManager.pendingObjects.Count != 1) return;
+            if (!_trackObject.isActive || BuilderManager.Instance.pendingObjects.Count != 1) return;
             
             var otherConnection = other.GetComponent<Connection>();
             
@@ -99,7 +97,7 @@ namespace Builder
             {
                 case ObjectsType.Floor when otherConnection.connectionType == ConnectionType.Floor:
                 {
-                    if (Vector3.Distance(other.transform.position, _builderManager.mousePos) > _trackObject.maxMouseDistance)
+                    if (Vector3.Distance(other.transform.position, BuilderManager.Instance.mousePos) > _trackObject.maxMouseDistance)
                     {
                         _selection.Move();
                     }
@@ -108,7 +106,7 @@ namespace Builder
                 }
                 case ObjectsType.Wall when otherConnection.connectionType == ConnectionType.Wall:
                 {
-                    if (Vector3.Distance(other.transform.position, _builderManager.mousePos) > _trackObject.maxMouseDistance)
+                    if (Vector3.Distance(other.transform.position, BuilderManager.Instance.mousePos) > _trackObject.maxMouseDistance)
                     {
                         _selection.Move();
                     }
@@ -117,7 +115,7 @@ namespace Builder
                 }
                 case ObjectsType.Slant when otherConnection.connectionType == ConnectionType.Slant:
                 {
-                    if (Vector3.Distance(other.transform.position, _builderManager.mousePos) > _trackObject.maxMouseDistance)
+                    if (Vector3.Distance(other.transform.position, BuilderManager.Instance.mousePos) > _trackObject.maxMouseDistance)
                     {
                         _selection.Move();
                     }

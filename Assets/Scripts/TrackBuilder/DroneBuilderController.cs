@@ -22,7 +22,6 @@ namespace Builder
         public int boostsCount;
         public float currentSpeed;
         public DroneBuilderCheckNode droneBuilderCheckNode;
-        public BuilderManager builderManager;
         public DroneBuilderSoundController droneBuilderSoundController;
         
         private List<DroneEngine> _engines;
@@ -36,24 +35,23 @@ namespace Builder
         {
             droneBuilderCheckNode = GetComponent<DroneBuilderCheckNode>();
             droneBuilderSoundController = GetComponent<DroneBuilderSoundController>();
-            builderManager = FindObjectOfType<BuilderManager>();
-            builderManager.droneBuilderController = this;
-            builderManager.droneBuilderCheckNode = droneBuilderCheckNode;
-            builderManager.droneBuilderSoundController = droneBuilderSoundController;
-            builderManager.cameraController = GetComponent<BuilderCameraController>();
+            BuilderManager.Instance.droneBuilderController = this;
+            BuilderManager.Instance.droneBuilderCheckNode = droneBuilderCheckNode;
+            BuilderManager.Instance.droneBuilderSoundController = droneBuilderSoundController;
+            BuilderManager.Instance.cameraController = GetComponent<BuilderCameraController>();
             _rb = GetComponent<Rigidbody>();
             _engines = GetComponentsInChildren<DroneEngine>().ToList();
         }
 
         private void Start()
         {
-            yawPower = builderManager.currentYawSensitivity;
+            yawPower = BuilderManager.Instance.currentYawSensitivity;
         }
 
         private void FixedUpdate()
         {
             currentSpeed = _rb.velocity.magnitude;
-            if (builderManager.isMove)
+            if (BuilderManager.Instance.isMove)
             {
                 _isMove = 0;
                 _isMove = Mathf.Abs(cyclic.x) + Mathf.Abs(cyclic.y) + Mathf.Abs(pedals) + Mathf.Abs(throttle);
@@ -114,9 +112,9 @@ namespace Builder
 
         public IEnumerator IsFreezing()
         {
-            builderManager.isMove = false;
+            BuilderManager.Instance.isMove = false;
             yield return new WaitForSeconds(3f);
-            builderManager.isMove = true;
+            BuilderManager.Instance.isMove = true;
         }
     }
 }

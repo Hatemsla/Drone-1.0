@@ -106,16 +106,16 @@ namespace Builder
             {
                 var currentObjectYOffset = (oldScale - newScale);
                 currentObject.Position = new Vector3(currentObject.Position.x,
-                    currentObject.Position.y - currentObjectYOffset, currentObject.Position.z);
-                currentObject.yOffset -= currentObjectYOffset;
+                    currentObject.Position.y - currentObject.yOffsetIncrease, currentObject.Position.z);
+                currentObject.yOffset -= currentObject.yOffsetIncrease;
                 currentObject.maxMouseDistance -= currentObjectYOffset;
             }
             else if (newScale > oldScale)
             {
                 var currentObjectYOffset = (newScale - oldScale);
                 currentObject.Position = new Vector3(currentObject.Position.x,
-                    currentObject.Position.y + currentObjectYOffset, currentObject.Position.z);
-                currentObject.yOffset += currentObjectYOffset;
+                    currentObject.Position.y + currentObject.yOffsetIncrease, currentObject.Position.z);
+                currentObject.yOffset += currentObject.yOffsetIncrease;
                 currentObject.maxMouseDistance += currentObjectYOffset;
             }
         }

@@ -7,6 +7,7 @@ using DroneFootball;
 using Newtonsoft.Json;
 using Sockets;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -14,8 +15,11 @@ using Outline = cakeslice.Outline;
 
 namespace Builder
 {
+    public class TestLevelEvent : UnityEvent {}
+    
     public class BuilderManager : MonoBehaviour
     {
+        public static BuilderManager Instance;
         public string levelName;
         public float interfaceScale;
         public float currentYawSensitivity;
@@ -46,7 +50,9 @@ namespace Builder
         public GameObject[] objects;
         public List<GameObject> objectsPool;
         [HideInInspector] public Scene levelScene;
-        
+
+        public TestLevelEvent TestLevelEvent;
+
         private int _currentGroundIndex;
         private bool _isTabPanel;
         private bool _isLevelEnd;
@@ -64,6 +70,8 @@ namespace Builder
 
         private void Awake()
         {
+            Instance = this;
+            TestLevelEvent = new TestLevelEvent();
             _startPointerSize = builderUI.pathArrow.sizeDelta;
             _selection = FindObjectOfType<Selection>();
             _selection.Select(droneBuilderController.gameObject);
@@ -354,6 +362,7 @@ namespace Builder
             }
             else
             {
+                TestLevelEvent.Invoke();
                 freeFlyCamera.enabled = true;
                 freeFlyCamera.GetComponent<CinemachineVirtualCamera>().Priority = 10;
                 cameraController.isSwitch = false;

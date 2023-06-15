@@ -1,7 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using Builder;
 using UnityEngine;
 
 namespace Builder
@@ -10,8 +6,9 @@ namespace Builder
     {
         public int id;
         public Transform connection;
-        public ObjectsType objectType;
+        public ObjectsType objectType = ObjectsType.Other;
         public float yOffset;
+        public float yOffsetIncrease;
         public bool isActive;
         public float maxMouseDistance = 3f;
         public string objectName;

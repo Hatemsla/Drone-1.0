@@ -17,7 +17,6 @@ namespace Builder
         public List<GameObject> selectedObjects = new();
         [SerializeField] private LayerMask layerMask;
         [SerializeField] private EditObject editObject;
-        [SerializeField] private BuilderManager builderManager;
         private Connection _selectedConnection;
 
         private void Update()
@@ -68,14 +67,14 @@ namespace Builder
 
             if ((Input.GetKeyDown(KeyCode.F) || Input.GetMouseButtonDown(1)) && selectedObjects.Count > 0 && selectedObject != null)
             {
-                builderManager.PlaceObjects();
+                BuilderManager.Instance.PlaceObjects();
                 Deselect();
             }
 
             if (Input.GetKeyDown(KeyCode.T) && selectedObjects.Count > 0 && selectedObject != null)
             {
-                builderManager.PlaceObjects();
-                builderManager.SelectObject(builderManager.currentSelectObjectIndex);
+                BuilderManager.Instance.PlaceObjects();
+                BuilderManager.Instance.SelectObject(BuilderManager.Instance.currentSelectObjectIndex);
             }
 
             if (Input.GetKeyDown(KeyCode.Delete))
@@ -94,10 +93,10 @@ namespace Builder
             if (selectedObject == null) return;
             TrackBuilderUtils.ChangeLayerRecursively(selectedObject.transform.root.transform, LayerMask.NameToLayer("Track"));
             TrackBuilderUtils.TurnTrackObjects(selectedObjects, true);
-            builderManager.pendingObject = selectedObject.gameObject;
-            builderManager.pendingObjects = new List<GameObject>(selectedObjects);
-            builderManager.currentObjectType = selectedObject.GetComponentInParent<TrackObject>();
-            builderManager.currentObjectType.isActive = true;
+            BuilderManager.Instance.pendingObject = selectedObject.gameObject;
+            BuilderManager.Instance.pendingObjects = new List<GameObject>(selectedObjects);
+            BuilderManager.Instance.currentObjectType = selectedObject.GetComponentInParent<TrackObject>();
+            BuilderManager.Instance.currentObjectType.isActive = true;
         }
 
         public void Delete()
@@ -107,14 +106,14 @@ namespace Builder
             
             foreach (var selectedObj in selectedObjects)
             {
-                builderManager.objectsPool.Remove(selectedObj);
-                builderManager.droneBuilderCheckNode.RemoveNode(selectedObj.transform);
+                BuilderManager.Instance.objectsPool.Remove(selectedObj);
+                BuilderManager.Instance.droneBuilderCheckNode.RemoveNode(selectedObj.transform);
                 Destroy(selectedObj);
             }
 
-            builderManager.pendingObjects.Clear();
+            BuilderManager.Instance.pendingObjects.Clear();
             selectedObjects.Clear();
-            builderManager.pendingObject = null;
+            BuilderManager.Instance.pendingObject = null;
         }
 
         public void AddSelection(GameObject obj)
