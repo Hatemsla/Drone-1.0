@@ -6,34 +6,34 @@ using UnityEngine;
 public class Portal : MonoBehaviour
 {
     public Camera portalView;
-    private Portal _otherPortal;
+    public Portal otherPortal;
 
     private void Start()
     {
         var otherPortals = FindObjectsOfType<Portal>();
-        foreach (var otherPortal in otherPortals)
+        foreach (var portal in otherPortals)
         {
-            if (otherPortal != this)
-                _otherPortal = otherPortal;
+            if (portal != this)
+                otherPortal = portal;
         }
 
-        if (!_otherPortal) return;
+        if (!otherPortal) return;
 
-        _otherPortal.portalView.targetTexture = new RenderTexture(Screen.width, Screen.height, 24);
-        GetComponentInChildren<MeshRenderer>().sharedMaterial.mainTexture = _otherPortal.portalView.targetTexture;
+        otherPortal.portalView.targetTexture = new RenderTexture(Screen.width, Screen.height, 24);
+        GetComponentInChildren<MeshRenderer>().sharedMaterial.mainTexture = otherPortal.portalView.targetTexture;
     }
 
     private void Update()
     {
-        if (!_otherPortal) return;
+        if (!otherPortal) return;
         
         var lookerPosition =
-            _otherPortal.transform.worldToLocalMatrix.MultiplyPoint3x4(Camera.main.transform.position);
+            otherPortal.transform.worldToLocalMatrix.MultiplyPoint3x4(Camera.main.transform.position);
         lookerPosition = new Vector3(-lookerPosition.x, lookerPosition.y, -lookerPosition.z);
         portalView.transform.localPosition = lookerPosition;
 
         var difference = transform.rotation *
-                         Quaternion.Inverse(_otherPortal.transform.rotation * Quaternion.Euler(0f, 180f, 0f));
+                         Quaternion.Inverse(otherPortal.transform.rotation * Quaternion.Euler(0f, 180f, 0f));
         portalView.transform.rotation = difference * Camera.main.transform.rotation;
 
         portalView.nearClipPlane = lookerPosition.magnitude;

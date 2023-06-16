@@ -76,7 +76,9 @@ MonoBehaviour:
   id: 0
   connection: {fileID: 3833103451056561007}
   objectType: 0
+  hasPortal: 0
   yOffset: 0
+  yOffsetIncrease: 0
   isActive: 0
   maxMouseDistance: 4
   objectName: "\u041F\u043E\u043B"
@@ -89,12 +91,20 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3833103451152496073}
     m_Modifications:
+    - target: {fileID: 451122711794315407, guid: bc8ac98ad4fd93b468b4ed4426afdd39, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1130688844790959552, guid: bc8ac98ad4fd93b468b4ed4426afdd39, type: 3}
       propertyPath: m_Center.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1130688844790959552, guid: bc8ac98ad4fd93b468b4ed4426afdd39, type: 3}
       propertyPath: m_Center.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2830774848677793899, guid: bc8ac98ad4fd93b468b4ed4426afdd39, type: 3}
+      propertyPath: m_LocalPosition.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4017628895310522734, guid: bc8ac98ad4fd93b468b4ed4426afdd39, type: 3}
@@ -111,6 +121,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4321944295525291800, guid: bc8ac98ad4fd93b468b4ed4426afdd39, type: 3}
       propertyPath: m_Center.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5991470087915238505, guid: bc8ac98ad4fd93b468b4ed4426afdd39, type: 3}
+      propertyPath: m_LocalPosition.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6126638381942541935, guid: bc8ac98ad4fd93b468b4ed4426afdd39, type: 3}
@@ -200,6 +214,10 @@ PrefabInstance:
     - target: {fileID: 7920376084157599920, guid: bc8ac98ad4fd93b468b4ed4426afdd39, type: 3}
       propertyPath: m_Name
       value: Floor1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8738434980897996025, guid: bc8ac98ad4fd93b468b4ed4426afdd39, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

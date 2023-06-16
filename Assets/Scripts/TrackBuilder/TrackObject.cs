@@ -7,6 +7,7 @@ namespace Builder
         public int id;
         public Transform connection;
         public ObjectsType objectType = ObjectsType.Other;
+        public HasPortal hasPortal = HasPortal.No;
         public float yOffset;
         public float yOffsetIncrease;
         public bool isActive;

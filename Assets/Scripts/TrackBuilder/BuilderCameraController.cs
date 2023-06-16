@@ -6,6 +6,7 @@ namespace Builder
     public class BuilderCameraController : MonoBehaviour
     {
         public bool isSwitch;
+        public bool isFirstView;
         [SerializeField] private CinemachineVirtualCamera thirdView;
         [SerializeField] private CinemachineVirtualCamera firstView;
 
@@ -19,6 +20,7 @@ namespace Builder
                 (_prevThirdView, _prevFirstView) = (_prevFirstView, _prevThirdView);
                 thirdView.Priority = _prevThirdView;
                 firstView.Priority = _prevFirstView;
+                isFirstView = firstView.Priority > thirdView.Priority;
             }
         }
 

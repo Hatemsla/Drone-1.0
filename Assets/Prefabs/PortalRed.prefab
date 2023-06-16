@@ -76,7 +76,7 @@ Camera:
     m_Bits: 4294967295
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
-  m_TargetDisplay: 0
+  m_TargetDisplay: 1
   m_TargetEye: 3
   m_HDR: 1
   m_AllowMSAA: 1
@@ -302,8 +302,8 @@ ParticleSystem:
       m_PostInfinity: 2
       m_RotationOrder: 4
   moveWithTransform: 0
-  moveWithCustomTransform: {fileID: 0}
-  scalingMode: 1
+  moveWithCustomTransform: {fileID: 8811561043003865603}
+  scalingMode: 0
   randomSeed: 0
   InitialModule:
     serializedVersion: 3
@@ -5130,8 +5130,8 @@ ParticleSystem:
       m_PostInfinity: 2
       m_RotationOrder: 4
   moveWithTransform: 0
-  moveWithCustomTransform: {fileID: 0}
-  scalingMode: 1
+  moveWithCustomTransform: {fileID: 8811561043003865603}
+  scalingMode: 0
   randomSeed: 0
   InitialModule:
     serializedVersion: 3
@@ -9958,8 +9958,8 @@ ParticleSystem:
       m_PostInfinity: 2
       m_RotationOrder: 4
   moveWithTransform: 0
-  moveWithCustomTransform: {fileID: 0}
-  scalingMode: 1
+  moveWithCustomTransform: {fileID: 8811561043003865603}
+  scalingMode: 0
   randomSeed: 0
   InitialModule:
     serializedVersion: 3
@@ -14800,7 +14800,7 @@ Transform:
   - {fileID: 4393710565903016419}
   - {fileID: 2659927531908752270}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!65 &7086610767755127366
 BoxCollider:
@@ -14836,6 +14836,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   portalView: {fileID: 5921304820790170429}
+  otherPortal: {fileID: 0}
 --- !u!114 &321950336226126566
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14848,3 +14849,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83d1788f7d824afda473a88748c67a2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  otherTeleporter: {fileID: 0}
