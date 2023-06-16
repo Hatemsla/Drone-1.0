@@ -25,80 +25,19 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2b7fdc50-160f-488f-bb8d-47a059ac380e" name="Default Changelist" comment="Add thermal vision&#10;Add yOffset individual increase&#10;Fix scratch get control mode">
-      <change afterPath="$PROJECT_DIR$/Assets/Materials/HighlightMaterial.mat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Materials/HighlightMaterial.mat.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Models/battery_full.fbx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Models/battery_full.fbx.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Models/tunnel_bendy_entrance.fbx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Models/tunnel_bendy_entrance.fbx.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/TrackObjects/Battery.prefab" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/TrackObjects/Battery.prefab.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/TrackObjects/WindZoneModel.prefab" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Resources/TrackObjects/WindZoneModel.prefab.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/HighlightPostProcess.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/HighlightPostProcess.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Shaders/HighlightShader.shader" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Shaders/HighlightShader.shader.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Shaders/UIBlur.shader" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Shaders/UIBlur.shader.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/ThermalObject.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/ThermalObject.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/ThermalVision.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/ThermalVision.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/TrackBuilder/WindTurbine.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/TrackBuilder/WindTurbine.cs.meta" afterDir="false" />
+    <list default="true" id="2b7fdc50-160f-488f-bb8d-47a059ac380e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.DroneGames/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.DroneGames/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Fonts/Furore SDF.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Fonts/Furore SDF.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/TrackObjects/Billboard.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/TrackObjects/Billboard.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/TrackObjects/Block.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/TrackObjects/Block.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/TrackObjects/BuilderDrone.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/TrackObjects/BuilderDrone.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/TrackObjects/Cargo1.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/TrackObjects/Cargo1.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/TrackObjects/EntityButton.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/TrackObjects/EntityButton.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/TrackObjects/FreezingBall.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/TrackObjects/FreezingBall.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/TrackObjects/Glass.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/TrackObjects/Glass.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/TrackObjects/Lamp1.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/TrackObjects/Lamp1.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/TrackObjects/Lamp2.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/TrackObjects/Lamp2.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/TrackObjects/Lamp3.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/TrackObjects/Lamp3.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/TrackObjects/Lamp4.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/TrackObjects/Lamp4.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/TrackObjects/Lamp5.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/TrackObjects/Lamp5.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/TrackObjects/Lamp6.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/TrackObjects/Lamp6.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/TrackObjects/LaserPlatform.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/TrackObjects/LaserPlatform.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/TrackObjects/LightGuide.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/TrackObjects/LightGuide.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/TrackObjects/Magnet.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/TrackObjects/Magnet.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/TrackObjects/PathSpinal.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/TrackObjects/PathSpinal.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/TrackObjects/PowerLineLarge.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/TrackObjects/PowerLineLarge.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/TrackObjects/RopeCreator.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/TrackObjects/RopeCreator.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/TrackObjects/Slant.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/TrackObjects/Slant.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/TrackObjects/TrapMaceSwinging.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/TrackObjects/TrapMaceSwinging.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/TrackObjects/TrapMagnetVoid.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/TrackObjects/TrapMagnetVoid.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/TrackObjects/TrapWindmill.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/TrackObjects/TrapWindmill.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/TrackObjects/Wall1.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/TrackObjects/Wall1.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/TrackObjects/Wall2.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/TrackObjects/Wall2.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/TrackObjects/Wall3.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/TrackObjects/Wall3.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/TrackObjects/Wall4.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/TrackObjects/Wall4.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/TrackObjects/WindTurbine.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/TrackObjects/WindTurbine.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/TrackObjects/WindZone.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/TrackObjects/WindZone.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/TrackObjects/WindZone.prefab.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/TrackObjects/WindZone.prefab.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Materials/Floors/Floor2/Material.001.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Materials/Floors/Floor2/Material.001.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Materials/Floors/Floor2/Material.002.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Materials/Floors/Floor2/Material.002.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Materials/Floors/Floor2/Material.003.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Materials/Floors/Floor2/Material.003.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Materials/Floors/Floor2/Material.004.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Materials/Floors/Floor2/Material.004.mat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Models/floor2.blend" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Models/floor2.blend.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/TrackObjects/Floor2.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/TrackObjects/Floor2.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/TestSockets.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/TestSockets.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/TrackBuilder.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/TrackBuilder.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/GameManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/GameManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Sockets/ScratchData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Sockets/ScratchData.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TrackBuilder/BuilderManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TrackBuilder/BuilderManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TrackBuilder/CheckPlacement.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TrackBuilder/CheckPlacement.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TrackBuilder/Connection.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TrackBuilder/Connection.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TrackBuilder/DroneBuilderController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TrackBuilder/DroneBuilderController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TrackBuilder/EditObject.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TrackBuilder/EditObject.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TrackBuilder/ObjectsType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TrackBuilder/ObjectsType.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TrackBuilder/Selection.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TrackBuilder/Selection.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TrackBuilder/TrackObject.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TrackBuilder/TrackObject.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TrackBuilder/UndoRedoManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TrackBuilder/UndoRedoManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Shaders.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Shaders/UIBlur.shader" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Shaders/UIBlur.shader.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/SkySeries Freebie/6sidedCosmicCoolCloud.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/SkySeries Freebie/6sidedCosmicCoolCloud.mat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/TagManager.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/EditorSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/EditorSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/Packages/com.unity.probuilder/Settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/Packages/com.unity.probuilder/Settings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserSettings/EditorUserSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/EditorUserSettings.asset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UserSettings/Layouts/default-2022.dwlt" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/Layouts/default-2022.dwlt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -110,8 +49,6 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/61c05f8d81804e929ff4198c5bcc7a6216e400/98/9dea1f25/Object.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/6c9b376c3fca40b787e8c1a2133bf243171a00/00/5ebfa8ff/GameObject.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/6c9b376c3fca40b787e8c1a2133bf243171a00/65/fc3f7a18/Graphics.cs" root0="SKIP_HIGHLIGHTING" />
@@ -125,6 +62,7 @@
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/IntroManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Menu/ColorPreview.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Menu/SpriteSwapper.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Portal.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/TrackBuilder/BoostTrigger.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/TrackBuilder/DroneBuilderCheckNode.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../TestDroneGamesURP/Assets/Scripts/TrackBuilder/DroneBuilderController.cs" root0="SKIP_HIGHLIGHTING" />
@@ -255,10 +193,10 @@
       </option>
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="17776">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="5552">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" value="17776" />
+      <option name="pid" value="5552" />
       <option name="projectPathOnTarget" />
       <option name="selectedOptions">
         <list />
@@ -384,7 +322,8 @@
       <workItem from="1686650060617" duration="11068000" />
       <workItem from="1686739224474" duration="7417000" />
       <workItem from="1686813944151" duration="13243000" />
-      <workItem from="1686830834891" duration="4988000" />
+      <workItem from="1686830834891" duration="5046000" />
+      <workItem from="1686896725516" duration="3466000" />
     </task>
     <task id="LOCAL-00001" summary="Add checkpoint spawn in droneRace">
       <created>1673510278765</created>
@@ -554,7 +493,21 @@
       <option name="project" value="LOCAL" />
       <updated>1686748217069</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="Add thermal vision&#10;Add yOffset individual increase&#10;Fix scratch get control mode">
+      <created>1686839043207</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1686839043207</updated>
+    </task>
+    <task id="LOCAL-00026" summary="Add thermal vision&#10;Add yOffset individual increase&#10;Fix scratch get control mode">
+      <created>1686839051725</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1686839051725</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -618,6 +571,19 @@
             </endOffsets>
           </properties>
           <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/Teleporter.cs</url>
+          <line>11</line>
+          <properties documentPath="C:\Work\Unity\DroneGames\Assets\Scripts\Teleporter.cs" initialLine="11" containingFunctionPresentation="Method 'OnTriggerStay'">
+            <startOffsets>
+              <option value="219" />
+            </startOffsets>
+            <endOffsets>
+              <option value="304" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="2" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

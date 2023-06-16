@@ -8,22 +8,26 @@ namespace DroneFootball
 {
     public class ThermalVision : MonoBehaviour
     {
-        public Camera mainCamera;
         public Color thermalColor;
         public float darkeningAmount = 0.5f;
 
         public List<ThermalObject> thermalObjects;
+        public List<Camera> cameras;
         private bool _isThermalVision;
 
         private void Start()
         {
+            cameras = FindObjectsOfType<Camera>().ToList();
             BuilderManager.Instance.TestLevelEvent.AddListener(TurnOffThermalVision);
         }
 
         private void TurnOffThermalVision()
         {
             _isThermalVision = false;
-            mainCamera.clearFlags = _isThermalVision ? CameraClearFlags.SolidColor : CameraClearFlags.Skybox;
+            foreach (var cam in cameras)
+            {
+                cam.clearFlags = _isThermalVision ? CameraClearFlags.SolidColor : CameraClearFlags.Skybox;
+            }
             TurnThermalVision();
         }
 
@@ -32,7 +36,10 @@ namespace DroneFootball
             if (Input.GetKeyDown(KeyCode.T) && BuilderManager.Instance.isMove)
             {
                 _isThermalVision = !_isThermalVision;
-                mainCamera.clearFlags = _isThermalVision ? CameraClearFlags.SolidColor : CameraClearFlags.Skybox;
+                foreach (var cam in cameras)
+                {
+                    cam.clearFlags = _isThermalVision ? CameraClearFlags.SolidColor : CameraClearFlags.Skybox;
+                }
                 TurnThermalVision();
             }
         }
@@ -91,9 +98,14 @@ namespace DroneFootball
                 
                 foreach (var objectMaterial in obj.materials)
                 {
-                    var originalColor = objectMaterial.GetColor("_Color");
-                    var darkenedColor = _isThermalVision ? originalColor * darkeningAmount : originalColor / darkeningAmount;
-                    objectMaterial.SetColor("_Color", darkenedColor);
+                    if (objectMaterial.HasProperty("_Color"))
+                    {
+                        var originalColor = objectMaterial.GetColor("_Color");
+                        var darkenedColor = _isThermalVision
+                            ? originalColor * darkeningAmount
+                            : originalColor / darkeningAmount;
+                        objectMaterial.SetColor("_Color", darkenedColor);
+                    }
                 }
             }
         }
