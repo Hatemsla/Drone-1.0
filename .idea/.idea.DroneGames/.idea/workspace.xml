@@ -26,19 +26,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2b7fdc50-160f-488f-bb8d-47a059ac380e" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/PortalBlue.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/PortalBlue.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/PortalRed.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/PortalRed.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/TrackObjects/Billboard.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/TrackObjects/Billboard.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/TrackObjects/Floor1.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/TrackObjects/Floor1.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/TrackObjects/Floor2.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/TrackObjects/Floor2.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/TrackObjects/Wall1.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/TrackObjects/Wall1.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/TrackObjects/Wall1Model.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/TrackObjects/Wall1Model.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.DroneGames/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.DroneGames/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/TrackObjects/TrapMaceSwinging.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/TrackObjects/TrapMaceSwinging.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/TrackBuilder.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/TrackBuilder.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Portal.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Portal.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Teleporter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Teleporter.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TrackBuilder/BuilderCameraController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TrackBuilder/BuilderCameraController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TrackBuilder/TrackObject.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TrackBuilder/TrackObject.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UserSettings/EditorUserSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/EditorUserSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserSettings/Layouts/default-2022.dwlt" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/Layouts/default-2022.dwlt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -193,10 +186,10 @@
       </option>
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="5552">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" value="5552" />
+      <option name="pid" />
       <option name="projectPathOnTarget" />
       <option name="selectedOptions">
         <list />
@@ -323,7 +316,8 @@
       <workItem from="1686739224474" duration="7417000" />
       <workItem from="1686813944151" duration="13243000" />
       <workItem from="1686830834891" duration="5046000" />
-      <workItem from="1686896725516" duration="16402000" />
+      <workItem from="1686896725516" duration="19058000" />
+      <workItem from="1687003661679" duration="5004000" />
     </task>
     <task id="LOCAL-00001" summary="Add checkpoint spawn in droneRace">
       <created>1673510278765</created>
@@ -557,36 +551,6 @@
     <option name="LAST_COMMIT_MESSAGE" value="Add thermal vision&#10;Add yOffset individual increase&#10;Fix scratch get control mode" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/TrackBuilder/BuilderManager.cs</url>
-          <line>201</line>
-          <properties documentPath="C:\Work\Unity\DroneGames\Assets\Scripts\TrackBuilder\BuilderManager.cs" initialLine="201" containingFunctionPresentation="Method 'Update'">
-            <startOffsets>
-              <option value="6935" />
-            </startOffsets>
-            <endOffsets>
-              <option value="6989" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/Teleporter.cs</url>
-          <line>25</line>
-          <properties documentPath="C:\Work\Unity\DroneGames\Assets\Scripts\Teleporter.cs" initialLine="25" containingFunctionPresentation="Method 'OnTriggerStay'">
-            <startOffsets>
-              <option value="656" />
-            </startOffsets>
-            <endOffsets>
-              <option value="707" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="3" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
     <pin-to-top-manager>
       <pinned-members>
         <PinnedItemInfo parentTag="Type#UnityEngine.Events.UnityEventBase" memberName="m_PersistentCalls" />

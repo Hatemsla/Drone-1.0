@@ -30,7 +30,7 @@ namespace Drone
                     Teleport(other.transform);
             }
         }
-
+        
         private void Teleport(Transform obj)
         {
             var localPos = transform.worldToLocalMatrix.MultiplyPoint3x4(obj.position);
