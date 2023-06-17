@@ -5,7 +5,7 @@ namespace Builder
 {
     public class RigidbodyMagnet : MonoBehaviour
     {
-        public float magnetForce = 100;
+        public float magnetForce = 1;
 
         private List<Rigidbody> _caughtRigidbodies = new();
 
