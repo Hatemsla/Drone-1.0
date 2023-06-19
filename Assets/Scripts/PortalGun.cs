@@ -6,6 +6,7 @@ namespace Drone
 {
     public class PortalGun : MonoBehaviour
     {
+        [SerializeField] private LayerMask layerMask;
         [SerializeField] private Portal redPortal;
         [SerializeField] private Portal bluePortal;
 
@@ -21,7 +22,7 @@ namespace Drone
         {
             if (Input.GetKeyDown(KeyCode.G) && BuilderManager.Instance.isMove && BuilderManager.Instance.cameraController.isFirstView)
             {
-                if (Physics.Raycast(transform.position, transform.forward, out var hitInfo, 50f, -1, QueryTriggerInteraction.Ignore))
+                if (Physics.Raycast(transform.position, transform.forward, out var hitInfo, 50f, layerMask))
                 {
                     var trackObject = hitInfo.collider.gameObject.GetComponentInParent<TrackObject>();
                     if (!trackObject) return;
@@ -32,8 +33,8 @@ namespace Drone
                             if (_portals.Exists(portal => portal.transform.position == hitInfo.point))
                                 return;
 
-                            var portalRotation = Quaternion.LookRotation(hitInfo.normal, Vector3.up);
-                            var portalSpawnPosition = hitInfo.point + hitInfo.normal * 1.01f;
+                            var portalRotation = Quaternion.LookRotation(hitInfo.normal);
+                            var portalSpawnPosition = hitInfo.point + redPortal.transform.forward * 0.2f;
                             
                             Portal portal;
                             if (_portals.Count == 0)
@@ -52,8 +53,8 @@ namespace Drone
                         }
                         else
                         {
-                            _portals[_activePortalIndex].transform.position = hitInfo.point + _portals[_activePortalIndex].transform.forward * 0.6f;
                             _portals[_activePortalIndex].transform.rotation = Quaternion.LookRotation(hitInfo.normal);
+                            _portals[_activePortalIndex].transform.position = hitInfo.point + _portals[_activePortalIndex].transform.forward * 0.2f;
                             _activePortalIndex = _activePortalIndex >= 1 ? 0 : 1;
                         }
                     }

@@ -34,20 +34,25 @@ namespace Drone
         private void Teleport(Transform obj)
         {
             var localPos = transform.worldToLocalMatrix.MultiplyPoint3x4(obj.position);
-            localPos = new Vector3(-localPos.x, localPos.y, -localPos.z * 100);
+            localPos = new Vector3(-localPos.x, localPos.y, -localPos.z);
+            var teleportOffset = -1.5f;
+            localPos += otherTeleporter.transform.forward * teleportOffset;
             obj.position = otherTeleporter.transform.localToWorldMatrix.MultiplyPoint3x4(localPos);
             
-            obj.GetComponent<DroneBuilderController>().yaw = 180f;
+            // var difference = otherTeleporter.transform.rotation * Quaternion.Inverse(transform.rotation * Quaternion.Euler(0, 180, 0));
+            obj.GetComponent<DroneBuilderController>().yaw = otherTeleporter.transform.eulerAngles.y;
         }
 
         private void OnTriggerEnter(Collider other)
         {
-            other.gameObject.layer = 12;
+            if(otherTeleporter)
+                other.gameObject.layer = 12;
         }
 
         private void OnTriggerExit(Collider other)
         {
-            other.gameObject.layer = 8;
+            if(otherTeleporter)
+                other.gameObject.layer = 8;
         }
     }
 }
