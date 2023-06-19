@@ -19,16 +19,17 @@ namespace Builder
         
         public static Vector3 ParseVector3(string str)
         {
-            string[] values = str.Split(' ');
-            float x = float.Parse(values[0]);
-            float y = float.Parse(values[1]);
-            float z = float.Parse(values[2]);
+            var values = str.Split(' ');
+            var x = float.Parse(values[0]);
+            var y = float.Parse(values[1]);
+            var z = float.Parse(values[2]);
             return new Vector3(x, y, z);
         }
         
         public static void ChangeLayerRecursively(Transform obj, int layer)
         {
-            if (LayerMask.LayerToName(obj.gameObject.layer) != "FloorConnection" && LayerMask.LayerToName(obj.gameObject.layer) != "WallConnection" && LayerMask.LayerToName(obj.gameObject.layer) != "SlantConnection")
+            if (LayerMask.LayerToName(obj.gameObject.layer) != "FloorConnection" && LayerMask.LayerToName(obj.gameObject.layer) != "WallConnection" 
+                && LayerMask.LayerToName(obj.gameObject.layer) != "SlantConnection" && LayerMask.LayerToName(obj.gameObject.layer) != "Ignore Raycast")
             {
                 obj.gameObject.layer = layer;
             }

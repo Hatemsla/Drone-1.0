@@ -11,60 +11,90 @@ namespace DroneFootball
         public Color thermalColor;
         public float darkeningAmount = 0.5f;
 
-        public List<ThermalObject> thermalObjects;
+        public ThermalObject[] thermalObjects;
         public List<Camera> cameras;
-        private bool _isThermalVision;
+        public bool isThermalVision;
 
         private void Start()
         {
             cameras = FindObjectsOfType<Camera>().ToList();
-            BuilderManager.Instance.TestLevelEvent.AddListener(TurnOffThermalVision);
+            BuilderManager.Instance.TestLevelEvent.AddListener(OnTurnOffThermalVision);
+        }
+
+        private void OnTurnOffThermalVision()
+        {
+            if (isThermalVision)
+            {
+                SetDefaultDarkeningForNonThermalObjects();
+                TurnOffThermalVision();
+            }
+
+            isThermalVision = false;
+            foreach (var cam in cameras)
+            {
+                cam.clearFlags = CameraClearFlags.Skybox;
+            }
         }
 
         private void TurnOffThermalVision()
         {
-            _isThermalVision = false;
-            foreach (var cam in cameras)
+            thermalObjects = FindObjectsOfType<ThermalObject>();
+            foreach (var obj in thermalObjects)
             {
-                cam.clearFlags = _isThermalVision ? CameraClearFlags.SolidColor : CameraClearFlags.Skybox;
+                SwitchToDefaultColor(obj);
             }
-            TurnThermalVision();
+        }
+
+        private void SetDefaultDarkeningForNonThermalObjects()
+        {
+            var allObjects = FindObjectsOfType<Renderer>();
+            foreach (var obj in allObjects)
+            {
+                if (obj.GetComponent<ThermalObject>()) continue;
+
+                foreach (var objectMaterial in obj.materials)
+                {
+                    if (objectMaterial.HasProperty("_Color"))
+                    {
+                        var originalColor = objectMaterial.GetColor("_Color");
+                        var darkenedColor = originalColor / darkeningAmount;
+                        objectMaterial.SetColor("_Color", darkenedColor);
+                    }
+                }
+            }
         }
 
         private void Update()
         {
             if (Input.GetKeyDown(KeyCode.T) && BuilderManager.Instance.isMove)
             {
-                _isThermalVision = !_isThermalVision;
+                isThermalVision = !isThermalVision;
                 foreach (var cam in cameras)
                 {
-                    cam.clearFlags = _isThermalVision ? CameraClearFlags.SolidColor : CameraClearFlags.Skybox;
+                    cam.clearFlags = isThermalVision ? CameraClearFlags.SolidColor : CameraClearFlags.Skybox;
                 }
                 TurnThermalVision();
+                SetDarkeningForNonThermalObjects();
             }
         }
 
         private void TurnThermalVision()
         {
-            if (!_isThermalVision)
+            if (!isThermalVision)
             {
                 foreach (var obj in thermalObjects)
                 {
                     SwitchToDefaultColor(obj);
                 }
-
-                SetDarkeningForNonThermalObjects();
-                return;   
+                return;
             }
-            
-            thermalObjects = FindObjectsOfType<ThermalObject>().ToList();
+
+            thermalObjects = FindObjectsOfType<ThermalObject>();
 
             foreach (var obj in thermalObjects)
             {
                 HighlightObject(obj);
             }
-
-            SetDarkeningForNonThermalObjects();
         }
 
         private void HighlightObject(ThermalObject obj)
@@ -84,7 +114,9 @@ namespace DroneFootball
                 foreach (var defaultColor in obj.defaultColors)
                 {
                     obj.objectMaterials[i].SetColor("_Color", obj.defaultColors[i]);
-                    obj.objectMaterials[i].DisableKeyword("_EMISSION");
+                    obj.objectMaterials[i].SetColor("_EmissionColor", Color.white);
+                    if(!obj.hasEmissions[i])
+                        obj.objectMaterials[i].DisableKeyword("_EMISSION");
                 }
             }
         }
@@ -101,7 +133,7 @@ namespace DroneFootball
                     if (objectMaterial.HasProperty("_Color"))
                     {
                         var originalColor = objectMaterial.GetColor("_Color");
-                        var darkenedColor = _isThermalVision
+                        var darkenedColor = isThermalVision
                             ? originalColor * darkeningAmount
                             : originalColor / darkeningAmount;
                         objectMaterial.SetColor("_Color", darkenedColor);

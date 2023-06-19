@@ -21,6 +21,7 @@ namespace Builder
         public bool isSimpleMode;
         public int boostsCount;
         public float currentSpeed;
+        public Light flashLight;
         public DroneBuilderCheckNode droneBuilderCheckNode;
         public DroneBuilderSoundController droneBuilderSoundController;
         
@@ -30,7 +31,7 @@ namespace Builder
         private float _finalYaw;
         private float _isMove;
         private Rigidbody _rb;
-
+        
         private void Awake()
         {
             droneBuilderCheckNode = GetComponent<DroneBuilderCheckNode>();
@@ -57,6 +58,12 @@ namespace Builder
                 _isMove = Mathf.Abs(cyclic.x) + Mathf.Abs(cyclic.y) + Mathf.Abs(pedals) + Mathf.Abs(throttle);
                 DroneMove();
             }
+        }
+
+        private void OnFlashLight()
+        {
+            if(BuilderManager.Instance.isMove)
+                flashLight.enabled = !flashLight.enabled;
         }
 
         private void OnCyclic(InputValue value)
