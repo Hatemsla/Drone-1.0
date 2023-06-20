@@ -2,7 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Cinemachine;
+using Drone;
 using DroneFootball;
 using Newtonsoft.Json;
 using Sockets;
@@ -23,6 +25,7 @@ namespace Builder
         public string levelName;
         public float interfaceScale;
         public float currentYawSensitivity;
+        public float currentTime;
         public int currentSelectObjectIndex;
         public bool canPlace;
         public bool isMove;
@@ -37,6 +40,7 @@ namespace Builder
         public DroneBuilderSoundController droneBuilderSoundController;
         public UndoRedoManager undoRedoManager;
         public AsyncLoad asyncLoad;
+        public Timer timer;
         public CinemachineBrain cameraBrain;
         public BuilderCameraController cameraController;
         public FreeFlyCamera freeFlyCamera;
@@ -103,6 +107,12 @@ namespace Builder
 
         private void Update()
         {
+            if (isMove)
+            {
+                currentTime += Time.deltaTime;
+                SetDroneParameters();
+            }
+
             CheckTabPanel();
 
             if (Input.GetKey(KeyCode.LeftControl))
@@ -228,6 +238,20 @@ namespace Builder
             }
         }
 
+        private void SetDroneParameters()
+        {
+            builderUI.speedText.text = $"{droneBuilderController.currentSpeed:00}";
+            float minutes = Mathf.FloorToInt(currentTime / 60);
+            float seconds = Mathf.FloorToInt(currentTime % 60);
+            builderUI.timeText.text = $"{minutes:00}:{seconds:00}";
+            builderUI.batteryText.text = $"{droneBuilderController.droneRpgController.DroneData.Battery:00}"; 
+            builderUI.checkpointsCountText.text = $"{droneBuilderCheckNode.currentNode}/{droneBuilderCheckNode.nodes.Count}";
+            Debug.Log($"Armor: {droneBuilderController.droneRpgController.DroneData.Armor} Health: {droneBuilderController.droneRpgController.DroneData.Health}");
+            Debug.Log(droneBuilderController.droneRpgController.GetCurrentHealthIndex(droneBuilderController.droneRpgController.DroneData.Armor));
+            builderUI.armorBar.TurnBars(droneBuilderController.droneRpgController.GetCurrentHealthIndex(droneBuilderController.droneRpgController.DroneData.Armor));
+            builderUI.healthBar.TurnBars(droneBuilderController.droneRpgController.GetCurrentHealthIndex(droneBuilderController.droneRpgController.DroneData.Health));
+        }
+
         private Vector3 CalculateCommonCenter(List<GameObject> objectsList)
         {
             var center = Vector3.zero;
@@ -336,6 +360,12 @@ namespace Builder
             isMove = !isMove;
             if (isMove)
             {
+                foreach (var obj in objectsPool)
+                    obj.SetActive(true);
+                
+                currentTime = 0;
+                droneBuilderController.droneRpgController.DroneData = new DroneData(100, 100, 100);
+                builderUI.droneView.SetActive(true);
                 freeFlyCamera.enabled = false;
                 freeFlyCamera.GetComponent<CinemachineVirtualCamera>().Priority = 0;
                 cameraController.isSwitch = true;
@@ -363,6 +393,7 @@ namespace Builder
             else
             {
                 TestLevelEvent.Invoke();
+                builderUI.droneView.SetActive(false);
                 freeFlyCamera.enabled = true;
                 freeFlyCamera.GetComponent<CinemachineVirtualCamera>().Priority = 10;
                 cameraController.isSwitch = false;

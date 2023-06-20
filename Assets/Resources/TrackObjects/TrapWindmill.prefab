@@ -149,6 +149,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectMaterials: []
   defaultColors: []
+  hasEmissions: 
 --- !u!1 &437205622444458943
 GameObject:
   m_ObjectHideFlags: 0
@@ -298,6 +299,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectMaterials: []
   defaultColors: []
+  hasEmissions: 
 --- !u!1 &911892446289465052
 GameObject:
   m_ObjectHideFlags: 0
@@ -448,6 +450,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectMaterials: []
   defaultColors: []
+  hasEmissions: 
 --- !u!1 &1145641445126680305
 GameObject:
   m_ObjectHideFlags: 0
@@ -547,6 +550,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectMaterials: []
   defaultColors: []
+  hasEmissions: 
 --- !u!1 &2191220050999812873
 GameObject:
   m_ObjectHideFlags: 0
@@ -696,6 +700,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectMaterials: []
   defaultColors: []
+  hasEmissions: 
 --- !u!1 &5088857157902067786
 GameObject:
   m_ObjectHideFlags: 0
@@ -881,6 +886,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectMaterials: []
   defaultColors: []
+  hasEmissions: 
 --- !u!1 &5258261018607119709
 GameObject:
   m_ObjectHideFlags: 0
@@ -893,6 +899,7 @@ GameObject:
   - component: {fileID: 4915803618500759553}
   - component: {fileID: 4915803618500759554}
   - component: {fileID: 5659191429575721898}
+  - component: {fileID: 7756943951698049399}
   m_Layer: 7
   m_Name: TrapWindmill
   m_TagString: Untagged
@@ -981,6 +988,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rotateSpeed: 50
   trap: {fileID: 4915803618500759553}
+--- !u!114 &7756943951698049399
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5258261018607119709}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d3225843bb641e8844385e5197f2412, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6505708842789637494
 GameObject:
   m_ObjectHideFlags: 0
@@ -1130,3 +1149,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectMaterials: []
   defaultColors: []
+  hasEmissions: 

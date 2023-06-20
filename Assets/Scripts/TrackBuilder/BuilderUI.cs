@@ -7,6 +7,15 @@ namespace Builder
 {
     public class BuilderUI : MonoBehaviour
     {
+        [Header("Drone view")]
+        public GameObject droneView;
+        public TMP_Text speedText;
+        public TMP_Text batteryText;
+        public TMP_Text timeText;
+        public TMP_Text checkpointsCountText;
+        public DroneBars healthBar;
+        public DroneBars armorBar;
+        
         [Header("UI")]
         public Button floorBtn;
         public Button wallBtn;

@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using DroneRace;
+using Drone;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -24,6 +24,7 @@ namespace Builder
         public Light flashLight;
         public DroneBuilderCheckNode droneBuilderCheckNode;
         public DroneBuilderSoundController droneBuilderSoundController;
+        public DroneRpgController droneRpgController;
         
         private List<DroneEngine> _engines;
         private float _finalPitch;
@@ -36,6 +37,7 @@ namespace Builder
         {
             droneBuilderCheckNode = GetComponent<DroneBuilderCheckNode>();
             droneBuilderSoundController = GetComponent<DroneBuilderSoundController>();
+            droneRpgController = GetComponent<DroneRpgController>();
             BuilderManager.Instance.droneBuilderController = this;
             BuilderManager.Instance.droneBuilderCheckNode = droneBuilderCheckNode;
             BuilderManager.Instance.droneBuilderSoundController = droneBuilderSoundController;
@@ -51,8 +53,8 @@ namespace Builder
 
         private void FixedUpdate()
         {
-            currentSpeed = _rb.velocity.magnitude;
-            if (BuilderManager.Instance.isMove)
+            currentSpeed = _rb.velocity.magnitude / 8.2f * 100f;
+            if (BuilderManager.Instance.isMove && droneRpgController.isAlive && droneRpgController.isCharged)
             {
                 _isMove = 0;
                 _isMove = Mathf.Abs(cyclic.x) + Mathf.Abs(cyclic.y) + Mathf.Abs(pedals) + Mathf.Abs(throttle);
