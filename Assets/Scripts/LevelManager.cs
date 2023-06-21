@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Text.RegularExpressions;
@@ -10,6 +11,18 @@ namespace DroneFootball
 {
     public static class LevelManager
     {
+        public static string[] LoadMaps()
+        {
+            var jsonFiles = Directory.GetFiles(Path.Combine(Application.dataPath, "Levels"), "*.json");
+
+            for (var i = 0; i < jsonFiles.Length; i++)
+            {
+                jsonFiles[i] = Path.GetFileNameWithoutExtension(jsonFiles[i]);
+            }
+
+            return jsonFiles;
+        }
+        
         public static bool LoadLevel(string level)
         {
             return File.Exists(Application.dataPath + "/Levels/" + level + ".json");
