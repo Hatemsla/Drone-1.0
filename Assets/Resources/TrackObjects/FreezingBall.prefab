@@ -78,12 +78,19 @@ MonoBehaviour:
   connection: {fileID: 0}
   objectType: 5
   hasPortal: 1
+  interactiveType: 6
   yOffset: 0.446
   yOffsetIncrease: 0.224
   isActive: 0
   maxMouseDistance: 0
   objectName: 
   objectDescription: 
+  windmill: {fileID: 0}
+  magnet: {fileID: 0}
+  pendulum: {fileID: 0}
+  windZone: {fileID: 0}
+  freezingBall: {fileID: 0}
+  battery: {fileID: 0}
 --- !u!114 &8164714071133552622
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -96,6 +103,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 754141a4512f43fb91c4dc889867554c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isFreezing: 1
 --- !u!1001 &1917226635795364144
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -278,6 +286,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectMaterials: []
   defaultColors: []
+  hasEmissions: 
 --- !u!1 &5910019542131451872 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5233112405309087440, guid: 549cfb50a9f0548408b5a674fe660f53, type: 3}
@@ -333,6 +342,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectMaterials: []
   defaultColors: []
+  hasEmissions: 
 --- !u!1 &7730324624914867878 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -1018664272722485354, guid: 549cfb50a9f0548408b5a674fe660f53, type: 3}
@@ -388,6 +398,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectMaterials: []
   defaultColors: []
+  hasEmissions: 
 --- !u!1 &7736981424315593594 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -1025663018108745142, guid: 549cfb50a9f0548408b5a674fe660f53, type: 3}
@@ -443,3 +454,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objectMaterials: []
   defaultColors: []
+  hasEmissions: 

@@ -17,7 +17,30 @@ namespace Builder
         [SerializeField] private TMP_InputField yRot;
         [SerializeField] private TMP_InputField zRot;
         [SerializeField] private Slider xyzScale;
-        
+        [SerializeField] private Slider windmillRotSpeed;
+        [SerializeField] private Slider magnetForce;
+        [SerializeField] private Slider pendulumSpeed;
+        [SerializeField] private Slider pendulumAngle;
+        [SerializeField] private Slider windForce;
+        [SerializeField] private Slider batteryEnergy;
+        [SerializeField] private Slider boostForce;
+        [SerializeField] private TMP_Text xyzScaleValue;
+        [SerializeField] private TMP_Text windmillRotSpeedValue;
+        [SerializeField] private TMP_Text magnetForceValue;
+        [SerializeField] private TMP_Text pendulumSpeedValue;
+        [SerializeField] private TMP_Text pendulumAngleValue;
+        [SerializeField] private TMP_Text windForceValue;
+        [SerializeField] private TMP_Text batteryEnergyValue;
+        [SerializeField] private TMP_Text boostForceValue;
+        [SerializeField] private Toggle freezing;
+        [SerializeField] private GameObject windmillPanel;
+        [SerializeField] private GameObject magnetPanel;
+        [SerializeField] private GameObject pendulumPanel;
+        [SerializeField] private GameObject windPanel;
+        [SerializeField] private GameObject batteryPanel;
+        [SerializeField] private GameObject freezingPanel;
+        [SerializeField] private GameObject boostPanel;
+        [SerializeField] private List<GameObject> interactivePanels;
 
         private Dictionary<float, int> _sliderValues = new Dictionary<float, int>()
         {
@@ -49,11 +72,65 @@ namespace Builder
             xRot.text = xR.ToString("f2", CultureInfo.CurrentCulture);
             yRot.text = yR.ToString("f2", CultureInfo.CurrentCulture);
             zRot.text = zR.ToString("f2", CultureInfo.CurrentCulture);
+            xyzScaleValue.text = xyzS.ToString("f1", CultureInfo.CurrentCulture);
             
             if(trackObject.objectType is ObjectsType.Gate or ObjectsType.Drone)
                 return;
 
             xyzScale.value = ConvertScaleToSliderValue(xyzS);
+
+            if (!trackObject.windmill && !trackObject.magnet && !trackObject.pendulum && !trackObject.battery &&
+                !trackObject.windZone && !trackObject.windZone && !trackObject.freezingBall && !trackObject.boost)
+                TurnInteractivePanels(gameObject);
+            else if (trackObject.windmill)
+            {
+                TurnInteractivePanels(windmillPanel);
+                windmillRotSpeed.value = trackObject.windmill.rotateSpeed;
+                windmillRotSpeedValue.text = trackObject.windmill.rotateSpeed.ToString("f1", CultureInfo.CurrentCulture);
+            }
+            else if (trackObject.magnet)
+            {
+                TurnInteractivePanels(magnetPanel);
+                magnetForce.value = trackObject.magnet.magnetForce;
+                magnetForceValue.text = trackObject.magnet.magnetForce.ToString("f1", CultureInfo.CurrentCulture);
+            }
+            else if (trackObject.pendulum)
+            {
+                TurnInteractivePanels(pendulumPanel);
+                pendulumSpeed.value = trackObject.pendulum.moveSpeed;
+                pendulumSpeedValue.text = trackObject.pendulum.moveSpeed.ToString("f1", CultureInfo.CurrentCulture);
+                pendulumAngle.value = trackObject.pendulum.rightAngle;
+                pendulumAngleValue.text = (trackObject.pendulum.rightAngle * 360f).ToString("f1", CultureInfo.CurrentCulture);
+            }
+            else if (trackObject.windZone)
+            {
+                TurnInteractivePanels(windPanel);
+                windForce.value = trackObject.windZone.windForce;
+                windForceValue.text = trackObject.windZone.windForce.ToString("f1", CultureInfo.CurrentCulture);
+            }
+            else if (trackObject.battery)
+            {
+                TurnInteractivePanels(batteryPanel);
+                batteryEnergy.value = trackObject.battery.energy;
+                batteryEnergyValue.text = trackObject.battery.energy.ToString(CultureInfo.CurrentCulture);
+            }
+            else if (trackObject.freezingBall)
+            {
+                TurnInteractivePanels(freezingPanel);
+                freezing.isOn = trackObject.freezingBall.isFreezing;
+            }
+            else if (trackObject.boost)
+            {
+                TurnInteractivePanels(boostPanel);
+                boostForce.value = trackObject.boost.boost;
+                boostForceValue.text = trackObject.boost.boost.ToString("f1", CultureInfo.CurrentCulture);
+            }
+        }
+
+        private void TurnInteractivePanels(GameObject activePanel)
+        {
+            foreach (var interactivePanel in interactivePanels)
+                interactivePanel.SetActive(interactivePanel == activePanel);
         }
 
         private int ConvertScaleToSliderValue(float originValue)

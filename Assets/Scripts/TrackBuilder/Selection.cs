@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Drone;
 using UnityEngine;
-using UnityEngine.UI;
-using cakeslice;
-using Unity.VisualScripting;
 using UnityEngine.EventSystems;
 using Outline = cakeslice.Outline;
 
@@ -54,12 +52,12 @@ namespace Builder
 
                     if (Input.GetKey(KeyCode.LeftControl))
                     {
-                        if (hit.collider.gameObject.layer == LayerMask.NameToLayer("TrackGround"))
+                        if (hit.collider.transform.root.gameObject.layer == LayerMask.NameToLayer("TrackGround"))
                             AddSelection(hit.collider.transform.root.gameObject);
                     }
                     else
                     {
-                        if (hit.collider.gameObject.layer == LayerMask.NameToLayer("TrackGround"))
+                        if (hit.collider.transform.root.gameObject.layer == LayerMask.NameToLayer("TrackGround"))
                             Select(hit.collider.transform.root.gameObject);
                     }
                 }
@@ -84,6 +82,31 @@ namespace Builder
 
             if (selectedObject)
             {
+                switch (selectedTrackObject.interactiveType)
+                {
+                    case InteractiveType.Windmill:
+                        selectedTrackObject.windmill = selectedTrackObject.GetComponentInChildren<Windmill>();
+                        break;
+                    case InteractiveType.Magnet:
+                        selectedTrackObject.magnet = selectedTrackObject.GetComponentInChildren<RigidbodyMagnet>();
+                        break;
+                    case InteractiveType.Pendulum:
+                        selectedTrackObject.pendulum = selectedTrackObject.GetComponentInChildren<Pendulum>();
+                        break;
+                    case InteractiveType.Battery:
+                        selectedTrackObject.battery = selectedTrackObject.GetComponentInChildren<Battery>();
+                        break;
+                    case InteractiveType.Freezing:
+                        selectedTrackObject.freezingBall = selectedTrackObject.GetComponentInChildren<FreezingBall>();
+                        break;
+                    case InteractiveType.Wind:
+                        selectedTrackObject.windZone = selectedTrackObject.GetComponentInChildren<WindZoneScript>();
+                        break;
+                    case InteractiveType.Boost:
+                        selectedTrackObject.boost = selectedTrackObject.GetComponentInChildren<BoostTrigger>();
+                        break;
+                }
+
                 editObject.OnSelectObject(selectedTrackObject);
             }
         }

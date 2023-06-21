@@ -21,6 +21,7 @@ namespace Builder
         public bool isSimpleMode;
         public int boostsCount;
         public float currentSpeed;
+        public float currentPercentSpeed;
         public Light flashLight;
         public DroneBuilderCheckNode droneBuilderCheckNode;
         public DroneBuilderSoundController droneBuilderSoundController;
@@ -53,7 +54,8 @@ namespace Builder
 
         private void FixedUpdate()
         {
-            currentSpeed = _rb.velocity.magnitude / 8.2f * 100f;
+            currentSpeed = _rb.velocity.magnitude / 8.2f * 40f;
+            currentPercentSpeed = _rb.velocity.magnitude / 8.2f * 100f;
             if (BuilderManager.Instance.isMove && droneRpgController.isAlive && droneRpgController.isCharged)
             {
                 _isMove = 0;

@@ -42,14 +42,14 @@ namespace Drone
         {
             ChangeMoveDir();
 
-            if (_movingClockwise)
+            switch (_movingClockwise)
             {
-                _rb.angularVelocity = new Vector3(0f, 0f, moveSpeed);
-            }
-
-            if (!_movingClockwise)
-            {
-                _rb.angularVelocity = new Vector3(0f, 0f, -moveSpeed);
+                case true:
+                    _rb.angularVelocity = new Vector3(0f, 0f, moveSpeed) * moveSpeed;
+                    break;
+                case false:
+                    _rb.angularVelocity = new Vector3(0f, 0f, -moveSpeed) * moveSpeed;
+                    break;
             }
         }
     }

@@ -11,7 +11,7 @@ namespace Builder
             var player = other.transform.root.GetComponentInParent<DroneBuilderController>();
             if (player)
             {
-                if (player.currentSpeed >= 50f)
+                if (player.currentPercentSpeed >= 50f)
                 {
                     player.droneRpgController.ApplyDamage((int)player.currentSpeed);
                 }

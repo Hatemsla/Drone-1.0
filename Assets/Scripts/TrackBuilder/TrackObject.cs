@@ -1,3 +1,4 @@
+using Drone;
 using UnityEngine;
 
 namespace Builder
@@ -8,12 +9,21 @@ namespace Builder
         public Transform connection;
         public ObjectsType objectType = ObjectsType.Other;
         public HasPortal hasPortal = HasPortal.No;
+        public InteractiveType interactiveType = InteractiveType.None;
         public float yOffset;
         public float yOffsetIncrease;
         public bool isActive;
         public float maxMouseDistance = 3f;
         public string objectName;
         public string objectDescription;
+
+        public Windmill windmill;
+        public RigidbodyMagnet magnet;
+        public Pendulum pendulum;
+        public WindZoneScript windZone;
+        public FreezingBall freezingBall;
+        public Battery battery;
+        public BoostTrigger boost;
 
         public Vector3 Scale
         {

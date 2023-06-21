@@ -119,5 +119,46 @@ namespace Builder
                 currentObject.maxMouseDistance += currentObjectYOffset;
             }
         }
+
+        public void OnWindmillRotationSpeedChanged(float value)
+        {
+            currentObject.windmill.rotateSpeed = value;
+        }
+        
+        public void OnMagnetForceChanged(float value)
+        {
+            currentObject.magnet.magnetForce = value;
+        }
+
+        public void OnPendulumSpeedChanged(float value)
+        {
+            currentObject.pendulum.moveSpeed = value;
+        }
+
+        public void OnPendulumAngleChanged(float value)
+        {
+            currentObject.pendulum.rightAngle = value;
+            currentObject.pendulum.leftAngle = -value;
+        }
+
+        public void OnWindZoneForceChanged(float value)
+        {
+            currentObject.windZone.windForce = value;
+        }
+
+        public void OnBatteryEnergyChanged(float value)
+        {
+            currentObject.battery.energy = value;
+        }
+
+        public void OnFreezingBallChanged(bool value)
+        {
+            currentObject.freezingBall.isFreezing = value;
+        }
+
+        public void OnBoostChanged(float value)
+        {
+            currentObject.boost.boost = value;
+        }
     }
 }

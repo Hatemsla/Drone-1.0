@@ -27,7 +27,7 @@ namespace Sockets
 
                 if (www.result != UnityWebRequest.Result.Success)
                 {
-                    Debug.LogError("Error: " + www.error);
+                    Debug.LogWarning("Error: " + www.error);
                 }
                 else
                 {
@@ -54,7 +54,7 @@ namespace Sockets
     
             if (www.result != UnityWebRequest.Result.Success)
             {
-                Debug.LogError("Error: " + www.error);
+                Debug.LogWarning("Error: " + www.error);
             }
             else
             {

@@ -6,7 +6,7 @@ namespace Builder
 {
     public class Battery : MonoBehaviour
     {
-        public int energy;
+        public float energy;
 
         private void OnTriggerEnter(Collider other)
         {

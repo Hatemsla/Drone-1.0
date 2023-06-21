@@ -80,12 +80,20 @@ MonoBehaviour:
   connection: {fileID: 0}
   objectType: 5
   hasPortal: 1
+  interactiveType: 7
   yOffset: 1.04
   yOffsetIncrease: 0.505
   isActive: 0
   maxMouseDistance: 0
   objectName: 
   objectDescription: 
+  windmill: {fileID: 0}
+  magnet: {fileID: 0}
+  pendulum: {fileID: 0}
+  windZone: {fileID: 0}
+  freezingBall: {fileID: 0}
+  battery: {fileID: 0}
+  boost: {fileID: 0}
 --- !u!1 &3561165371227626217
 GameObject:
   m_ObjectHideFlags: 0
@@ -152,6 +160,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7577bbc19e3abcc44bb0bf1ad44efa86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  boost: 2
 --- !u!1 &4347390786775142821
 GameObject:
   m_ObjectHideFlags: 0

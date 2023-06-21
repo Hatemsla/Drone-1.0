@@ -6,12 +6,13 @@ namespace Builder
 {
     public class Windmill : MonoBehaviour
     {
+        public Vector3 rotateDirection;
         public float rotateSpeed;
         public Rigidbody trap;
 
         private void FixedUpdate()
         {
-            trap.MoveRotation(trap.rotation * Quaternion.Euler(0, Time.deltaTime * rotateSpeed, 0));
+            trap.MoveRotation(trap.rotation * Quaternion.Euler(rotateDirection * (rotateSpeed * Time.deltaTime)));
         }
     }
 }

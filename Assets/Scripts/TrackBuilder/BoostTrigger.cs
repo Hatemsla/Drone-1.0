@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class BoostTrigger : MonoBehaviour
 {
+    public float boost = 2;
+    
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -19,10 +21,10 @@ public class BoostTrigger : MonoBehaviour
 
     private IEnumerator BoostDrone(Rigidbody rb, DroneBuilderController drone)
     {
-        rb.velocity *= 2;
+        rb.velocity *= boost;
         drone.boostsCount++;
         yield return new WaitForSeconds(2);
-        rb.velocity /= 2;
+        rb.velocity /= boost;
         drone.boostsCount--;
     }
 }

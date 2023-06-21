@@ -246,8 +246,6 @@ namespace Builder
             builderUI.timeText.text = $"{minutes:00}:{seconds:00}";
             builderUI.batteryText.text = $"{droneBuilderController.droneRpgController.DroneData.Battery:00}"; 
             builderUI.checkpointsCountText.text = $"{droneBuilderCheckNode.currentNode}/{droneBuilderCheckNode.nodes.Count}";
-            Debug.Log($"Armor: {droneBuilderController.droneRpgController.DroneData.Armor} Health: {droneBuilderController.droneRpgController.DroneData.Health}");
-            Debug.Log(droneBuilderController.droneRpgController.GetCurrentHealthIndex(droneBuilderController.droneRpgController.DroneData.Armor));
             builderUI.armorBar.TurnBars(droneBuilderController.droneRpgController.GetCurrentHealthIndex(droneBuilderController.droneRpgController.DroneData.Armor));
             builderUI.healthBar.TurnBars(droneBuilderController.droneRpgController.GetCurrentHealthIndex(droneBuilderController.droneRpgController.DroneData.Health));
         }
