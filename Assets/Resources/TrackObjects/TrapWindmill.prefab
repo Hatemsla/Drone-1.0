@@ -899,7 +899,6 @@ GameObject:
   - component: {fileID: 4915803618500759553}
   - component: {fileID: 4915803618500759554}
   - component: {fileID: 5659191429575721898}
-  - component: {fileID: 7756943951698049399}
   m_Layer: 7
   m_Name: TrapWindmill
   m_TagString: Untagged
@@ -969,12 +968,21 @@ MonoBehaviour:
   objectType: 5
   hasPortal: 1
   interactiveType: 1
+  effectType: 1
   yOffset: 1.221
   yOffsetIncrease: 0.609
   isActive: 0
   maxMouseDistance: 0
+  damage: 1
   objectName: 
   objectDescription: 
+  windmill: {fileID: 0}
+  magnet: {fileID: 0}
+  pendulum: {fileID: 0}
+  windZone: {fileID: 0}
+  freezingBall: {fileID: 0}
+  battery: {fileID: 0}
+  boost: {fileID: 0}
 --- !u!114 &5659191429575721898
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -990,18 +998,6 @@ MonoBehaviour:
   rotateDirection: {x: 0, y: 1, z: 0}
   rotateSpeed: 50
   trap: {fileID: 4915803618500759553}
---- !u!114 &7756943951698049399
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5258261018607119709}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d3225843bb641e8844385e5197f2412, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &6505708842789637494
 GameObject:
   m_ObjectHideFlags: 0

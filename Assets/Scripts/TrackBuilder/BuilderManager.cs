@@ -358,9 +358,6 @@ namespace Builder
             isMove = !isMove;
             if (isMove)
             {
-                foreach (var obj in objectsPool)
-                    obj.SetActive(true);
-                
                 currentTime = 0;
                 droneBuilderController.droneRpgController.DroneData = new DroneData(100, 100, 100);
                 builderUI.droneView.SetActive(true);
@@ -413,6 +410,9 @@ namespace Builder
                 droneBuilderSoundController.droneFly.Stop();
                 _selection.enabled = true;
             }
+            
+            foreach (var obj in objectsPool)
+                obj.SetActive(true);
         }
 
         public void StartLevel()

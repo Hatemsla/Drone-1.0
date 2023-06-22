@@ -27,6 +27,18 @@
   <component name="ChangeListManager">
     <list default="true" id="2b7fdc50-160f-488f-bb8d-47a059ac380e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.DroneGames/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.DroneGames/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/TrackBuilder.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/TrackBuilder.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/DroneRpgController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/DroneRpgController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Map.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Map.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/MapManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/MapManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TrackBuilder/TrackObject.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TrackBuilder/TrackObject.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TrackBuilder/Windmill.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TrackBuilder/Windmill.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TrackBuilder/WindmillAttacker.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TrackBuilder/WindmillAttacker.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Fallback.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Fallback.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserSettings/EditorUserSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/EditorUserSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserSettings/Layouts/CurrentMaximizeLayout.dwlt" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/Layouts/CurrentMaximizeLayout.dwlt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserSettings/Layouts/default-2022.dwlt" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/Layouts/default-2022.dwlt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -141,7 +153,7 @@
 }</component>
   <component name="RunManager" selected="Attach to Unity Editor.Attach to Unity Editor">
     <configuration name="Standalone Player" type="RunUnityExe" factoryName="Unity Executable">
-      <option name="EXE_PATH" value="$USER_HOME$/YandexDisk/DroneExe\DroneFootball.exe" />
+      <option name="EXE_PATH" value="$USER_HOME$/YandexDisk/DroneExe\Drone.exe" />
       <option name="PROGRAM_PARAMETERS" value="" />
       <option name="WORKING_DIRECTORY" value="C:\Work\Unity\DroneExe" />
       <option name="PASS_PARENT_ENVS" value="1" />
@@ -182,10 +194,10 @@
       </option>
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="17404">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="3060">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" value="17404" />
+      <option name="pid" value="3060" />
       <option name="projectPathOnTarget" />
       <option name="selectedOptions">
         <list />
@@ -318,7 +330,8 @@
       <workItem from="1687155717798" duration="17785000" />
       <workItem from="1687257859471" duration="3657000" />
       <workItem from="1687263305990" duration="7718000" />
-      <workItem from="1687332189321" duration="18514000" />
+      <workItem from="1687332189321" duration="20894000" />
+      <workItem from="1687426674518" duration="4572000" />
     </task>
     <task id="LOCAL-00001" summary="Add checkpoint spawn in droneRace">
       <created>1673510278765</created>
@@ -552,6 +565,23 @@
     <option name="LAST_COMMIT_MESSAGE" value="Add thermal vision&#10;Add yOffset individual increase&#10;Fix scratch get control mode" />
   </component>
   <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Assets/Scripts/DroneRpgController.cs</url>
+          <line>39</line>
+          <properties documentPath="C:\Work\Unity\DroneGames\Assets\Scripts\DroneRpgController.cs" initialLine="39" containingFunctionPresentation="Method 'ApplyDamage'">
+            <startOffsets>
+              <option value="979" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1006" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
     <pin-to-top-manager>
       <pinned-members>
         <PinnedItemInfo parentTag="Type#UnityEngine.Events.UnityEventBase" memberName="m_PersistentCalls" />

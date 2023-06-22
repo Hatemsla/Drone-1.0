@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace DroneFootball
+namespace Drone
 {
     public class Map : MonoBehaviour, IPointerClickHandler
     {

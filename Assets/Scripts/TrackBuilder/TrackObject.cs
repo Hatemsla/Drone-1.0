@@ -10,10 +10,12 @@ namespace Builder
         public ObjectsType objectType = ObjectsType.Other;
         public HasPortal hasPortal = HasPortal.No;
         public InteractiveType interactiveType = InteractiveType.None;
+        public EffectType effectType = EffectType.Massive;
         public float yOffset;
         public float yOffsetIncrease;
         public bool isActive;
         public float maxMouseDistance = 3f;
+        public float damage = 1f;
         public string objectName;
         public string objectDescription;
 

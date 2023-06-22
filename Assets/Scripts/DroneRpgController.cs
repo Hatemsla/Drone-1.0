@@ -35,7 +35,7 @@ namespace Drone
             }
         }
 
-        public void ApplyDamage(int damage)
+        public void ApplyDamage(float damage)
         {
             var armorPercentage = 0.9f;
             var healthPercentage = 1f - armorPercentage;
@@ -71,6 +71,33 @@ namespace Drone
             }
 
             return _thresholds.Length - 1;
+        }
+
+        private void OnCollisionEnter(Collision other)
+        {
+            var trackObject = other.transform.GetComponentInParent<TrackObject>();
+            if (trackObject && droneBuilderController.currentPercentSpeed >= 50f)
+            {
+                switch (trackObject.effectType)
+                {
+                    case EffectType.Massive:
+                        ApplyDamage(droneBuilderController.currentPercentSpeed / 2);
+                        break;
+                    case EffectType.Destructible:
+                        if (BuilderManager.Instance.isGameMode)
+                            Destroy(trackObject.gameObject);
+                        else
+                            transform.gameObject.SetActive(false);
+                        break;
+                    case EffectType.Hybrid:
+                        ApplyDamage(trackObject.damage);
+                        if (BuilderManager.Instance.isGameMode)
+                            Destroy(trackObject.gameObject);
+                        else
+                            trackObject.gameObject.SetActive(false);
+                        break;
+                }
+            }
         }
     }
 }

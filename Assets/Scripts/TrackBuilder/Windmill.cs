@@ -14,5 +14,14 @@ namespace Builder
         {
             trap.MoveRotation(trap.rotation * Quaternion.Euler(rotateDirection * (rotateSpeed * Time.deltaTime)));
         }
+        
+        private void OnCollisionEnter(Collision other)
+        {
+            var player = other.transform.root.GetComponentInParent<DroneBuilderController>();
+            if (player)
+            {
+                player.droneRpgController.ApplyDamage(rotateSpeed / 10 / 2);
+            }
+        }
     }
 }

@@ -1,7 +1,8 @@
 ﻿using System;
+using DroneFootball;
 using UnityEngine;
 
-namespace DroneFootball
+namespace Drone
 {
     public class MapManager : MonoBehaviour
     {
