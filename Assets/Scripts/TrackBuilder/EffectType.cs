@@ -4,6 +4,7 @@
     {
         Destructible,
         Massive,
-        Hybrid
+        Hybrid,
+        None
     }
 }

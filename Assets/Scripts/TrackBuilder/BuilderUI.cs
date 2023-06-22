@@ -13,6 +13,8 @@ namespace Builder
         public TMP_Text batteryText;
         public TMP_Text timeText;
         public TMP_Text checkpointsCountText;
+        public TMP_Text coinsCountText;
+        public TMP_Text crystalsCountText;
         public DroneBars healthBar;
         public DroneBars armorBar;
         
@@ -49,6 +51,6 @@ namespace Builder
         
         [Header("Animations")]
         public Animator savePanelAnimator;
-        
+
     }
 }

@@ -5,6 +5,20 @@
         private float _health;
         private float _armor;
         private float _battery;
+        private int _coins;
+        private int _crystals;
+
+        public int Crystals
+        {
+            get => _crystals;
+            set => _crystals = value;
+        }
+        
+        public int Coins
+        {
+            get => _coins;
+            set => _coins = value;
+        }
         
         public float Health
         {
