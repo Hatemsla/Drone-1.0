@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Builder;
 using UnityEngine;
 
 public class Timer : MonoBehaviour
@@ -9,6 +10,8 @@ public class Timer : MonoBehaviour
 
     public float waitForStartGame;
     public float waitForEndGame;
+
+    public float currentTime;
 
     private void Start()
     {
@@ -20,11 +23,14 @@ public class Timer : MonoBehaviour
     {
         WaitForEndGame();
         WaitForStartGame();
+        
+        if(!RewindManager.Instance.IsBeingRewinded && BuilderManager.Instance.isMove)
+            currentTime += Time.deltaTime;
     }
 
     public void WaitForEndGame()
     {
-        if (waitForEndGame >= 0 && waitForStartGame <= 0)
+        if (waitForEndGame >= 0 && waitForStartGame <= 0 && !RewindManager.Instance.IsBeingRewinded)
         {
             waitForEndGame -= Time.deltaTime;
         }

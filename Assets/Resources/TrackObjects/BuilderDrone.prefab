@@ -373,7 +373,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 718910220148088088}
-  m_LocalRotation: {x: 0.11870825, y: -0.0000000042711794, z: 5.1063476e-10, w: 0.9929292}
+  m_LocalRotation: {x: 0.11870825, y: -0.0000000042711803, z: 5.1063487e-10, w: 0.9929292}
   m_LocalPosition: {x: 0, y: 1.19, z: -2.02}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1976,6 +1976,8 @@ GameObject:
   - component: {fileID: 3929679829912247987}
   - component: {fileID: 8851807507189300604}
   - component: {fileID: 7767562909715087698}
+  - component: {fileID: 4325667061062234284}
+  - component: {fileID: 922666209851334460}
   m_Layer: 8
   m_Name: BuilderDrone
   m_TagString: Player
@@ -2102,8 +2104,10 @@ MonoBehaviour:
   lerpSpeed: 5
   yaw: 0
   isSimpleMode: 1
+  isStop: 0
   boostsCount: 0
   currentSpeed: 0
+  currentPercentSpeed: 0
   flashLight: {fileID: 2559315850702973615}
   droneBuilderCheckNode: {fileID: 0}
   droneBuilderSoundController: {fileID: 0}
@@ -2170,12 +2174,22 @@ MonoBehaviour:
   connection: {fileID: 0}
   objectType: 4
   hasPortal: 1
+  interactiveType: 0
+  effectType: 1
   yOffset: 0.2
   yOffsetIncrease: 0
   isActive: 0
   maxMouseDistance: 0
+  damage: 1
   objectName: 
   objectDescription: 
+  windmill: {fileID: 0}
+  magnet: {fileID: 0}
+  pendulum: {fileID: 0}
+  windZone: {fileID: 0}
+  freezingBall: {fileID: 0}
+  battery: {fileID: 0}
+  boost: {fileID: 0}
 --- !u!114 &3929679829912247987
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2302,6 +2316,42 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &4325667061062234284
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5984266150220761620}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1853014c10a6eb46a8363fdc11758e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  trackObjectActiveState: 0
+  trackTransform: 1
+  trackVelocity: 1
+  trackAnimator: 0
+  trackAudio: 0
+  trackParticles:
+    enabled: 0
+    value:
+      particleTrackingLimit: 0
+      particleRestartFrom: 0
+      particleSystems: []
+--- !u!114 &922666209851334460
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5984266150220761620}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5ead070b9f24323bb010aa43c6535fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  droneController: {fileID: 5984266151265704063}
 --- !u!1 &5984266150251674074
 GameObject:
   m_ObjectHideFlags: 0

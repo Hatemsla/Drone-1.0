@@ -548,10 +548,18 @@ SphereCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2518833345567129754}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 430c8b21e6a352248b853e54ebc427a6, type: 2}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
   m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 2
+  serializedVersion: 3
   m_Radius: 0.43130174
   m_Center: {x: 0, y: 0.39725205, z: 0}
 --- !u!1 &2633377984231577332
@@ -1287,6 +1295,12 @@ GameObject:
   - component: {fileID: 4614730690171260030}
   - component: {fileID: 983543520344574869}
   - component: {fileID: 3510808209705705292}
+  - component: {fileID: 728600974130496787}
+  - component: {fileID: 8062848276550936934}
+  - component: {fileID: 528952657342025607}
+  - component: {fileID: 3626234170533336811}
+  - component: {fileID: 2062375249290902073}
+  - component: {fileID: 1890344073081976521}
   m_Layer: 3
   m_Name: DroneFootballAI
   m_TagString: Bot
@@ -1309,7 +1323,7 @@ Transform:
   - {fileID: 6578335343262745132}
   - {fileID: 4614730690203287482}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &4614730690171260030
 Rigidbody:
@@ -1318,10 +1332,21 @@ Rigidbody:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4614730690171260027}
-  serializedVersion: 2
+  serializedVersion: 4
   m_Mass: 1
   m_Drag: 0.5
   m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -1366,6 +1391,104 @@ MonoBehaviour:
   targetTransform: {fileID: 0}
   footballController: {fileID: 0}
   droneMeshRenderer: {fileID: 2790139280912237602}
+--- !u!114 &728600974130496787
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4614730690171260027}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1853014c10a6eb46a8363fdc11758e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  trackObjectActiveState: 0
+  trackTransform: 1
+  trackVelocity: 1
+  trackAnimator: 0
+  trackAudio: 0
+  trackParticles:
+    enabled: 0
+    value:
+      particleTrackingLimit: 0
+      particleRestartFrom: 0
+      particleSystems: []
+--- !u!114 &8062848276550936934
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4614730690171260027}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9665e5496f694495a10f28a04596eadf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  droneAi: {fileID: 3510808209705705292}
+--- !u!114 &528952657342025607
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4614730690171260027}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df39eaa033de4f7b8cfc9f2d652fc575, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  checkNode: {fileID: 983543520344574869}
+--- !u!114 &3626234170533336811
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4614730690171260027}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1853014c10a6eb46a8363fdc11758e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  trackObjectActiveState: 0
+  trackTransform: 1
+  trackVelocity: 1
+  trackAnimator: 0
+  trackAudio: 0
+  trackParticles:
+    enabled: 0
+    value:
+      particleTrackingLimit: 0
+      particleRestartFrom: 0
+      particleSystems: []
+--- !u!114 &2062375249290902073
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4614730690171260027}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9665e5496f694495a10f28a04596eadf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  droneAi: {fileID: 3510808209705705292}
+--- !u!114 &1890344073081976521
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4614730690171260027}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df39eaa033de4f7b8cfc9f2d652fc575, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  checkNode: {fileID: 983543520344574869}
 --- !u!1 &4614730690203287477
 GameObject:
   m_ObjectHideFlags: 0

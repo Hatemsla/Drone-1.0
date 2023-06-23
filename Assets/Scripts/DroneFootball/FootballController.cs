@@ -40,8 +40,6 @@ namespace DroneFootball
             droneFootballController.isSimpleMode = isSimpleMode;
             playerCheckNode = droneFootballController.droneFootballCheckNode;
 
-            footballUIManager.scoreText.text = $"Счет: {playerCheckNode.currentNode}";
-
             foreach (var droneAI in droneFootballAIList)
             {
                 droneAI.footballController = this;
@@ -56,6 +54,7 @@ namespace DroneFootball
             CheckStartGame();
             CheckEndGame();
             CheckTabPanel();
+            CheckScore();
         }
 
         private void LateUpdate()

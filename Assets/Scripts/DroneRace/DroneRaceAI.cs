@@ -6,19 +6,8 @@ using UnityEngine;
 namespace DroneRace
 {
     [RequireComponent(typeof(Rigidbody), typeof(DroneRaceCheckNode))]
-    public class DroneRaceAI : MonoBehaviour
+    public class DroneRaceAI : DroneAI
     {
-        public float speed = 1;
-        public float minMaxPitch;
-        public float minMaxRoll;
-        public float proportionalGain;
-        public float integralGain;
-        public float derivativeGain;
-        public float outputMin = -1;
-        public float outputMax = 1;
-        public float integralSaturation;
-        public float throttle;
-        public float lerpSpeed;
         public DroneRaceCheckNode droneRaceCheckNode;
         public RaceController raceController;
         public MeshRenderer droneMeshRenderer;
@@ -60,12 +49,13 @@ namespace DroneRace
 
         private void DroneMove()
         {
-            var targetPosition = droneRaceCheckNode.nodes[droneRaceCheckNode.currentNode].position;
+            targetTransform = droneRaceCheckNode.nodes[droneRaceCheckNode.currentNode];
+            var targetPosition = targetTransform.position;
             foreach (var engine in _engines) engine.UpdateEngine(_rb, throttle);
             throttle = _throttleController.UpdateThrottle(Time.fixedDeltaTime, _rb.position.y, targetPosition.y);
 
-            float pitch = _pitchController.UpdateThrottle(Time.fixedDeltaTime, _rb.position.x, targetPosition.x);
-            float roll = _rollController.UpdateThrottle(Time.fixedDeltaTime, _rb.position.z, targetPosition.z);
+            var pitch = _pitchController.UpdateThrottle(Time.fixedDeltaTime, _rb.position.x, targetPosition.x);
+            var roll = _rollController.UpdateThrottle(Time.fixedDeltaTime, _rb.position.z, targetPosition.z);
 
             targetPosition.y = _rb.position.y;
             

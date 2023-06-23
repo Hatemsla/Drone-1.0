@@ -5,9 +5,8 @@ using System.Linq;
 using Builder;
 using UnityEngine;
 
-public class DroneBuilderCheckNode : MonoBehaviour
+public class DroneBuilderCheckNode : CheckNode
 {
-    public int currentNode;
     public List<BuilderCheckpointTrigger> nodes;
     
     private void Update()

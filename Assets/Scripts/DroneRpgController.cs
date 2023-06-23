@@ -21,7 +21,7 @@ namespace Drone
 
         private void Update()
         {
-            if (BuilderManager.Instance.isMove)
+            if (BuilderManager.Instance.isMove && !RewindManager.Instance.IsBeingRewinded)
                 DroneData.Battery -= powerUsageRate * Time.deltaTime;
 
             if (DroneData.Health <= 0)

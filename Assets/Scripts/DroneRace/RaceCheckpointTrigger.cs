@@ -83,7 +83,7 @@ namespace DroneRace
         private IEnumerator DestroyGate()
         {
             yield return new WaitForSeconds(3f);
-            Destroy(gameObject);
+            gameObject.SetActive(false);
         }
     }
 }

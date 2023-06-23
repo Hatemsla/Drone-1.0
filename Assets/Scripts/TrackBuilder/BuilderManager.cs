@@ -25,7 +25,6 @@ namespace Builder
         public string levelName;
         public float interfaceScale;
         public float currentYawSensitivity;
-        public float currentTime;
         public int currentSelectObjectIndex;
         public bool canPlace;
         public bool isMove;
@@ -90,6 +89,8 @@ namespace Builder
 
         private void Start()
         {
+            builderUI.pathArrow.gameObject.SetActive(false);
+            
             if (isLoadLevel)
             {
                 StartCoroutine(LoadScene());
@@ -109,7 +110,6 @@ namespace Builder
         {
             if (isMove)
             {
-                currentTime += Time.deltaTime;
                 SetDroneParameters();
             }
 
@@ -241,8 +241,8 @@ namespace Builder
         private void SetDroneParameters()
         {
             builderUI.speedText.text = $"{droneBuilderController.currentSpeed:00}";
-            float minutes = Mathf.FloorToInt(currentTime / 60);
-            float seconds = Mathf.FloorToInt(currentTime % 60);
+            float minutes = Mathf.FloorToInt(timer.currentTime / 60);
+            float seconds = Mathf.FloorToInt(timer.currentTime % 60);
             builderUI.timeText.text = $"{minutes:00}:{seconds:00}";
             builderUI.batteryText.text = $"{droneBuilderController.droneRpgController.DroneData.Battery:00}"; 
             builderUI.checkpointsCountText.text = $"{droneBuilderCheckNode.currentNode}/{droneBuilderCheckNode.nodes.Count}";
@@ -360,7 +360,7 @@ namespace Builder
             isMove = !isMove;
             if (isMove)
             {
-                currentTime = 0;
+                timer.currentTime = 0;
                 droneBuilderController.droneRpgController.DroneData = new DroneData(100, 100, 100);
                 builderUI.droneView.SetActive(true);
                 freeFlyCamera.enabled = false;
@@ -448,6 +448,13 @@ namespace Builder
                 var layer = Convert.ToInt32(kvp.Value["layer"]);
                 var yOffset = Convert.ToSingle(kvp.Value["yOffset"]);
                 var maxMouseDistance = Convert.ToSingle(kvp.Value["maxMouseDistance"]);
+                var rotSpeed = kvp.Value["rotSpeed"] != "null" ? Convert.ToSingle(kvp.Value["rotSpeed"]) : 0f;
+                var magnetForce = kvp.Value["magnetForce"] != "null" ? Convert.ToSingle(kvp.Value["magnetForce"]) : 0f;
+                var pendulumMoveSpeed = kvp.Value["pendulumMoveSpeed"] != "null" ? Convert.ToSingle(kvp.Value["pendulumMoveSpeed"]) : 0f;
+                var windForce = kvp.Value["windForce"] != "null" ? Convert.ToSingle(kvp.Value["windForce"]) : 0f;
+                var batteryEnergy = kvp.Value["batteryEnergy"] != "null" ? Convert.ToSingle(kvp.Value["batteryEnergy"]) : 0f;
+                var freezing = kvp.Value["freezing"] != "null" && Convert.ToBoolean(kvp.Value["freezing"]);
+                
                 var newObj = Instantiate(Resources.Load<GameObject>("TrackObjects/" + objectName), position, Quaternion.Euler(rotation));
                 yield return new WaitForSeconds(0.01f);
                 TrackBuilderUtils.ChangeLayerRecursively(newObj.transform, layer);
@@ -457,6 +464,31 @@ namespace Builder
                 var trackObj = newObj.GetComponent<TrackObject>();
                 trackObj.yOffset = yOffset;
                 trackObj.maxMouseDistance = maxMouseDistance;
+                
+                trackObj.windmill = trackObj.GetComponentInChildren<Windmill>();
+                if (trackObj.windmill != null)
+                    trackObj.windmill.rotateSpeed = rotSpeed;
+
+                trackObj.magnet = trackObj.GetComponentInChildren<RigidbodyMagnet>();
+                if (trackObj.magnet != null)
+                    trackObj.magnet.magnetForce = magnetForce;
+
+                trackObj.pendulum = trackObj.GetComponentInChildren<Pendulum>();
+                if (trackObj.pendulum != null)
+                    trackObj.pendulum.moveSpeed = pendulumMoveSpeed;
+
+                trackObj.windZone = trackObj.GetComponentInChildren<WindZoneScript>();
+                if (trackObj.windZone != null)
+                    trackObj.windZone.windForce = windForce;
+
+                trackObj.battery = trackObj.GetComponentInChildren<Battery>();
+                if (trackObj.battery != null)
+                    trackObj.battery.energy = batteryEnergy;
+
+                trackObj.freezingBall = trackObj.GetComponentInChildren<FreezingBall>();
+                if (trackObj.freezingBall != null)
+                    trackObj.freezingBall.isFreezing = freezing;
+
                 objectsPool.Add(newObj);
             }
             

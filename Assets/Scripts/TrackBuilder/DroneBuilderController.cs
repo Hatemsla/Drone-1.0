@@ -3,22 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Drone;
+using DroneFootball;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace Builder
 {
-    public class DroneBuilderController : MonoBehaviour
+    public class DroneBuilderController : DroneController
     {
-        public float minMaxPitch;
-        public float minMaxRoll;
-        public float yawPower;
-        public Vector2 cyclic;
-        public float pedals;
-        public float throttle;
-        public float lerpSpeed;
-        public float yaw;
-        public bool isSimpleMode;
         public int boostsCount;
         public float currentSpeed;
         public float currentPercentSpeed;

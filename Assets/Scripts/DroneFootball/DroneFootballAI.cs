@@ -6,20 +6,8 @@ using UnityEngine;
 namespace DroneFootball
 {
     [RequireComponent(typeof(DroneFootballCheckNode), typeof(Rigidbody))]
-    public class DroneFootballAI : MonoBehaviour
+    public class DroneFootballAI : DroneAI
     {
-        public float speed;
-        public float minMaxPitch;
-        public float minMaxRoll;
-        public float proportionalGain;
-        public float integralGain;
-        public float derivativeGain;
-        public float outputMin = -1;
-        public float outputMax = 1;
-        public float integralSaturation;
-        public float throttle;
-        public float lerpSpeed;
-        public Transform targetTransform;
         public FootballController footballController;
         public MeshRenderer droneMeshRenderer;
         
@@ -59,8 +47,8 @@ namespace DroneFootball
             throttle = _throttleController.UpdateThrottle(Time.fixedDeltaTime, _rb.position.y,
                 targetTransform.position.y);
 
-            float pitch = _pitchController.UpdateThrottle(Time.fixedDeltaTime, _rb.position.x, targetTransform.position.x);
-            float roll = _rollController.UpdateThrottle(Time.fixedDeltaTime, _rb.position.z, targetTransform.position.z);
+            var pitch = _pitchController.UpdateThrottle(Time.fixedDeltaTime, _rb.position.x, targetTransform.position.x);
+            var roll = _rollController.UpdateThrottle(Time.fixedDeltaTime, _rb.position.z, targetTransform.position.z);
 
             var targetPosition = targetTransform.position;
             targetPosition.y = _rb.position.y;

@@ -5,9 +5,8 @@ using Random = UnityEngine.Random;
 
 namespace DroneRace
 {
-    public class DroneRaceCheckNode : MonoBehaviour
+    public class DroneRaceCheckNode : CheckNode
     {
-        public int currentNode;
         public float wayDistance;
         public List<Transform> nodes;
         public GameObject checkPointPrefab;

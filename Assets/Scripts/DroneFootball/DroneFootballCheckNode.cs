@@ -6,8 +6,7 @@ using UnityEngine;
 
 namespace DroneFootball
 {
-    public class DroneFootballCheckNode : MonoBehaviour
+    public class DroneFootballCheckNode : CheckNode
     {
-        public int currentNode;
     }
 }

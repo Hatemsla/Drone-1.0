@@ -9,17 +9,8 @@ using UnityEngine.InputSystem;
 
 namespace DroneFootball
 {
-    public class DroneFootballController : MonoBehaviour
+    public class DroneFootballController : DroneController
     {
-        public float minMaxPitch;
-        public float minMaxRoll;
-        public float yawPower;
-        public Vector2 cyclic;
-        public float pedals;
-        public float throttle;
-        public float lerpSpeed;
-        public bool isSimpleMode;
-        public bool isStop;
         public DroneFootballCheckNode droneFootballCheckNode;
         public FootballController footballController;
         public MeshRenderer droneMeshRenderer;
@@ -29,7 +20,6 @@ namespace DroneFootball
         private float _finalPitch;
         private float _finalRoll;
         private float _finalYaw;
-        private float _yaw;
         private float _isMove;
         private bool _isStopAlready;
 
@@ -91,11 +81,11 @@ namespace DroneFootball
             
             float pitch = cyclic.y * minMaxPitch;
             float roll = -cyclic.x * minMaxRoll;
-            _yaw += pedals * yawPower;
+            yaw += pedals * yawPower;
 
             _finalPitch = Mathf.Lerp(_finalPitch, pitch, Time.deltaTime * lerpSpeed);
             _finalRoll = Mathf.Lerp(_finalRoll, roll, Time.deltaTime * lerpSpeed);
-            _finalYaw = Mathf.Lerp(_finalYaw, _yaw, Time.deltaTime * lerpSpeed);
+            _finalYaw = Mathf.Lerp(_finalYaw, yaw, Time.deltaTime * lerpSpeed);
             
             Quaternion rot = Quaternion.Euler(_finalPitch, _finalYaw, _finalRoll);
             _rb.MoveRotation(rot);
