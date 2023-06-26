@@ -26,6 +26,7 @@ namespace Builder
         public FreezingBall freezingBall;
         public Battery battery;
         public BoostTrigger boost;
+        public Lamp lamp;
 
         public Vector3 Scale
         {

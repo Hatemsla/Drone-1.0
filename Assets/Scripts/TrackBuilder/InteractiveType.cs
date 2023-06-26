@@ -9,6 +9,7 @@
         Battery,
         Wind,
         Freezing,
-        Boost
+        Boost,
+        Lamp
     }
 }

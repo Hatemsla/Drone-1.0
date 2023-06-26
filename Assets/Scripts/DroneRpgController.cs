@@ -1,12 +1,11 @@
-﻿using System;
-using Builder;
+﻿using Builder;
 using UnityEngine;
 
 namespace Drone
 {
     public class DroneRpgController : MonoBehaviour
     {
-        public DroneBuilderController droneBuilderController;
+        public DroneController droneBuilderController;
         public DroneData DroneData;
         public int powerUsageRate;
         public bool isAlive = true;
@@ -24,15 +23,9 @@ namespace Drone
             if (BuilderManager.Instance.isMove && !RewindManager.Instance.IsBeingRewinded)
                 DroneData.Battery -= powerUsageRate * Time.deltaTime;
 
-            if (DroneData.Health <= 0)
-            {
-                isAlive = false;
-            }
+            if (DroneData.Health <= 0) isAlive = false;
 
-            if (DroneData.Battery <= 0)
-            {
-                isCharged = false;
-            }
+            if (DroneData.Battery <= 0) isCharged = false;
         }
 
         public void ApplyDamage(float damage)
@@ -57,18 +50,11 @@ namespace Drone
 
         public int GetCurrentHealthIndex(float value)
         {
-            if (value <= 0)
-            {
-                return -1;
-            }
+            if (value <= 0) return -1;
 
             for (var i = 0; i < _thresholds.Length; i++)
-            {
                 if (value <= _thresholds[i])
-                {
                     return _thresholds.Length - i - 1;
-                }
-            }
 
             return _thresholds.Length - 1;
         }
@@ -77,7 +63,6 @@ namespace Drone
         {
             var trackObject = other.transform.GetComponentInParent<TrackObject>();
             if (trackObject && droneBuilderController.currentPercentSpeed >= 50f)
-            {
                 switch (trackObject.effectType)
                 {
                     case EffectType.Massive:
@@ -90,6 +75,23 @@ namespace Drone
                             transform.gameObject.SetActive(false);
                         break;
                     case EffectType.Hybrid:
+                        if (trackObject.objectType == ObjectsType.Lamp)
+                        {
+                            var lamp = trackObject.GetComponent<Lamp>();
+                            if (lamp.isTurn)
+                            {
+                                lamp.TurnLamp();
+                            }
+                            else
+                            {
+                                if (BuilderManager.Instance.isGameMode)
+                                    Destroy(trackObject.gameObject);
+                                else
+                                    trackObject.gameObject.SetActive(false);
+                            }
+                            return;
+                        }
+
                         ApplyDamage(trackObject.damage);
                         if (BuilderManager.Instance.isGameMode)
                             Destroy(trackObject.gameObject);
@@ -97,7 +99,6 @@ namespace Drone
                             trackObject.gameObject.SetActive(false);
                         break;
                 }
-            }
         }
     }
 }

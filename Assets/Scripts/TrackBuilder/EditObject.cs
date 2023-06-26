@@ -160,5 +160,10 @@ namespace Builder
         {
             currentObject.boost.boost = value;
         }
+        
+        public void OnLampChanged(bool value)
+        {
+            currentObject.lamp.TurnLamp();
+        }
     }
 }

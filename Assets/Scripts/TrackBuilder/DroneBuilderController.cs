@@ -12,8 +12,6 @@ namespace Builder
     public class DroneBuilderController : DroneController
     {
         public int boostsCount;
-        public float currentSpeed;
-        public float currentPercentSpeed;
         public Light flashLight;
         public DroneBuilderCheckNode droneBuilderCheckNode;
         public DroneBuilderSoundController droneBuilderSoundController;

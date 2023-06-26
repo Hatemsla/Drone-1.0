@@ -33,12 +33,14 @@ namespace Builder
         [SerializeField] private TMP_Text batteryEnergyValue;
         [SerializeField] private TMP_Text boostForceValue;
         [SerializeField] private Toggle freezing;
+        [SerializeField] private Toggle lamp;
         [SerializeField] private GameObject windmillPanel;
         [SerializeField] private GameObject magnetPanel;
         [SerializeField] private GameObject pendulumPanel;
         [SerializeField] private GameObject windPanel;
         [SerializeField] private GameObject batteryPanel;
         [SerializeField] private GameObject freezingPanel;
+        [SerializeField] private GameObject lampPanel;
         [SerializeField] private GameObject boostPanel;
         [SerializeField] private List<GameObject> interactivePanels;
 
@@ -80,7 +82,7 @@ namespace Builder
             xyzScale.value = ConvertScaleToSliderValue(xyzS);
 
             if (!trackObject.windmill && !trackObject.magnet && !trackObject.pendulum && !trackObject.battery &&
-                !trackObject.windZone && !trackObject.windZone && !trackObject.freezingBall && !trackObject.boost)
+                !trackObject.windZone && !trackObject.windZone && !trackObject.freezingBall && !trackObject.boost && !trackObject.lamp)
                 TurnInteractivePanels(gameObject);
             else if (trackObject.windmill)
             {
@@ -124,6 +126,11 @@ namespace Builder
                 TurnInteractivePanels(boostPanel);
                 boostForce.value = trackObject.boost.boost;
                 boostForceValue.text = trackObject.boost.boost.ToString("f1", CultureInfo.CurrentCulture);
+            }
+            else if (trackObject.lamp)
+            {
+                TurnInteractivePanels(lampPanel);
+                lamp.isOn = trackObject.lamp.isTurn;
             }
         }
 

@@ -7,6 +7,7 @@
         Slant,
         Gate,
         Drone,
+        Lamp,
         Other
     }
 }

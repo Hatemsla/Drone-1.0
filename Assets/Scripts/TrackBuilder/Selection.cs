@@ -105,6 +105,9 @@ namespace Builder
                     case InteractiveType.Boost:
                         selectedTrackObject.boost = selectedTrackObject.GetComponentInChildren<BoostTrigger>();
                         break;
+                    case InteractiveType.Lamp:
+                        selectedTrackObject.lamp = selectedTrackObject.GetComponentInChildren<Lamp>();
+                        break;
                 }
 
                 editObject.OnSelectObject(selectedTrackObject);

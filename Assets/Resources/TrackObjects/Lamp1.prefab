@@ -324,6 +324,7 @@ GameObject:
   - component: {fileID: 5370337658596081177}
   - component: {fileID: 5760329422699941234}
   - component: {fileID: 4977062239885403080}
+  - component: {fileID: 390909539117887896}
   m_Layer: 7
   m_Name: Lamp1
   m_TagString: Untagged
@@ -392,7 +393,7 @@ MonoBehaviour:
   connection: {fileID: 0}
   objectType: 5
   hasPortal: 1
-  interactiveType: 0
+  interactiveType: 8
   effectType: 2
   yOffset: 0
   yOffsetIncrease: 0
@@ -408,3 +409,20 @@ MonoBehaviour:
   freezingBall: {fileID: 0}
   battery: {fileID: 0}
   boost: {fileID: 0}
+  lamp: {fileID: 0}
+--- !u!114 &390909539117887896
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4741328374309708963}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0cb28dbba5f43d4928b27650a5a0577, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lamp: {fileID: 770072802544371712}
+  meshes:
+  - {fileID: 3152446213013519452}
+  isTurn: 1

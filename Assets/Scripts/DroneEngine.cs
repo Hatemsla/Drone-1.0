@@ -1,4 +1,6 @@
+using System;
 using UnityEngine;
+
 public class DroneEngine : MonoBehaviour
 {
     public float maxPower = 4f;
@@ -7,13 +9,13 @@ public class DroneEngine : MonoBehaviour
 
     public void UpdateEngine(Rigidbody rb, float throttle)
     {
-        Vector3 upVector = transform.up;
+        var upVector = transform.up;
         upVector.x = 0f;
         upVector.z = 0f;
-        float diff = 1 - upVector.magnitude;
-        float finalDiff = Physics.gravity.magnitude * diff;
+        var diff = 1 - upVector.magnitude;
+        var finalDiff = Physics.gravity.magnitude * diff;
 
-        Vector3 engineForce = Vector3.zero;
+        var engineForce = Vector3.zero;
         engineForce = transform.up * (rb.mass * Physics.gravity.magnitude + finalDiff + throttle * maxPower) / 4f;
 
         rb.AddForce(engineForce, ForceMode.Force);
@@ -25,6 +27,6 @@ public class DroneEngine : MonoBehaviour
     {
         if (!propeller) return;
 
-        propeller.Rotate(Vector3.forward, propellerRotSpeed, Space.Self);
+        propeller.Rotate(Vector3.forward, propellerRotSpeed * maxPower, Space.Self);
     }
 }

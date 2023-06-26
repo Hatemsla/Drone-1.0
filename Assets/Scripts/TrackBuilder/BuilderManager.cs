@@ -55,6 +55,7 @@ namespace Builder
         public UnityEvent testLevelEvent;
         public UnityEvent loadingComplete;
 
+        private List<Lamp> _lamps;
         private int _currentGroundIndex;
         private bool _isTabPanel;
         private bool _isLevelEnd;
@@ -353,9 +354,16 @@ namespace Builder
             builderUI.levelResultPanel.SetActive(false);
         }
 
+        private void TurnOnLamps()
+        {
+            foreach (var lamp in _lamps)
+                lamp.TurnOn();
+        }
+
         public void TestLevel()
         {
             isMove = !isMove;
+            _lamps = FindObjectsOfType<Lamp>().ToList();
             if (isMove)
             {
                 timer.currentTime = 0;
@@ -387,6 +395,7 @@ namespace Builder
             else
             {
                 testLevelEvent.Invoke();
+                TurnOnLamps();
                 builderUI.droneView.SetActive(false);
                 freeFlyCamera.enabled = true;
                 freeFlyCamera.GetComponent<CinemachineVirtualCamera>().Priority = 10;

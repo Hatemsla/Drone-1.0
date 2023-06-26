@@ -47,22 +47,22 @@ namespace DroneFootball
                 _isMove = Mathf.Abs(cyclic.x) + Mathf.Abs(cyclic.y) + Mathf.Abs(pedals) + Mathf.Abs(throttle);
                 DroneMove();
             }
-            else if(footballController.isGameStart && !_isStopAlready)
+            else if (footballController.isGameStart && !_isStopAlready)
             {
                 StartCoroutine(DroneStop());
             }
         }
-        
+
         private void OnCyclic(InputValue value)
         {
             cyclic = value.Get<Vector2>();
         }
-        
+
         private void OnPedals(InputValue value)
         {
             pedals = value.Get<float>();
         }
-        
+
         private void OnThrottle(InputValue value)
         {
             throttle = value.Get<float>();
@@ -71,36 +71,28 @@ namespace DroneFootball
         private void DroneMove()
         {
             if (_isMove != 0 || isSimpleMode)
-            {
                 foreach (var engine in _engines)
-                {
                     engine.UpdateEngine(_rb, throttle);
-                }
-            }
             CheckDroneHover();
-            
-            float pitch = cyclic.y * minMaxPitch;
-            float roll = -cyclic.x * minMaxRoll;
+
+            var pitch = cyclic.y * minMaxPitch;
+            var roll = -cyclic.x * minMaxRoll;
             yaw += pedals * yawPower;
 
             _finalPitch = Mathf.Lerp(_finalPitch, pitch, Time.deltaTime * lerpSpeed);
             _finalRoll = Mathf.Lerp(_finalRoll, roll, Time.deltaTime * lerpSpeed);
             _finalYaw = Mathf.Lerp(_finalYaw, yaw, Time.deltaTime * lerpSpeed);
-            
-            Quaternion rot = Quaternion.Euler(_finalPitch, _finalYaw, _finalRoll);
+
+            var rot = Quaternion.Euler(_finalPitch, _finalYaw, _finalRoll);
             _rb.MoveRotation(rot);
         }
-        
+
         private void CheckDroneHover()
         {
             if (isSimpleMode && _isMove == 0)
-            {
                 _rb.drag = 5;
-            }
             else
-            {
                 _rb.drag = 0.5f;
-            }
         }
 
         private IEnumerator DroneStop()
