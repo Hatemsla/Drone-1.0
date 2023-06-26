@@ -58,6 +58,7 @@ namespace DroneFootball
                 objData["windForce"] = trackObj.windZone != null ? trackObj.windZone.windForce.ToString(CultureInfo.CurrentCulture) : null;
                 objData["batteryEnergy"] = trackObj.battery != null ? trackObj.battery.energy.ToString(CultureInfo.CurrentCulture) : null;
                 objData["freezing"] = trackObj.freezingBall != null ? trackObj.freezingBall.isFreezing.ToString(CultureInfo.CurrentCulture) : null;
+                objData["boost"] = trackObj.boost != null ? trackObj.boost.boost.ToString(CultureInfo.CurrentCulture) : null;
                 data[obj.GetInstanceID() + ""] = objData;
             }
             var json = JsonConvert.SerializeObject(data, Formatting.Indented);

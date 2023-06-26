@@ -24,7 +24,7 @@ public class Timer : MonoBehaviour
         WaitForEndGame();
         WaitForStartGame();
         
-        if(!RewindManager.Instance.IsBeingRewinded && BuilderManager.Instance.isMove)
+        if(!RewindManager.Instance.IsBeingRewinded)
             currentTime += Time.deltaTime;
     }
 

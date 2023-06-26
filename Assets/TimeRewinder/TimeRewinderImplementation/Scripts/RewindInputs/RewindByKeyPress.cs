@@ -1,5 +1,8 @@
 using UnityEngine;
 
+/// <summary>
+///  Example how to rewind time with key press
+/// </summary>
 public class RewindByKeyPress : MonoBehaviour
 {
     bool isRewinding = false;
@@ -16,7 +19,7 @@ public class RewindByKeyPress : MonoBehaviour
             if (!isRewinding)
             {
                 RewindManager.Instance.StartRewindTimeBySeconds(rewindValue);
-                // rewindSound.Play();
+                rewindSound.Play();
             }
             else
             {
@@ -30,7 +33,7 @@ public class RewindByKeyPress : MonoBehaviour
             if(isRewinding)
             {
                 RewindManager.Instance.StopRewindTimeBySeconds();
-                // rewindSound.Stop();
+                rewindSound.Stop();
                 rewindValue = 0;
                 isRewinding = false;
             }

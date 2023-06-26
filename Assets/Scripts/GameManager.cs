@@ -47,6 +47,7 @@ namespace DroneFootball
                     var dontDestroyGameManager = FindObjectsOfType<GameManager>();
                     var dontDestroyDbManager = FindObjectsOfType<DBManager>();
                     var dontDestroyServer = FindObjectsOfType<Server>();
+                    var dontDestroyScratchClient = FindObjectsOfType<ScratchClient>();
 
                     foreach (var obj in dontDestroyGameManager)
                         if (obj.transform.gameObject != transform.gameObject)
@@ -57,6 +58,10 @@ namespace DroneFootball
                             Destroy(obj);
 
                     foreach (var obj in dontDestroyServer)
+                        if (obj.transform.gameObject != transform.gameObject)
+                            Destroy(obj);
+
+                    foreach (var obj in dontDestroyScratchClient)
                         if (obj.transform.gameObject != transform.gameObject)
                             Destroy(obj);
 

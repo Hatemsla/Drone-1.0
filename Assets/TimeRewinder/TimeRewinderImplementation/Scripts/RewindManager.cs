@@ -5,12 +5,12 @@ using UnityEngine;
 
 public class RewindManager : MonoBehaviour
 {
- 
     /// <summary>
     /// Property defining how much into the past should be tracked. 
     /// You can edit this value to your preference
     /// </summary>
-    [field:SerializeField] public float HowManySecondsToTrack { get; private set; } = 12;
+    [field: SerializeField]
+    public float HowManySecondsToTrack { get; private set; } = 12;
 
     /// <summary>
     /// This property returns how many seconds are currently available for rewind
@@ -34,7 +34,7 @@ public class RewindManager : MonoBehaviour
 
 
     float rewindSeconds = 0;
-    List<RewindAbstract> _rewindedObjects;
+    public List<RewindAbstract> rewindedObjects;
 
     /// <summary>
     /// Call this method to rewind time by specified seconds instantly without snapshot preview. Usefull for one time instant rewinds.
@@ -42,20 +42,24 @@ public class RewindManager : MonoBehaviour
     /// <param name="seconds">Parameter defining how many seconds should object rewind to from now (Parameter must be >=0).</param>
     public void InstantRewindTimeBySeconds(float seconds)
     {
-        if(seconds>HowManySecondsAvailableForRewind)
+        if (seconds > HowManySecondsAvailableForRewind)
         {
-            Debug.LogError("Not enough stored tracked value!!! Reaching on wrong index. Called rewind should be less than HowManySecondsAvailableForRewind property");
+            Debug.LogError(
+                "Not enough stored tracked value!!! Reaching on wrong index. Called rewind should be less than HowManySecondsAvailableForRewind property");
             return;
         }
-        if(seconds<0)
+
+        if (seconds < 0)
         {
             Debug.LogError("Parameter in RewindTimeBySeconds() must have positive value!!!");
             return;
         }
-        _rewindedObjects.ForEach(x => x.Rewind(seconds));
+
+        rewindedObjects.ForEach(x => x.Rewind(seconds));
         HowManySecondsAvailableForRewind -= seconds;
         BuffersRestore?.Invoke(seconds);
     }
+
     /// <summary>
     /// Call this method if you want to start rewinding time with ability to preview snapshots. After done rewinding, StopRewindTimeBySeconds() must be called!!!. To update snapshot preview between, call method SetTimeSecondsInRewind().
     /// </summary>
@@ -64,8 +68,9 @@ public class RewindManager : MonoBehaviour
     public void StartRewindTimeBySeconds(float seconds)
     {
         if (IsBeingRewinded)
-            Debug.LogError("The previous rewind must be stopped by calling StopRewindTimeBySeconds() before you start another rewind");
-        
+            Debug.LogError(
+                "The previous rewind must be stopped by calling StopRewindTimeBySeconds() before you start another rewind");
+
         CheckReachingOutOfBounds(seconds);
 
         rewindSeconds = seconds;
@@ -81,18 +86,21 @@ public class RewindManager : MonoBehaviour
         CheckReachingOutOfBounds(seconds);
         rewindSeconds = seconds;
     }
+
     /// <summary>
     /// Call this method to stop previewing rewind state and resume normal game flow
     /// </summary>
     public void StopRewindTimeBySeconds()
     {
         if (!IsBeingRewinded)
-            Debug.LogError("Rewind must be started before you try to stop it. StartRewindTimeBySeconds() must be called first");
+            Debug.LogError(
+                "Rewind must be started before you try to stop it. StartRewindTimeBySeconds() must be called first");
 
         HowManySecondsAvailableForRewind -= rewindSeconds;
         BuffersRestore?.Invoke(rewindSeconds);
         IsBeingRewinded = false;
     }
+
     /// <summary>
     /// Call if you want to restart the whole tracking system
     /// </summary>
@@ -104,22 +112,26 @@ public class RewindManager : MonoBehaviour
         HowManySecondsAvailableForRewind = 0;
         TrackingEnabled = true;
     }
+
     private void CheckReachingOutOfBounds(float seconds)
     {
-        if (Mathf.Round(seconds*100) > Mathf.Round(HowManySecondsAvailableForRewind*100))
+        if (Mathf.Round(seconds * 100) > Mathf.Round(HowManySecondsAvailableForRewind * 100))
         {
-            Debug.LogError("Not enough stored tracked value!!! Reaching on wrong index. Called rewind should be less than HowManySecondsAvailableForRewind property");
+            Debug.LogError(
+                "Not enough stored tracked value!!! Reaching on wrong index. Called rewind should be less than HowManySecondsAvailableForRewind property");
             return;
         }
+
         if (seconds < 0)
         {
             Debug.LogError("Parameter in StartRewindTimeBySeconds() must have positive value!!!");
             return;
         }
     }
+
     private void Awake()
     {
-        _rewindedObjects = FindObjectsOfType<RewindAbstract>().ToList();
+        rewindedObjects = FindObjectsOfType<RewindAbstract>().ToList();
 
         if (Instance != null && Instance != this)
         {
@@ -128,24 +140,34 @@ public class RewindManager : MonoBehaviour
 
         Instance = this;
 
-        _rewindedObjects.ForEach(x => x.MainInit());
+        rewindedObjects.ForEach(x => x.MainInit());
     }
+
+    public void FindRewindObjects()
+    {
+        rewindedObjects = FindObjectsOfType<RewindAbstract>().ToList();
+        
+        rewindedObjects.ForEach(x => x.MainInit());
+    }
+
     private void OnEnable()
     {
         HowManySecondsAvailableForRewind = 0;
     }
+
     private void FixedUpdate()
-    {   
+    {
         if (IsBeingRewinded)
         {
-            _rewindedObjects.ForEach(x => x.Rewind(rewindSeconds));
+            rewindedObjects.ForEach(x => x.Rewind(rewindSeconds));
         }
-        else 
+        else
         {
-            _rewindedObjects.ForEach(x => x.Track());
+            rewindedObjects.ForEach(x => x.Track());
 
-            if(TrackingEnabled)
-                HowManySecondsAvailableForRewind = Mathf.Min(HowManySecondsAvailableForRewind + Time.fixedDeltaTime, HowManySecondsToTrack);
+            if (TrackingEnabled)
+                HowManySecondsAvailableForRewind = Mathf.Min(HowManySecondsAvailableForRewind + Time.fixedDeltaTime,
+                    HowManySecondsToTrack);
         }
     }
 

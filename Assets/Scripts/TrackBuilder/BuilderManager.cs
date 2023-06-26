@@ -17,8 +17,6 @@ using Outline = cakeslice.Outline;
 
 namespace Builder
 {
-    public class TestLevelEvent : UnityEvent {}
-    
     public class BuilderManager : MonoBehaviour
     {
         public static BuilderManager Instance;
@@ -54,7 +52,8 @@ namespace Builder
         public List<GameObject> objectsPool;
         [HideInInspector] public Scene levelScene;
 
-        public TestLevelEvent TestLevelEvent;
+        public UnityEvent testLevelEvent;
+        public UnityEvent loadingComplete;
 
         private int _currentGroundIndex;
         private bool _isTabPanel;
@@ -69,12 +68,9 @@ namespace Builder
         private Vector3 _dronePrevPosition;
         private Vector3 _prevMousePos;
 
-        public Action loadingComplete;
-
         private void Awake()
         {
             Instance = this;
-            TestLevelEvent = new TestLevelEvent();
             _startPointerSize = builderUI.pathArrow.sizeDelta;
             _selection = FindObjectOfType<Selection>();
             _selection.Select(droneBuilderController.gameObject);
@@ -90,6 +86,8 @@ namespace Builder
         private void Start()
         {
             builderUI.pathArrow.gameObject.SetActive(false);
+            loadingComplete.AddListener(RewindManager.Instance.FindRewindObjects);
+            loadingComplete.AddListener(RewindManager.Instance.RestartTracking);
             
             if (isLoadLevel)
             {
@@ -97,7 +95,7 @@ namespace Builder
             }
             else if (isGameLevel)
             {
-                loadingComplete += TestLevel;
+                loadingComplete.AddListener(TestLevel);
                 StartLevel();
             }
             else
@@ -379,7 +377,6 @@ namespace Builder
                 droneBuilderController.GetComponent<Rigidbody>().useGravity = true;
                 builderUI.createPanel.SetActive(false);
                 builderUI.editButtons.SetActive(false);
-                builderUI.objectEditPanel.SetActive(false);
                 if(droneBuilderCheckNode.nodes.Count > 0)
                     builderUI.pathArrow.gameObject.SetActive(true);
                 droneBuilderCheckNode.currentNode = 0;
@@ -389,7 +386,7 @@ namespace Builder
             }
             else
             {
-                TestLevelEvent.Invoke();
+                testLevelEvent.Invoke();
                 builderUI.droneView.SetActive(false);
                 freeFlyCamera.enabled = true;
                 freeFlyCamera.GetComponent<CinemachineVirtualCamera>().Priority = 10;
@@ -407,7 +404,6 @@ namespace Builder
                 _isTabPanel = false;
                 builderUI.createPanel.SetActive(true);
                 builderUI.editButtons.SetActive(true);
-                builderUI.objectEditPanel.SetActive(true);
                 builderUI.pathArrow.gameObject.SetActive(false);
                 droneBuilderSoundController.droneFly.Stop();
                 _selection.enabled = true;
@@ -454,6 +450,7 @@ namespace Builder
                 var windForce = kvp.Value["windForce"] != "null" ? Convert.ToSingle(kvp.Value["windForce"]) : 0f;
                 var batteryEnergy = kvp.Value["batteryEnergy"] != "null" ? Convert.ToSingle(kvp.Value["batteryEnergy"]) : 0f;
                 var freezing = kvp.Value["freezing"] != "null" && Convert.ToBoolean(kvp.Value["freezing"]);
+                var boost = kvp.Value["boost"] != "null" ? Convert.ToSingle(kvp.Value["boost"]) : 0f;
                 
                 var newObj = Instantiate(Resources.Load<GameObject>("TrackObjects/" + objectName), position, Quaternion.Euler(rotation));
                 yield return new WaitForSeconds(0.01f);
@@ -488,6 +485,10 @@ namespace Builder
                 trackObj.freezingBall = trackObj.GetComponentInChildren<FreezingBall>();
                 if (trackObj.freezingBall != null)
                     trackObj.freezingBall.isFreezing = freezing;
+
+                trackObj.boost = trackObj.GetComponentInChildren<BoostTrigger>();
+                if (trackObj.boost != null)
+                    trackObj.boost.boost = boost;
 
                 objectsPool.Add(newObj);
             }
@@ -641,6 +642,7 @@ namespace Builder
             {
                 Destroy(obj);
             }
+            RewindManager.Instance.rewindedObjects.Clear();
             objectsPool.Clear();
             pendingObjects.Clear();
         }
@@ -648,6 +650,7 @@ namespace Builder
         public void TurnUI()
         {
             builderUI.uiPanel.SetActive(false);
+            builderUI.droneView.SetActive(false);
         }
     }
 }

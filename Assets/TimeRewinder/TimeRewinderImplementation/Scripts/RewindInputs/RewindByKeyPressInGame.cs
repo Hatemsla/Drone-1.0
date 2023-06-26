@@ -10,7 +10,7 @@ public class RewindByKeyPressInGame : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (Input.GetKey(KeyCode.Space) && BuilderManager.Instance.isMove)
+        if (Input.GetKey(KeyCode.Space))
         {
             _rewindValue += rewindIntensity;
 

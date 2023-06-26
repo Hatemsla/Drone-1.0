@@ -3,13 +3,6 @@ using UnityEngine;
 
 namespace Sockets
 {
-    public enum DroneMode
-    {
-        AltHold,
-        Angle,
-        Manual
-    }
-    
     public class ScratchData
     {
         public string Mode;

@@ -21,7 +21,7 @@ namespace DroneFootball
         private void Start()
         {
             cameras = FindObjectsOfType<Camera>().ToList();
-            BuilderManager.Instance.TestLevelEvent.AddListener(OnTurnOffThermalVision);
+            BuilderManager.Instance.testLevelEvent.AddListener(OnTurnOffThermalVision);
         }
 
         private void Update()
