@@ -403,12 +403,22 @@ MonoBehaviour:
   objectType: 5
   hasPortal: 1
   interactiveType: 2
+  effectType: 1
   yOffset: 0.429
   yOffsetIncrease: 0.28
   isActive: 0
   maxMouseDistance: 0
+  damage: 1
   objectName: 
   objectDescription: 
+  windmill: {fileID: 0}
+  magnet: {fileID: 0}
+  pendulum: {fileID: 0}
+  windZone: {fileID: 0}
+  freezingBall: {fileID: 0}
+  battery: {fileID: 0}
+  boost: {fileID: 0}
+  lamp: {fileID: 0}
 --- !u!1 &4420926778266880387
 GameObject:
   m_ObjectHideFlags: 0
@@ -1213,8 +1223,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 0.7112393, z: 1}
-  m_Center: {x: 0, y: -0.1443803, z: 0}
+  m_Size: {x: 1, y: 0.5790311, z: 1.1161337}
+  m_Center: {x: 0, y: -0.23130965, z: 0.0060055256}
 --- !u!1 &8720341803887389186
 GameObject:
   m_ObjectHideFlags: 0

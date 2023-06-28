@@ -29,6 +29,7 @@ namespace Builder
         public bool isGameMode;
         public bool isLoadLevel;
         public bool isGameLevel;
+        public bool isInputText;
         public BuilderUI builderUI;
         public EditMenu editMenu;
         public BuilderAudioManager audioManager;
@@ -107,6 +108,9 @@ namespace Builder
 
         private void Update()
         {
+            if(isInputText)
+                return;
+            
             if (isMove)
             {
                 SetDroneParameters();

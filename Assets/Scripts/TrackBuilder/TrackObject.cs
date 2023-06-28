@@ -27,6 +27,7 @@ namespace Builder
         public Battery battery;
         public BoostTrigger boost;
         public Lamp lamp;
+        public Hint hint;
 
         public Vector3 Scale
         {

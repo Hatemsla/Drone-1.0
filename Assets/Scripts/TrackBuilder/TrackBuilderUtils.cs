@@ -29,7 +29,8 @@ namespace Builder
         public static void ChangeLayerRecursively(Transform obj, int layer)
         {
             if (LayerMask.LayerToName(obj.gameObject.layer) != "FloorConnection" && LayerMask.LayerToName(obj.gameObject.layer) != "WallConnection" 
-                && LayerMask.LayerToName(obj.gameObject.layer) != "SlantConnection" && LayerMask.LayerToName(obj.gameObject.layer) != "Ignore Raycast")
+                && LayerMask.LayerToName(obj.gameObject.layer) != "SlantConnection" && LayerMask.LayerToName(obj.gameObject.layer) != "Ignore Raycast"
+                && LayerMask.LayerToName(obj.gameObject.layer) != "Hint")
             {
                 obj.gameObject.layer = layer;
             }

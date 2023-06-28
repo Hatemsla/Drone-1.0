@@ -19,6 +19,9 @@ namespace Builder
 
         private void Update()
         {
+            if(BuilderManager.Instance.isInputText)
+                return;
+            
             if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
             {
                 var ray = Camera.main!.ScreenPointToRay(Input.mousePosition);
@@ -107,6 +110,9 @@ namespace Builder
                         break;
                     case InteractiveType.Lamp:
                         selectedTrackObject.lamp = selectedTrackObject.GetComponentInChildren<Lamp>();
+                        break;
+                    case InteractiveType.Hint:
+                        selectedTrackObject.hint = selectedTrackObject.GetComponentInChildren<Hint>();
                         break;
                 }
 

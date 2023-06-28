@@ -16,6 +16,7 @@ namespace Builder
         [SerializeField] private TMP_InputField xRot;
         [SerializeField] private TMP_InputField yRot;
         [SerializeField] private TMP_InputField zRot;
+        [SerializeField] private TMP_InputField hintInput;
         [SerializeField] private Slider xyzScale;
         [SerializeField] private Slider windmillRotSpeed;
         [SerializeField] private Slider magnetForce;
@@ -42,6 +43,7 @@ namespace Builder
         [SerializeField] private GameObject freezingPanel;
         [SerializeField] private GameObject lampPanel;
         [SerializeField] private GameObject boostPanel;
+        [SerializeField] private GameObject hintPanel;
         [SerializeField] private List<GameObject> interactivePanels;
 
         private Dictionary<float, int> _sliderValues = new Dictionary<float, int>()
@@ -82,7 +84,8 @@ namespace Builder
             xyzScale.value = ConvertScaleToSliderValue(xyzS);
 
             if (!trackObject.windmill && !trackObject.magnet && !trackObject.pendulum && !trackObject.battery &&
-                !trackObject.windZone && !trackObject.windZone && !trackObject.freezingBall && !trackObject.boost && !trackObject.lamp)
+                !trackObject.windZone && !trackObject.windZone && !trackObject.freezingBall && !trackObject.boost && 
+                !trackObject.lamp && !trackObject.hint)
                 TurnInteractivePanels(gameObject);
             else if (trackObject.windmill)
             {
@@ -132,6 +135,11 @@ namespace Builder
                 TurnInteractivePanels(lampPanel);
                 lamp.isOn = trackObject.lamp.isTurn;
             }
+            else if (trackObject.hint)
+            {
+                TurnInteractivePanels(hintPanel);
+                hintInput.text = trackObject.hint.hintText.text;
+            }
         }
 
         private void TurnInteractivePanels(GameObject activePanel)
@@ -142,7 +150,7 @@ namespace Builder
 
         private int ConvertScaleToSliderValue(float originValue)
         {
-            if(_sliderValues.TryGetValue(originValue, out var value))
+            if (_sliderValues.TryGetValue(originValue, out var value))
                 return value;
 
             return (int)xyzScale.value;

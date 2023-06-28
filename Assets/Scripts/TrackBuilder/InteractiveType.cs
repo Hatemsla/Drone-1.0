@@ -10,6 +10,7 @@
         Wind,
         Freezing,
         Boost,
-        Lamp
+        Lamp,
+        Hint
     }
 }

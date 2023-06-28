@@ -165,5 +165,20 @@ namespace Builder
         {
             currentObject.lamp.TurnLamp();
         }
+
+        public void OnHintTextChanged(string value)
+        {
+            currentObject.hint.hintText.text = value;
+        }
+
+        public void OnSelectTextHint(string value)
+        {
+            BuilderManager.Instance.isInputText = true;
+        }
+        
+        public void OnDeselectTextHint(string value)
+        {
+            BuilderManager.Instance.isInputText = false;
+        }
     }
 }

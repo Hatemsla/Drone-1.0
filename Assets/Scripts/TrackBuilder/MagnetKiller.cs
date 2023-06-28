@@ -1,4 +1,5 @@
 ﻿using System;
+using Drone;
 using UnityEngine;
 
 namespace Builder
@@ -8,6 +9,10 @@ namespace Builder
         public float rotationSpeed;
         public Transform leftRotor;
         public Transform rightRotor;
+        
+        private readonly float _baseDamage = 10.0f;
+        private readonly float _damageInterval = 1.0f;
+        private float _timer;
 
         private void FixedUpdate()
         {
@@ -20,7 +25,19 @@ namespace Builder
 
         private void OnTriggerStay(Collider other)
         {
-            // var player = other.GetComponent<>;
+            var player = other.GetComponentInParent<DroneRpgController>();
+            if (player)
+            {
+                _timer += Time.deltaTime;
+
+                if (_timer >= _damageInterval)
+                {
+                    var damage = _baseDamage + (_timer / _damageInterval) * _baseDamage;
+
+                    player.ApplyDamage(damage);
+                    _timer = 0.0f;
+                }
+            }
         }
     }
 }
