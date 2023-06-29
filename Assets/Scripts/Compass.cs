@@ -12,7 +12,7 @@ namespace Drone
 
         private void Start()
         {
-            player = FindObjectOfType<DroneBuilderController>().transform;
+            player = FindObjectOfType<DroneController>().transform;
         }
 
         private void Update()

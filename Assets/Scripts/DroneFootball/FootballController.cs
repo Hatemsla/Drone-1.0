@@ -15,8 +15,8 @@ namespace DroneFootball
         public bool isSimpleMode;
         public bool isGameStart;
         public Transform targetCheckpoint;
-        public DroneFootballController droneFootballController;
-        public DroneFootballCheckNode playerCheckNode;
+        public DroneController droneFootballController;
+        public CheckNode playerCheckNode;
         public DroneFootballSoundController droneFootballSoundController;
         public FootballUIManager footballUIManager;
         public Timer timer;
@@ -38,7 +38,7 @@ namespace DroneFootball
         {
             footballCheckpointTrigger.currentGateScale = currentGateScale;
             droneFootballController.isSimpleMode = isSimpleMode;
-            playerCheckNode = droneFootballController.droneFootballCheckNode;
+            playerCheckNode = droneFootballController.GetComponent<CheckNode>();
 
             foreach (var droneAI in droneFootballAIList)
             {
@@ -99,15 +99,15 @@ namespace DroneFootball
 
         private bool IsBehind(Vector3 point) // true если point сзади камеры
         {
-            Vector3 forward = playerCamera.transform.TransformDirection(Vector3.forward);
-            Vector3 toOther = point - playerCamera.transform.position;
+            var forward = playerCamera.transform.TransformDirection(Vector3.forward);
+            var toOther = point - playerCamera.transform.position;
             if (Vector3.Dot(forward, toOther) < 0) return true;
             return false;
         }
 
         private void RotatePointer(Vector2 direction) // поворачивает PointerUI в направление direction
         {
-            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+            var angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
             footballUIManager.pathArrow.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
         }
 
@@ -136,6 +136,7 @@ namespace DroneFootball
                 footballUIManager.timeToStartGameText.gameObject.SetActive(false);
                 footballUIManager.descriptionPanel.SetActive(false);
                 footballUIManager.backgroundImage.SetActive(false);
+                footballUIManager.droneView.SetActive(true);
                 isGameStart = true;
                 if(!droneFootballSoundController.droneFly.isPlaying && !_isTabPanel)
                     droneFootballSoundController.droneFly.Play();
@@ -148,7 +149,8 @@ namespace DroneFootball
             {
                 float minutes = Mathf.FloorToInt(timer.waitForEndGame / 60);
                 float seconds = Mathf.FloorToInt(timer.waitForEndGame % 60);
-                footballUIManager.timeToEndGameText.text = $"{minutes:00}:{seconds:00}";
+                footballUIManager.timeText.text = $"{minutes:00}:{seconds:00}";
+                footballUIManager.speedText.text = $"{droneFootballController.currentSpeed:00}";
             }
             else
             {
@@ -178,11 +180,12 @@ namespace DroneFootball
 
         public void CheckScore()
         {
-            footballUIManager.scoreText.text = $"Счет: {playerCheckNode.currentNode}";
+            footballUIManager.checkpointsCountText.text = $"{playerCheckNode.currentNode}";
         }
 
         public void TurnUI()
         {
+            footballUIManager.droneView.SetActive(false);
             footballUIManager.uiPanel.SetActive(false);
         }
 

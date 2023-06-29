@@ -7,8 +7,6 @@ using UnityEngine;
 
 public class DroneBuilderCheckNode : CheckNode
 {
-    public List<BuilderCheckpointTrigger> nodes;
-    
     private void Update()
     {
         CalculateWayDistance();
@@ -27,21 +25,21 @@ public class DroneBuilderCheckNode : CheckNode
 
     public void AddNode(Transform t)
     {
-        nodes.Add(t.GetComponent<BuilderCheckpointTrigger>());
+        nodes.Add(t);
         SetCheckpointsId();
     }
 
     public void RemoveNode(Transform t)
     {
-        nodes.Remove(t.GetComponent<BuilderCheckpointTrigger>());
+        nodes.Remove(t);
         SetCheckpointsId();
     }
 
     private void SetCheckpointsId()
     {
-        for (int i = 0; i < nodes.Count; i++)
+        for (var i = 0; i < nodes.Count; i++)
         {
-            nodes[i].checkpointId = i;
+            nodes[i].GetComponent<BuilderCheckpointTrigger>().checkpointId = i;
         }
     }
 }

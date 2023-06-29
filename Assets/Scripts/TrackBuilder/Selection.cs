@@ -114,6 +114,9 @@ namespace Builder
                     case InteractiveType.Hint:
                         selectedTrackObject.hint = selectedTrackObject.GetComponentInChildren<Hint>();
                         break;
+                    case InteractiveType.Draw:
+                        selectedTrackObject.draw = selectedTrackObject.GetComponentInChildren<DrawMeshHandler>();
+                        break;
                 }
 
                 editObject.OnSelectObject(selectedTrackObject);

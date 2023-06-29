@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Cinemachine;
 using DB;
 using DroneFootball;
 using UnityEngine;
@@ -10,24 +11,24 @@ namespace DroneRace
 {
     public class RaceController : MonoBehaviour
     {
+        [SerializeField] private Transform targetCheckpoint;
+        [SerializeField] private CheckNode checkNode;
+        [SerializeField] private DroneRaceAI droneRaceAI;
+        [SerializeField] private CheckNode playerNode;
+        [SerializeField] private RacePath racePath;
+        public DroneController droneRaceController;
+        public DroneRaceUIManager raceUIManager;
+        public DroneRaceAudioController droneRaceAudioController;
         public float interfaceScale;
         public float currentAIDroneSpeed;
         public int clipIndex;
         public bool isSimpleMode;
         public bool isGameStart;
-        public Transform targetCheckpoint;
-        public DroneRaceController droneRaceController;
-        public DroneRaceAI droneRaceAI;
-        public DroneRaceUIManager raceUIManager;
-        public DroneRaceCheckNode playerNode;
-        public DroneRaceAudioController droneRaceAudioController;
         public Timer timer;
-        public RacePath racePath;
         public AsyncLoad asyncLoad;
-        public List<DroneRaceCheckNode> droneRaceCheckNodes;
         
-        private Camera _mainCamera;
-        private DroneRaceCheckNode _checkNode;
+        private List<CheckNode> _droneRaceCheckNodes;
+        private CinemachineBrain _mainCamera;
         private Vector3 _startPointerSize;
         private int _playerRacePosition;
         private bool _isResult;
@@ -36,17 +37,16 @@ namespace DroneRace
         private void Awake()
         {
             _startPointerSize = raceUIManager.pathArrow.sizeDelta;
-            _mainCamera = Camera.main;
+            _mainCamera = FindObjectOfType<CinemachineBrain>();
         }
 
         private void Start()
         {
             droneRaceController.isSimpleMode = isSimpleMode;
-            _checkNode = droneRaceController.droneRaceCheckNode;
-            foreach (var drone in droneRaceCheckNodes)
-            {
+            checkNode = droneRaceController.GetComponent<CheckNode>();
+            _droneRaceCheckNodes = FindObjectsOfType<CheckNode>().ToList();
+            foreach (var drone in _droneRaceCheckNodes)
                 racePath.nodes[0].localScale = new Vector3(3, 3, 3);
-            }
 
             droneRaceAI.speed *= currentAIDroneSpeed;
         }
@@ -56,16 +56,12 @@ namespace DroneRace
             CheckStartGame();
             CheckEndGame();
             CheckTabPanel();
-
-            droneRaceCheckNodes = droneRaceCheckNodes.OrderByDescending(x => x.currentNode).ThenBy(x => x.wayDistance).ToList();
-            raceUIManager.racePositionText.text = $"Позиция: {_playerRacePosition + 1}";
-            _playerRacePosition = droneRaceCheckNodes.IndexOf(playerNode);
         }
 
         private void LateUpdate()
         {
-            targetCheckpoint = _checkNode.nodes[_checkNode.currentNode];
-            Vector3 realPos = _mainCamera.WorldToScreenPoint(targetCheckpoint.position);
+            targetCheckpoint = checkNode.nodes[checkNode.currentNode];
+            Vector3 realPos = _mainCamera.OutputCamera.WorldToScreenPoint(targetCheckpoint.position);
             Rect rect = new Rect(0, 0, Screen.width, Screen.height);
 
             Vector3 outPos = realPos;
@@ -139,6 +135,7 @@ namespace DroneRace
             }
             else
             {
+                raceUIManager.droneView.SetActive(true);
                 raceUIManager.timeToStartGameText.gameObject.SetActive(false);
                 raceUIManager.descriptionPanel.SetActive(false);
                 raceUIManager.backgroundImage.SetActive(false);
@@ -154,7 +151,11 @@ namespace DroneRace
             {
                 float minutes = Mathf.FloorToInt(timer.waitForEndGame / 60);
                 float seconds = Mathf.FloorToInt(timer.waitForEndGame % 60);
-                raceUIManager.timeToEndGameText.text = $"{minutes:00}:{seconds:00}";
+                raceUIManager.timeText.text = $"{minutes:00}:{seconds:00}";
+                raceUIManager.speedText.text = $"{droneRaceController.currentSpeed:00}";
+                raceUIManager.checkpointsCountText.text = $"{_playerRacePosition + 1}";
+                _droneRaceCheckNodes = _droneRaceCheckNodes.OrderByDescending(x => x.currentNode).ThenBy(x => x.wayDistance).ToList();
+                _playerRacePosition = _droneRaceCheckNodes.IndexOf(playerNode);
             }
             else
             {
@@ -184,6 +185,7 @@ namespace DroneRace
 
         public void TurnUI()
         {
+            raceUIManager.droneView.SetActive(false);
             raceUIManager.uiPanel.SetActive(false);
         }
 

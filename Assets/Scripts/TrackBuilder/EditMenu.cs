@@ -44,6 +44,7 @@ namespace Builder
         [SerializeField] private GameObject lampPanel;
         [SerializeField] private GameObject boostPanel;
         [SerializeField] private GameObject hintPanel;
+        [SerializeField] private GameObject drawPanel;
         [SerializeField] private List<GameObject> interactivePanels;
 
         private Dictionary<float, int> _sliderValues = new Dictionary<float, int>()
@@ -85,7 +86,7 @@ namespace Builder
 
             if (!trackObject.windmill && !trackObject.magnet && !trackObject.pendulum && !trackObject.battery &&
                 !trackObject.windZone && !trackObject.windZone && !trackObject.freezingBall && !trackObject.boost && 
-                !trackObject.lamp && !trackObject.hint)
+                !trackObject.lamp && !trackObject.hint && !trackObject.draw)
                 TurnInteractivePanels(gameObject);
             else if (trackObject.windmill)
             {
@@ -139,6 +140,10 @@ namespace Builder
             {
                 TurnInteractivePanels(hintPanel);
                 hintInput.text = trackObject.hint.hintText.text;
+            }
+            else if (trackObject.draw)
+            {
+                TurnInteractivePanels(drawPanel);
             }
         }
 

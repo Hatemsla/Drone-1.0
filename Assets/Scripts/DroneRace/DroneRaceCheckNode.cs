@@ -7,8 +7,6 @@ namespace DroneRace
 {
     public class DroneRaceCheckNode : CheckNode
     {
-        public float wayDistance;
-        public List<Transform> nodes;
         public GameObject checkPointPrefab;
 
         private RacePath _racePath;

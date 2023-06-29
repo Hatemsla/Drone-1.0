@@ -9,26 +9,25 @@ namespace DroneRace
     [RequireComponent(typeof(Rigidbody), typeof(DroneRaceCheckNode))]
     public class DroneRaceController : DroneController
     {
-        public DroneRaceCheckNode droneRaceCheckNode;
         public RaceController raceController;
-        public MeshRenderer droneMeshRenderer;
+        [SerializeField] private Rigidbody rb;
         
         private List<DroneEngine> _engines;
         private float _finalPitch;
         private float _finalRoll;
         private float _finalYaw;
         private float _isMove;
-        private Rigidbody _rb;
 
         private void Awake()
         {
-            _rb = GetComponent<Rigidbody>();
+            rb = GetComponent<Rigidbody>();
             _engines = GetComponentsInChildren<DroneEngine>().ToList();
-            droneRaceCheckNode = GetComponent<DroneRaceCheckNode>();
         }
 
         private void FixedUpdate()
         {
+            currentSpeed = rb.velocity.magnitude / 8.2f * 40f;
+            currentPercentSpeed = rb.velocity.magnitude / 8.2f * 100f;
             if (raceController.isGameStart)
             {
                 _isMove = 0;
@@ -58,7 +57,7 @@ namespace DroneRace
             {
                 foreach (var engine in _engines)
                 {
-                    engine.UpdateEngine(_rb, throttle);
+                    engine.UpdateEngine(rb, throttle);
                 }
             }
             
@@ -73,18 +72,18 @@ namespace DroneRace
             _finalYaw = Mathf.Lerp(_finalYaw, yaw, Time.deltaTime * lerpSpeed);
 
             var rot = Quaternion.Euler(_finalPitch, _finalYaw, _finalRoll);
-            _rb.MoveRotation(rot);
+            rb.MoveRotation(rot);
         }
 
         private void CheckDroneHover()
         {
             if (isSimpleMode && _isMove == 0)
             {
-                _rb.drag = 5;
+                rb.drag = 5;
             }
             else
             {
-                _rb.drag = 0.5f;
+                rb.drag = 0.5f;
             }
         }
     }

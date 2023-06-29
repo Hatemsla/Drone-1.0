@@ -5,4 +5,6 @@ using UnityEngine;
 public class CheckNode : MonoBehaviour
 {
     public int currentNode;
+    public float wayDistance;
+    public List<Transform> nodes;
 }

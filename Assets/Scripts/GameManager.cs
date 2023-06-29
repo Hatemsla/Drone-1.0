@@ -78,7 +78,7 @@ namespace DroneFootball
                     raceController.raceUIManager.exitBtn.onClick.AddListener(GameManagerUtils.Exit);
                     raceController.isSimpleMode = gameData.isSimpleMode;
                     raceController.droneRaceController.yawPower = gameData.currentYawSensitivity;
-                    server.droneRaceController = raceController.droneRaceController;
+                    server.player = raceController.droneRaceController;
                     raceController.currentAIDroneSpeed = gameData.currentAIDroneSpeed;
                     raceController.timer.timeForEndGame = gameData.gameTimeInSeconds;
 
@@ -94,7 +94,7 @@ namespace DroneFootball
                     footballController.footballUIManager.exitBtn.onClick.AddListener(GameManagerUtils.Exit);
                     footballController.isSimpleMode = gameData.isSimpleMode;
                     footballController.droneFootballController.yawPower = gameData.currentYawSensitivity;
-                    server.droneFootballController = footballController.droneFootballController;
+                    server.player = footballController.droneFootballController;
                     footballController.currentGateScale = gameData.currentGateScale;
                     footballController.currentAIDroneSpeed = gameData.currentAIDroneSpeed;
                     footballController.timer.timeForEndGame = gameData.gameTimeInSeconds;
@@ -125,7 +125,7 @@ namespace DroneFootball
                     builderManager.builderUI.saveBtn.onClick.AddListener(SaveLevel);
                     builderManager.levelName = gameData.levelName;
                     builderManager.droneBuilderController.isSimpleMode = gameData.isSimpleMode;
-                    server.droneBuilderController = builderManager.droneBuilderController;
+                    server.player = builderManager.droneBuilderController;
                     asyncLoad = builderManager.asyncLoad;
 
                     if (gameData.isLoadLevel)

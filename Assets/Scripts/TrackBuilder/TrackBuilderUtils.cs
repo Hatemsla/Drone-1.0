@@ -30,7 +30,7 @@ namespace Builder
         {
             if (LayerMask.LayerToName(obj.gameObject.layer) != "FloorConnection" && LayerMask.LayerToName(obj.gameObject.layer) != "WallConnection" 
                 && LayerMask.LayerToName(obj.gameObject.layer) != "SlantConnection" && LayerMask.LayerToName(obj.gameObject.layer) != "Ignore Raycast"
-                && LayerMask.LayerToName(obj.gameObject.layer) != "Hint")
+                && LayerMask.LayerToName(obj.gameObject.layer) != "Hint" && LayerMask.LayerToName(obj.gameObject.layer) != "Draw")
             {
                 obj.gameObject.layer = layer;
             }

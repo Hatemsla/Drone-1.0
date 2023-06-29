@@ -180,5 +180,15 @@ namespace Builder
         {
             BuilderManager.Instance.isInputText = false;
         }
+
+        public void OnStartDrawButton()
+        {
+            currentObject.draw.StartDraw();
+        }
+
+        public void OnStopDrawButton()
+        {
+            currentObject.draw.StopDraw();
+        }
     }
 }

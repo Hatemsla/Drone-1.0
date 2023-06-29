@@ -28,6 +28,7 @@ namespace Builder
         public BoostTrigger boost;
         public Lamp lamp;
         public Hint hint;
+        public DrawMeshHandler draw;
 
         public Vector3 Scale
         {

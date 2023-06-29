@@ -385,8 +385,8 @@ namespace Builder
                 droneBuilderController.yaw = _dronePrevRotationY;
                 _dronePrevPosition = droneBuilderController.transform.position;
                 cameraBrain.transform.SetParent(droneBuilderController.transform);
-                droneBuilderController.GetComponent<Rigidbody>().isKinematic = false;
-                droneBuilderController.GetComponent<Rigidbody>().useGravity = true;
+                droneBuilderController.rb.isKinematic = false;
+                droneBuilderController.rb.useGravity = true;
                 builderUI.createPanel.SetActive(false);
                 builderUI.editButtons.SetActive(false);
                 if(droneBuilderCheckNode.nodes.Count > 0)
@@ -409,8 +409,8 @@ namespace Builder
                 droneBuilderController.yaw = _dronePrevRotationY;
                 droneBuilderController.transform.position = _dronePrevPosition;
                 droneBuilderController.transform.localRotation = Quaternion.Euler(0, _dronePrevRotationY, 0);
-                droneBuilderController.GetComponent<Rigidbody>().isKinematic = true;
-                droneBuilderController.GetComponent<Rigidbody>().useGravity = false;
+                droneBuilderController.rb.isKinematic = true;
+                droneBuilderController.rb.useGravity = false;
                 builderUI.editorTabPanel.SetActive(false);
                 builderUI.gameTabPanel.SetActive(false);
                 Time.timeScale = 1f;
@@ -646,7 +646,7 @@ namespace Builder
                 builderUI.pathArrow.gameObject.SetActive(true);
             }
 
-            FindObjectOfType<Server>().droneBuilderController = droneBuilderController;
+            FindObjectOfType<Server>().player = droneBuilderController;
         }
         
         private void ClearObject()
