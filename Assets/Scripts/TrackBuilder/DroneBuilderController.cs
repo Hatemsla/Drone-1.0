@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Drone;
-using DroneFootball;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -13,7 +11,6 @@ namespace Builder
     {
         public int boostsCount;
         public Light flashLight;
-        public Light uvFlashLight;
         public DroneBuilderCheckNode droneBuilderCheckNode;
         public DroneBuilderSoundController droneBuilderSoundController;
         public DroneRpgController droneRpgController;
@@ -45,17 +42,17 @@ namespace Builder
 
         private void Update()
         {
-            var hits = Physics.SphereCastAll(transform.position, 25f, transform.forward, uvFlashLight.range);
-
-            foreach (var hit in hits)
-            {
-                var hint = hit.collider.GetComponentInParent<Hint>();
-                if (hint)
-                {
-                    hint.gameObject.SetActive(true);
-                    Debug.Log("Object detected: " + hint);
-                }
-            }
+            // var hits = Physics.SphereCastAll(transform.position, 25f, transform.forward, uvFlashLight.range);
+            //
+            // foreach (var hit in hits)
+            // {
+            //     var hint = hit.collider.GetComponentInParent<Hint>();
+            //     if (hint)
+            //     {
+            //         hint.gameObject.SetActive(true);
+            //         Debug.Log("Object detected: " + hint);
+            //     }
+            // }
         }
 
         private void FixedUpdate()
@@ -78,8 +75,8 @@ namespace Builder
 
         private void OnUVFlashLight()
         {
-            if (BuilderManager.Instance.isMove)
-                uvFlashLight.enabled = !uvFlashLight.enabled;
+            // if (BuilderManager.Instance.isMove)
+            //     uvFlashLight.enabled = !uvFlashLight.enabled;
         }
 
         private void OnCyclic(InputValue value)
