@@ -78,7 +78,7 @@ namespace Drone
                         if (trackObject.objectType == ObjectsType.Lamp)
                         {
                             var lamp = trackObject.GetComponent<Lamp>();
-                            if (lamp.isTurn)
+                            if (lamp.isLampTurn)
                             {
                                 lamp.TurnLamp();
                             }

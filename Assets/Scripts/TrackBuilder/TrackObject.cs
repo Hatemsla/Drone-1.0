@@ -19,16 +19,7 @@ namespace Builder
         public string objectName;
         public string objectDescription;
 
-        public Windmill windmill;
-        public RigidbodyMagnet magnet;
-        public Pendulum pendulum;
-        public WindZoneScript windZone;
-        public FreezingBall freezingBall;
-        public Battery battery;
-        public BoostTrigger boost;
-        public Lamp lamp;
-        public Hint hint;
-        public DrawMeshHandler draw;
+        public InteractiveObject interactiveObject;
 
         public Vector3 Scale
         {

@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 
 namespace Builder
 {
-    public class DrawMeshHandler : MonoBehaviour
+    public class DrawMeshHandler : InteractiveObject
     {
         [SerializeField] private Transform meshParent;
         [SerializeField] private CinemachineVirtualCamera virtualCamera;

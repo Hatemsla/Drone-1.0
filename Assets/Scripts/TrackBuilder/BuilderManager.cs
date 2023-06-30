@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using Cinemachine;
@@ -455,15 +456,19 @@ namespace Builder
                 var rotation = TrackBuilderUtils.ParseVector3(kvp.Value["rotation"]);
                 var scale = TrackBuilderUtils.ParseVector3(kvp.Value["scale"]);
                 var layer = Convert.ToInt32(kvp.Value["layer"]);
-                var yOffset = Convert.ToSingle(kvp.Value["yOffset"]);
-                var maxMouseDistance = Convert.ToSingle(kvp.Value["maxMouseDistance"]);
-                var rotSpeed = kvp.Value["rotSpeed"] != "null" ? Convert.ToSingle(kvp.Value["rotSpeed"]) : 0f;
-                var magnetForce = kvp.Value["magnetForce"] != "null" ? Convert.ToSingle(kvp.Value["magnetForce"]) : 0f;
-                var pendulumMoveSpeed = kvp.Value["pendulumMoveSpeed"] != "null" ? Convert.ToSingle(kvp.Value["pendulumMoveSpeed"]) : 0f;
-                var windForce = kvp.Value["windForce"] != "null" ? Convert.ToSingle(kvp.Value["windForce"]) : 0f;
-                var batteryEnergy = kvp.Value["batteryEnergy"] != "null" ? Convert.ToSingle(kvp.Value["batteryEnergy"]) : 0f;
-                var freezing = kvp.Value["freezing"] != "null" && Convert.ToBoolean(kvp.Value["freezing"]);
-                var boost = kvp.Value["boost"] != "null" ? Convert.ToSingle(kvp.Value["boost"]) : 0f;
+                var yOffset = Convert.ToSingle(kvp.Value[nameof(currentObjectType.yOffset)]);
+                var maxMouseDistance = Convert.ToSingle(kvp.Value[nameof(currentObjectType.maxMouseDistance)]);
+                var rotSpeed = kvp.Value[nameof(currentObjectType.interactiveObject.windMillRotateSpeed)] != "null" ? Convert.ToSingle(kvp.Value[nameof(currentObjectType.interactiveObject.magnetForce)]) : 0f;
+                var magnetForce = kvp.Value[nameof(currentObjectType.interactiveObject.magnetForce)] != "null" ? Convert.ToSingle(kvp.Value[nameof(currentObjectType.interactiveObject.magnetForce)]) : 0f;
+                var pendulumMoveSpeed = kvp.Value[nameof(currentObjectType.interactiveObject.pendulumMoveSpeed)] != "null" ? Convert.ToSingle(kvp.Value[nameof(currentObjectType.interactiveObject.pendulumMoveSpeed)]) : 0f;
+                var leftPendulumAngle = kvp.Value[nameof(currentObjectType.interactiveObject.leftPendulumAngle)] != "null" ? Convert.ToSingle(kvp.Value[nameof(currentObjectType.interactiveObject.leftPendulumAngle)]) : 0f;
+                var rightPendulumAngle = kvp.Value[nameof(currentObjectType.interactiveObject.rightPendulumAngle)] != "null" ? Convert.ToSingle(kvp.Value[nameof(currentObjectType.interactiveObject.rightPendulumAngle)]) : 0f;
+                var windForce = kvp.Value[nameof(currentObjectType.interactiveObject.windForce)] != "null" ? Convert.ToSingle(kvp.Value[nameof(currentObjectType.interactiveObject.windForce)]) : 0f;
+                var batteryEnergy = kvp.Value[nameof(currentObjectType.interactiveObject.batteryEnergy)] != "null" ? Convert.ToSingle(kvp.Value[nameof(currentObjectType.interactiveObject.batteryEnergy)]) : 0f;
+                var freezing = kvp.Value[nameof(currentObjectType.interactiveObject.isFreezing)] != "null" && Convert.ToBoolean(kvp.Value[nameof(currentObjectType.interactiveObject.isFreezing)]);
+                var boost = kvp.Value[nameof(currentObjectType.interactiveObject.boostSpeed)] != "null" ? Convert.ToSingle(kvp.Value[nameof(currentObjectType.interactiveObject.boostSpeed)]) : 0f;
+                var hintText = kvp.Value[nameof(currentObjectType.interactiveObject.hintText)] != "null" ? kvp.Value[nameof(currentObjectType.interactiveObject.hintText)] : "";
+                var isLampTurn = kvp.Value[nameof(currentObjectType.interactiveObject.isLampTurn)] != "null" && Convert.ToBoolean(kvp.Value[nameof(currentObjectType.interactiveObject.isLampTurn)]);
                 
                 var newObj = Instantiate(Resources.Load<GameObject>("TrackObjects/" + objectName), position, Quaternion.Euler(rotation));
                 yield return new WaitForSeconds(0.01f);
@@ -474,34 +479,52 @@ namespace Builder
                 var trackObj = newObj.GetComponent<TrackObject>();
                 trackObj.yOffset = yOffset;
                 trackObj.maxMouseDistance = maxMouseDistance;
-                
-                trackObj.windmill = trackObj.GetComponentInChildren<Windmill>();
-                if (trackObj.windmill != null)
-                    trackObj.windmill.rotateSpeed = rotSpeed;
 
-                trackObj.magnet = trackObj.GetComponentInChildren<RigidbodyMagnet>();
-                if (trackObj.magnet != null)
-                    trackObj.magnet.magnetForce = magnetForce;
-
-                trackObj.pendulum = trackObj.GetComponentInChildren<Pendulum>();
-                if (trackObj.pendulum != null)
-                    trackObj.pendulum.moveSpeed = pendulumMoveSpeed;
-
-                trackObj.windZone = trackObj.GetComponentInChildren<WindZoneScript>();
-                if (trackObj.windZone != null)
-                    trackObj.windZone.windForce = windForce;
-
-                trackObj.battery = trackObj.GetComponentInChildren<Battery>();
-                if (trackObj.battery != null)
-                    trackObj.battery.energy = batteryEnergy;
-
-                trackObj.freezingBall = trackObj.GetComponentInChildren<FreezingBall>();
-                if (trackObj.freezingBall != null)
-                    trackObj.freezingBall.isFreezing = freezing;
-
-                trackObj.boost = trackObj.GetComponentInChildren<BoostTrigger>();
-                if (trackObj.boost != null)
-                    trackObj.boost.boost = boost;
+                switch (trackObj.interactiveType)
+                {
+                    case InteractiveType.Windmill:
+                        trackObj.interactiveObject = trackObj.GetComponentInChildren<Windmill>();
+                        trackObj.interactiveObject.windMillRotateSpeed = rotSpeed;
+                        break;
+                    case InteractiveType.Magnet:
+                        trackObj.interactiveObject = trackObj.GetComponentInChildren<RigidbodyMagnet>();
+                        trackObj.interactiveObject.magnetForce = magnetForce;
+                        break;
+                    case InteractiveType.Pendulum:
+                        trackObj.interactiveObject = trackObj.GetComponentInChildren<Pendulum>();
+                        trackObj.interactiveObject.pendulumMoveSpeed = pendulumMoveSpeed;
+                        trackObj.interactiveObject.leftPendulumAngle = leftPendulumAngle;
+                        trackObj.interactiveObject.rightPendulumAngle = rightPendulumAngle;
+                        break;
+                    case InteractiveType.Wind:
+                        trackObj.interactiveObject = trackObj.GetComponentInChildren<WindZoneScript>();
+                        trackObj.interactiveObject.windForce = windForce;
+                        break;
+                    case InteractiveType.Battery:
+                        trackObj.interactiveObject = trackObj.GetComponentInChildren<Battery>();
+                        trackObj.interactiveObject.batteryEnergy = batteryEnergy;
+                        break;
+                    case InteractiveType.Freezing:
+                        trackObj.interactiveObject = trackObj.GetComponentInChildren<FreezingBall>();
+                        trackObj.interactiveObject.isFreezing = freezing;
+                        break;
+                    case InteractiveType.Boost:
+                        trackObj.interactiveObject = trackObj.GetComponentInChildren<BoostTrigger>();
+                        trackObj.interactiveObject.boostSpeed = boost;
+                        break;
+                    case InteractiveType.Hint:
+                        trackObj.interactiveObject = trackObj.GetComponentInChildren<Hint>();
+                        trackObj.interactiveObject.hintText.text = hintText;
+                        break;
+                    case InteractiveType.Lamp:
+                        trackObj.interactiveObject = trackObj.GetComponentInChildren<Lamp>();
+                        trackObj.interactiveObject.isLampTurn = isLampTurn;
+                        break;
+                    case InteractiveType.Draw:
+                        break;
+                    case InteractiveType.None:
+                        break;
+                }
 
                 objectsPool.Add(newObj);
             }

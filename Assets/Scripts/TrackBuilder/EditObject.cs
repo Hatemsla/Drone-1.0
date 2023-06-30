@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Drone;
 using UnityEngine;
 
 namespace Builder
@@ -122,53 +123,54 @@ namespace Builder
 
         public void OnWindmillRotationSpeedChanged(float value)
         {
-            currentObject.windmill.rotateSpeed = value;
+            currentObject.interactiveObject.windMillRotateSpeed = value;
         }
         
         public void OnMagnetForceChanged(float value)
         {
-            currentObject.magnet.magnetForce = value;
+            currentObject.interactiveObject.magnetForce = value;
         }
 
         public void OnPendulumSpeedChanged(float value)
         {
-            currentObject.pendulum.moveSpeed = value;
+            currentObject.interactiveObject.pendulumMoveSpeed = value;
         }
 
         public void OnPendulumAngleChanged(float value)
         {
-            currentObject.pendulum.rightAngle = value;
-            currentObject.pendulum.leftAngle = -value;
+            currentObject.interactiveObject.rightPendulumAngle = value;
+            currentObject.interactiveObject.leftPendulumAngle = -value;
         }
 
         public void OnWindZoneForceChanged(float value)
         {
-            currentObject.windZone.windForce = value;
+            currentObject.interactiveObject.windForce = value;
         }
 
         public void OnBatteryEnergyChanged(float value)
         {
-            currentObject.battery.energy = value;
+            currentObject.interactiveObject.batteryEnergy = value;
         }
 
         public void OnFreezingBallChanged(bool value)
         {
-            currentObject.freezingBall.isFreezing = value;
+            currentObject.interactiveObject.isFreezing = value;
         }
 
         public void OnBoostChanged(float value)
         {
-            currentObject.boost.boost = value;
+            currentObject.interactiveObject.boostSpeed = value;
         }
         
         public void OnLampChanged(bool value)
         {
-            currentObject.lamp.TurnLamp();
+            if(currentObject.interactiveObject is Lamp lamp)
+                lamp.TurnLamp();
         }
 
         public void OnHintTextChanged(string value)
         {
-            currentObject.hint.hintText.text = value;
+            currentObject.interactiveObject.hintText.text = value;
         }
 
         public void OnSelectTextHint(string value)
@@ -181,14 +183,14 @@ namespace Builder
             BuilderManager.Instance.isInputText = false;
         }
 
-        public void OnStartDrawButton()
-        {
-            currentObject.draw.StartDraw();
-        }
-
-        public void OnStopDrawButton()
-        {
-            currentObject.draw.StopDraw();
-        }
+        // public void OnStartDrawButton()
+        // {
+        //     currentObject.interactiveObject.StartDraw();
+        // }
+        //
+        // public void OnStopDrawButton()
+        // {
+        //     currentObject.interactiveObject.StopDraw();
+        // }
     }
 }

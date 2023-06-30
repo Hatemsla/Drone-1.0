@@ -1,47 +1,51 @@
 ﻿using System;
 using System.Collections.Generic;
+using Builder;
 using UnityEngine;
 
 namespace Drone
 {
-    public class Lamp : MonoBehaviour
+    public class Lamp : InteractiveObject
     {
-        public Light lamp;
-        public MeshRenderer[] meshes;
-        public bool isTurn = true;
+        [SerializeField] private Light lamp;
+        [SerializeField] private MeshRenderer[] meshes;
 
         private Dictionary<Material, bool> _emissions = new Dictionary<Material, bool>();
 
         private void Start()
         {
-            for (var i = 0; i < meshes.Length; i++)
+            foreach (var mesh in meshes)
             {
-                for (var j = 0; j < meshes[i].materials.Length; j++)
+                foreach (var mat in mesh.materials)
                 {
-                    if (meshes[i].materials[j].IsKeywordEnabled("_EMISSION"))
-                    {
-                        _emissions.Add(meshes[i].materials[j], true);
-                    }
+                    _emissions.Add(mat, mat.IsKeywordEnabled("_EMISSION"));
+                }
+            }
+
+            foreach (var mesh in meshes)
+            {
+                foreach (var mat in mesh.materials)
+                {
+                    if(isLampTurn && _emissions.TryGetValue(mat, out var isEmissionEnabled) && isEmissionEnabled)
+                        mat.EnableKeyword("_EMISSION");
                     else
-                    {
-                        _emissions.Add(meshes[i].materials[j], false);
-                    }
+                        mat.DisableKeyword("_EMISSION");
                 }
             }
         }
 
         public void TurnOn()
         {
-            isTurn = true;
-            lamp.enabled = isTurn;
+            isLampTurn = true;
+            lamp.enabled = isLampTurn;
             
-            for (int i = 0; i < meshes.Length; i++)
+            foreach (var mesh in meshes)
             {
-                for (int j = 0; j < meshes[i].materials.Length; j++)
+                foreach (var mat in mesh.materials)
                 {
-                    if (_emissions.TryGetValue(meshes[i].materials[j], out var isEmissionEnabled) && isEmissionEnabled)
+                    if (_emissions.TryGetValue(mat, out var isEmissionEnabled) && isEmissionEnabled)
                     {
-                        meshes[i].materials[j].EnableKeyword("_EMISSION");
+                        mat.EnableKeyword("_EMISSION");
                     }
                 }
             }
@@ -49,17 +53,17 @@ namespace Drone
 
         public void TurnLamp()
         {
-            isTurn = !isTurn;
-            lamp.enabled = isTurn;
+            isLampTurn = !isLampTurn;
+            lamp.enabled = isLampTurn;
 
-            for (int i = 0; i < meshes.Length; i++)
+            foreach (var mesh in meshes)
             {
-                for (int j = 0; j < meshes[i].materials.Length; j++)
+                foreach (var mat in mesh.materials)
                 {
-                    if(isTurn && _emissions.TryGetValue(meshes[i].materials[j], out var isEmissionEnabled) && isEmissionEnabled)
-                        meshes[i].materials[j].EnableKeyword("_EMISSION");
+                    if(isLampTurn && _emissions.TryGetValue(mat, out var isEmissionEnabled) && isEmissionEnabled)
+                        mat.EnableKeyword("_EMISSION");
                     else
-                        meshes[i].materials[j].DisableKeyword("_EMISSION");
+                        mat.DisableKeyword("_EMISSION");
                 }
             }
         }

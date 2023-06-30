@@ -41,14 +41,14 @@ namespace Builder
                                     var offset = _selectedConnection.GetObjectOffset(otherConnection, sizeMultiplier);
                                     selectedObject.transform.position = otherConnection.transform.position + offset;
                                     selectedObject.transform.rotation = otherConnection.transform.rotation;
-                                    break;
+                                    return;
                                 }
                                 case ConnectionType.Wall:
                                 case ConnectionType.Slant:
                                     selectedObject.transform.position = new Vector3(otherConnection.transform.position.x,
                                         otherConnection.transform.position.y + selectedTrackObject.yOffset,
                                         otherConnection.transform.position.z);
-                                    break;
+                                    return;
                             }
                         }
                     }
@@ -88,34 +88,34 @@ namespace Builder
                 switch (selectedTrackObject.interactiveType)
                 {
                     case InteractiveType.Windmill:
-                        selectedTrackObject.windmill = selectedTrackObject.GetComponentInChildren<Windmill>();
+                        selectedTrackObject.interactiveObject = selectedTrackObject.GetComponentInChildren<Windmill>();
                         break;
                     case InteractiveType.Magnet:
-                        selectedTrackObject.magnet = selectedTrackObject.GetComponentInChildren<RigidbodyMagnet>();
+                        selectedTrackObject.interactiveObject = selectedTrackObject.GetComponentInChildren<RigidbodyMagnet>();
                         break;
                     case InteractiveType.Pendulum:
-                        selectedTrackObject.pendulum = selectedTrackObject.GetComponentInChildren<Pendulum>();
+                        selectedTrackObject.interactiveObject = selectedTrackObject.GetComponentInChildren<Pendulum>();
                         break;
                     case InteractiveType.Battery:
-                        selectedTrackObject.battery = selectedTrackObject.GetComponentInChildren<Battery>();
+                        selectedTrackObject.interactiveObject = selectedTrackObject.GetComponentInChildren<Battery>();
                         break;
                     case InteractiveType.Freezing:
-                        selectedTrackObject.freezingBall = selectedTrackObject.GetComponentInChildren<FreezingBall>();
+                        selectedTrackObject.interactiveObject = selectedTrackObject.GetComponentInChildren<FreezingBall>();
                         break;
                     case InteractiveType.Wind:
-                        selectedTrackObject.windZone = selectedTrackObject.GetComponentInChildren<WindZoneScript>();
+                        selectedTrackObject.interactiveObject = selectedTrackObject.GetComponentInChildren<WindZoneScript>();
                         break;
                     case InteractiveType.Boost:
-                        selectedTrackObject.boost = selectedTrackObject.GetComponentInChildren<BoostTrigger>();
+                        selectedTrackObject.interactiveObject = selectedTrackObject.GetComponentInChildren<BoostTrigger>();
                         break;
                     case InteractiveType.Lamp:
-                        selectedTrackObject.lamp = selectedTrackObject.GetComponentInChildren<Lamp>();
+                        selectedTrackObject.interactiveObject = selectedTrackObject.GetComponentInChildren<Lamp>();
                         break;
                     case InteractiveType.Hint:
-                        selectedTrackObject.hint = selectedTrackObject.GetComponentInChildren<Hint>();
+                        selectedTrackObject.interactiveObject = selectedTrackObject.GetComponentInChildren<Hint>();
                         break;
                     case InteractiveType.Draw:
-                        selectedTrackObject.draw = selectedTrackObject.GetComponentInChildren<DrawMeshHandler>();
+                        selectedTrackObject.interactiveObject = selectedTrackObject.GetComponentInChildren<DrawMeshHandler>();
                         break;
                 }
 

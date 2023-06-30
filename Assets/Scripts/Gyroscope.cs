@@ -9,6 +9,11 @@ namespace Drone
         [SerializeField] private RectTransform lockator;
         [SerializeField] DroneController droneController;
 
+        private void Start()
+        {
+            droneController = FindObjectOfType<DroneController>();
+        }
+
         private void LateUpdate()
         {
             lockator.rotation = Quaternion.Euler(0f, 0f, droneController.transform.eulerAngles.z);

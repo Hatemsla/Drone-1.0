@@ -84,66 +84,64 @@ namespace Builder
 
             xyzScale.value = ConvertScaleToSliderValue(xyzS);
 
-            if (!trackObject.windmill && !trackObject.magnet && !trackObject.pendulum && !trackObject.battery &&
-                !trackObject.windZone && !trackObject.windZone && !trackObject.freezingBall && !trackObject.boost && 
-                !trackObject.lamp && !trackObject.hint && !trackObject.draw)
-                TurnInteractivePanels(gameObject);
-            else if (trackObject.windmill)
+            switch (trackObject.interactiveType)
             {
-                TurnInteractivePanels(windmillPanel);
-                windmillRotSpeed.value = trackObject.windmill.rotateSpeed;
-                windmillRotSpeedValue.text = trackObject.windmill.rotateSpeed.ToString("f1", CultureInfo.CurrentCulture);
-            }
-            else if (trackObject.magnet)
-            {
-                TurnInteractivePanels(magnetPanel);
-                magnetForce.value = trackObject.magnet.magnetForce;
-                magnetForceValue.text = trackObject.magnet.magnetForce.ToString("f1", CultureInfo.CurrentCulture);
-            }
-            else if (trackObject.pendulum)
-            {
-                TurnInteractivePanels(pendulumPanel);
-                pendulumSpeed.value = trackObject.pendulum.moveSpeed;
-                pendulumSpeedValue.text = trackObject.pendulum.moveSpeed.ToString("f1", CultureInfo.CurrentCulture);
-                pendulumAngle.value = trackObject.pendulum.rightAngle;
-                pendulumAngleValue.text = (trackObject.pendulum.rightAngle * 360f).ToString("f1", CultureInfo.CurrentCulture);
-            }
-            else if (trackObject.windZone)
-            {
-                TurnInteractivePanels(windPanel);
-                windForce.value = trackObject.windZone.windForce;
-                windForceValue.text = trackObject.windZone.windForce.ToString("f1", CultureInfo.CurrentCulture);
-            }
-            else if (trackObject.battery)
-            {
-                TurnInteractivePanels(batteryPanel);
-                batteryEnergy.value = trackObject.battery.energy;
-                batteryEnergyValue.text = trackObject.battery.energy.ToString(CultureInfo.CurrentCulture);
-            }
-            else if (trackObject.freezingBall)
-            {
-                TurnInteractivePanels(freezingPanel);
-                freezing.isOn = trackObject.freezingBall.isFreezing;
-            }
-            else if (trackObject.boost)
-            {
-                TurnInteractivePanels(boostPanel);
-                boostForce.value = trackObject.boost.boost;
-                boostForceValue.text = trackObject.boost.boost.ToString("f1", CultureInfo.CurrentCulture);
-            }
-            else if (trackObject.lamp)
-            {
-                TurnInteractivePanels(lampPanel);
-                lamp.isOn = trackObject.lamp.isTurn;
-            }
-            else if (trackObject.hint)
-            {
-                TurnInteractivePanels(hintPanel);
-                hintInput.text = trackObject.hint.hintText.text;
-            }
-            else if (trackObject.draw)
-            {
-                TurnInteractivePanels(drawPanel);
+                case InteractiveType.None:
+                    TurnInteractivePanels(gameObject);
+                    break;
+                case InteractiveType.Windmill:
+                    TurnInteractivePanels(windmillPanel);
+                    windmillRotSpeed.value = trackObject.interactiveObject.windMillRotateSpeed;
+                    windmillRotSpeedValue.text =
+                        trackObject.interactiveObject.windMillRotateSpeed.ToString("f1", CultureInfo.CurrentCulture);
+                    break;
+                case InteractiveType.Magnet:
+                    TurnInteractivePanels(magnetPanel);
+                    magnetForce.value = trackObject.interactiveObject.magnetForce;
+                    magnetForceValue.text =
+                        trackObject.interactiveObject.magnetForce.ToString("f1", CultureInfo.CurrentCulture);
+                    break;
+                case InteractiveType.Pendulum:
+                    TurnInteractivePanels(pendulumPanel);
+                    pendulumSpeed.value = trackObject.interactiveObject.pendulumMoveSpeed;
+                    pendulumSpeedValue.text =
+                        trackObject.interactiveObject.pendulumMoveSpeed.ToString("f1", CultureInfo.CurrentCulture);
+                    pendulumAngle.value = trackObject.interactiveObject.rightPendulumAngle;
+                    pendulumAngleValue.text =
+                        (trackObject.interactiveObject.rightPendulumAngle * 360f).ToString("f1", CultureInfo.CurrentCulture);
+                    break;
+                case InteractiveType.Wind:
+                    TurnInteractivePanels(windPanel);
+                    windForce.value = trackObject.interactiveObject.windForce;
+                    windForceValue.text =
+                        trackObject.interactiveObject.windForce.ToString("f1", CultureInfo.CurrentCulture);
+                    break;
+                case InteractiveType.Battery:
+                    TurnInteractivePanels(batteryPanel);
+                    batteryEnergy.value = trackObject.interactiveObject.batteryEnergy;
+                    batteryEnergyValue.text = trackObject.interactiveObject.batteryEnergy.ToString(CultureInfo.CurrentCulture);
+                    break;
+                case InteractiveType.Freezing:
+                    TurnInteractivePanels(freezingPanel);
+                    freezing.isOn = trackObject.interactiveObject.isFreezing;
+                    break;
+                case InteractiveType.Boost:
+                    TurnInteractivePanels(boostPanel);
+                    boostForce.value = trackObject.interactiveObject.boostSpeed;
+                    boostForceValue.text =
+                        trackObject.interactiveObject.boostSpeed.ToString("f1", CultureInfo.CurrentCulture);
+                    break;
+                case InteractiveType.Lamp:
+                    TurnInteractivePanels(lampPanel);
+                    lamp.isOn = trackObject.interactiveObject.isLampTurn;
+                    break;
+                case InteractiveType.Hint:
+                    TurnInteractivePanels(hintPanel);
+                    hintInput.text = trackObject.interactiveObject.hintText.text;
+                    break;
+                case InteractiveType.Draw:
+                    TurnInteractivePanels(drawPanel);
+                    break;
             }
         }
 

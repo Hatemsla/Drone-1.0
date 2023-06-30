@@ -3,8 +3,8 @@ using UnityEngine;
 
 namespace Builder
 {
-    public class Hint : MonoBehaviour
+    public class Hint : InteractiveObject
     {
-        public TMP_Text hintText;
+        
     }
 }
