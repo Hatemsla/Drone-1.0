@@ -76,15 +76,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 22
   connection: {fileID: 0}
-  objectType: 5
+  objectType: 6
   hasPortal: 1
   interactiveType: 2
+  effectType: 1
   yOffset: 1.137
   yOffsetIncrease: 0.551
   isActive: 0
   maxMouseDistance: 0
+  damage: 1
   objectName: 
   objectDescription: 
+  interactiveObject: {fileID: 0}
 --- !u!1 &2611622830812899703
 GameObject:
   m_ObjectHideFlags: 0
@@ -151,7 +154,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2da39162af5542c18603e0e6a9fa86f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  windMillRotateSpeed: 0
   magnetForce: 0.7
+  pendulumMoveSpeed: 0
+  leftPendulumAngle: 0
+  rightPendulumAngle: 0
+  windForce: 0
+  isFreezing: 1
+  batteryEnergy: 0
+  boostSpeed: 2
+  isLampTurn: 1
+  hintText: {fileID: 0}
 --- !u!1001 &1552842925205153055
 PrefabInstance:
   m_ObjectHideFlags: 0

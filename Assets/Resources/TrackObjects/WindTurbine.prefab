@@ -265,8 +265,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b7774b25f364db4be3299ccd5e39866, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  windMillRotateSpeed: 0
+  magnetForce: 0
+  pendulumMoveSpeed: 0
+  leftPendulumAngle: 0
+  rightPendulumAngle: 0
+  windForce: 0
+  isFreezing: 1
+  batteryEnergy: 0
+  boostSpeed: 2
+  isLampTurn: 1
+  hintText: {fileID: 0}
   rotateDirection: {x: 1, y: 0, z: 0}
-  rotateSpeed: 50
   trap: {fileID: 5446718760121195197}
 --- !u!1 &5832602252723406564
 GameObject:
@@ -368,15 +378,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 27
   connection: {fileID: 0}
-  objectType: 5
+  objectType: 6
   hasPortal: 1
   interactiveType: 1
+  effectType: 1
   yOffset: 21.64
   yOffsetIncrease: 10.8
   isActive: 0
   maxMouseDistance: 0
+  damage: 1
   objectName: 
   objectDescription: 
+  interactiveObject: {fileID: 0}
 --- !u!1 &5832602253883739916
 GameObject:
   m_ObjectHideFlags: 0

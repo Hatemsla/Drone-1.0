@@ -109,10 +109,10 @@ namespace Sockets
 
         private void SetDroneData(MioData data, DroneController drone)
         {
-            drone.throttle = data.LeftMio.X / 2000f;
-            drone.pedals = data.LeftMio.Y / 2000f;
-            drone.cyclic.x = data.RightMio.X / 2000f;
-            drone.cyclic.y = data.RightMio.Y / 2000f;
+            drone.throttle = data.LeftMio.X / 1000f;
+            drone.pedals = data.LeftMio.Y / 1000f;
+            drone.cyclic.x = data.RightMio.X / 1000f;
+            drone.cyclic.y = data.RightMio.Y / 1000f;
         }
 
         private void OnDestroy()

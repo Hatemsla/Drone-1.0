@@ -52,10 +52,10 @@ namespace Builder
         public Transform targetCheckpoint;
         public GameObject[] objects;
         public List<GameObject> objectsPool;
-        [HideInInspector] public Scene levelScene;
 
-        public UnityEvent testLevelEvent;
-        public UnityEvent loadingComplete;
+        [HideInInspector] public Scene levelScene;
+        [HideInInspector] public UnityEvent testLevelEvent;
+        [HideInInspector] public UnityEvent loadingComplete;
 
         private List<Lamp> _lamps;
         private int _currentGroundIndex;
@@ -368,9 +368,9 @@ namespace Builder
         public void TestLevel()
         {
             isMove = !isMove;
-            _lamps = FindObjectsOfType<Lamp>().ToList();
             if (isMove)
             {
+                _lamps = FindObjectsOfType<Lamp>().ToList();
                 timer.currentTime = 0;
                 droneBuilderController.droneRpgController.DroneData = new DroneData(100, 100, 100);
                 builderUI.droneView.SetActive(true);

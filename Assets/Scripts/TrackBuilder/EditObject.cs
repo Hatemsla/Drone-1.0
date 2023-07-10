@@ -8,6 +8,7 @@ namespace Builder
     public class EditObject : MonoBehaviour
     {
         public TrackObject currentObject;
+        [SerializeField] private BuilderUI builderUI;
         [SerializeField] private EditMenu editMenu;
 
         private void Start()
@@ -183,14 +184,40 @@ namespace Builder
             BuilderManager.Instance.isInputText = false;
         }
 
-        // public void OnStartDrawButton()
-        // {
-        //     currentObject.interactiveObject.StartDraw();
-        // }
-        //
-        // public void OnStopDrawButton()
-        // {
-        //     currentObject.interactiveObject.StopDraw();
-        // }
+        public void OnStartDrawButton()
+        {
+            if (currentObject.interactiveObject is DrawLine drawLine)
+            {
+                drawLine.StartDraw();
+                builderUI.editButtons.SetActive(false);
+                builderUI.createPanel.SetActive(false);
+            }
+        }
+        
+        public void OnStopDrawButton()
+        {
+            if (currentObject.interactiveObject is DrawLine drawLine)
+            {
+                drawLine.StopDraw();
+                builderUI.editButtons.SetActive(true);
+                builderUI.createPanel.SetActive(true);
+            }
+        }
+
+        public void OnThicknessChanged(float value)
+        {
+            if (currentObject.interactiveObject is DrawLine drawLine)
+            {
+                drawLine.SetThickness(value);
+            }
+        }
+        
+        public void OnColorChanged(float value)
+        {
+            if (currentObject.interactiveObject is DrawLine drawLine)
+            {
+                drawLine.SetColor(Color.HSVToRGB(value, 1f, 1f));
+            }
+        }
     }
 }

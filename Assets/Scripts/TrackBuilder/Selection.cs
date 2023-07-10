@@ -115,7 +115,7 @@ namespace Builder
                         selectedTrackObject.interactiveObject = selectedTrackObject.GetComponentInChildren<Hint>();
                         break;
                     case InteractiveType.Draw:
-                        selectedTrackObject.interactiveObject = selectedTrackObject.GetComponentInChildren<DrawMeshHandler>();
+                        selectedTrackObject.interactiveObject = selectedTrackObject.GetComponentInChildren<DrawLine>();
                         break;
                 }
 

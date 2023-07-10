@@ -72,10 +72,10 @@ MonoBehaviour:
   currentForwardDistance: 0
   heightMask:
     serializedVersion: 2
-    m_Bits: 2147483647
+    m_Bits: 4294967295
   forwardDistanceMask:
     serializedVersion: 2
-    m_Bits: 2147483647
+    m_Bits: 4294967295
   waitTime: 0.1
 --- !u!1 &143132923454954420
 GameObject:
@@ -463,8 +463,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb130233d8e91bd4f9e25284f75ce06a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minMaxPitch: 15
-  minMaxRoll: 15
+  minMaxPitch: 30
+  minMaxRoll: 30
   yawPower: 1
   cyclic: {x: 0, y: 0}
   pedals: 0
@@ -473,9 +473,10 @@ MonoBehaviour:
   yaw: 0
   isSimpleMode: 0
   isStop: 0
-  droneFootballCheckNode: {fileID: 0}
+  currentPercentSpeed: 0
+  currentSpeed: 0
   footballController: {fileID: 0}
-  droneMeshRenderer: {fileID: 7748357714156865828}
+  rb: {fileID: 0}
 --- !u!114 &7332079272930706101
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -489,6 +490,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentNode: 0
+  wayDistance: 0
+  nodes: []
 --- !u!114 &7332079272930706102
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -720,8 +723,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 951934841079136417}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.6531999, y: 0.0596, z: 0.1728}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.19313717, y: 0.388, z: 0.19311094}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -802,8 +805,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 951934841184784917}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.3362, y: 0.0596, z: 0.1728}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.19290066, y: 0.388, z: 0.19311619}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -849,8 +852,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 951934841518040674}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.653, y: 0.0596, z: -0.1841}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.19271517, y: 0.388, z: -0.19265628}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -896,8 +899,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 951934841771302446}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.336, y: 0.0596, z: -0.1837}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.1929059, y: 0.388, z: -0.19265103}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

@@ -1619,8 +1619,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e0b9b3731a5a1a488fdf0384a34676f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minMaxPitch: 15
-  minMaxRoll: 15
+  minMaxPitch: 30
+  minMaxRoll: 30
   yawPower: 1
   cyclic: {x: 0, y: 0}
   pedals: 0
@@ -1629,9 +1629,10 @@ MonoBehaviour:
   yaw: 0
   isSimpleMode: 0
   isStop: 0
-  droneRaceCheckNode: {fileID: 0}
+  currentPercentSpeed: 0
+  currentSpeed: 0
   raceController: {fileID: 0}
-  droneMeshRenderer: {fileID: 2808979558708131663}
+  rb: {fileID: 0}
 --- !u!114 &4632446992205922068
 MonoBehaviour:
   m_ObjectHideFlags: 0

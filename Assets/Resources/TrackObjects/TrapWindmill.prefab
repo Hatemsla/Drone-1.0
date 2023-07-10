@@ -965,7 +965,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 17
   connection: {fileID: 0}
-  objectType: 5
+  objectType: 6
   hasPortal: 1
   interactiveType: 1
   effectType: 1
@@ -976,13 +976,7 @@ MonoBehaviour:
   damage: 1
   objectName: 
   objectDescription: 
-  windmill: {fileID: 0}
-  magnet: {fileID: 0}
-  pendulum: {fileID: 0}
-  windZone: {fileID: 0}
-  freezingBall: {fileID: 0}
-  battery: {fileID: 0}
-  boost: {fileID: 0}
+  interactiveObject: {fileID: 0}
 --- !u!114 &5659191429575721898
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -995,8 +989,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b7774b25f364db4be3299ccd5e39866, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  windMillRotateSpeed: 0
+  magnetForce: 0
+  pendulumMoveSpeed: 0
+  leftPendulumAngle: 0
+  rightPendulumAngle: 0
+  windForce: 0
+  isFreezing: 1
+  batteryEnergy: 0
+  boostSpeed: 2
+  isLampTurn: 1
+  hintText: {fileID: 0}
   rotateDirection: {x: 0, y: 1, z: 0}
-  rotateSpeed: 50
   trap: {fileID: 4915803618500759553}
 --- !u!1 &6505708842789637494
 GameObject:
