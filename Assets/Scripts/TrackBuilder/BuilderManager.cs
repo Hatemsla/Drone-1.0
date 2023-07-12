@@ -12,6 +12,7 @@ using Sockets;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Outline = cakeslice.Outline;
@@ -54,8 +55,8 @@ namespace Builder
         public List<GameObject> objectsPool;
 
         [HideInInspector] public Scene levelScene;
-        [HideInInspector] public UnityEvent testLevelEvent;
-        [HideInInspector] public UnityEvent loadingComplete;
+        public event Action TestLevelEvent;
+        public event Action LoadingComplete;
 
         private List<Lamp> _lamps;
         private int _currentGroundIndex;
@@ -89,21 +90,115 @@ namespace Builder
         private void Start()
         {
             builderUI.pathArrow.gameObject.SetActive(false);
-            loadingComplete.AddListener(RewindManager.Instance.FindRewindObjects);
-            loadingComplete.AddListener(RewindManager.Instance.RestartTracking);
             
+            LoadingComplete += RewindManager.Instance.FindRewindObjects;
+            LoadingComplete += RewindManager.Instance.RestartTracking;
+
             if (isLoadLevel)
             {
                 StartCoroutine(LoadScene());
             }
             else if (isGameLevel)
             {
-                loadingComplete.AddListener(TestLevel);
+                LoadingComplete += TestLevel;
                 StartLevel();
             }
             else
             {
                 CreateObjectsPoolScene();
+            }
+        }
+
+        private void OnEnable()
+        {
+            TestLevelEvent += InputManager.Instance.TurnActionMaps;
+            InputManager.Instance.CopyObjectEvent += CopyObject;
+            InputManager.Instance.PasteObjectEvent += PasteObject;
+            InputManager.Instance.UndoObjectEvent += UndoCommand;
+            InputManager.Instance.RedoObjectEvent += RedoCommand;
+            InputManager.Instance.PlaceObjectEvent += PlaceObject;
+            InputManager.Instance.PlaceAndPickupObjectEvent += PlaceAndPickupObject;
+            InputManager.Instance.RotateYObjectEvent += RotateYObject;
+            InputManager.Instance.RotateXObjectEvent += RotateXObject;
+            InputManager.Instance.ChangeObjectHeightEvent += ChangeObjectHeight;
+            InputManager.Instance.ChangeObjectScaleEvent += ChangeObjectScale;
+            InputManager.Instance.ExitEvent += CheckTabPanel;
+        }
+        
+        private void OnDisable()
+        {
+            LoadingComplete -= RewindManager.Instance.FindRewindObjects;
+            LoadingComplete -= RewindManager.Instance.RestartTracking;
+            LoadingComplete -= TestLevel;
+            TestLevelEvent -= InputManager.Instance.TurnActionMaps;
+            InputManager.Instance.CopyObjectEvent -= CopyObject;
+            InputManager.Instance.PasteObjectEvent -= PasteObject;
+            InputManager.Instance.UndoObjectEvent -= UndoCommand;
+            InputManager.Instance.RedoObjectEvent -= RedoCommand;
+            InputManager.Instance.PlaceObjectEvent -= PlaceObject;
+            InputManager.Instance.PlaceAndPickupObjectEvent -= PlaceAndPickupObject;
+            InputManager.Instance.RotateYObjectEvent -= RotateYObject;
+            InputManager.Instance.RotateXObjectEvent -= RotateXObject;
+            InputManager.Instance.ChangeObjectHeightEvent -= ChangeObjectHeight;
+            InputManager.Instance.ChangeObjectScaleEvent -= ChangeObjectScale;
+        }
+
+        private void RotateXObject(float value)
+        {
+            if(IsNoEditObject())
+                return;
+            
+            if(value > 0)
+                RotateObject(pendingObject.transform.right, 10f, Space.World);
+            else if(value < 0)
+                RotateObject(pendingObject.transform.right, -10f, Space.World);
+        }
+
+        private void ChangeObjectScale(float value)
+        {
+            if(IsNoEditObject() || currentObjectType.objectType == ObjectsType.Drone || currentObjectType.objectType == ObjectsType.Gate)
+                return;
+            
+            var angleX = currentObjectType.Rotation.eulerAngles.x;
+            var angleY = currentObjectType.Rotation.eulerAngles.y;
+            var angleZ = currentObjectType.Rotation.eulerAngles.z;
+            editMenu.SetEditPanelParams(currentObjectType.objectName, currentObjectType.objectDescription,
+                currentObjectType.Position.x, currentObjectType.Position.y, currentObjectType.Position.z, 
+                angleX, angleY, angleZ,
+                currentObjectType.Scale.x + value * 0.5f, currentObjectType);
+        }
+
+        private void RotateYObject(float value)
+        {
+            if(IsNoEditObject())
+                return;
+            
+            if(value > 0)
+                RotateObject(pendingObject.transform.up, 10, Space.World);
+            else if(value < 0)
+                RotateObject(pendingObject.transform.up, -10, Space.World);
+        }
+
+        private bool IsNoEditObject()
+        {
+            return currentObjectType == null || pendingObject == null || pendingObjects.Count > 1;
+        }
+
+        private void PlaceAndPickupObject()
+        {
+            if (_selection.selectedObjects.Count > 0 && _selection.selectedObject != null)
+            {
+                PlaceObjects();
+                SelectObject(currentSelectObjectIndex);
+            }
+        }
+        
+        private void PlaceObject()
+        {
+            if (_selection.selectedObjects.Count > 0 && _selection.selectedObject != null)
+            {
+                PlaceObjects();
+                _selection.Deselect();
             }
         }
 
@@ -117,38 +212,7 @@ namespace Builder
                 SetDroneParameters();
             }
 
-            CheckTabPanel();
-
-            if (Input.GetKey(KeyCode.LeftControl))
-            {
-                if (Input.GetKeyDown(KeyCode.C))
-                {
-                    if (_selection.selectedObject != null)
-                    {
-                        copyObject = _selection.selectedObject;
-                    }
-                }
-                else if (Input.GetKeyDown(KeyCode.V))
-                {
-                    if(pendingObject != null || pendingObjects.Count > 0)
-                        PlaceObjects();
-                
-                    if (copyObject != null)
-                    {
-                        PasteObject(copyObject);
-                    } 
-                }
-                else if (Input.GetKeyDown(KeyCode.Z))
-                {
-                    undoRedoManager.UndoCommand();
-                }
-                else if (Input.GetKeyDown(KeyCode.Y))
-                {
-                    undoRedoManager.RedoCommand();
-                }
-            }
-
-            var ray = Camera.main!.ScreenPointToRay(Input.mousePosition);
+            var ray = Camera.main!.ScreenPointToRay(InputManager.Instance.mousePosition);
 
             if (Physics.Raycast(ray, out _hit, 10000, layerMask, QueryTriggerInteraction.Ignore) && !EventSystem.current.IsPointerOverGameObject())
             {
@@ -175,70 +239,34 @@ namespace Builder
                     };
                 }
             }
+        }
+        
+        private void UndoCommand()
+        {
+            undoRedoManager.UndoCommand();
+        }
 
-            if (Input.GetMouseButtonDown(0) && canPlace)
-            {
+        private void RedoCommand()
+        {
+            undoRedoManager.RedoCommand();
+        }
+
+        private void PasteObject()
+        {
+            if(pendingObject != null || pendingObjects.Count > 0)
                 PlaceObjects();
-            }
+                
+            if (copyObject != null)
+            {
+                PasteObject(copyObject);
+            } 
+        }
 
-            if(currentObjectType == null || pendingObject == null || pendingObjects.Count > 1)
-                return;
-
-            if (Input.GetKeyDown(KeyCode.Q))
+        private void CopyObject()
+        {
+            if (_selection.selectedObject != null)
             {
-                RotateObject(pendingObject.transform.up, -10, Space.World);
-            }
-            else if (Input.GetKeyDown(KeyCode.E))
-            {
-                RotateObject(pendingObject.transform.up, 10, Space.World);
-            }
-            else if (Input.GetAxis("Mouse ScrollWheel") != 0)
-            {
-                var mouseScroll = Input.GetAxis("Mouse ScrollWheel");
-                var rotateAmount = mouseScroll > 0 ? 1 : -1;
-                RotateObject(pendingObject.transform.up, 10 * rotateAmount, Space.World);
-            }
-
-            if (Input.GetKey(KeyCode.W))
-            {
-                ChangeObjectHeight(2 * Time.deltaTime);
-            }
-            else if (Input.GetKey(KeyCode.S))
-            {
-                ChangeObjectHeight(-2 * Time.deltaTime);
-            }
-
-            if (currentObjectType.objectType != ObjectsType.Drone && currentObjectType.objectType != ObjectsType.Gate)
-            {
-                if (Input.GetKeyDown(KeyCode.A))
-                {
-                    var angleX = currentObjectType.Rotation.eulerAngles.x;
-                    var angleY = currentObjectType.Rotation.eulerAngles.y;
-                    var angleZ = currentObjectType.Rotation.eulerAngles.z;
-                    editMenu.SetEditPanelParams(currentObjectType.objectName, currentObjectType.objectDescription,
-                        currentObjectType.Position.x, currentObjectType.Position.y, currentObjectType.Position.z, 
-                        angleX, angleY, angleZ,
-                        currentObjectType.Scale.x + 0.5f, currentObjectType);
-                }
-                else if (Input.GetKeyDown(KeyCode.D))
-                {
-                    var angleX = currentObjectType.Rotation.eulerAngles.x;
-                    var angleY = currentObjectType.Rotation.eulerAngles.y;
-                    var angleZ = currentObjectType.Rotation.eulerAngles.z;
-                    editMenu.SetEditPanelParams(currentObjectType.objectName, currentObjectType.objectDescription,
-                        currentObjectType.Position.x, currentObjectType.Position.y, currentObjectType.Position.z, 
-                        angleX, angleY, angleZ,
-                        currentObjectType.Scale.x - 0.5f, currentObjectType);
-                }
-            }
-
-            if (Input.GetKeyDown(KeyCode.Z))
-            {
-                RotateObject(Vector3.right, 10f, Space.World);
-            }
-            else if (Input.GetKeyDown(KeyCode.X))
-            {
-                RotateObject(Vector3.right, -10f, Space.World);
+                copyObject = _selection.selectedObject;
             }
         }
 
@@ -272,7 +300,7 @@ namespace Builder
 
         private void CheckTabPanel()
         {
-            if (Input.GetKeyDown(KeyCode.Escape) && isMove)
+            if (isMove)
             {
                 _isTabPanel = !_isTabPanel;
                 if(_isTabPanel)
@@ -368,6 +396,7 @@ namespace Builder
         public void TestLevel()
         {
             isMove = !isMove;
+            TestLevelEvent?.Invoke();
             if (isMove)
             {
                 _lamps = FindObjectsOfType<Lamp>().ToList();
@@ -399,7 +428,6 @@ namespace Builder
             }
             else
             {
-                testLevelEvent.Invoke();
                 TurnOnLamps();
                 builderUI.droneView.SetActive(false);
                 freeFlyCamera.enabled = true;
@@ -534,7 +562,7 @@ namespace Builder
             builderUI.loadLevelPanel.SetActive(false);
             audioManager.EndPlay();
             CreateObjectsPoolScene();
-            loadingComplete?.Invoke();
+            LoadingComplete?.Invoke();
         }
 
 
@@ -588,17 +616,14 @@ namespace Builder
 
         private void ChangeObjectHeight(float value)
         {
-            if(currentObjectType == null)
+            if(IsNoEditObject())
                 return;
             
             currentObjectType.yOffset += value;
-                // _mainCamera.transform.Translate(0, value, 0, Space.Self);
         }
 
         private void RotateObject(Vector3 axis, float rotateAmount, Space space)
         {
-            if(pendingObject == null)
-                return;
             pendingObject.transform.Rotate(axis, rotateAmount, space);
         }
         

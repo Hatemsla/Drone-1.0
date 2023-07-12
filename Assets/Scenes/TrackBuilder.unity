@@ -19408,7 +19408,6 @@ GameObject:
   - component: {fileID: 1330915979}
   - component: {fileID: 1330915980}
   - component: {fileID: 1330915981}
-  - component: {fileID: 1330915982}
   m_Layer: 5
   m_Name: EditPanel
   m_TagString: Untagged
@@ -19578,18 +19577,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ShowMaskGraphic: 1
---- !u!114 &1330915982
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1330915975}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa86aae882a14d928aeb20be64df4ce4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1346477166
 GameObject:
   m_ObjectHideFlags: 0
@@ -22480,6 +22467,188 @@ RectTransform:
   m_AnchoredPosition: {x: 249.8, y: -51.047}
   m_SizeDelta: {x: 499.57, y: 45.377}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1480886553
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1480886555}
+  - component: {fileID: 1480886554}
+  - component: {fileID: 1480886556}
+  m_Layer: 0
+  m_Name: InputManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1480886554
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1480886553}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: ae13aabaf349be146ae96b9545218c11, type: 3}
+  m_NotificationBehavior: 2
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: fd2ceed1-12ab-4e7d-8800-ad72924c4fb2
+    m_ActionName: Player/Cyclic[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 45c7ade7-bd26-4dda-a030-09e3ba64b7d1
+    m_ActionName: Player/Pedals[/Keyboard/z,/Keyboard/x]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: f85225fc-94dd-48ff-8083-0b5bdc044449
+    m_ActionName: Player/Throttle[/Keyboard/q,/Keyboard/e]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 5d914d44-ad16-4fba-a840-a925a03458cd
+    m_ActionName: Player/FlashLight[/Keyboard/l]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: c5c8911a-ac24-415b-a8ee-aa91992ea750
+    m_ActionName: Player/UVFlashLight[/Keyboard/k]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 8e4e09d8-881f-40b5-95d2-f7db06716a91
+    m_ActionName: Player/RewindTime[/Keyboard/space]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: abaefa60-5129-4080-b021-ca8edaba51d5
+    m_ActionName: Builder/RotateObject[/Keyboard/q,/Keyboard/e]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: f0229cc1-0dbd-4114-9dfb-8d64e21a1973
+    m_ActionName: Builder/DeleteObject[/Keyboard/delete]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: a3845ce3-9ce8-4816-9eb6-251b9524c1a2
+    m_ActionName: Builder/SelectObjects[/Keyboard/ctrl,/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: c85f5846-543a-4fe6-9076-4f86bf50f87f
+    m_ActionName: Builder/SelectObject[/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: cfe0c522-78ae-44c7-94e3-6f04529b1b06
+    m_ActionName: Builder/PlaceAndPickupSameObejct[/Keyboard/t]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: d346ac98-0551-4b54-8f52-b97d4fee79e1
+    m_ActionName: Builder/PlaceObject[/Mouse/rightButton,/Keyboard/f]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 1a2d39eb-9fa2-4592-8bb7-74c3b637cb62
+    m_ActionName: Builder/RedoCommand[/Keyboard/ctrl,/Keyboard/y]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 167e2806-e782-4b38-b579-eaf5fc5a6850
+    m_ActionName: Builder/UndoCommand[/Keyboard/ctrl,/Keyboard/z]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 29a5735e-1765-4dcc-acbf-5f5e5b123a49
+    m_ActionName: Builder/PasteObject[/Keyboard/ctrl,/Keyboard/v]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: c069305d-e2bf-4bf8-9264-2215442a297c
+    m_ActionName: Builder/CopyObject[/Keyboard/ctrl,/Keyboard/c]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: ad95d176-15c4-4bfd-b660-42994ed358bd
+    m_ActionName: UI/Navigate[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 951a0522-96cd-4361-83ce-82176441e806
+    m_ActionName: UI/Submit[/Keyboard/enter]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: dc707296-c1f5-401f-9c00-d4c39a52f07e
+    m_ActionName: UI/Cancel[/Keyboard/escape]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 9ad81d7f-5692-463a-8c83-80eab7456105
+    m_ActionName: UI/Point[/Mouse/position]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: c8ff5ca8-7de6-4d6f-aaeb-1fd37e760ece
+    m_ActionName: UI/Click[/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 5c47aae5-64af-405b-8838-ad20197315c1
+    m_ActionName: UI/ScrollWheel[/Mouse/scroll]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: d671faff-575d-489f-940c-57c5fefddcf6
+    m_ActionName: UI/MiddleClick[/Mouse/middleButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 8bfc0223-bc68-4482-8ad0-8cdce996d93b
+    m_ActionName: UI/RightClick[/Mouse/rightButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 80daa9b9-667c-4817-9b3c-b2f7c31f2f11
+    m_ActionName: UI/TrackedDevicePosition
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 0382cd26-68e5-44c7-852e-e3c13721b8b6
+    m_ActionName: UI/TrackedDeviceOrientation
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: Player
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
+--- !u!4 &1480886555
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1480886553}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 992.14526, y: 530.38763, z: -16.770756}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 16
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1480886556
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1480886553}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce2533d410df4396bb7d79d324f53761, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  throttle: 0
+  pedals: 0
+  cyclic: {x: 0, y: 0}
 --- !u!1 &1489766011
 GameObject:
   m_ObjectHideFlags: 0
@@ -24080,17 +24249,17 @@ MonoBehaviour:
   m_MoveRepeatDelay: 0.5
   m_MoveRepeatRate: 0.1
   m_XRTrackingOrigin: {fileID: 0}
-  m_ActionsAsset: {fileID: -944628639613478452, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_PointAction: {fileID: -1654692200621890270, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_MoveAction: {fileID: -8784545083839296357, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_SubmitAction: {fileID: 392368643174621059, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_CancelAction: {fileID: 7727032971491509709, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_LeftClickAction: {fileID: 3001919216989983466, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_MiddleClickAction: {fileID: -2185481485913320682, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_RightClickAction: {fileID: -4090225696740746782, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_ScrollWheelAction: {fileID: 6240969308177333660, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_TrackedDevicePositionAction: {fileID: 6564999863303420839, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_TrackedDeviceOrientationAction: {fileID: 7970375526676320489, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_ActionsAsset: {fileID: -944628639613478452, guid: ae13aabaf349be146ae96b9545218c11, type: 3}
+  m_PointAction: {fileID: 2011620707067437678, guid: ae13aabaf349be146ae96b9545218c11, type: 3}
+  m_MoveAction: {fileID: -5424286321023490480, guid: ae13aabaf349be146ae96b9545218c11, type: 3}
+  m_SubmitAction: {fileID: -3497418768305775216, guid: ae13aabaf349be146ae96b9545218c11, type: 3}
+  m_CancelAction: {fileID: 4221214588108452756, guid: ae13aabaf349be146ae96b9545218c11, type: 3}
+  m_LeftClickAction: {fileID: -592114785035148373, guid: ae13aabaf349be146ae96b9545218c11, type: 3}
+  m_MiddleClickAction: {fileID: -3730771058624619608, guid: ae13aabaf349be146ae96b9545218c11, type: 3}
+  m_RightClickAction: {fileID: -2422778435315347134, guid: ae13aabaf349be146ae96b9545218c11, type: 3}
+  m_ScrollWheelAction: {fileID: 1283926257429727534, guid: ae13aabaf349be146ae96b9545218c11, type: 3}
+  m_TrackedDevicePositionAction: {fileID: -6914660678933265243, guid: ae13aabaf349be146ae96b9545218c11, type: 3}
+  m_TrackedDeviceOrientationAction: {fileID: -3698194682254455649, guid: ae13aabaf349be146ae96b9545218c11, type: 3}
   m_DeselectOnBackgroundClick: 1
   m_PointerBehavior: 0
   m_CursorLockBehavior: 0
@@ -29437,12 +29606,6 @@ MonoBehaviour:
   - {fileID: 6554557504242428667}
   levelScene:
     m_Handle: 0
-  testLevelEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  loadingComplete:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!4 &1964624141
 Transform:
   m_ObjectHideFlags: 0
@@ -32796,11 +32959,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 718910220148088089, guid: d02e1081ac5d4604e80dd2d3b7e27488, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.0000000042711803
+      value: -0.0000000042711794
       objectReference: {fileID: 0}
     - target: {fileID: 718910220148088089, guid: d02e1081ac5d4604e80dd2d3b7e27488, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -5.1063487e-10
+      value: 5.1063476e-10
       objectReference: {fileID: 0}
     - target: {fileID: 5984266150220761616, guid: d02e1081ac5d4604e80dd2d3b7e27488, type: 3}
       propertyPath: m_RootOrder

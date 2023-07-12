@@ -1,14 +1,12 @@
-﻿using System.Collections;
-using System.Text;
-using Builder;
+﻿using Builder;
 using DB;
+using DroneFootball;
 using DroneRace;
-using Menu;
 using Sockets;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace DroneFootball
+namespace Drone
 {
     public class GameManager : MonoBehaviour
     {
@@ -44,26 +42,11 @@ namespace DroneFootball
             {
                 case 1:
                 {
-                    var dontDestroyGameManager = FindObjectsOfType<GameManager>();
-                    var dontDestroyDbManager = FindObjectsOfType<DBManager>();
-                    var dontDestroyServer = FindObjectsOfType<Server>();
-                    var dontDestroyScratchClient = FindObjectsOfType<ScratchClient>();
+                    var gameManagers = FindObjectsOfType<GameManager>();
 
-                    foreach (var obj in dontDestroyGameManager)
-                        if (obj.transform.gameObject != transform.gameObject)
-                            Destroy(obj);
-
-                    foreach (var obj in dontDestroyDbManager)
-                        if (obj.transform.gameObject != transform.gameObject)
-                            Destroy(obj);
-
-                    foreach (var obj in dontDestroyServer)
-                        if (obj.transform.gameObject != transform.gameObject)
-                            Destroy(obj);
-
-                    foreach (var obj in dontDestroyScratchClient)
-                        if (obj.transform.gameObject != transform.gameObject)
-                            Destroy(obj);
+                    foreach (var gameManager in gameManagers)
+                        if(gameManager != this)
+                            Destroy(gameManager.gameObject);
 
                     asyncLoad = FindObjectOfType<AsyncLoad>();
                     break;

@@ -8,6 +8,8 @@
         Gate,
         Drone,
         Lamp,
+        Hint,
+        Draw,
         Other
     }
 }

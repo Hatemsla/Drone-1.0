@@ -68,9 +68,11 @@ namespace Builder
         public static LayerMask SetLayerMask(string activeLayer)
         {
             var trackGroundLayer = LayerMask.NameToLayer("TrackGround");
+            var trackHintLayer = LayerMask.NameToLayer("Hint");
+            var trackDrawLayer = LayerMask.NameToLayer("Draw");
             var activeLayerIndex = LayerMask.NameToLayer(activeLayer);
 
-            var layerMask = (1 << trackGroundLayer) | (1 << activeLayerIndex);
+            var layerMask = (1 << trackGroundLayer) | (1 << trackHintLayer) | (1 << trackDrawLayer) | (1 << activeLayerIndex);
 
             return layerMask;
         }

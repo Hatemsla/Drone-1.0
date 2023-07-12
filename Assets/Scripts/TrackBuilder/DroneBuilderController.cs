@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Drone;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace Builder
 {
@@ -40,19 +39,24 @@ namespace Builder
             yawPower = BuilderManager.Instance.currentYawSensitivity;
         }
 
-        private void Update()
+        private void OnEnable()
         {
-            // var hits = Physics.SphereCastAll(transform.position, 25f, transform.forward, uvFlashLight.range);
-            //
-            // foreach (var hit in hits)
-            // {
-            //     var hint = hit.collider.GetComponentInParent<Hint>();
-            //     if (hint)
-            //     {
-            //         hint.gameObject.SetActive(true);
-            //         Debug.Log("Object detected: " + hint);
-            //     }
-            // }
+            InputManager.Instance.FlashlightEvent += TurnFlashLight;
+            InputManager.Instance.CyclicEvent += OnCyclic;
+            InputManager.Instance.ThrottleEvent += OnThrottle;
+            InputManager.Instance.PedalsEvent += OnPedals;
+        }
+
+        private void OnThrottle(float value) => throttle = value;
+        private void OnPedals(float value) => pedals = value;
+        private void OnCyclic(Vector2 value) => cyclic = value;
+
+        private void OnDisable()
+        {
+            InputManager.Instance.FlashlightEvent -= TurnFlashLight;
+            InputManager.Instance.CyclicEvent -= OnCyclic;
+            InputManager.Instance.ThrottleEvent -= OnThrottle;
+            InputManager.Instance.PedalsEvent -= OnPedals;
         }
 
         private void FixedUpdate()
@@ -67,31 +71,18 @@ namespace Builder
             }
         }
 
-        private void OnFlashLight()
+        private void TurnFlashLight()
         {
-            if(BuilderManager.Instance.isMove)
+            if (BuilderManager.Instance.isMove)
+            {
                 flashLight.enabled = !flashLight.enabled;
+            }
         }
 
         private void OnUVFlashLight()
         {
             // if (BuilderManager.Instance.isMove)
             //     uvFlashLight.enabled = !uvFlashLight.enabled;
-        }
-
-        private void OnCyclic(InputValue value)
-        {
-            cyclic = value.Get<Vector2>();
-        }
-        
-        private void OnPedals(InputValue value)
-        {
-            pedals = value.Get<float>();
-        }
-        
-        private void OnThrottle(InputValue value)
-        {
-            throttle = value.Get<float>();
         }
 
         private void DroneMove()
