@@ -104,7 +104,7 @@ MeshCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 5
-  m_Convex: 1
+  m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 2534964839176971238, guid: 2befb2cf37437d841b62227c367be343, type: 3}
 --- !u!114 &6599849976366901474
@@ -211,14 +211,7 @@ MonoBehaviour:
   damage: 1
   objectName: 
   objectDescription: 
-  windmill: {fileID: 0}
-  magnet: {fileID: 0}
-  pendulum: {fileID: 0}
-  windZone: {fileID: 0}
-  freezingBall: {fileID: 0}
-  battery: {fileID: 0}
-  boost: {fileID: 0}
-  lamp: {fileID: 0}
+  interactiveObject: {fileID: 0}
 --- !u!114 &58524121785168025
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -231,10 +224,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0cb28dbba5f43d4928b27650a5a0577, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  windMillRotateSpeed: 0
+  magnetForce: 0
+  pendulumMoveSpeed: 0
+  leftPendulumAngle: 0
+  rightPendulumAngle: 0
+  windForce: 0
+  isFreezing: 1
+  batteryEnergy: 0
+  boostSpeed: 2
+  isLampTurn: 1
+  hintText: {fileID: 0}
   lamp: {fileID: 4467663619839477915}
   meshes:
   - {fileID: 6769983221193338574}
-  isTurn: 1
 --- !u!1 &3858520452422363765
 GameObject:
   m_ObjectHideFlags: 0
@@ -247,6 +250,7 @@ GameObject:
   - component: {fileID: 8360398464691589633}
   - component: {fileID: 72083914804793054}
   - component: {fileID: 7730995308071756636}
+  - component: {fileID: 2476261798794189780}
   m_Layer: 7
   m_Name: Cube
   m_TagString: Untagged
@@ -333,6 +337,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   color: 0
   eraseRenderer: 0
+--- !u!64 &2476261798794189780
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3858520452422363765}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -5495902117074765545, guid: 2befb2cf37437d841b62227c367be343, type: 3}
 --- !u!1 &4467663619839477909
 GameObject:
   m_ObjectHideFlags: 0
@@ -439,6 +465,7 @@ GameObject:
   - component: {fileID: 893802242327345763}
   - component: {fileID: 5416008423594796910}
   - component: {fileID: 2075560845456771877}
+  - component: {fileID: 7003504596391582596}
   m_Layer: 7
   m_Name: Circle
   m_TagString: Untagged
@@ -525,3 +552,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   color: 0
   eraseRenderer: 0
+--- !u!64 &7003504596391582596
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8547713782986016449}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -2124705421725058983, guid: 2befb2cf37437d841b62227c367be343, type: 3}

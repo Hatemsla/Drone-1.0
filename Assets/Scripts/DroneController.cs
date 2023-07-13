@@ -2,6 +2,7 @@ using UnityEngine;
 
 public abstract class DroneController : MonoBehaviour
 {
+    public const float MaxVelocity = 13f; 
     public float minMaxPitch;
     public float minMaxRoll;
     public float yawPower;

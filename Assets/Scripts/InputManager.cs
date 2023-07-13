@@ -9,6 +9,7 @@ namespace Drone
     {
         public static InputManager Instance;
         public Vector3 mousePosition;
+        public float changeHeight;
 
         public event Action FlashlightEvent;
         public event Action CopyObjectEvent;
@@ -76,8 +77,10 @@ namespace Drone
             _playerInput.Builder.SelectObjects.performed += _ => SelectObjectsEvent?.Invoke();
             _playerInput.Builder.DeleteObject.performed += _ => DeleteObjectEvent?.Invoke();
             _playerInput.Builder.RotateYObject.performed += _ => RotateYObjectEvent?.Invoke(_.ReadValue<float>());
+            _playerInput.Builder.MouseScroll.performed += _ => RotateYObjectEvent?.Invoke(_.ReadValue<float>());
             _playerInput.Builder.RotateXObject.performed += _ => RotateXObjectEvent?.Invoke(_.ReadValue<float>());
             _playerInput.Builder.ChangeObjectHeight.performed += _ => ChangeObjectHeightEvent?.Invoke(_.ReadValue<float>());
+            _playerInput.Builder.ChangeObjectHeight.canceled += _ => ChangeObjectHeightEvent?.Invoke(0f);
             _playerInput.Builder.ChangeObjectScale.performed += _ => ChangeObjectScaleEvent?.Invoke(_.ReadValue<float>());
             _playerInput.Builder.LockCursor.performed += _ => LockCursorEvent?.Invoke();
             
@@ -95,14 +98,15 @@ namespace Drone
         private void Update()
         {
             mousePosition = Mouse.current.position.ReadValue();
+            changeHeight = _playerInput.Builder.ChangeObjectHeight.ReadValue<float>();
         }
 
         private void OnEnable()
         {
             _playerInput.Enable();
             _playerInput.Player.Disable();
-            _playerInput.Builder.Enable();
-            _playerInput.UI.Disable();
+            _playerInput.Builder.Disable();
+            _playerInput.UI.Enable();
             _playerInput.Camera.Disable();
         }
 

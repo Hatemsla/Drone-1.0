@@ -994,50 +994,6 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""MouseScroll"",
-                    ""id"": ""0ad579cb-fa60-4329-ae06-2401b8ab9f8e"",
-                    ""path"": ""TwoModifiers"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""RotateXObject"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""binding"",
-                    ""id"": ""afea9b9e-6cfd-4dc5-86cb-7f5b31081651"",
-                    ""path"": ""<Mouse>/scroll/down"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""RotateXObject"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""Binding"",
-                    ""id"": ""7abfbef3-7d6a-411f-8021-40be53ba290c"",
-                    ""path"": ""<Mouse>/scroll/up"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""RotateXObject"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""modifier1"",
-                    ""id"": ""c7285c37-3dd1-4e9c-99a3-dcf884c1ae06"",
-                    ""path"": ""<Keyboard>/ctrl"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""RotateXObject"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""MouseScroll"",
                     ""id"": ""92702945-cb43-419b-a32c-3e15d8319edd"",
                     ""path"": ""1DAxis"",
                     ""interactions"": """",

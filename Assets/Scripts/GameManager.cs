@@ -49,6 +49,7 @@ namespace Drone
                             Destroy(gameManager.gameObject);
 
                     asyncLoad = FindObjectOfType<AsyncLoad>();
+                    InputManager.Instance.TurnCustomActionMap("UI");
                     break;
                 }
                 case 2:
@@ -127,7 +128,11 @@ namespace Drone
                         // builderManager.StartLevel();
                         builderManager.isGameMode = true;
                         builderManager.isGameLevel = true;
+                        InputManager.Instance.TurnCustomActionMap("Player");
+                        return;
                     }
+                    
+                    InputManager.Instance.TurnCustomActionMap("Builder");
 
                     break;
                 }

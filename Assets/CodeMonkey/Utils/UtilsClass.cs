@@ -12,8 +12,10 @@
 
 using System;
 using System.Collections.Generic;
+using Drone;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using Object = UnityEngine.Object;
 using Random = System.Random;
@@ -310,7 +312,7 @@ namespace CodeMonkey.Utils
             if (EventSystem.current.IsPointerOverGameObject()) return true;
 
             var pe = new PointerEventData(EventSystem.current);
-            pe.position = Input.mousePosition;
+            pe.position = InputManager.Instance.mousePosition;
             var hits = new List<RaycastResult>();
             EventSystem.current.RaycastAll(pe, hits);
             return hits.Count > 0;

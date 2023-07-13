@@ -104,7 +104,7 @@ MeshCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 5
-  m_Convex: 1
+  m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -2124705421725058983, guid: a8a5b62522190584797ce8ff0d7db4fa, type: 3}
 --- !u!114 &103987086517462195
@@ -226,7 +226,7 @@ MeshCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 5
-  m_Convex: 1
+  m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -5495902117074765545, guid: a8a5b62522190584797ce8ff0d7db4fa, type: 3}
 --- !u!114 &8133156848549393712
@@ -332,14 +332,7 @@ MonoBehaviour:
   damage: 1
   objectName: 
   objectDescription: 
-  windmill: {fileID: 0}
-  magnet: {fileID: 0}
-  pendulum: {fileID: 0}
-  windZone: {fileID: 0}
-  freezingBall: {fileID: 0}
-  battery: {fileID: 0}
-  boost: {fileID: 0}
-  lamp: {fileID: 0}
+  interactiveObject: {fileID: 0}
 --- !u!114 &8197946650829192919
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -352,10 +345,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0cb28dbba5f43d4928b27650a5a0577, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  windMillRotateSpeed: 0
+  magnetForce: 0
+  pendulumMoveSpeed: 0
+  leftPendulumAngle: 0
+  rightPendulumAngle: 0
+  windForce: 0
+  isFreezing: 1
+  batteryEnergy: 0
+  boostSpeed: 2
+  isLampTurn: 1
+  hintText: {fileID: 0}
   lamp: {fileID: 7074302002716840627}
   meshes:
   - {fileID: 8536276106994427063}
-  isTurn: 1
 --- !u!1 &6669015980090749565
 GameObject:
   m_ObjectHideFlags: 0

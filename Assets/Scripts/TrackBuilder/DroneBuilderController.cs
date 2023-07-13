@@ -61,8 +61,8 @@ namespace Builder
 
         private void FixedUpdate()
         {
-            currentSpeed = rb.velocity.magnitude / 8.2f * 40f;
-            currentPercentSpeed = rb.velocity.magnitude / 8.2f * 100f;
+            currentSpeed = rb.velocity.magnitude / MaxVelocity * 40f;
+            currentPercentSpeed = rb.velocity.magnitude / MaxVelocity * 100f;
             if (BuilderManager.Instance.isMove && droneRpgController.isAlive && droneRpgController.isCharged)
             {
                 _isMove = 0;

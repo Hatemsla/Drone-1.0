@@ -77,12 +77,16 @@ MonoBehaviour:
   connection: {fileID: 0}
   objectType: 5
   hasPortal: 1
+  interactiveType: 0
+  effectType: 1
   yOffset: 0.5
   yOffsetIncrease: 0.247
   isActive: 0
   maxMouseDistance: 0
+  damage: 1
   objectName: 
   objectDescription: 
+  interactiveObject: {fileID: 0}
 --- !u!1 &5514774280214305338
 GameObject:
   m_ObjectHideFlags: 0
@@ -189,7 +193,7 @@ MeshCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 5
-  m_Convex: 1
+  m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -5495902117074765545, guid: 3ccef2b034307c449bff04e34513c43a, type: 3}
 --- !u!114 &8100958426237832999
