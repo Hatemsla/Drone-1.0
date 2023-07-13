@@ -30,7 +30,14 @@ namespace Drone
         public event Action XRayEvent;
         public event Action<float> ChangeObjectHeightEvent;
         public event Action<float> ChangeObjectScaleEvent;
-        public event Action ExitEvent; 
+        public event Action ExitEvent;
+        public event Action SetCursorEvent;
+        public event Action CameraBoostEvent;
+        public event Action<Vector2> CameraMoveEvent;
+        public event Action<float> CameraChangeHeightEvent;
+        public event Action<float> CameraZoomEvent;
+        public event Action LockCursorEvent;
+        public event Action SwitchViewEvent;
 
         public static event Action RebindComplete;
         public static event Action RebindCanceled;
@@ -57,6 +64,7 @@ namespace Drone
             _playerInput.Player.ThermalVision.performed += _ => ThermalVisionEvent?.Invoke();
             _playerInput.Player.XRay.performed += _ => XRayEvent?.Invoke();
             _playerInput.Player.Exit.performed += _ => ExitEvent?.Invoke();
+            _playerInput.Player.SwitchView.performed += _ => SwitchViewEvent?.Invoke();
 
             _playerInput.Builder.CopyObject.performed += _ => CopyObjectEvent?.Invoke();
             _playerInput.Builder.PasteObject.performed += _ => PasteObjectEvent?.Invoke();
@@ -71,6 +79,17 @@ namespace Drone
             _playerInput.Builder.RotateXObject.performed += _ => RotateXObjectEvent?.Invoke(_.ReadValue<float>());
             _playerInput.Builder.ChangeObjectHeight.performed += _ => ChangeObjectHeightEvent?.Invoke(_.ReadValue<float>());
             _playerInput.Builder.ChangeObjectScale.performed += _ => ChangeObjectScaleEvent?.Invoke(_.ReadValue<float>());
+            _playerInput.Builder.LockCursor.performed += _ => LockCursorEvent?.Invoke();
+            
+            _playerInput.Camera.SetCursor.performed += _ => SetCursorEvent?.Invoke();
+            _playerInput.Camera.CameraBoostSpeed.performed += _ => CameraBoostEvent?.Invoke();
+            _playerInput.Camera.CameraMove.performed += _ => CameraMoveEvent?.Invoke(_.ReadValue<Vector2>());
+            _playerInput.Camera.CameraMove.canceled += _ => CameraMoveEvent?.Invoke(Vector2.zero);
+            _playerInput.Camera.CameraChangeHeight.performed += _ => CameraChangeHeightEvent?.Invoke(_.ReadValue<float>());
+            _playerInput.Camera.MouseScroll.performed += _ => CameraZoomEvent?.Invoke(_.ReadValue<float>());
+            _playerInput.Camera.MouseScroll.canceled += _ => CameraZoomEvent?.Invoke(0f);
+            _playerInput.Camera.MouseScroll.performed += _ => RotateXObjectEvent?.Invoke(_.ReadValue<float>());
+            _playerInput.Camera.LockCursor.performed += _ => LockCursorEvent?.Invoke();
         }
 
         private void Update()
@@ -84,11 +103,23 @@ namespace Drone
             _playerInput.Player.Disable();
             _playerInput.Builder.Enable();
             _playerInput.UI.Disable();
+            _playerInput.Camera.Disable();
         }
 
         private void OnDisable()
         {
             _playerInput.Disable();
+        }
+
+        public void TurnCustomActionMap(string actionName)
+        {
+            foreach (var action in _playerInput.asset.actionMaps)
+            {
+                if(action.name == actionName)
+                    action.Enable();
+                else
+                    action.Disable();
+            }
         }
 
         public void TurnActionMaps()
@@ -104,6 +135,20 @@ namespace Drone
             {
                 _playerInput.Player.Disable();
                 _playerInput.Builder.Enable();
+            }
+        }
+
+        public void TurnCameraActionMap()
+        {
+            if (_playerInput.Camera.enabled)
+            {
+                _playerInput.Camera.Disable();
+                _playerInput.Builder.Enable();
+            }
+            else
+            {
+                _playerInput.Camera.Enable();
+                _playerInput.Builder.Disable();
             }
         }
 

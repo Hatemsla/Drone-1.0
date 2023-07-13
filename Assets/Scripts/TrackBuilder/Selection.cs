@@ -4,6 +4,7 @@ using System.Linq;
 using Drone;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 using Outline = cakeslice.Outline;
 
 namespace Builder
@@ -119,7 +120,7 @@ namespace Builder
         {
             if (!EventSystem.current.IsPointerOverGameObject())
             {
-                var ray = Camera.main!.ScreenPointToRay(Input.mousePosition);
+                var ray = Camera.main!.ScreenPointToRay(Mouse.current.position.ReadValue());
                 if (Physics.Raycast(ray, out var hit, 10000, layerMask))
                 {
                     if (selectedTrackObject && selectedObjects.Count == 1)

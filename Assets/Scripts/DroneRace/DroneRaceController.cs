@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
-using DroneFootball;
+using Drone;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -23,7 +23,25 @@ namespace DroneRace
             rb = GetComponent<Rigidbody>();
             _engines = GetComponentsInChildren<DroneEngine>().ToList();
         }
+        
+        private void OnEnable()
+        {
+            InputManager.Instance.CyclicEvent += OnCyclic;
+            InputManager.Instance.ThrottleEvent += OnThrottle;
+            InputManager.Instance.PedalsEvent += OnPedals;
+        }
 
+        private void OnThrottle(float value) => throttle = value;
+        private void OnPedals(float value) => pedals = value;
+        private void OnCyclic(Vector2 value) => cyclic = value;
+
+        private void OnDisable()
+        {
+            InputManager.Instance.CyclicEvent -= OnCyclic;
+            InputManager.Instance.ThrottleEvent -= OnThrottle;
+            InputManager.Instance.PedalsEvent -= OnPedals;
+        }
+        
         private void FixedUpdate()
         {
             currentSpeed = rb.velocity.magnitude / 8.2f * 40f;
@@ -34,21 +52,6 @@ namespace DroneRace
                 _isMove = Mathf.Abs(cyclic.x) + Mathf.Abs(cyclic.y) + Mathf.Abs(pedals) + Mathf.Abs(throttle);
                 DroneMove();
             }
-        }
-
-        private void OnCyclic(InputValue value)
-        {
-            cyclic = value.Get<Vector2>();
-        }
-        
-        private void OnPedals(InputValue value)
-        {
-            pedals = value.Get<float>();
-        }
-        
-        private void OnThrottle(InputValue value)
-        {
-            throttle = value.Get<float>();
         }
 
         private void DroneMove()

@@ -1,8 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Cinemachine;
 using DB;
+using Drone;
 using DroneFootball;
 using UnityEngine;
 using UnityEngine.UI;
@@ -51,11 +53,20 @@ namespace DroneRace
             droneRaceAI.speed *= currentAIDroneSpeed;
         }
 
+        private void OnEnable()
+        {
+            InputManager.Instance.ExitEvent += CheckTabPanel;
+        }
+
+        private void OnDisable()
+        {
+            InputManager.Instance.ExitEvent -= CheckTabPanel;
+        }
+
         private void Update()
         {
             CheckStartGame();
             CheckEndGame();
-            CheckTabPanel();
         }
 
         private void LateUpdate()
@@ -115,16 +126,13 @@ namespace DroneRace
 
         private void CheckTabPanel()
         {
-            if (Input.GetKeyDown(KeyCode.Escape))
-            {
-                _isTabPanel = !_isTabPanel;
-                if(_isTabPanel)
-                    droneRaceAudioController.droneFly.Stop();
-                else if(isGameStart)
-                    droneRaceAudioController.droneFly.Play();
-                raceUIManager.tabPanel.SetActive(_isTabPanel);
-                Time.timeScale = _isTabPanel ? 0f : 1f;
-            }
+            _isTabPanel = !_isTabPanel;
+            if(_isTabPanel)
+                droneRaceAudioController.droneFly.Stop();
+            else if(isGameStart)
+                droneRaceAudioController.droneFly.Play();
+            raceUIManager.tabPanel.SetActive(_isTabPanel);
+            Time.timeScale = _isTabPanel ? 0f : 1f;
         }
         
         private void CheckStartGame()

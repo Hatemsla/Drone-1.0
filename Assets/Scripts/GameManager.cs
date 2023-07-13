@@ -66,6 +66,8 @@ namespace Drone
                     raceController.timer.timeForEndGame = gameData.gameTimeInSeconds;
 
                     asyncLoad = raceController.asyncLoad;
+                    
+                    InputManager.Instance.TurnCustomActionMap("Player");
                     break;
                 case 3:
                     footballController = FindObjectOfType<FootballController>();
@@ -83,6 +85,8 @@ namespace Drone
                     footballController.timer.timeForEndGame = gameData.gameTimeInSeconds;
 
                     asyncLoad = footballController.asyncLoad;
+                    
+                    InputManager.Instance.TurnCustomActionMap("Player");
                     break;
                 case 4:
                 {

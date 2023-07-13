@@ -1,6 +1,7 @@
 using System.Collections;
 using Cinemachine;
 using DB;
+using Drone;
 using Menu;
 using UnityEngine;
 using UnityEngine.UI;
@@ -48,12 +49,21 @@ namespace DroneFootball
 
             playerCamera = FindObjectOfType<CinemachineBrain>();
         }
+        
+        private void OnEnable()
+        {
+            InputManager.Instance.ExitEvent += CheckTabPanel;
+        }
+
+        private void OnDisable()
+        {
+            InputManager.Instance.ExitEvent -= CheckTabPanel;
+        }
 
         private void Update()
         {
             CheckStartGame();
             CheckEndGame();
-            CheckTabPanel();
             CheckScore();
         }
 
@@ -113,16 +123,13 @@ namespace DroneFootball
 
         private void CheckTabPanel()
         {
-            if (Input.GetKeyDown(KeyCode.Escape))
-            {
-                _isTabPanel = !_isTabPanel;
-                if(_isTabPanel)
-                    droneFootballSoundController.droneFly.Stop();
-                else if(isGameStart)
-                    droneFootballSoundController.droneFly.Play();
-                footballUIManager.tabPanel.SetActive(_isTabPanel);
-                Time.timeScale = _isTabPanel ? 0f : 1f;
-            }
+            _isTabPanel = !_isTabPanel;
+            if(_isTabPanel)
+                droneFootballSoundController.droneFly.Stop();
+            else if(isGameStart)
+                droneFootballSoundController.droneFly.Play();
+            footballUIManager.tabPanel.SetActive(_isTabPanel);
+            Time.timeScale = _isTabPanel ? 0f : 1f;
         }
 
         private void CheckStartGame()

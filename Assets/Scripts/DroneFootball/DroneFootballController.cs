@@ -1,12 +1,10 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Cinemachine;
+using Drone;
 using Sockets;
 using UnityEngine;
-using UnityEngine.InputSystem;
-
 namespace DroneFootball
 {
     public class DroneFootballController : DroneController
@@ -35,6 +33,24 @@ namespace DroneFootball
         {
             FindObjectOfType<Server>().player = this;
         }
+        
+        private void OnEnable()
+        {
+            InputManager.Instance.CyclicEvent += OnCyclic;
+            InputManager.Instance.ThrottleEvent += OnThrottle;
+            InputManager.Instance.PedalsEvent += OnPedals;
+        }
+
+        private void OnThrottle(float value) => throttle = value;
+        private void OnPedals(float value) => pedals = value;
+        private void OnCyclic(Vector2 value) => cyclic = value;
+
+        private void OnDisable()
+        {
+            InputManager.Instance.CyclicEvent -= OnCyclic;
+            InputManager.Instance.ThrottleEvent -= OnThrottle;
+            InputManager.Instance.PedalsEvent -= OnPedals;
+        }
 
         private void FixedUpdate()
         {
@@ -50,21 +66,6 @@ namespace DroneFootball
             {
                 StartCoroutine(DroneStop());
             }
-        }
-
-        private void OnCyclic(InputValue value)
-        {
-            cyclic = value.Get<Vector2>();
-        }
-
-        private void OnPedals(InputValue value)
-        {
-            pedals = value.Get<float>();
-        }
-
-        private void OnThrottle(InputValue value)
-        {
-            throttle = value.Get<float>();
         }
 
         private void DroneMove()

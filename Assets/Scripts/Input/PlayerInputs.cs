@@ -188,6 +188,15 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": ""Press"",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SwitchView"",
+                    ""type"": ""Button"",
+                    ""id"": ""54eccb19-a767-4182-9a99-28343024f7d6"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press"",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -476,6 +485,17 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""action"": ""Exit"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""75d6c805-e620-40b0-9734-c52421af862a"",
+                    ""path"": ""<Keyboard>/v"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SwitchView"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -599,6 +619,24 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""MouseScroll"",
+                    ""type"": ""Value"",
+                    ""id"": ""fea7d3a1-7eb0-4099-a562-955c9090eeb2"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""LockCursor"",
+                    ""type"": ""Button"",
+                    ""id"": ""dbb2f43b-d608-4b5a-a267-4820fba27e53"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press"",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -856,39 +894,6 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": ""MouseScroll"",
-                    ""id"": ""b0ca35f6-18c6-4f53-a53f-e23b5f6204ac"",
-                    ""path"": ""1DAxis"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""RotateYObject"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""negative"",
-                    ""id"": ""3dcb63c9-c85a-479e-bb87-d174f43f1669"",
-                    ""path"": ""<Mouse>/scroll/down"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""RotateYObject"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""positive"",
-                    ""id"": ""5cde9a40-80e2-4e3d-84ea-9581d2095da8"",
-                    ""path"": ""<Mouse>/scroll/up"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""RotateYObject"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
                     ""name"": ""UpdateHeight"",
                     ""id"": ""d6ec9a20-9fd6-415b-a188-56fa387298af"",
                     ""path"": ""1DAxis"",
@@ -1030,6 +1035,50 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""action"": ""RotateXObject"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""MouseScroll"",
+                    ""id"": ""92702945-cb43-419b-a32c-3e15d8319edd"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MouseScroll"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""dbb7ccac-c39e-4394-bf6a-dc41952f502d"",
+                    ""path"": ""<Mouse>/scroll/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MouseScroll"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""5b2e2239-3470-4ced-9d5d-c771683de540"",
+                    ""path"": ""<Mouse>/scroll/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MouseScroll"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9ec6e099-6f7a-44d4-8693-b8e0f9ba994d"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LockCursor"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -1548,6 +1597,222 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Camera"",
+            ""id"": ""0e318cc3-941e-4250-8a63-a68329b59863"",
+            ""actions"": [
+                {
+                    ""name"": ""SetCursor"",
+                    ""type"": ""Button"",
+                    ""id"": ""cb183d57-053c-4d72-b1cf-a6d9867edad8"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press"",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""CameraBoostSpeed"",
+                    ""type"": ""Button"",
+                    ""id"": ""e0f03ce8-1729-4f65-b26a-2ab377a15996"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Hold"",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""CameraMove"",
+                    ""type"": ""Value"",
+                    ""id"": ""ef61c11e-6418-4be7-803e-2e4907f6588e"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""CameraChangeHeight"",
+                    ""type"": ""Value"",
+                    ""id"": ""450b4a4e-8063-47be-b9af-c24bbc79d16f"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""MouseScroll"",
+                    ""type"": ""Value"",
+                    ""id"": ""5eaedae7-ee52-4a12-849a-49048d06778a"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""LockCursor"",
+                    ""type"": ""Button"",
+                    ""id"": ""b650f1e3-8ca9-489a-8cd6-7a7808ed1a1c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press"",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""b690d085-0e18-49a4-99c6-accf7c445513"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SetCursor"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ad8d0a35-1aba-43e7-8bb9-0fc93c653ac0"",
+                    ""path"": ""<Keyboard>/shift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CameraBoostSpeed"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""Move"",
+                    ""id"": ""7f7637cb-412b-4e43-a844-09dc301d6373"",
+                    ""path"": ""2DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CameraMove"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""2ee68244-8c03-4f2c-b721-75b096cd4418"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CameraMove"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""9b0d026e-2cf1-4f7c-a6b0-027e634406e2"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CameraMove"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""889888ca-8067-490f-956a-31d042d84f4d"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CameraMove"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""ca83d839-a8f7-4949-8e76-ab9c63df3aa6"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CameraMove"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""UpDown"",
+                    ""id"": ""4071da07-cd5c-44bb-9ce7-71d5e381d113"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CameraChangeHeight"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""dc53ba75-773e-4700-8254-4241ae1e5729"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CameraChangeHeight"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""27b0683a-3f31-45cc-9ec0-85c218fc8984"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CameraChangeHeight"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""MouseScroll"",
+                    ""id"": ""6edfbf7b-1edc-431c-a6ec-4023f6627913"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MouseScroll"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""cb4e077d-7ea5-450d-b72c-ea93397dc830"",
+                    ""path"": ""<Mouse>/scroll/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MouseScroll"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""7568c4ad-b786-4b6a-ad2c-3d45ba3f3919"",
+                    ""path"": ""<Mouse>/scroll/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MouseScroll"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1c182b7a-73a1-4deb-bd68-8cdc65808aaa"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LockCursor"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -1572,6 +1837,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         m_Player_ApplyOpen = m_Player.FindAction("ApplyOpen", throwIfNotFound: true);
         m_Player_Attack = m_Player.FindAction("Attack", throwIfNotFound: true);
         m_Player_Exit = m_Player.FindAction("Exit", throwIfNotFound: true);
+        m_Player_SwitchView = m_Player.FindAction("SwitchView", throwIfNotFound: true);
         // Builder
         m_Builder = asset.FindActionMap("Builder", throwIfNotFound: true);
         m_Builder_RotateYObject = m_Builder.FindAction("RotateYObject", throwIfNotFound: true);
@@ -1587,6 +1853,8 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         m_Builder_ChangeObjectHeight = m_Builder.FindAction("ChangeObjectHeight", throwIfNotFound: true);
         m_Builder_ChangeObjectScale = m_Builder.FindAction("ChangeObjectScale", throwIfNotFound: true);
         m_Builder_RotateXObject = m_Builder.FindAction("RotateXObject", throwIfNotFound: true);
+        m_Builder_MouseScroll = m_Builder.FindAction("MouseScroll", throwIfNotFound: true);
+        m_Builder_LockCursor = m_Builder.FindAction("LockCursor", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1599,6 +1867,14 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         m_UI_RightClick = m_UI.FindAction("RightClick", throwIfNotFound: true);
         m_UI_TrackedDevicePosition = m_UI.FindAction("TrackedDevicePosition", throwIfNotFound: true);
         m_UI_TrackedDeviceOrientation = m_UI.FindAction("TrackedDeviceOrientation", throwIfNotFound: true);
+        // Camera
+        m_Camera = asset.FindActionMap("Camera", throwIfNotFound: true);
+        m_Camera_SetCursor = m_Camera.FindAction("SetCursor", throwIfNotFound: true);
+        m_Camera_CameraBoostSpeed = m_Camera.FindAction("CameraBoostSpeed", throwIfNotFound: true);
+        m_Camera_CameraMove = m_Camera.FindAction("CameraMove", throwIfNotFound: true);
+        m_Camera_CameraChangeHeight = m_Camera.FindAction("CameraChangeHeight", throwIfNotFound: true);
+        m_Camera_MouseScroll = m_Camera.FindAction("MouseScroll", throwIfNotFound: true);
+        m_Camera_LockCursor = m_Camera.FindAction("LockCursor", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -1678,6 +1954,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_ApplyOpen;
     private readonly InputAction m_Player_Attack;
     private readonly InputAction m_Player_Exit;
+    private readonly InputAction m_Player_SwitchView;
     public struct PlayerActions
     {
         private @PlayerInputs m_Wrapper;
@@ -1700,6 +1977,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         public InputAction @ApplyOpen => m_Wrapper.m_Player_ApplyOpen;
         public InputAction @Attack => m_Wrapper.m_Player_Attack;
         public InputAction @Exit => m_Wrapper.m_Player_Exit;
+        public InputAction @SwitchView => m_Wrapper.m_Player_SwitchView;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1763,6 +2041,9 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @Exit.started += instance.OnExit;
             @Exit.performed += instance.OnExit;
             @Exit.canceled += instance.OnExit;
+            @SwitchView.started += instance.OnSwitchView;
+            @SwitchView.performed += instance.OnSwitchView;
+            @SwitchView.canceled += instance.OnSwitchView;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -1821,6 +2102,9 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @Exit.started -= instance.OnExit;
             @Exit.performed -= instance.OnExit;
             @Exit.canceled -= instance.OnExit;
+            @SwitchView.started -= instance.OnSwitchView;
+            @SwitchView.performed -= instance.OnSwitchView;
+            @SwitchView.canceled -= instance.OnSwitchView;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -1855,6 +2139,8 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
     private readonly InputAction m_Builder_ChangeObjectHeight;
     private readonly InputAction m_Builder_ChangeObjectScale;
     private readonly InputAction m_Builder_RotateXObject;
+    private readonly InputAction m_Builder_MouseScroll;
+    private readonly InputAction m_Builder_LockCursor;
     public struct BuilderActions
     {
         private @PlayerInputs m_Wrapper;
@@ -1872,6 +2158,8 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         public InputAction @ChangeObjectHeight => m_Wrapper.m_Builder_ChangeObjectHeight;
         public InputAction @ChangeObjectScale => m_Wrapper.m_Builder_ChangeObjectScale;
         public InputAction @RotateXObject => m_Wrapper.m_Builder_RotateXObject;
+        public InputAction @MouseScroll => m_Wrapper.m_Builder_MouseScroll;
+        public InputAction @LockCursor => m_Wrapper.m_Builder_LockCursor;
         public InputActionMap Get() { return m_Wrapper.m_Builder; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1920,6 +2208,12 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @RotateXObject.started += instance.OnRotateXObject;
             @RotateXObject.performed += instance.OnRotateXObject;
             @RotateXObject.canceled += instance.OnRotateXObject;
+            @MouseScroll.started += instance.OnMouseScroll;
+            @MouseScroll.performed += instance.OnMouseScroll;
+            @MouseScroll.canceled += instance.OnMouseScroll;
+            @LockCursor.started += instance.OnLockCursor;
+            @LockCursor.performed += instance.OnLockCursor;
+            @LockCursor.canceled += instance.OnLockCursor;
         }
 
         private void UnregisterCallbacks(IBuilderActions instance)
@@ -1963,6 +2257,12 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @RotateXObject.started -= instance.OnRotateXObject;
             @RotateXObject.performed -= instance.OnRotateXObject;
             @RotateXObject.canceled -= instance.OnRotateXObject;
+            @MouseScroll.started -= instance.OnMouseScroll;
+            @MouseScroll.performed -= instance.OnMouseScroll;
+            @MouseScroll.canceled -= instance.OnMouseScroll;
+            @LockCursor.started -= instance.OnLockCursor;
+            @LockCursor.performed -= instance.OnLockCursor;
+            @LockCursor.canceled -= instance.OnLockCursor;
         }
 
         public void RemoveCallbacks(IBuilderActions instance)
@@ -2098,6 +2398,92 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         }
     }
     public UIActions @UI => new UIActions(this);
+
+    // Camera
+    private readonly InputActionMap m_Camera;
+    private List<ICameraActions> m_CameraActionsCallbackInterfaces = new List<ICameraActions>();
+    private readonly InputAction m_Camera_SetCursor;
+    private readonly InputAction m_Camera_CameraBoostSpeed;
+    private readonly InputAction m_Camera_CameraMove;
+    private readonly InputAction m_Camera_CameraChangeHeight;
+    private readonly InputAction m_Camera_MouseScroll;
+    private readonly InputAction m_Camera_LockCursor;
+    public struct CameraActions
+    {
+        private @PlayerInputs m_Wrapper;
+        public CameraActions(@PlayerInputs wrapper) { m_Wrapper = wrapper; }
+        public InputAction @SetCursor => m_Wrapper.m_Camera_SetCursor;
+        public InputAction @CameraBoostSpeed => m_Wrapper.m_Camera_CameraBoostSpeed;
+        public InputAction @CameraMove => m_Wrapper.m_Camera_CameraMove;
+        public InputAction @CameraChangeHeight => m_Wrapper.m_Camera_CameraChangeHeight;
+        public InputAction @MouseScroll => m_Wrapper.m_Camera_MouseScroll;
+        public InputAction @LockCursor => m_Wrapper.m_Camera_LockCursor;
+        public InputActionMap Get() { return m_Wrapper.m_Camera; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(CameraActions set) { return set.Get(); }
+        public void AddCallbacks(ICameraActions instance)
+        {
+            if (instance == null || m_Wrapper.m_CameraActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_CameraActionsCallbackInterfaces.Add(instance);
+            @SetCursor.started += instance.OnSetCursor;
+            @SetCursor.performed += instance.OnSetCursor;
+            @SetCursor.canceled += instance.OnSetCursor;
+            @CameraBoostSpeed.started += instance.OnCameraBoostSpeed;
+            @CameraBoostSpeed.performed += instance.OnCameraBoostSpeed;
+            @CameraBoostSpeed.canceled += instance.OnCameraBoostSpeed;
+            @CameraMove.started += instance.OnCameraMove;
+            @CameraMove.performed += instance.OnCameraMove;
+            @CameraMove.canceled += instance.OnCameraMove;
+            @CameraChangeHeight.started += instance.OnCameraChangeHeight;
+            @CameraChangeHeight.performed += instance.OnCameraChangeHeight;
+            @CameraChangeHeight.canceled += instance.OnCameraChangeHeight;
+            @MouseScroll.started += instance.OnMouseScroll;
+            @MouseScroll.performed += instance.OnMouseScroll;
+            @MouseScroll.canceled += instance.OnMouseScroll;
+            @LockCursor.started += instance.OnLockCursor;
+            @LockCursor.performed += instance.OnLockCursor;
+            @LockCursor.canceled += instance.OnLockCursor;
+        }
+
+        private void UnregisterCallbacks(ICameraActions instance)
+        {
+            @SetCursor.started -= instance.OnSetCursor;
+            @SetCursor.performed -= instance.OnSetCursor;
+            @SetCursor.canceled -= instance.OnSetCursor;
+            @CameraBoostSpeed.started -= instance.OnCameraBoostSpeed;
+            @CameraBoostSpeed.performed -= instance.OnCameraBoostSpeed;
+            @CameraBoostSpeed.canceled -= instance.OnCameraBoostSpeed;
+            @CameraMove.started -= instance.OnCameraMove;
+            @CameraMove.performed -= instance.OnCameraMove;
+            @CameraMove.canceled -= instance.OnCameraMove;
+            @CameraChangeHeight.started -= instance.OnCameraChangeHeight;
+            @CameraChangeHeight.performed -= instance.OnCameraChangeHeight;
+            @CameraChangeHeight.canceled -= instance.OnCameraChangeHeight;
+            @MouseScroll.started -= instance.OnMouseScroll;
+            @MouseScroll.performed -= instance.OnMouseScroll;
+            @MouseScroll.canceled -= instance.OnMouseScroll;
+            @LockCursor.started -= instance.OnLockCursor;
+            @LockCursor.performed -= instance.OnLockCursor;
+            @LockCursor.canceled -= instance.OnLockCursor;
+        }
+
+        public void RemoveCallbacks(ICameraActions instance)
+        {
+            if (m_Wrapper.m_CameraActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(ICameraActions instance)
+        {
+            foreach (var item in m_Wrapper.m_CameraActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_CameraActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public CameraActions @Camera => new CameraActions(this);
     public interface IPlayerActions
     {
         void OnCyclic(InputAction.CallbackContext context);
@@ -2118,6 +2504,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         void OnApplyOpen(InputAction.CallbackContext context);
         void OnAttack(InputAction.CallbackContext context);
         void OnExit(InputAction.CallbackContext context);
+        void OnSwitchView(InputAction.CallbackContext context);
     }
     public interface IBuilderActions
     {
@@ -2134,6 +2521,8 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         void OnChangeObjectHeight(InputAction.CallbackContext context);
         void OnChangeObjectScale(InputAction.CallbackContext context);
         void OnRotateXObject(InputAction.CallbackContext context);
+        void OnMouseScroll(InputAction.CallbackContext context);
+        void OnLockCursor(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {
@@ -2147,5 +2536,14 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         void OnRightClick(InputAction.CallbackContext context);
         void OnTrackedDevicePosition(InputAction.CallbackContext context);
         void OnTrackedDeviceOrientation(InputAction.CallbackContext context);
+    }
+    public interface ICameraActions
+    {
+        void OnSetCursor(InputAction.CallbackContext context);
+        void OnCameraBoostSpeed(InputAction.CallbackContext context);
+        void OnCameraMove(InputAction.CallbackContext context);
+        void OnCameraChangeHeight(InputAction.CallbackContext context);
+        void OnMouseScroll(InputAction.CallbackContext context);
+        void OnLockCursor(InputAction.CallbackContext context);
     }
 }

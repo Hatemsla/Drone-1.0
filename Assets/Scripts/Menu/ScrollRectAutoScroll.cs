@@ -27,7 +27,7 @@ namespace Menu
 
         private void Update()
         {
-            InputScroll();
+            // InputScroll();
             if (!_mouseOver)
                 _mScrollRect.normalizedPosition = Vector2.Lerp(_mScrollRect.normalizedPosition, _mNextScrollPosition,
                     scrollSpeed * Time.deltaTime);

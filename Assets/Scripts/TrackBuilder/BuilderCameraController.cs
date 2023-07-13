@@ -1,4 +1,6 @@
-﻿using Cinemachine;
+﻿using System;
+using Cinemachine;
+using Drone;
 using UnityEngine;
 
 namespace Builder
@@ -13,9 +15,19 @@ namespace Builder
         private int _prevThirdView = 10;
         private int _prevFirstView = 0;
 
-        private void Update()
+        private void OnEnable()
         {
-            if (Input.GetKeyDown(KeyCode.V) && isSwitch)
+            InputManager.Instance.SwitchViewEvent += SwitchView;
+        }
+        
+        private void OnDisable()
+        {
+            InputManager.Instance.SwitchViewEvent -= SwitchView;
+        }
+
+        private void SwitchView()
+        {
+            if (isSwitch)
             {
                 (_prevThirdView, _prevFirstView) = (_prevFirstView, _prevThirdView);
                 thirdView.Priority = _prevThirdView;
