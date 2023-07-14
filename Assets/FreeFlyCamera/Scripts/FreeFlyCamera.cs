@@ -29,11 +29,8 @@ public class FreeFlyCamera : MonoBehaviour
         SetDefaultParameters();
         
         var moveDirection = new Vector3(value.x, 0f, value.y);
-        moveDirection = transform.TransformDirection(moveDirection);
 
         _deltaPosition += moveDirection;
-        
-        CameraMove();
     }
 
     private void OnDisable()
@@ -57,20 +54,17 @@ public class FreeFlyCamera : MonoBehaviour
         SetDefaultParameters();
         
         var heightDirection = new Vector3(0f, value, 0f);
-        heightDirection = transform.TransformDirection(heightDirection);
 
         _deltaPosition += heightDirection;
-        
-        CameraMove();
     }
 
     private void CameraZoom(float value)
     {
         SetDefaultParameters();
 
-        _deltaPosition += transform.forward * value * 10;
-        
-        CameraMove();
+        var zoomDirection = new Vector3(0f, 0f, value);
+
+        _deltaPosition += zoomDirection * 10 * Time.deltaTime;
     }
 
     private void SetDefaultParameters()
@@ -83,10 +77,9 @@ public class FreeFlyCamera : MonoBehaviour
     {
         if (enableMovement)
         {
-            // Calc acceleration
             CalculateCurrentIncrease(_deltaPosition != Vector3.zero);
 
-            transform.position += _deltaPosition * _currentSpeed * _currentIncrease;
+            transform.position += transform.rotation * _deltaPosition * _currentSpeed * _currentIncrease;
         }
     }
 
@@ -110,23 +103,15 @@ public class FreeFlyCamera : MonoBehaviour
         if (Cursor.visible)
             return;
 
-        // Translation
-        // if (enableTranslation)
-            // transform.Translate(Vector3.forward * Mouse.current.scroll.y.ReadValue() * Time.deltaTime * translationSpeed);
-            
         CameraMove();
             
-        // Rotation
         if (enableRotation)
         {
-            // Pitch
             transform.rotation *= Quaternion.AngleAxis(
                 -Mouse.current.delta.y.ReadValue() * mouseSense * Time.smoothDeltaTime,
                 Vector3.right
             );
             
-
-            // Paw
             transform.rotation = Quaternion.Euler(
                 transform.eulerAngles.x,
                 transform.eulerAngles.y + Mouse.current.delta.x.ReadValue() * mouseSense  * Time.smoothDeltaTime,

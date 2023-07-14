@@ -9,8 +9,6 @@ namespace Drone
     {
         public static InputManager Instance;
         public Vector3 mousePosition;
-        public float changeHeight;
-
         public event Action FlashlightEvent;
         public event Action CopyObjectEvent;
         public event Action PasteObjectEvent;
@@ -99,7 +97,6 @@ namespace Drone
         private void Update()
         {
             mousePosition = Mouse.current.position.ReadValue();
-            changeHeight = _playerInput.Builder.ChangeObjectHeight.ReadValue<float>();
         }
 
         private void OnEnable()

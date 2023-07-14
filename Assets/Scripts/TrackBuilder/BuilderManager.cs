@@ -159,8 +159,6 @@ namespace Builder
 
         private void ChangeObjectScale(float value)
         {
-            Debug.Log(noScaleEditableObjects.HasFlag(currentObjectType.objectType));
-            
             if (IsNoEditObject() || noScaleEditableObjects.HasFlag(currentObjectType.objectType))
                 return;
 
