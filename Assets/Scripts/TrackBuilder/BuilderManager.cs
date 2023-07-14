@@ -47,6 +47,7 @@ namespace Builder
         public FreeFlyCamera freeFlyCamera;
         public LayerMask layerMask;
         public GameObject pendingObject;
+        public ObjectsType noScaleEditableObjects;
         public List<GameObject> pendingObjects = new();
         public GameObject copyObject;
         public TrackObject currentObjectType;
@@ -158,8 +159,9 @@ namespace Builder
 
         private void ChangeObjectScale(float value)
         {
-            if (IsNoEditObject() || currentObjectType.objectType == ObjectsType.Drone ||
-                currentObjectType.objectType == ObjectsType.Gate)
+            Debug.Log(noScaleEditableObjects.HasFlag(currentObjectType.objectType));
+            
+            if (IsNoEditObject() || noScaleEditableObjects.HasFlag(currentObjectType.objectType))
                 return;
 
             var angleX = currentObjectType.Rotation.eulerAngles.x;

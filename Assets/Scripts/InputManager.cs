@@ -89,6 +89,7 @@ namespace Drone
             _playerInput.Camera.CameraMove.performed += _ => CameraMoveEvent?.Invoke(_.ReadValue<Vector2>());
             _playerInput.Camera.CameraMove.canceled += _ => CameraMoveEvent?.Invoke(Vector2.zero);
             _playerInput.Camera.CameraChangeHeight.performed += _ => CameraChangeHeightEvent?.Invoke(_.ReadValue<float>());
+            _playerInput.Camera.CameraChangeHeight.canceled += _ => CameraChangeHeightEvent?.Invoke(0);
             _playerInput.Camera.MouseScroll.performed += _ => CameraZoomEvent?.Invoke(_.ReadValue<float>());
             _playerInput.Camera.MouseScroll.canceled += _ => CameraZoomEvent?.Invoke(0f);
             _playerInput.Camera.MouseScroll.performed += _ => RotateXObjectEvent?.Invoke(_.ReadValue<float>());

@@ -1,8 +1,7 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.Video;
 
@@ -11,7 +10,7 @@ public class IntroManager : MonoBehaviour
     public VideoPlayer video;
     public VideoClip studioIntro;
     public VideoClip gameIntro;
-
+    
     private void Start()
     {
         StartCoroutine(WaitForNextVideo());
@@ -19,10 +18,7 @@ public class IntroManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.anyKeyDown)
-        {
-            SceneManager.LoadScene(1);
-        }
+        if (Keyboard.current.anyKey.wasPressedThisFrame) SceneManager.LoadScene(1);
     }
 
     private IEnumerator WaitForLevel()

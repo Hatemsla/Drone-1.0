@@ -1,10 +1,4 @@
-﻿//===========================================================================//
-//                       FreeFlyCamera (Version 1.2)                         //
-//                        (c) 2019 Sergey Stafeyev                           //
-//===========================================================================//
-
-using System;
-using Drone;
+﻿using Drone;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -34,15 +28,12 @@ public class FreeFlyCamera : MonoBehaviour
     {
         SetDefaultParameters();
         
-        if (value.y > 0)
-            _deltaPosition += transform.forward;
-        else if (value.y < 0)
-            _deltaPosition -= transform.forward;
+        var moveDirection = new Vector3(value.x, 0f, value.y);
+        moveDirection = transform.TransformDirection(moveDirection);
+
+        _deltaPosition += moveDirection;
         
-        if (value.x > 0)
-            _deltaPosition += transform.right;
-        else if (value.x < 0)
-            _deltaPosition -= transform.right;
+        CameraMove();
     }
 
     private void OnDisable()
@@ -65,10 +56,10 @@ public class FreeFlyCamera : MonoBehaviour
     {
         SetDefaultParameters();
         
-        if (value > 0)
-            _deltaPosition += transform.up;
-        else if (value < 0)
-            _deltaPosition -= transform.up;
+        var heightDirection = new Vector3(0f, value, 0f);
+        heightDirection = transform.TransformDirection(heightDirection);
+
+        _deltaPosition += heightDirection;
         
         CameraMove();
     }
@@ -77,10 +68,7 @@ public class FreeFlyCamera : MonoBehaviour
     {
         SetDefaultParameters();
 
-        if(value > 0)
-            _deltaPosition += transform.forward * 10;
-        else if(value < 0)
-            _deltaPosition -= transform.forward * 10;
+        _deltaPosition += transform.forward * value * 10;
         
         CameraMove();
     }

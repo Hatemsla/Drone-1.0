@@ -12,6 +12,7 @@
         Boost,
         Lamp,
         Hint,
-        Draw
+        Draw,
+        Door
     }
 }

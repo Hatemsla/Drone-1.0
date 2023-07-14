@@ -1569,12 +1569,12 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""CameraBoostSpeed"",
-                    ""type"": ""Button"",
+                    ""type"": ""Value"",
                     ""id"": ""e0f03ce8-1729-4f65-b26a-2ab377a15996"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": ""Axis"",
                     ""processors"": """",
-                    ""interactions"": ""Hold"",
-                    ""initialStateCheck"": false
+                    ""interactions"": ""Hold(duration=0.1)"",
+                    ""initialStateCheck"": true
                 },
                 {
                     ""name"": ""CameraMove"",
