@@ -108,6 +108,16 @@ namespace Drone
             _playerInput.Camera.Disable();
         }
 
+        /// <summary>
+        /// Action map logs
+        /// </summary>
+        /// <returns></returns>
+        public string EnabledMaps()
+        {
+            return
+                $"Player: {_playerInput.Player.enabled} Builder: {_playerInput.Builder.enabled} UI: {_playerInput.UI.enabled} Camera: {_playerInput.Camera.enabled}";
+        }
+
         private void OnDisable()
         {
             _playerInput.Disable();
@@ -156,7 +166,7 @@ namespace Drone
 
         public void StartRebind(string actionName, int bindingIndex, TMP_Text statusText, bool excludeMouse)
         {
-            InputAction action = _playerInput.asset.FindAction(actionName);
+            var action = _playerInput.asset.FindAction(actionName);
             if (action == null || action.bindings.Count <= bindingIndex)
             {
                 Debug.Log("Couldn't find action or binding");
@@ -214,7 +224,7 @@ namespace Drone
                 rebind.WithControlsExcluding("Mouse");
 
             RebindStarted?.Invoke(actionToRebind, bindingIndex);
-            rebind.Start(); //actually starts the rebinding process
+            rebind.Start();
         }
         
         private static void SaveBindingOverride(InputAction action)

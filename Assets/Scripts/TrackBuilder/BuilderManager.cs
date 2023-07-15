@@ -215,7 +215,7 @@ namespace Builder
                 SetDroneParameters();
             }
 
-            var ray = Camera.main!.ScreenPointToRay(InputManager.Instance.mousePosition);
+            var ray = Camera.main!.ScreenPointToRay(Mouse.current.position.ReadValue());
 
             if (Physics.Raycast(ray, out _hit, 10000, layerMask, QueryTriggerInteraction.Ignore) &&
                 !EventSystem.current.IsPointerOverGameObject())

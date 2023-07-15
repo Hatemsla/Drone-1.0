@@ -50,6 +50,7 @@ namespace Drone
 
                     asyncLoad = FindObjectOfType<AsyncLoad>();
                     InputManager.Instance.TurnCustomActionMap("UI");
+                    Debug.Log(InputManager.Instance.EnabledMaps());
                     break;
                 }
                 case 2:
@@ -133,7 +134,6 @@ namespace Drone
                     }
                     
                     InputManager.Instance.TurnCustomActionMap("Builder");
-
                     break;
                 }
             }
