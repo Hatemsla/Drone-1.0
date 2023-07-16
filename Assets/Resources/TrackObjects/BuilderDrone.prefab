@@ -373,7 +373,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 718910220148088088}
-  m_LocalRotation: {x: 0.11870825, y: 0.0000000042711794, z: -5.1063476e-10, w: 0.9929292}
+  m_LocalRotation: {x: 0.11870825, y: -0.0000000042711794, z: 5.1063476e-10, w: 0.9929292}
   m_LocalPosition: {x: 0, y: 1.19, z: -2.02}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1967,7 +1967,6 @@ GameObject:
   - component: {fileID: 5984266150220761616}
   - component: {fileID: 5984266150220761617}
   - component: {fileID: 5984266150220761619}
-  - component: {fileID: 679018503878537435}
   - component: {fileID: 5984266151265704063}
   - component: {fileID: 5984266151265704062}
   - component: {fileID: 6599626876460778540}
@@ -2055,36 +2054,6 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.43130174
   m_Center: {x: 0, y: 0.39725205, z: 0}
---- !u!114 &679018503878537435
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5984266150220761620}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Actions: {fileID: -944628639613478452, guid: ae13aabaf349be146ae96b9545218c11, type: 3}
-  m_NotificationBehavior: 0
-  m_UIInputModule: {fileID: 0}
-  m_DeviceLostEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_DeviceRegainedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ControlsChangedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ActionEvents: []
-  m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: 
-  m_DefaultActionMap: Player
-  m_SplitScreenIndex: -1
-  m_Camera: {fileID: 0}
 --- !u!114 &5984266151265704063
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2097,8 +2066,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab45b44373ff4a02a8e4e1ca31b252a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minMaxPitch: 15
-  minMaxRoll: 15
+  minMaxPitch: 30
+  minMaxRoll: 30
   yawPower: 1
   cyclic: {x: 0, y: 0}
   pedals: 0
@@ -2107,13 +2076,14 @@ MonoBehaviour:
   yaw: 0
   isSimpleMode: 1
   isStop: 0
-  boostsCount: 0
-  currentSpeed: 0
   currentPercentSpeed: 0
+  currentSpeed: 0
+  boostsCount: 0
   flashLight: {fileID: 2559315850702973615}
   droneBuilderCheckNode: {fileID: 0}
   droneBuilderSoundController: {fileID: 0}
   droneRpgController: {fileID: 0}
+  rb: {fileID: 0}
 --- !u!114 &5984266151265704062
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2127,6 +2097,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentNode: 0
+  wayDistance: 0
   nodes: []
 --- !u!114 &6599626876460778540
 MonoBehaviour:
@@ -2144,6 +2115,8 @@ MonoBehaviour:
   powerUsageRate: 1
   isAlive: 1
   isCharged: 1
+  armorPercentage: 0.9
+  explosionPrefab: {fileID: 225308898256752974, guid: 511e690e94a28b5438cbd6ec189b24e5, type: 3}
 --- !u!114 &8451796036726758168
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2174,7 +2147,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: -1
   connection: {fileID: 0}
-  objectType: 4
+  objectType: 16
   hasPortal: 1
   interactiveType: 0
   effectType: 1
@@ -2185,13 +2158,7 @@ MonoBehaviour:
   damage: 1
   objectName: 
   objectDescription: 
-  windmill: {fileID: 0}
-  magnet: {fileID: 0}
-  pendulum: {fileID: 0}
-  windZone: {fileID: 0}
-  freezingBall: {fileID: 0}
-  battery: {fileID: 0}
-  boost: {fileID: 0}
+  interactiveObject: {fileID: 0}
 --- !u!114 &3929679829912247987
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -4,15 +4,14 @@ using UnityEngine;
 
 namespace Builder
 {
-    public class Windmill : MonoBehaviour
+    public class Windmill : InteractiveObject
     {
-        public Vector3 rotateDirection;
-        public float rotateSpeed;
-        public Rigidbody trap;
+        [SerializeField] private Vector3 rotateDirection;
+        [SerializeField] private Rigidbody trap;
 
         private void FixedUpdate()
         {
-            trap.MoveRotation(trap.rotation * Quaternion.Euler(rotateDirection * (rotateSpeed * Time.deltaTime)));
+            trap.MoveRotation(trap.rotation * Quaternion.Euler(rotateDirection * (windMillRotateSpeed * Time.deltaTime)));
         }
         
         private void OnCollisionEnter(Collision other)
@@ -20,7 +19,7 @@ namespace Builder
             var player = other.transform.root.GetComponentInParent<DroneBuilderController>();
             if (player)
             {
-                player.droneRpgController.ApplyDamage(rotateSpeed / 10 / 2);
+                player.droneRpgController.ApplyDamage(windMillRotateSpeed / 10 / 2);
             }
         }
     }

@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -46,11 +48,16 @@ namespace Builder
         public GameObject loadPanel;
         public GameObject objectEditPanel;
         public GameObject saveLevelPanel;
+        public GameObject createButtonsParent;
 
         public List<Button> createButtons;
         
         [Header("Animations")]
         public Animator savePanelAnimator;
 
+        private void Awake()
+        {
+            createButtons = createButtonsParent.GetComponentsInChildren<Button>().ToList();
+        }
     }
 }

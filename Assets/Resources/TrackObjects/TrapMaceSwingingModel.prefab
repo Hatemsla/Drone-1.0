@@ -105,7 +105,7 @@ MeshCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 5
-  m_Convex: 1
+  m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -7387706064836869012, guid: aec9ce851c54ac04095cb17da4d245d5, type: 3}
 --- !u!114 &7968536393605582298
@@ -227,7 +227,7 @@ MeshCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 5
-  m_Convex: 1
+  m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4711208715938537054, guid: aec9ce851c54ac04095cb17da4d245d5, type: 3}
 --- !u!114 &7968536393605582301
@@ -349,7 +349,7 @@ MeshCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 5
-  m_Convex: 1
+  m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4579454407841743219, guid: aec9ce851c54ac04095cb17da4d245d5, type: 3}
 --- !u!114 &7968536393605582300
@@ -470,7 +470,7 @@ MeshCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 5
-  m_Convex: 1
+  m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 2534964839176971238, guid: aec9ce851c54ac04095cb17da4d245d5, type: 3}
 --- !u!114 &7968536393605582297
@@ -627,7 +627,7 @@ MeshCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 5
-  m_Convex: 1
+  m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -462981019419857548, guid: aec9ce851c54ac04095cb17da4d245d5, type: 3}
 --- !u!114 &7968536393605582299
@@ -757,6 +757,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42544e04674b446a977a1702c3338cdd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 7
-  leftAngle: -0.35
-  rightAngle: 0.35
+  windMillRotateSpeed: 0
+  magnetForce: 0
+  pendulumMoveSpeed: 0
+  leftPendulumAngle: 0
+  rightPendulumAngle: 0
+  windForce: 0
+  isFreezing: 1
+  batteryEnergy: 0
+  boostSpeed: 2
+  isLampTurn: 1
+  hintText: {fileID: 0}

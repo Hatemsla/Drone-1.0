@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 1798772590013560365}
   - component: {fileID: 5398617558895641262}
   - component: {fileID: 983285007643778979}
-  - component: {fileID: 167668007542750422}
   - component: {fileID: 5372698028185940698}
+  - component: {fileID: 4633199593916412427}
   m_Layer: 7
   m_Name: Circle
   m_TagString: Untagged
@@ -86,7 +86,21 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &167668007542750422
+--- !u!114 &5372698028185940698
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3464189588646444556}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbf3575480402db40813e763382412fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: 0
+  eraseRenderer: 0
+--- !u!64 &4633199593916412427
 MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -105,23 +119,9 @@ MeshCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 5
-  m_Convex: 1
+  m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -2124705421725058983, guid: 4b566092b353b6a42ba29f9684771e2a, type: 3}
---- !u!114 &5372698028185940698
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3464189588646444556}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fbf3575480402db40813e763382412fb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  color: 0
-  eraseRenderer: 0
 --- !u!1 &8286875781267837624
 GameObject:
   m_ObjectHideFlags: 0
@@ -227,7 +227,7 @@ MeshCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 5
-  m_Convex: 1
+  m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -5495902117074765545, guid: 4b566092b353b6a42ba29f9684771e2a, type: 3}
 --- !u!114 &1417611949845558919
@@ -322,7 +322,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 13
   connection: {fileID: 0}
-  objectType: 5
+  objectType: 32
   hasPortal: 1
   interactiveType: 8
   effectType: 2
@@ -333,14 +333,7 @@ MonoBehaviour:
   damage: 1
   objectName: 
   objectDescription: 
-  windmill: {fileID: 0}
-  magnet: {fileID: 0}
-  pendulum: {fileID: 0}
-  windZone: {fileID: 0}
-  freezingBall: {fileID: 0}
-  battery: {fileID: 0}
-  boost: {fileID: 0}
-  lamp: {fileID: 0}
+  interactiveObject: {fileID: 0}
 --- !u!114 &3348543343652748678
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -353,11 +346,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0cb28dbba5f43d4928b27650a5a0577, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  windMillRotateSpeed: 0
+  magnetForce: 0
+  pendulumMoveSpeed: 0
+  leftPendulumAngle: 0
+  rightPendulumAngle: 0
+  windForce: 0
+  isFreezing: 1
+  batteryEnergy: 0
+  boostSpeed: 2
+  isLampTurn: 1
+  hintText: {fileID: 0}
   lamp: {fileID: 6667990243917963877}
   meshes:
   - {fileID: 983285007643778979}
   - {fileID: 5155712853596091923}
-  isTurn: 1
 --- !u!1 &8875137910288050621
 GameObject:
   m_ObjectHideFlags: 0

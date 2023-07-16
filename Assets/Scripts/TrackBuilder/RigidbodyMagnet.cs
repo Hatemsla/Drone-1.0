@@ -3,10 +3,8 @@ using UnityEngine;
 
 namespace Builder
 {
-    public class RigidbodyMagnet : MonoBehaviour
+    public class RigidbodyMagnet : InteractiveObject
     {
-        public float magnetForce = 1;
-
         private List<Rigidbody> _caughtRigidbodies = new();
 
         private void FixedUpdate()

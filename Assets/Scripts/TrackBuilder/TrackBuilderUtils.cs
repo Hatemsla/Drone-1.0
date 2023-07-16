@@ -30,7 +30,7 @@ namespace Builder
         {
             if (LayerMask.LayerToName(obj.gameObject.layer) != "FloorConnection" && LayerMask.LayerToName(obj.gameObject.layer) != "WallConnection" 
                 && LayerMask.LayerToName(obj.gameObject.layer) != "SlantConnection" && LayerMask.LayerToName(obj.gameObject.layer) != "Ignore Raycast"
-                && LayerMask.LayerToName(obj.gameObject.layer) != "Hint")
+                && LayerMask.LayerToName(obj.gameObject.layer) != "Hint" && LayerMask.LayerToName(obj.gameObject.layer) != "Draw")
             {
                 obj.gameObject.layer = layer;
             }
@@ -68,9 +68,11 @@ namespace Builder
         public static LayerMask SetLayerMask(string activeLayer)
         {
             var trackGroundLayer = LayerMask.NameToLayer("TrackGround");
+            var trackHintLayer = LayerMask.NameToLayer("Hint");
+            var trackDrawLayer = LayerMask.NameToLayer("Draw");
             var activeLayerIndex = LayerMask.NameToLayer(activeLayer);
 
-            var layerMask = (1 << trackGroundLayer) | (1 << activeLayerIndex);
+            var layerMask = (1 << trackGroundLayer) | (1 << trackHintLayer) | (1 << trackDrawLayer) | (1 << activeLayerIndex);
 
             return layerMask;
         }

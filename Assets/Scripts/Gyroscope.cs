@@ -7,20 +7,19 @@ namespace Drone
     {
         [SerializeField] private RectTransform point;
         [SerializeField] private RectTransform lockator;
-        private DroneController _droneController;
-        private readonly float _positionScale = 20f;
+        [SerializeField] DroneController droneController;
 
         private void Start()
         {
-            _droneController = FindObjectOfType<DroneController>();
+            droneController = FindObjectOfType<DroneController>();
         }
 
         private void LateUpdate()
         {
-            lockator.rotation = Quaternion.Euler(0f, 0f, _droneController.transform.eulerAngles.z);
+            lockator.rotation = Quaternion.Euler(0f, 0f, droneController.transform.eulerAngles.z);
 
-            var posX = -Mathf.Clamp(Mathf.DeltaAngle(0f, _droneController.transform.eulerAngles.z), -20, 20);
-            var posY = Mathf.Clamp(Mathf.DeltaAngle(0f, _droneController.transform.eulerAngles.x), -20, 20);
+            var posX = -Mathf.Clamp(Mathf.DeltaAngle(0f, droneController.transform.eulerAngles.z), -20, 20);
+            var posY = Mathf.Clamp(Mathf.DeltaAngle(0f, droneController.transform.eulerAngles.x), -20, 20);
 
             var newPosition = new Vector3(posX, posY, 0f);
             point.localPosition = newPosition;

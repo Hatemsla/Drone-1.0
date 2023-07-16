@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Builder;
+using Drone;
 using UnityEngine;
 
 namespace DroneFootball
@@ -21,34 +22,42 @@ namespace DroneFootball
         private void Start()
         {
             cameras = FindObjectsOfType<Camera>().ToList();
-            BuilderManager.Instance.testLevelEvent.AddListener(OnTurnOffThermalVision);
+            BuilderManager.Instance.TestLevelEvent += OnTurnOffThermalVision;
+            InputManager.Instance.ThermalVisionEvent += OnThermalVision;
+            InputManager.Instance.XRayEvent += OnXRay;
         }
 
-        private void Update()
+        private void OnDisable()
         {
-            if (BuilderManager.Instance.isMove)
+            InputManager.Instance.ThermalVisionEvent -= OnThermalVision;
+            InputManager.Instance.XRayEvent -= OnXRay;
+        }
+
+        private void OnXRay()
+        {
+            if(!BuilderManager.Instance.isMove)
+                return;
+            
+            OnTurnOffThermalVision();
+            isXRay = !isXRay;
+            TurnXRay();
+        }
+
+        private void OnThermalVision()
+        {
+            if(!BuilderManager.Instance.isMove)
+                return;
+            
+            isXRay = false;
+            TurnXRay();
+            isThermalVision = !isThermalVision;
+            foreach (var cam in cameras)
             {
-                if (Input.GetKeyDown(KeyCode.T))
-                {
-                    isXRay = false;
-                    TurnXRay();
-                    isThermalVision = !isThermalVision;
-                    foreach (var cam in cameras)
-                    {
-                        cam.clearFlags = isThermalVision ? CameraClearFlags.SolidColor : CameraClearFlags.Skybox;
-                    }
-
-                    TurnThermalVision();
-                    SetDarkeningForNonThermalObjects();
-                }
-
-                if (Input.GetKeyDown(KeyCode.Y))
-                {
-                    OnTurnOffThermalVision();
-                    isXRay = !isXRay;
-                    TurnXRay();
-                }
+                cam.clearFlags = isThermalVision ? CameraClearFlags.SolidColor : CameraClearFlags.Skybox;
             }
+
+            TurnThermalVision();
+            SetDarkeningForNonThermalObjects();
         }
 
         private void TurnXRay()

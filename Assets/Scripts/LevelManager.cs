@@ -42,29 +42,82 @@ namespace DroneFootball
                 if (obj.layer != LayerMask.NameToLayer("TrackGround") && obj.layer != LayerMask.NameToLayer("Track"))
                     continue;
 
-                var objData = new Dictionary<string, string>();
-                objData["name"] = obj.name;
-                objData["position"] = FormatVector3(obj.transform.position);
-                objData["rotation"] = FormatVector3(obj.transform.rotation.eulerAngles);
-                objData["scale"] = FormatVector3(obj.transform.localScale);
-                objData["layer"] = obj.layer.ToString();
                 var trackObj = obj.GetComponent<TrackObject>();
-                objData["yOffset"] = trackObj.yOffset.ToString(CultureInfo.CurrentCulture);
-                objData["maxMouseDistance"] = trackObj.maxMouseDistance.ToString(CultureInfo.CurrentCulture);
-                objData["damage"] = trackObj.damage.ToString(CultureInfo.CurrentCulture);
-                objData["rotSpeed"] = trackObj.windmill != null ? trackObj.windmill.rotateSpeed.ToString(CultureInfo.CurrentCulture) : null;
-                objData["magnetForce"] = trackObj.magnet != null ? trackObj.magnet.magnetForce.ToString(CultureInfo.CurrentCulture) : null;
-                objData["pendulumMoveSpeed"] = trackObj.pendulum != null ? trackObj.pendulum.moveSpeed.ToString(CultureInfo.CurrentCulture) : null;
-                objData["windForce"] = trackObj.windZone != null ? trackObj.windZone.windForce.ToString(CultureInfo.CurrentCulture) : null;
-                objData["batteryEnergy"] = trackObj.battery != null ? trackObj.battery.energy.ToString(CultureInfo.CurrentCulture) : null;
-                objData["freezing"] = trackObj.freezingBall != null ? trackObj.freezingBall.isFreezing.ToString(CultureInfo.CurrentCulture) : null;
-                objData["boost"] = trackObj.boost != null ? trackObj.boost.boost.ToString(CultureInfo.CurrentCulture) : null;
+                var objData = new Dictionary<string, string>
+                {
+                    [nameof(obj.name)] = obj.name,
+                    ["position"] = FormatVector3(obj.transform.position),
+                    ["rotation"] = FormatVector3(obj.transform.rotation.eulerAngles),
+                    ["scale"] = FormatVector3(obj.transform.localScale),
+                    ["layer"] = obj.layer.ToString(),
+                    [nameof(trackObj.yOffset)] = trackObj.yOffset.ToString(CultureInfo.CurrentCulture),
+                    [nameof(trackObj.maxMouseDistance)] = trackObj.maxMouseDistance.ToString(CultureInfo.CurrentCulture),
+                    [nameof(trackObj.damage)] = trackObj.damage.ToString(CultureInfo.CurrentCulture),
+                    [nameof(trackObj.interactiveObject.windMillRotateSpeed)] = null,
+                    [nameof(trackObj.interactiveObject.magnetForce)] = null,
+                    [nameof(trackObj.interactiveObject.pendulumMoveSpeed)] = null,
+                    [nameof(trackObj.interactiveObject.leftPendulumAngle)] = null,
+                    [nameof(trackObj.interactiveObject.rightPendulumAngle)] = null,
+                    [nameof(trackObj.interactiveObject.windForce)] = null,
+                    [nameof(trackObj.interactiveObject.batteryEnergy)] = null,
+                    [nameof(trackObj.interactiveObject.isFreezing)] = null,
+                    [nameof(trackObj.interactiveObject.boostSpeed)] = null,
+                    [nameof(trackObj.interactiveObject.hintText)] = null,
+                    [nameof(trackObj.interactiveObject.isLampTurn)] = null
+                };
+
+                if (trackObj.interactiveObject)
+                {
+                    switch (trackObj.interactiveType)
+                    {
+                        case InteractiveType.Windmill:
+                            objData[nameof(trackObj.interactiveObject.windMillRotateSpeed)] =
+                                trackObj.interactiveObject.windMillRotateSpeed.ToString(CultureInfo.CurrentCulture);
+                            break;
+                        case InteractiveType.Magnet:
+                            objData[nameof(trackObj.interactiveObject.magnetForce)] =
+                                trackObj.interactiveObject.magnetForce.ToString(CultureInfo.CurrentCulture);
+                            break;
+                        case InteractiveType.Pendulum:
+                            objData[nameof(trackObj.interactiveObject.pendulumMoveSpeed)] =
+                                trackObj.interactiveObject.pendulumMoveSpeed.ToString(CultureInfo.CurrentCulture);
+                            objData[nameof(trackObj.interactiveObject.leftPendulumAngle)] =
+                                trackObj.interactiveObject.leftPendulumAngle.ToString(CultureInfo.CurrentCulture);
+                            objData[nameof(trackObj.interactiveObject.rightPendulumAngle)] =
+                                trackObj.interactiveObject.rightPendulumAngle.ToString(CultureInfo.CurrentCulture);
+                            break;
+                        case InteractiveType.Wind:
+                            objData[nameof(trackObj.interactiveObject.windForce)] =
+                                trackObj.interactiveObject.windForce.ToString(CultureInfo.CurrentCulture);
+                            break;
+                        case InteractiveType.Battery:
+                            objData[nameof(trackObj.interactiveObject.batteryEnergy)] =
+                                trackObj.interactiveObject.batteryEnergy.ToString(CultureInfo.CurrentCulture);
+                            break;
+                        case InteractiveType.Freezing:
+                            objData[nameof(trackObj.interactiveObject.isFreezing)] =
+                                trackObj.interactiveObject.isFreezing.ToString(CultureInfo.CurrentCulture);
+                            break;
+                        case InteractiveType.Boost:
+                            objData[nameof(trackObj.interactiveObject.boostSpeed)] = trackObj.interactiveObject.boostSpeed.ToString(CultureInfo.CurrentCulture);
+                            break;
+                        case InteractiveType.Hint:
+                            objData[nameof(trackObj.interactiveObject.hintText)] =
+                                trackObj.interactiveObject.hintText.text.ToString(CultureInfo.CurrentCulture);
+                            break;
+                        case InteractiveType.Lamp:
+                            objData[nameof(trackObj.interactiveObject.isLampTurn)] =
+                                trackObj.interactiveObject.isLampTurn.ToString(CultureInfo.CurrentCulture);
+                            break;
+                    }
+                }
+
                 data[obj.GetInstanceID() + ""] = objData;
             }
             var json = JsonConvert.SerializeObject(data, Formatting.Indented);
             File.WriteAllText(Application.dataPath + "/Levels/" + levelName + ".json", json);
         }
-        
+
         private static string FormatVector3(Vector3 vector)
         {
             return vector.x + " " + vector.y + " " + vector.z;

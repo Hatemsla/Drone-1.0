@@ -256,7 +256,7 @@ MeshCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 5
-  m_Convex: 1
+  m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -1550514412580984892, guid: 7fc9de9dd74ba8a4fbf7d5dc620a1075, type: 3}
 --- !u!114 &4208133712177939421
@@ -378,7 +378,7 @@ MeshCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 5
-  m_Convex: 1
+  m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4493585093827132993, guid: 7fc9de9dd74ba8a4fbf7d5dc620a1075, type: 3}
 --- !u!114 &403195323398270646
@@ -628,14 +628,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 5
   connection: {fileID: 0}
-  objectType: 1
+  objectType: 2
   hasPortal: 1
+  interactiveType: 0
+  effectType: 1
   yOffset: 0.625
   yOffsetIncrease: 0.31
   isActive: 0
   maxMouseDistance: 3
+  damage: 1
   objectName: 
   objectDescription: 
+  interactiveObject: {fileID: 0}
 --- !u!1 &7823000200117384428
 GameObject:
   m_ObjectHideFlags: 0
@@ -741,7 +745,7 @@ MeshCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 5
-  m_Convex: 1
+  m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -5495902117074765545, guid: 7fc9de9dd74ba8a4fbf7d5dc620a1075, type: 3}
 --- !u!114 &1765700125914842349

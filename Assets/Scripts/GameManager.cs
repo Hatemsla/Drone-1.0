@@ -1,14 +1,12 @@
-﻿using System.Collections;
-using System.Text;
-using Builder;
+﻿using Builder;
 using DB;
+using DroneFootball;
 using DroneRace;
-using Menu;
 using Sockets;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace DroneFootball
+namespace Drone
 {
     public class GameManager : MonoBehaviour
     {
@@ -44,28 +42,15 @@ namespace DroneFootball
             {
                 case 1:
                 {
-                    var dontDestroyGameManager = FindObjectsOfType<GameManager>();
-                    var dontDestroyDbManager = FindObjectsOfType<DBManager>();
-                    var dontDestroyServer = FindObjectsOfType<Server>();
-                    var dontDestroyScratchClient = FindObjectsOfType<ScratchClient>();
+                    var gameManagers = FindObjectsOfType<GameManager>();
 
-                    foreach (var obj in dontDestroyGameManager)
-                        if (obj.transform.gameObject != transform.gameObject)
-                            Destroy(obj);
-
-                    foreach (var obj in dontDestroyDbManager)
-                        if (obj.transform.gameObject != transform.gameObject)
-                            Destroy(obj);
-
-                    foreach (var obj in dontDestroyServer)
-                        if (obj.transform.gameObject != transform.gameObject)
-                            Destroy(obj);
-
-                    foreach (var obj in dontDestroyScratchClient)
-                        if (obj.transform.gameObject != transform.gameObject)
-                            Destroy(obj);
+                    foreach (var gameManager in gameManagers)
+                        if(gameManager != this)
+                            Destroy(gameManager.gameObject);
 
                     asyncLoad = FindObjectOfType<AsyncLoad>();
+                    InputManager.Instance.TurnCustomActionMap("UI");
+                    Debug.Log(InputManager.Instance.EnabledMaps());
                     break;
                 }
                 case 2:
@@ -78,11 +63,13 @@ namespace DroneFootball
                     raceController.raceUIManager.exitBtn.onClick.AddListener(GameManagerUtils.Exit);
                     raceController.isSimpleMode = gameData.isSimpleMode;
                     raceController.droneRaceController.yawPower = gameData.currentYawSensitivity;
-                    server.droneRaceController = raceController.droneRaceController;
+                    server.player = raceController.droneRaceController;
                     raceController.currentAIDroneSpeed = gameData.currentAIDroneSpeed;
                     raceController.timer.timeForEndGame = gameData.gameTimeInSeconds;
 
                     asyncLoad = raceController.asyncLoad;
+                    
+                    InputManager.Instance.TurnCustomActionMap("Player");
                     break;
                 case 3:
                     footballController = FindObjectOfType<FootballController>();
@@ -94,12 +81,14 @@ namespace DroneFootball
                     footballController.footballUIManager.exitBtn.onClick.AddListener(GameManagerUtils.Exit);
                     footballController.isSimpleMode = gameData.isSimpleMode;
                     footballController.droneFootballController.yawPower = gameData.currentYawSensitivity;
-                    server.droneFootballController = footballController.droneFootballController;
+                    server.player = footballController.droneFootballController;
                     footballController.currentGateScale = gameData.currentGateScale;
                     footballController.currentAIDroneSpeed = gameData.currentAIDroneSpeed;
                     footballController.timer.timeForEndGame = gameData.gameTimeInSeconds;
 
                     asyncLoad = footballController.asyncLoad;
+                    
+                    InputManager.Instance.TurnCustomActionMap("Player");
                     break;
                 case 4:
                 {
@@ -125,7 +114,7 @@ namespace DroneFootball
                     builderManager.builderUI.saveBtn.onClick.AddListener(SaveLevel);
                     builderManager.levelName = gameData.levelName;
                     builderManager.droneBuilderController.isSimpleMode = gameData.isSimpleMode;
-                    server.droneBuilderController = builderManager.droneBuilderController;
+                    server.player = builderManager.droneBuilderController;
                     asyncLoad = builderManager.asyncLoad;
 
                     if (gameData.isLoadLevel)
@@ -140,8 +129,11 @@ namespace DroneFootball
                         // builderManager.StartLevel();
                         builderManager.isGameMode = true;
                         builderManager.isGameLevel = true;
+                        InputManager.Instance.TurnCustomActionMap("Player");
+                        return;
                     }
-
+                    
+                    InputManager.Instance.TurnCustomActionMap("Builder");
                     break;
                 }
             }

@@ -10,6 +10,8 @@ namespace Drone
         public int powerUsageRate;
         public bool isAlive = true;
         public bool isCharged = true;
+        [SerializeField] private float armorPercentage = 0.9f;
+        [SerializeField] private ParticleSystem explosionPrefab;
 
         private readonly float[] _thresholds = { 0, 12.5f, 25, 37.5f, 50, 62.5f, 75, 87.5f, 100 };
 
@@ -30,7 +32,6 @@ namespace Drone
 
         public void ApplyDamage(float damage)
         {
-            var armorPercentage = 0.9f;
             var healthPercentage = 1f - armorPercentage;
 
             var armorDamage = Mathf.RoundToInt(damage * armorPercentage);
@@ -63,42 +64,47 @@ namespace Drone
         {
             var trackObject = other.transform.GetComponentInParent<TrackObject>();
             if (trackObject && droneBuilderController.currentPercentSpeed >= 50f)
+            {
                 switch (trackObject.effectType)
                 {
                     case EffectType.Massive:
                         ApplyDamage(droneBuilderController.currentPercentSpeed / 2);
                         break;
                     case EffectType.Destructible:
-                        if (BuilderManager.Instance.isGameMode)
-                            Destroy(trackObject.gameObject);
-                        else
-                            transform.gameObject.SetActive(false);
+                        CreateExplosion(trackObject, other);
+
                         break;
                     case EffectType.Hybrid:
                         if (trackObject.objectType == ObjectsType.Lamp)
                         {
                             var lamp = trackObject.GetComponent<Lamp>();
-                            if (lamp.isTurn)
+                            if (lamp && lamp.isLampTurn)
                             {
                                 lamp.TurnLamp();
                             }
                             else
                             {
-                                if (BuilderManager.Instance.isGameMode)
-                                    Destroy(trackObject.gameObject);
-                                else
-                                    trackObject.gameObject.SetActive(false);
+                                CreateExplosion(trackObject, other);
                             }
                             return;
                         }
-
+                        
                         ApplyDamage(trackObject.damage);
-                        if (BuilderManager.Instance.isGameMode)
-                            Destroy(trackObject.gameObject);
-                        else
-                            trackObject.gameObject.SetActive(false);
+                        CreateExplosion(trackObject, other);
+
                         break;
                 }
+            }
+        }
+
+        private void CreateExplosion(TrackObject trackObject, Collision other)
+        {
+            var explosion = Instantiate(explosionPrefab, other.transform.position, Quaternion.identity);
+            explosion.transform.localScale = new Vector3(trackObject.Scale.x, trackObject.Scale.y, trackObject.Scale.z);
+            if (BuilderManager.Instance.isGameMode)
+                Destroy(trackObject.gameObject);
+            else
+                trackObject.gameObject.SetActive(false);
         }
     }
 }

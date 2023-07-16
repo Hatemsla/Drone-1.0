@@ -1,25 +1,96 @@
-﻿//===========================================================================//
-//                       FreeFlyCamera (Version 1.2)                         //
-//                        (c) 2019 Sergey Stafeyev                           //
-//===========================================================================//
-
+﻿using Drone;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class FreeFlyCamera : MonoBehaviour
 {
     private float _currentIncrease = 1;
     private float _currentIncreaseMem;
+    private float _currentSpeed;
+    private Vector3 _deltaPosition;
 
     private Vector3 _initPosition;
     private Vector3 _initRotation;
 
     private CursorLockMode _wantedMode;
 
-
-    private void Start()
+    private void OnEnable()
     {
-        _initPosition = transform.position;
-        _initRotation = transform.eulerAngles;
+        InputManager.Instance.SetCursorEvent += CursorState;
+        InputManager.Instance.CameraBoostEvent += CameraBoost;
+        InputManager.Instance.CameraMoveEvent += CameraMove;
+        InputManager.Instance.CameraZoomEvent += CameraZoom;
+        InputManager.Instance.CameraChangeHeightEvent += CameraChangeHeight;
+        InputManager.Instance.LockCursorEvent += LockCursor;
+    }
+
+    private void CameraMove(Vector2 value)
+    {
+        SetDefaultParameters();
+        
+        var moveDirection = new Vector3(value.x, 0f, value.y);
+
+        _deltaPosition += moveDirection;
+    }
+
+    private void OnDisable()
+    {
+        InputManager.Instance.SetCursorEvent -= CursorState;
+        InputManager.Instance.CameraBoostEvent -= CameraBoost;
+        InputManager.Instance.CameraMoveEvent -= CameraMove;
+        InputManager.Instance.CameraZoomEvent -= CameraZoom;
+        InputManager.Instance.CameraChangeHeightEvent -= CameraChangeHeight;
+        InputManager.Instance.LockCursorEvent -= LockCursor;
+    }
+
+    private void LockCursor()
+    {
+        _wantedMode = _wantedMode == CursorLockMode.Locked ? CursorLockMode.None : CursorLockMode.Locked;
+        InputManager.Instance.TurnCameraActionMap();
+    }
+
+    private void CameraChangeHeight(float value)
+    {
+        SetDefaultParameters();
+        
+        var heightDirection = new Vector3(0f, value, 0f);
+
+        _deltaPosition += heightDirection;
+    }
+
+    private void CameraZoom(float value)
+    {
+        SetDefaultParameters();
+
+        var zoomDirection = new Vector3(0f, 0f, value);
+
+        _deltaPosition += zoomDirection * 10 * Time.deltaTime;
+    }
+
+    private void SetDefaultParameters()
+    {
+        _deltaPosition = Vector3.zero;
+        _currentSpeed = movementSpeed;
+    }
+
+    private void CameraMove()
+    {
+        if (enableMovement)
+        {
+            CalculateCurrentIncrease(_deltaPosition != Vector3.zero);
+
+            transform.position += transform.rotation * _deltaPosition * _currentSpeed * _currentIncrease;
+        }
+    }
+
+    private void CameraBoost()
+    {
+        _currentSpeed = boostedSpeed;
+    }
+
+    private void CursorState()
+    {
+        Cursor.lockState = _wantedMode = CursorLockMode.None;
     }
 
     private void Update()
@@ -32,71 +103,20 @@ public class FreeFlyCamera : MonoBehaviour
         if (Cursor.visible)
             return;
 
-        // Translation
-        if (enableTranslation)
-            transform.Translate(Vector3.forward * Input.mouseScrollDelta.y * Time.deltaTime * translationSpeed);
-
-        // Movement
-        if (enableMovement)
-        {
-            var deltaPosition = Vector3.zero;
-            var currentSpeed = movementSpeed;
-
-            if (Input.GetKey(boostSpeed))
-                currentSpeed = boostedSpeed;
-
-            if (Input.GetKey(KeyCode.W))
-                deltaPosition += transform.forward;
-
-            if (Input.GetKey(KeyCode.S))
-                deltaPosition -= transform.forward;
-
-            if (Input.GetAxis("Mouse ScrollWheel") > 0)
-                deltaPosition += transform.forward * 10;
-
-            if (Input.GetAxis("Mouse ScrollWheel") < 0)
-                deltaPosition -= transform.forward * 10;
-
-            if (Input.GetKey(KeyCode.A))
-                deltaPosition -= transform.right;
-
-            if (Input.GetKey(KeyCode.D))
-                deltaPosition += transform.right;
-
-            if (Input.GetKey(moveUp))
-                deltaPosition += transform.up;
-
-            if (Input.GetKey(moveDown))
-                deltaPosition -= transform.up;
-
-            // Calc acceleration
-            CalculateCurrentIncrease(deltaPosition != Vector3.zero);
-
-            transform.position += deltaPosition * currentSpeed * _currentIncrease;
-        }
-
-        // Rotation
+        CameraMove();
+            
         if (enableRotation)
         {
-            // Pitch
             transform.rotation *= Quaternion.AngleAxis(
-                -Input.GetAxis("Mouse Y") * mouseSense,
+                -Mouse.current.delta.y.ReadValue() * mouseSense * Time.smoothDeltaTime,
                 Vector3.right
             );
-
-            // Paw
+            
             transform.rotation = Quaternion.Euler(
                 transform.eulerAngles.x,
-                transform.eulerAngles.y + Input.GetAxis("Mouse X") * mouseSense,
+                transform.eulerAngles.y + Mouse.current.delta.x.ReadValue() * mouseSense  * Time.smoothDeltaTime,
                 transform.eulerAngles.z
             );
-        }
-
-        // Return to init position
-        if (Input.GetKeyDown(initPositonButton))
-        {
-            transform.position = _initPosition;
-            transform.eulerAngles = _initRotation;
         }
     }
 
@@ -112,16 +132,6 @@ public class FreeFlyCamera : MonoBehaviour
     // Apply requested cursor state
     private void SetCursorState()
     {
-        if (Input.GetKeyDown(KeyCode.Escape)) Cursor.lockState = _wantedMode = CursorLockMode.None;
-
-        if (Input.GetMouseButtonDown(1))
-        {
-            if (_wantedMode == CursorLockMode.Locked)
-                _wantedMode = CursorLockMode.None;
-            else
-                _wantedMode = CursorLockMode.Locked;
-        }
-
         // Apply cursor state
         Cursor.lockState = _wantedMode;
         // Hide cursor when locking
@@ -168,22 +178,11 @@ public class FreeFlyCamera : MonoBehaviour
     [SerializeField] [Tooltip("Speed of the quick camera movement when holding the 'Left Shift' key")]
     private float boostedSpeed = 50f;
 
-    [SerializeField] [Tooltip("Boost speed")]
-    private KeyCode boostSpeed = KeyCode.LeftShift;
-
-    [SerializeField] [Tooltip("Move up")] private KeyCode moveUp = KeyCode.E;
-
-    [SerializeField] [Tooltip("Move down")]
-    private KeyCode moveDown = KeyCode.Q;
-
     [Space] [SerializeField] [Tooltip("Acceleration at camera movement is active")]
     private bool enableSpeedAcceleration = true;
 
     [SerializeField] [Tooltip("Rate which is applied during camera movement")]
     private float speedAccelerationFactor = 1.5f;
-
-    [Space] [SerializeField] [Tooltip("This keypress will move the camera to initialization position")]
-    private KeyCode initPositonButton = KeyCode.R;
 
     #endregion UI
 }

@@ -4,14 +4,9 @@ using UnityEngine;
 
 namespace Drone
 {
-    public class Pendulum : MonoBehaviour
+    public class Pendulum : InteractiveObject
     {
         private Rigidbody _rb;
-
-        public float moveSpeed;
-        public float leftAngle;
-        public float rightAngle;
-
         private bool _movingClockwise;
 
         private void Start()
@@ -27,11 +22,11 @@ namespace Drone
 
         private void ChangeMoveDir()
         {
-            if (transform.rotation.z > rightAngle)
+            if (transform.rotation.z > rightPendulumAngle)
             {
                 _movingClockwise = false;
             }
-            if (transform.rotation.z < leftAngle)
+            if (transform.rotation.z < leftPendulumAngle)
             {
                 _movingClockwise = true;
             }
@@ -45,10 +40,10 @@ namespace Drone
             switch (_movingClockwise)
             {
                 case true:
-                    _rb.angularVelocity = new Vector3(0f, 0f, moveSpeed) * moveSpeed;
+                    _rb.angularVelocity = new Vector3(0f, 0f, pendulumMoveSpeed) * pendulumMoveSpeed;
                     break;
                 case false:
-                    _rb.angularVelocity = new Vector3(0f, 0f, -moveSpeed) * moveSpeed;
+                    _rb.angularVelocity = new Vector3(0f, 0f, -pendulumMoveSpeed) * pendulumMoveSpeed;
                     break;
             }
         }

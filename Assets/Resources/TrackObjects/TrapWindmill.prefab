@@ -106,7 +106,7 @@ MeshCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 5
-  m_Convex: 1
+  m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4579454407841743219, guid: e3a3d479f4d0d8c448348cfb2b177e21, type: 3}
 --- !u!114 &9069196892458311313
@@ -256,7 +256,7 @@ MeshCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 5
-  m_Convex: 1
+  m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 6894428203817054813, guid: e3a3d479f4d0d8c448348cfb2b177e21, type: 3}
 --- !u!114 &3610723323970064977
@@ -407,7 +407,7 @@ MeshCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 5
-  m_Convex: 1
+  m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -2124705421725058983, guid: e3a3d479f4d0d8c448348cfb2b177e21, type: 3}
 --- !u!114 &3235027276053504741
@@ -657,7 +657,7 @@ MeshCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 5
-  m_Convex: 1
+  m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 6416302070336371891, guid: e3a3d479f4d0d8c448348cfb2b177e21, type: 3}
 --- !u!114 &3176736470856857518
@@ -843,7 +843,7 @@ MeshCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 5
-  m_Convex: 1
+  m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -7196802604745430461, guid: e3a3d479f4d0d8c448348cfb2b177e21, type: 3}
 --- !u!114 &2712523840383515004
@@ -965,7 +965,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 17
   connection: {fileID: 0}
-  objectType: 5
+  objectType: 512
   hasPortal: 1
   interactiveType: 1
   effectType: 1
@@ -976,13 +976,7 @@ MonoBehaviour:
   damage: 1
   objectName: 
   objectDescription: 
-  windmill: {fileID: 0}
-  magnet: {fileID: 0}
-  pendulum: {fileID: 0}
-  windZone: {fileID: 0}
-  freezingBall: {fileID: 0}
-  battery: {fileID: 0}
-  boost: {fileID: 0}
+  interactiveObject: {fileID: 0}
 --- !u!114 &5659191429575721898
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -995,8 +989,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b7774b25f364db4be3299ccd5e39866, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  windMillRotateSpeed: 0
+  magnetForce: 0
+  pendulumMoveSpeed: 0
+  leftPendulumAngle: 0
+  rightPendulumAngle: 0
+  windForce: 0
+  isFreezing: 1
+  batteryEnergy: 0
+  boostSpeed: 2
+  isLampTurn: 1
+  hintText: {fileID: 0}
   rotateDirection: {x: 0, y: 1, z: 0}
-  rotateSpeed: 50
   trap: {fileID: 4915803618500759553}
 --- !u!1 &6505708842789637494
 GameObject:
@@ -1104,7 +1108,7 @@ MeshCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 5
-  m_Convex: 1
+  m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -462981019419857548, guid: e3a3d479f4d0d8c448348cfb2b177e21, type: 3}
 --- !u!114 &7806058487179233752

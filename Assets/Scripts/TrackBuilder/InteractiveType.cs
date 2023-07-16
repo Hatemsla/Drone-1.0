@@ -11,6 +11,8 @@
         Freezing,
         Boost,
         Lamp,
-        Hint
+        Hint,
+        Draw,
+        Door
     }
 }

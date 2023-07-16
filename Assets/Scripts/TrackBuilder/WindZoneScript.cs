@@ -4,9 +4,8 @@ using UnityEngine.UIElements;
 
 namespace Builder
 {
-    public class WindZoneScript : MonoBehaviour
+    public class WindZoneScript : InteractiveObject
     {
-        public float windForce = 10;
         private void OnTriggerStay(Collider other)
         {
             if (other.CompareTag("Player"))

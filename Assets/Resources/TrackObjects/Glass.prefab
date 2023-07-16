@@ -75,7 +75,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 8
   connection: {fileID: 0}
-  objectType: 5
+  objectType: 512
   hasPortal: 1
   interactiveType: 0
   effectType: 2
@@ -86,13 +86,7 @@ MonoBehaviour:
   damage: 10
   objectName: 
   objectDescription: 
-  windmill: {fileID: 0}
-  magnet: {fileID: 0}
-  pendulum: {fileID: 0}
-  windZone: {fileID: 0}
-  freezingBall: {fileID: 0}
-  battery: {fileID: 0}
-  boost: {fileID: 0}
+  interactiveObject: {fileID: 0}
 --- !u!1001 &8795635200586926278
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -192,7 +186,7 @@ MeshCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 5
-  m_Convex: 1
+  m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -5495902117074765545, guid: 5e009109d92a98e4795ea57dbc518e25, type: 3}
 --- !u!114 &7696803329489188097

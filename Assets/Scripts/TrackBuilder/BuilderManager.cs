@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using Cinemachine;
@@ -11,8 +12,10 @@ using Sockets;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Debug = UnityEngine.Debug;
 using Outline = cakeslice.Outline;
 
 namespace Builder
@@ -44,6 +47,7 @@ namespace Builder
         public FreeFlyCamera freeFlyCamera;
         public LayerMask layerMask;
         public GameObject pendingObject;
+        public ObjectsType noScaleEditableObjects;
         public List<GameObject> pendingObjects = new();
         public GameObject copyObject;
         public TrackObject currentObjectType;
@@ -51,10 +55,10 @@ namespace Builder
         public Transform targetCheckpoint;
         public GameObject[] objects;
         public List<GameObject> objectsPool;
-        [HideInInspector] public Scene levelScene;
 
-        public UnityEvent testLevelEvent;
-        public UnityEvent loadingComplete;
+        [HideInInspector] public Scene levelScene;
+        public event Action TestLevelEvent;
+        public event Action LoadingComplete;
 
         private List<Lamp> _lamps;
         private int _currentGroundIndex;
@@ -69,6 +73,7 @@ namespace Builder
         private float _dronePrevRotationY;
         private Vector3 _dronePrevPosition;
         private Vector3 _prevMousePos;
+        private float _objectHeightValue;
 
         private void Awake()
         {
@@ -77,27 +82,28 @@ namespace Builder
             _selection = FindObjectOfType<Selection>();
             _selection.Select(droneBuilderController.gameObject);
             _selection.Deselect();
-
-            for (int i = 0; i < builderUI.createButtons.Count; i++)
-            {
-                var i1 = i;
-                builderUI.createButtons[i].onClick.AddListener(delegate { SelectObject(i1); });
-            }
         }
 
         private void Start()
         {
+            for (var i = 0; i < builderUI.createButtons.Count; i++)
+            {
+                var i1 = i;
+                builderUI.createButtons[i].onClick.AddListener(delegate { SelectObject(i1); });
+            }
+
             builderUI.pathArrow.gameObject.SetActive(false);
-            loadingComplete.AddListener(RewindManager.Instance.FindRewindObjects);
-            loadingComplete.AddListener(RewindManager.Instance.RestartTracking);
-            
+
+            LoadingComplete += RewindManager.Instance.FindRewindObjects;
+            LoadingComplete += RewindManager.Instance.RestartTracking;
+
             if (isLoadLevel)
             {
                 StartCoroutine(LoadScene());
             }
             else if (isGameLevel)
             {
-                loadingComplete.AddListener(TestLevel);
+                LoadingComplete += TestLevel;
                 StartLevel();
             }
             else
@@ -106,53 +112,116 @@ namespace Builder
             }
         }
 
+        private void OnEnable()
+        {
+            TestLevelEvent += InputManager.Instance.TurnActionMaps;
+            InputManager.Instance.CopyObjectEvent += CopyObject;
+            InputManager.Instance.PasteObjectEvent += PasteObject;
+            InputManager.Instance.UndoObjectEvent += UndoCommand;
+            InputManager.Instance.RedoObjectEvent += RedoCommand;
+            InputManager.Instance.PlaceObjectEvent += PlaceObject;
+            InputManager.Instance.PlaceAndPickupObjectEvent += PlaceAndPickupObject;
+            InputManager.Instance.RotateYObjectEvent += RotateYObject;
+            InputManager.Instance.RotateXObjectEvent += RotateXObject;
+            InputManager.Instance.ChangeObjectHeightEvent += ChangeObjectHeight;
+            InputManager.Instance.ChangeObjectScaleEvent += ChangeObjectScale;
+            InputManager.Instance.ExitEvent += CheckTabPanel;
+        }
+
+        private void OnDisable()
+        {
+            LoadingComplete -= RewindManager.Instance.FindRewindObjects;
+            LoadingComplete -= RewindManager.Instance.RestartTracking;
+            LoadingComplete -= TestLevel;
+            TestLevelEvent -= InputManager.Instance.TurnActionMaps;
+            InputManager.Instance.CopyObjectEvent -= CopyObject;
+            InputManager.Instance.PasteObjectEvent -= PasteObject;
+            InputManager.Instance.UndoObjectEvent -= UndoCommand;
+            InputManager.Instance.RedoObjectEvent -= RedoCommand;
+            InputManager.Instance.PlaceObjectEvent -= PlaceObject;
+            InputManager.Instance.PlaceAndPickupObjectEvent -= PlaceAndPickupObject;
+            InputManager.Instance.RotateYObjectEvent -= RotateYObject;
+            InputManager.Instance.RotateXObjectEvent -= RotateXObject;
+            InputManager.Instance.ChangeObjectHeightEvent -= ChangeObjectHeight;
+            InputManager.Instance.ChangeObjectScaleEvent -= ChangeObjectScale;
+        }
+
+        private void RotateXObject(float value)
+        {
+            if (IsNoEditObject())
+                return;
+
+            if (value > 0)
+                RotateObject(pendingObject.transform.right, 10f, Space.World);
+            else if (value < 0)
+                RotateObject(pendingObject.transform.right, -10f, Space.World);
+        }
+
+        private void ChangeObjectScale(float value)
+        {
+            if (IsNoEditObject() || noScaleEditableObjects.HasFlag(currentObjectType.objectType))
+                return;
+
+            var angleX = currentObjectType.Rotation.eulerAngles.x;
+            var angleY = currentObjectType.Rotation.eulerAngles.y;
+            var angleZ = currentObjectType.Rotation.eulerAngles.z;
+            editMenu.SetEditPanelParams(currentObjectType.objectName, currentObjectType.objectDescription,
+                currentObjectType.Position.x, currentObjectType.Position.y, currentObjectType.Position.z,
+                angleX, angleY, angleZ,
+                currentObjectType.Scale.x + value * 0.5f, currentObjectType);
+        }
+
+        private void RotateYObject(float value)
+        {
+            if (IsNoEditObject())
+                return;
+
+            if (value > 0)
+                RotateObject(pendingObject.transform.up, 10, Space.World);
+            else if (value < 0)
+                RotateObject(pendingObject.transform.up, -10, Space.World);
+        }
+
+        private bool IsNoEditObject()
+        {
+            return currentObjectType == null || pendingObject == null || pendingObjects.Count > 1;
+        }
+
+        private void PlaceAndPickupObject()
+        {
+            if (_selection.selectedObjects.Count > 0 && _selection.selectedObject != null)
+            {
+                PlaceObjects();
+                SelectObject(currentSelectObjectIndex);
+            }
+        }
+
+        private void PlaceObject()
+        {
+            if (_selection.selectedObjects.Count > 0 && _selection.selectedObject != null)
+            {
+                PlaceObjects();
+                _selection.Deselect();
+            }
+        }
+
         private void Update()
         {
-            if(isInputText)
+            if (isInputText)
                 return;
-            
+
             if (isMove)
             {
                 SetDroneParameters();
             }
 
-            CheckTabPanel();
+            var ray = Camera.main!.ScreenPointToRay(Mouse.current.position.ReadValue());
 
-            if (Input.GetKey(KeyCode.LeftControl))
-            {
-                if (Input.GetKeyDown(KeyCode.C))
-                {
-                    if (_selection.selectedObject != null)
-                    {
-                        copyObject = _selection.selectedObject;
-                    }
-                }
-                else if (Input.GetKeyDown(KeyCode.V))
-                {
-                    if(pendingObject != null || pendingObjects.Count > 0)
-                        PlaceObjects();
-                
-                    if (copyObject != null)
-                    {
-                        PasteObject(copyObject);
-                    } 
-                }
-                else if (Input.GetKeyDown(KeyCode.Z))
-                {
-                    undoRedoManager.UndoCommand();
-                }
-                else if (Input.GetKeyDown(KeyCode.Y))
-                {
-                    undoRedoManager.RedoCommand();
-                }
-            }
-
-            var ray = Camera.main!.ScreenPointToRay(Input.mousePosition);
-
-            if (Physics.Raycast(ray, out _hit, 10000, layerMask, QueryTriggerInteraction.Ignore) && !EventSystem.current.IsPointerOverGameObject())
+            if (Physics.Raycast(ray, out _hit, 10000, layerMask, QueryTriggerInteraction.Ignore) &&
+                !EventSystem.current.IsPointerOverGameObject())
             {
                 mousePos = _hit.point;
-                
+
                 if (pendingObjects.Count == 0 || pendingObject == null) return;
 
                 if (pendingObjects.Count > 1)
@@ -175,69 +244,43 @@ namespace Builder
                 }
             }
 
-            if (Input.GetMouseButtonDown(0) && canPlace)
-            {
-                PlaceObjects();
-            }
+            UpdateObjectHeight();
+        }
 
-            if(currentObjectType == null || pendingObject == null || pendingObjects.Count > 1)
+        private void UpdateObjectHeight()
+        {
+            if (IsNoEditObject())
                 return;
 
-            if (Input.GetKeyDown(KeyCode.Q))
-            {
-                RotateObject(pendingObject.transform.up, -10, Space.World);
-            }
-            else if (Input.GetKeyDown(KeyCode.E))
-            {
-                RotateObject(pendingObject.transform.up, 10, Space.World);
-            }
-            else if (Input.GetAxis("Mouse ScrollWheel") != 0)
-            {
-                var mouseScroll = Input.GetAxis("Mouse ScrollWheel");
-                var rotateAmount = mouseScroll > 0 ? 1 : -1;
-                RotateObject(pendingObject.transform.up, 10 * rotateAmount, Space.World);
-            }
+            currentObjectType.yOffset += _objectHeightValue * 2 * Time.deltaTime;
+        }
 
-            if (Input.GetKey(KeyCode.W))
-            {
-                ChangeObjectHeight(2 * Time.deltaTime);
-            }
-            else if (Input.GetKey(KeyCode.S))
-            {
-                ChangeObjectHeight(-2 * Time.deltaTime);
-            }
+        private void UndoCommand()
+        {
+            undoRedoManager.UndoCommand();
+        }
 
-            if (currentObjectType.objectType != ObjectsType.Drone && currentObjectType.objectType != ObjectsType.Gate)
-            {
-                if (Input.GetKeyDown(KeyCode.A))
-                {
-                    var angleX = currentObjectType.Rotation.eulerAngles.x;
-                    var angleY = currentObjectType.Rotation.eulerAngles.y;
-                    var angleZ = currentObjectType.Rotation.eulerAngles.z;
-                    editMenu.SetEditPanelParams(currentObjectType.objectName, currentObjectType.objectDescription,
-                        currentObjectType.Position.x, currentObjectType.Position.y, currentObjectType.Position.z, 
-                        angleX, angleY, angleZ,
-                        currentObjectType.Scale.x + 0.5f, currentObjectType);
-                }
-                else if (Input.GetKeyDown(KeyCode.D))
-                {
-                    var angleX = currentObjectType.Rotation.eulerAngles.x;
-                    var angleY = currentObjectType.Rotation.eulerAngles.y;
-                    var angleZ = currentObjectType.Rotation.eulerAngles.z;
-                    editMenu.SetEditPanelParams(currentObjectType.objectName, currentObjectType.objectDescription,
-                        currentObjectType.Position.x, currentObjectType.Position.y, currentObjectType.Position.z, 
-                        angleX, angleY, angleZ,
-                        currentObjectType.Scale.x - 0.5f, currentObjectType);
-                }
-            }
+        private void RedoCommand()
+        {
+            undoRedoManager.RedoCommand();
+        }
 
-            if (Input.GetKeyDown(KeyCode.Z))
+        private void PasteObject()
+        {
+            if (pendingObject != null || pendingObjects.Count > 0)
+                PlaceObjects();
+
+            if (copyObject != null)
             {
-                RotateObject(Vector3.right, 10f, Space.World);
+                PasteObject(copyObject);
             }
-            else if (Input.GetKeyDown(KeyCode.X))
+        }
+
+        private void CopyObject()
+        {
+            if (_selection.selectedObject != null)
             {
-                RotateObject(Vector3.right, -10f, Space.World);
+                copyObject = _selection.selectedObject;
             }
         }
 
@@ -247,12 +290,17 @@ namespace Builder
             float minutes = Mathf.FloorToInt(timer.currentTime / 60);
             float seconds = Mathf.FloorToInt(timer.currentTime % 60);
             builderUI.timeText.text = $"{minutes:00}:{seconds:00}";
-            builderUI.batteryText.text = $"{droneBuilderController.droneRpgController.DroneData.Battery:00}"; 
-            builderUI.checkpointsCountText.text = $"{droneBuilderCheckNode.currentNode}/{droneBuilderCheckNode.nodes.Count}";
+            builderUI.batteryText.text = $"{droneBuilderController.droneRpgController.DroneData.Battery:00}";
+            builderUI.checkpointsCountText.text =
+                $"{droneBuilderCheckNode.currentNode}/{droneBuilderCheckNode.nodes.Count}";
             builderUI.coinsCountText.text = $"{droneBuilderController.droneRpgController.DroneData.Coins}";
             builderUI.crystalsCountText.text = $"{droneBuilderController.droneRpgController.DroneData.Crystals}";
-            builderUI.armorBar.TurnBars(droneBuilderController.droneRpgController.GetCurrentHealthIndex(droneBuilderController.droneRpgController.DroneData.Armor));
-            builderUI.healthBar.TurnBars(droneBuilderController.droneRpgController.GetCurrentHealthIndex(droneBuilderController.droneRpgController.DroneData.Health));
+            builderUI.armorBar.TurnBars(
+                droneBuilderController.droneRpgController.GetCurrentHealthIndex(droneBuilderController
+                    .droneRpgController.DroneData.Armor));
+            builderUI.healthBar.TurnBars(
+                droneBuilderController.droneRpgController.GetCurrentHealthIndex(droneBuilderController
+                    .droneRpgController.DroneData.Health));
         }
 
         private Vector3 CalculateCommonCenter(List<GameObject> objectsList)
@@ -271,10 +319,10 @@ namespace Builder
 
         private void CheckTabPanel()
         {
-            if (Input.GetKeyDown(KeyCode.Escape) && isMove)
+            if (isMove)
             {
                 _isTabPanel = !_isTabPanel;
-                if(_isTabPanel)
+                if (_isTabPanel)
                     droneBuilderSoundController.droneFly.Stop();
                 else
                     droneBuilderSoundController.droneFly.Play();
@@ -287,9 +335,9 @@ namespace Builder
 
         private void LateUpdate()
         {
-            if(droneBuilderCheckNode.nodes.Count == 0)
+            if (droneBuilderCheckNode.nodes.Count == 0)
                 return;
-            
+
             if (droneBuilderCheckNode.currentNode >= droneBuilderCheckNode.nodes.Count)
             {
                 builderUI.pathArrow.gameObject.SetActive(false);
@@ -297,7 +345,7 @@ namespace Builder
                     StartCoroutine(EndLevel());
                 return;
             }
-            
+
             targetCheckpoint = droneBuilderCheckNode.nodes[droneBuilderCheckNode.currentNode].transform;
             var realPos = cameraBrain.OutputCamera.WorldToScreenPoint(targetCheckpoint.position);
             var rect = new Rect(0, 0, Screen.width, Screen.height);
@@ -324,6 +372,7 @@ namespace Builder
                     outPos.y = Screen.height; // позиция иконки - сверху				
                 }
             }
+
             // ограничиваем позицию областью экрана
             var offset = builderUI.pathArrow.sizeDelta.x / 2;
             outPos.x = Mathf.Clamp(outPos.x, offset, Screen.width - offset);
@@ -333,10 +382,11 @@ namespace Builder
 
             RotatePointer(direction * pos);
 
-            builderUI.pathArrow.sizeDelta = new Vector2(_startPointerSize.x / 100 * interfaceScale, _startPointerSize.y / 100 * interfaceScale);
+            builderUI.pathArrow.sizeDelta = new Vector2(_startPointerSize.x / 100 * interfaceScale,
+                _startPointerSize.y / 100 * interfaceScale);
             builderUI.pathArrow.position = outPos;
         }
-        
+
         private bool IsBehind(Vector3 point) // true если point сзади камеры
         {
             var forward = cameraBrain.transform.TransformDirection(Vector3.forward);
@@ -367,9 +417,10 @@ namespace Builder
         public void TestLevel()
         {
             isMove = !isMove;
-            _lamps = FindObjectsOfType<Lamp>().ToList();
+            TestLevelEvent?.Invoke();
             if (isMove)
             {
+                _lamps = FindObjectsOfType<Lamp>().ToList();
                 timer.currentTime = 0;
                 droneBuilderController.droneRpgController.DroneData = new DroneData(100, 100, 100);
                 builderUI.droneView.SetActive(true);
@@ -385,11 +436,11 @@ namespace Builder
                 droneBuilderController.yaw = _dronePrevRotationY;
                 _dronePrevPosition = droneBuilderController.transform.position;
                 cameraBrain.transform.SetParent(droneBuilderController.transform);
-                droneBuilderController.GetComponent<Rigidbody>().isKinematic = false;
-                droneBuilderController.GetComponent<Rigidbody>().useGravity = true;
+                droneBuilderController.rb.isKinematic = false;
+                droneBuilderController.rb.useGravity = true;
                 builderUI.createPanel.SetActive(false);
                 builderUI.editButtons.SetActive(false);
-                if(droneBuilderCheckNode.nodes.Count > 0)
+                if (droneBuilderCheckNode.nodes.Count > 0)
                     builderUI.pathArrow.gameObject.SetActive(true);
                 droneBuilderCheckNode.currentNode = 0;
                 droneBuilderSoundController.droneFly.Play();
@@ -398,7 +449,6 @@ namespace Builder
             }
             else
             {
-                testLevelEvent.Invoke();
                 TurnOnLamps();
                 builderUI.droneView.SetActive(false);
                 freeFlyCamera.enabled = true;
@@ -409,8 +459,8 @@ namespace Builder
                 droneBuilderController.yaw = _dronePrevRotationY;
                 droneBuilderController.transform.position = _dronePrevPosition;
                 droneBuilderController.transform.localRotation = Quaternion.Euler(0, _dronePrevRotationY, 0);
-                droneBuilderController.GetComponent<Rigidbody>().isKinematic = true;
-                droneBuilderController.GetComponent<Rigidbody>().useGravity = false;
+                droneBuilderController.rb.isKinematic = true;
+                droneBuilderController.rb.useGravity = false;
                 builderUI.editorTabPanel.SetActive(false);
                 builderUI.gameTabPanel.SetActive(false);
                 Time.timeScale = 1f;
@@ -421,7 +471,7 @@ namespace Builder
                 droneBuilderSoundController.droneFly.Stop();
                 _selection.enabled = true;
             }
-            
+
             foreach (var obj in objectsPool)
                 obj.SetActive(true);
         }
@@ -430,7 +480,7 @@ namespace Builder
         {
             StartCoroutine(LoadScene());
         }
-        
+
         public IEnumerator LoadScene()
         {
             builderUI.pathArrow.gameObject.SetActive(false);
@@ -439,15 +489,15 @@ namespace Builder
             builderUI.loadLevelPanel.SetActive(true);
             audioManager.StartPlay();
             Dictionary<string, Dictionary<string, string>> loadedData;
-            
-            if(objectsPool.Count > 0)
+
+            if (objectsPool.Count > 0)
                 ClearObject();
 
             var filePath = Application.dataPath + "/Levels/" + levelName + ".json";
 
             var jsonData = File.ReadAllText(filePath);
             loadedData = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, string>>>(jsonData);
-            
+
             foreach (var kvp in loadedData)
             {
                 var objectName = kvp.Value["name"].Substring(0, kvp.Value["name"].IndexOf('('));
@@ -455,17 +505,45 @@ namespace Builder
                 var rotation = TrackBuilderUtils.ParseVector3(kvp.Value["rotation"]);
                 var scale = TrackBuilderUtils.ParseVector3(kvp.Value["scale"]);
                 var layer = Convert.ToInt32(kvp.Value["layer"]);
-                var yOffset = Convert.ToSingle(kvp.Value["yOffset"]);
-                var maxMouseDistance = Convert.ToSingle(kvp.Value["maxMouseDistance"]);
-                var rotSpeed = kvp.Value["rotSpeed"] != "null" ? Convert.ToSingle(kvp.Value["rotSpeed"]) : 0f;
-                var magnetForce = kvp.Value["magnetForce"] != "null" ? Convert.ToSingle(kvp.Value["magnetForce"]) : 0f;
-                var pendulumMoveSpeed = kvp.Value["pendulumMoveSpeed"] != "null" ? Convert.ToSingle(kvp.Value["pendulumMoveSpeed"]) : 0f;
-                var windForce = kvp.Value["windForce"] != "null" ? Convert.ToSingle(kvp.Value["windForce"]) : 0f;
-                var batteryEnergy = kvp.Value["batteryEnergy"] != "null" ? Convert.ToSingle(kvp.Value["batteryEnergy"]) : 0f;
-                var freezing = kvp.Value["freezing"] != "null" && Convert.ToBoolean(kvp.Value["freezing"]);
-                var boost = kvp.Value["boost"] != "null" ? Convert.ToSingle(kvp.Value["boost"]) : 0f;
-                
-                var newObj = Instantiate(Resources.Load<GameObject>("TrackObjects/" + objectName), position, Quaternion.Euler(rotation));
+                var yOffset = Convert.ToSingle(kvp.Value[nameof(currentObjectType.yOffset)]);
+                var maxMouseDistance = Convert.ToSingle(kvp.Value[nameof(currentObjectType.maxMouseDistance)]);
+                var rotSpeed = kvp.Value[nameof(currentObjectType.interactiveObject.windMillRotateSpeed)] != "null"
+                    ? Convert.ToSingle(kvp.Value[nameof(currentObjectType.interactiveObject.magnetForce)])
+                    : 0f;
+                var magnetForce = kvp.Value[nameof(currentObjectType.interactiveObject.magnetForce)] != "null"
+                    ? Convert.ToSingle(kvp.Value[nameof(currentObjectType.interactiveObject.magnetForce)])
+                    : 0f;
+                var pendulumMoveSpeed =
+                    kvp.Value[nameof(currentObjectType.interactiveObject.pendulumMoveSpeed)] != "null"
+                        ? Convert.ToSingle(kvp.Value[nameof(currentObjectType.interactiveObject.pendulumMoveSpeed)])
+                        : 0f;
+                var leftPendulumAngle =
+                    kvp.Value[nameof(currentObjectType.interactiveObject.leftPendulumAngle)] != "null"
+                        ? Convert.ToSingle(kvp.Value[nameof(currentObjectType.interactiveObject.leftPendulumAngle)])
+                        : 0f;
+                var rightPendulumAngle =
+                    kvp.Value[nameof(currentObjectType.interactiveObject.rightPendulumAngle)] != "null"
+                        ? Convert.ToSingle(kvp.Value[nameof(currentObjectType.interactiveObject.rightPendulumAngle)])
+                        : 0f;
+                var windForce = kvp.Value[nameof(currentObjectType.interactiveObject.windForce)] != "null"
+                    ? Convert.ToSingle(kvp.Value[nameof(currentObjectType.interactiveObject.windForce)])
+                    : 0f;
+                var batteryEnergy = kvp.Value[nameof(currentObjectType.interactiveObject.batteryEnergy)] != "null"
+                    ? Convert.ToSingle(kvp.Value[nameof(currentObjectType.interactiveObject.batteryEnergy)])
+                    : 0f;
+                var freezing = kvp.Value[nameof(currentObjectType.interactiveObject.isFreezing)] != "null" &&
+                               Convert.ToBoolean(kvp.Value[nameof(currentObjectType.interactiveObject.isFreezing)]);
+                var boost = kvp.Value[nameof(currentObjectType.interactiveObject.boostSpeed)] != "null"
+                    ? Convert.ToSingle(kvp.Value[nameof(currentObjectType.interactiveObject.boostSpeed)])
+                    : 0f;
+                var hintText = kvp.Value[nameof(currentObjectType.interactiveObject.hintText)] != "null"
+                    ? kvp.Value[nameof(currentObjectType.interactiveObject.hintText)]
+                    : "";
+                var isLampTurn = kvp.Value[nameof(currentObjectType.interactiveObject.isLampTurn)] != "null" &&
+                                 Convert.ToBoolean(kvp.Value[nameof(currentObjectType.interactiveObject.isLampTurn)]);
+
+                var newObj = Instantiate(Resources.Load<GameObject>("TrackObjects/" + objectName), position,
+                    Quaternion.Euler(rotation));
                 yield return new WaitForSeconds(0.01f);
                 TrackBuilderUtils.ChangeLayerRecursively(newObj.transform, layer);
                 TrackBuilderUtils.OffOutlineRecursively(newObj.transform);
@@ -474,44 +552,62 @@ namespace Builder
                 var trackObj = newObj.GetComponent<TrackObject>();
                 trackObj.yOffset = yOffset;
                 trackObj.maxMouseDistance = maxMouseDistance;
-                
-                trackObj.windmill = trackObj.GetComponentInChildren<Windmill>();
-                if (trackObj.windmill != null)
-                    trackObj.windmill.rotateSpeed = rotSpeed;
 
-                trackObj.magnet = trackObj.GetComponentInChildren<RigidbodyMagnet>();
-                if (trackObj.magnet != null)
-                    trackObj.magnet.magnetForce = magnetForce;
-
-                trackObj.pendulum = trackObj.GetComponentInChildren<Pendulum>();
-                if (trackObj.pendulum != null)
-                    trackObj.pendulum.moveSpeed = pendulumMoveSpeed;
-
-                trackObj.windZone = trackObj.GetComponentInChildren<WindZoneScript>();
-                if (trackObj.windZone != null)
-                    trackObj.windZone.windForce = windForce;
-
-                trackObj.battery = trackObj.GetComponentInChildren<Battery>();
-                if (trackObj.battery != null)
-                    trackObj.battery.energy = batteryEnergy;
-
-                trackObj.freezingBall = trackObj.GetComponentInChildren<FreezingBall>();
-                if (trackObj.freezingBall != null)
-                    trackObj.freezingBall.isFreezing = freezing;
-
-                trackObj.boost = trackObj.GetComponentInChildren<BoostTrigger>();
-                if (trackObj.boost != null)
-                    trackObj.boost.boost = boost;
+                switch (trackObj.interactiveType)
+                {
+                    case InteractiveType.Windmill:
+                        trackObj.interactiveObject = trackObj.GetComponentInChildren<Windmill>();
+                        trackObj.interactiveObject.windMillRotateSpeed = rotSpeed;
+                        break;
+                    case InteractiveType.Magnet:
+                        trackObj.interactiveObject = trackObj.GetComponentInChildren<RigidbodyMagnet>();
+                        trackObj.interactiveObject.magnetForce = magnetForce;
+                        break;
+                    case InteractiveType.Pendulum:
+                        trackObj.interactiveObject = trackObj.GetComponentInChildren<Pendulum>();
+                        trackObj.interactiveObject.pendulumMoveSpeed = pendulumMoveSpeed;
+                        trackObj.interactiveObject.leftPendulumAngle = leftPendulumAngle;
+                        trackObj.interactiveObject.rightPendulumAngle = rightPendulumAngle;
+                        break;
+                    case InteractiveType.Wind:
+                        trackObj.interactiveObject = trackObj.GetComponentInChildren<WindZoneScript>();
+                        trackObj.interactiveObject.windForce = windForce;
+                        break;
+                    case InteractiveType.Battery:
+                        trackObj.interactiveObject = trackObj.GetComponentInChildren<Battery>();
+                        trackObj.interactiveObject.batteryEnergy = batteryEnergy;
+                        break;
+                    case InteractiveType.Freezing:
+                        trackObj.interactiveObject = trackObj.GetComponentInChildren<FreezingBall>();
+                        trackObj.interactiveObject.isFreezing = freezing;
+                        break;
+                    case InteractiveType.Boost:
+                        trackObj.interactiveObject = trackObj.GetComponentInChildren<BoostTrigger>();
+                        trackObj.interactiveObject.boostSpeed = boost;
+                        break;
+                    case InteractiveType.Hint:
+                        trackObj.interactiveObject = trackObj.GetComponentInChildren<Hint>();
+                        trackObj.interactiveObject.hintText.text = hintText;
+                        break;
+                    case InteractiveType.Lamp:
+                        trackObj.interactiveObject = trackObj.GetComponentInChildren<Lamp>();
+                        trackObj.interactiveObject.isLampTurn = isLampTurn;
+                        break;
+                    case InteractiveType.Draw:
+                        break;
+                    case InteractiveType.None:
+                        break;
+                }
 
                 objectsPool.Add(newObj);
             }
-            
+
             builderUI.editButtons.SetActive(true);
             builderUI.createPanel.SetActive(true);
             builderUI.loadLevelPanel.SetActive(false);
             audioManager.EndPlay();
             CreateObjectsPoolScene();
-            loadingComplete?.Invoke();
+            LoadingComplete?.Invoke();
         }
 
 
@@ -524,7 +620,8 @@ namespace Builder
                     pendingObjects = new List<GameObject>(_selection.selectedObjects);
                     foreach (var pendingObj in pendingObjects)
                     {
-                        TrackBuilderUtils.ChangeLayerRecursively(pendingObj.transform, LayerMask.NameToLayer("TrackGround"));
+                        TrackBuilderUtils.ChangeLayerRecursively(pendingObj.transform,
+                            LayerMask.NameToLayer("TrackGround"));
                     }
                 }
                 else
@@ -537,6 +634,7 @@ namespace Builder
                         currentObjectType.Position, currentObjectType.Scale, currentObjectType.Rotation, pendingObject,
                         currentObjectType.yOffset));
                 }
+
                 TrackBuilderUtils.TurnTrackObjects(pendingObjects, false);
                 pendingObjects.Clear();
                 currentObjectType = null;
@@ -563,25 +661,16 @@ namespace Builder
             }
         }
 
-        private void ChangeObjectHeight(float value)
-        {
-            if(currentObjectType == null)
-                return;
-            
-            currentObjectType.yOffset += value;
-                // _mainCamera.transform.Translate(0, value, 0, Space.Self);
-        }
+        private void ChangeObjectHeight(float value) => _objectHeightValue = value;
 
         private void RotateObject(Vector3 axis, float rotateAmount, Space space)
         {
-            if(pendingObject == null)
-                return;
             pendingObject.transform.Rotate(axis, rotateAmount, space);
         }
-        
+
         public void SelectObject(int index)
         {
-            if(pendingObject != null)
+            if (pendingObject != null)
                 PlaceObjects();
 
             currentSelectObjectIndex = index;
@@ -604,9 +693,9 @@ namespace Builder
 
         private void PasteObject(GameObject obj)
         {
-            if(obj == null)
+            if (obj == null)
                 return;
-            
+
             pendingObject = Instantiate(obj, mousePos, copyObject.transform.rotation);
             pendingObjects.Add(pendingObject);
             TrackBuilderUtils.ChangeLayerRecursively(pendingObject.transform, LayerMask.NameToLayer("Track"));
@@ -617,7 +706,7 @@ namespace Builder
             _selection.Select(pendingObject);
             currentObjectType = pendingObject.GetComponent<TrackObject>();
             currentObjectType.isActive = true;
-            
+
             if (currentObjectType.objectType == ObjectsType.Gate)
             {
                 currentObjectType.GetComponent<BuilderCheckpointTrigger>().checkpointId =
@@ -636,7 +725,7 @@ namespace Builder
         {
             foreach (var obj in objectsPool)
             {
-                if(obj.GetComponent<BuilderCheckpointTrigger>())
+                if (obj.GetComponent<BuilderCheckpointTrigger>())
                     droneBuilderCheckNode.AddNode(obj.transform);
                 SceneManager.MoveGameObjectToScene(obj, levelScene);
             }
@@ -646,15 +735,16 @@ namespace Builder
                 builderUI.pathArrow.gameObject.SetActive(true);
             }
 
-            FindObjectOfType<Server>().droneBuilderController = droneBuilderController;
+            FindObjectOfType<Server>().player = droneBuilderController;
         }
-        
+
         private void ClearObject()
         {
             foreach (var obj in objectsPool)
             {
                 Destroy(obj);
             }
+
             RewindManager.Instance.rewindedObjects.Clear();
             objectsPool.Clear();
             pendingObjects.Clear();

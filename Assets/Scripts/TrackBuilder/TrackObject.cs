@@ -1,3 +1,4 @@
+using System;
 using Drone;
 using UnityEngine;
 
@@ -18,33 +19,40 @@ namespace Builder
         public float damage = 1f;
         public string objectName;
         public string objectDescription;
-
-        public Windmill windmill;
-        public RigidbodyMagnet magnet;
-        public Pendulum pendulum;
-        public WindZoneScript windZone;
-        public FreezingBall freezingBall;
-        public Battery battery;
-        public BoostTrigger boost;
-        public Lamp lamp;
-        public Hint hint;
+        public InteractiveObject interactiveObject;
+        
+        public event Action<Vector3> ScaleChanged;
+        public event Action<Vector3> PositionChanged;
+        public event Action<Quaternion> RotationChanged;
 
         public Vector3 Scale
         {
             get => transform.localScale;
-            set => transform.localScale = value;
+            set
+            {
+                transform.localScale = value;
+                ScaleChanged?.Invoke(value);
+            }
         }
 
         public Vector3 Position
         {
             get => transform.position;
-            set => transform.position = value;
+            set
+            {
+                transform.position = value;
+                PositionChanged?.Invoke(value);
+            }
         }
 
         public Quaternion Rotation
         {
             get => transform.rotation;
-            set => transform.rotation = value;
+            set
+            {
+                transform.rotation = value;
+                RotationChanged?.Invoke(value);
+            }
         }
     }
 }

@@ -1,4 +1,5 @@
 using Cinemachine;
+using Drone;
 using UnityEngine;
 
 public class CameraController : MonoBehaviour
@@ -8,13 +9,20 @@ public class CameraController : MonoBehaviour
 
     private int _tempView = 10;
 
-    private void Update()
+    private void OnEnable()
     {
-        if (Input.GetKeyDown(KeyCode.V))
-        {
-            thirdView.Priority = firstView.Priority;
-            firstView.Priority = _tempView;
-            _tempView = thirdView.Priority;
-        }
+        InputManager.Instance.SwitchViewEvent += SwitchView;
+    }
+        
+    private void OnDisable()
+    {
+        InputManager.Instance.SwitchViewEvent -= SwitchView;
+    }
+
+    private void SwitchView()
+    {
+        thirdView.Priority = firstView.Priority;
+        firstView.Priority = _tempView;
+        _tempView = thirdView.Priority;
     }
 }

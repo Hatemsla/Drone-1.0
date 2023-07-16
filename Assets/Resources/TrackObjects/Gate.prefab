@@ -43,9 +43,17 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3179005775414089896}
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
   m_IsTrigger: 1
+  m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 2
+  serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 0.001}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &1725579079949158934
@@ -61,10 +69,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 3
-  objectType: 3
+  connection: {fileID: 0}
+  objectType: 8
+  hasPortal: 1
+  interactiveType: 0
+  effectType: 1
   yOffset: 1.071
+  yOffsetIncrease: 0
   isActive: 0
   maxMouseDistance: 0
+  damage: 1
+  objectName: 
+  objectDescription: 
+  interactiveObject: {fileID: 0}
 --- !u!114 &334669364
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -83,6 +100,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
+    serializedVersion: 3
     m_TransformParent: {fileID: 3179005775414089897}
     m_Modifications:
     - target: {fileID: 267357277443722554, guid: d3e65618dad351a418911358331b0e2e, type: 3}
@@ -246,6 +264,9 @@ PrefabInstance:
       value: 18
       objectReference: {fileID: 0}
     m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d3e65618dad351a418911358331b0e2e, type: 3}
 --- !u!4 &5173236936956470605 stripped
 Transform:

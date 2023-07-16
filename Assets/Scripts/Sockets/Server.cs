@@ -15,13 +15,11 @@ namespace Sockets
     public class Server : MonoBehaviour
     {
         public MioData MioData;
-        public DroneFootballController droneFootballController;
-        public DroneRaceController droneRaceController;
-        public DroneBuilderController droneBuilderController;
+        public DroneController player;
         
         private static Socket _listener;
         private CancellationTokenSource _source;
-        public ManualResetEvent AllDone;
+        public ManualResetEvent allDone;
         private string _data;
 
         public const int Port = 8888;
@@ -30,7 +28,7 @@ namespace Sockets
         private void Awake()
         {
             _source = new CancellationTokenSource();
-            AllDone = new ManualResetEvent(false);
+            allDone = new ManualResetEvent(false);
         }
 
         private async void Start()
@@ -52,13 +50,13 @@ namespace Sockets
                 
                 while (!token.IsCancellationRequested)
                 {
-                    AllDone.Reset();
+                    allDone.Reset();
 
                     _listener.BeginAccept(new AsyncCallback(AcceptCallback), _listener);
                     
                     while (!token.IsCancellationRequested)
                     {
-                        if (AllDone.WaitOne(Waittime))
+                        if (allDone.WaitOne(Waittime))
                         {
                             break;
                         }
@@ -76,7 +74,7 @@ namespace Sockets
             Socket listener = (Socket)ar.AsyncState;
             Socket handler = listener.EndAccept(ar);
             
-            AllDone.Set();
+            allDone.Set();
 
             StateObject state = new StateObject();
             state.workSocket = handler;
@@ -102,39 +100,19 @@ namespace Sockets
                 {
                     Debug.Log(_data);
                     MioData = JsonConvert.DeserializeObject<MioData>(_data);
-                    if(droneFootballController)
-                        SetDroneFootballData(MioData, droneFootballController);
-                    else if(droneRaceController)
-                        SetDroneRaceData(MioData, droneRaceController);
-                    else if(droneBuilderController)
-                        SetDroneTrackBuilderData(MioData, droneBuilderController);
+                    if(player)
+                        SetDroneData(MioData, player);
                 }
                 handler.Close();
             }
         }
 
-        private void SetDroneFootballData(MioData data, DroneFootballController drone)
+        private void SetDroneData(MioData data, DroneController drone)
         {
-            drone.throttle = data.LeftMio.X / 2000f;
-            drone.pedals = data.LeftMio.Y / 2000f;
-            drone.cyclic.x = data.RightMio.X / 2000f;
-            drone.cyclic.y = data.RightMio.Y / 2000f;
-        }
-        
-        private void SetDroneRaceData(MioData data, DroneRaceController drone)
-        {
-            drone.throttle = data.LeftMio.X / 2000f;
-            drone.pedals = data.LeftMio.Y / 2000f;
-            drone.cyclic.x = data.RightMio.X / 2000f;
-            drone.cyclic.y = data.RightMio.Y / 2000f;
-        }
-
-        private void SetDroneTrackBuilderData(MioData data, DroneBuilderController drone)
-        {
-            drone.throttle = data.LeftMio.X / 2000f;
-            drone.pedals = data.LeftMio.Y / 2000f;
-            drone.cyclic.x = data.RightMio.X / 2000f;
-            drone.cyclic.y = data.RightMio.Y / 2000f;
+            drone.throttle = data.LeftMio.X / 1000f;
+            drone.pedals = data.LeftMio.Y / 1000f;
+            drone.cyclic.x = data.RightMio.X / 1000f;
+            drone.cyclic.y = data.RightMio.Y / 1000f;
         }
 
         private void OnDestroy()

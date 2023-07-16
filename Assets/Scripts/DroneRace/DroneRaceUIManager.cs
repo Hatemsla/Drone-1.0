@@ -6,15 +6,20 @@ namespace DroneRace
 {
     public class DroneRaceUIManager : MonoBehaviour
     {
+        [Header("DroneView")]
+        public GameObject droneView;
+        public TMP_Text speedText;
+        public TMP_Text timeText;
+        public TMP_Text checkpointsCountText;
+        
+        [Header("UI")]
         public Button backBtn;
         public Button exitBtn;
         public RectTransform pathArrow;
         public Sprite pointerIcon;
         public Sprite outOfScreenIcon;
         public TMP_Text timeToStartGameText;
-        public TMP_Text timeToEndGameText;
         public TMP_Text matchResultText;
-        public TMP_Text racePositionText;
         public GameObject descriptionPanel;
         public GameObject matchResultPanel;
         public GameObject backgroundImage;
