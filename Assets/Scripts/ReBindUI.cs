@@ -17,9 +17,8 @@ namespace Drone
         [Header("Binding Info - DO NOT EDIT")] [SerializeField]
         private InputBinding inputBinding;
 
-        private int bindingIndex;
-
-        private string actionName;
+        private int _bindingIndex;
+        private string _actionName;
 
         [Header("UI Fields")] [SerializeField] private TMP_Text actionText;
         [SerializeField] private Button rebindButton;
@@ -60,39 +59,37 @@ namespace Drone
         private void GetBindingInfo()
         {
             if (inputActionReference.action != null)
-                actionName = inputActionReference.action.name;
+                _actionName = inputActionReference.action.name;
 
             if (inputActionReference.action.bindings.Count > selectedBinding)
             {
                 inputBinding = inputActionReference.action.bindings[selectedBinding];
-                bindingIndex = selectedBinding;
+                _bindingIndex = selectedBinding;
             }
         }
 
         private void UpdateUI()
         {
             if (actionText != null)
-                actionText.text = actionName;
+                actionText.text = _actionName;
 
             if (rebindText != null)
             {
                 if (Application.isPlaying)
-                {
-                    rebindText.text = InputManager.GetBindingName(actionName, bindingIndex);
-                }
+                    rebindText.text = InputManager.GetBindingName(_actionName, _bindingIndex);
                 else
-                    rebindText.text = inputActionReference.action.GetBindingDisplayString(bindingIndex);
+                    rebindText.text = inputActionReference.action.GetBindingDisplayString(_bindingIndex);
             }
         }
 
         private void DoRebind()
         {
-            InputManager.Instance.StartRebind(actionName, bindingIndex, rebindText, excludeMouse);
+            InputManager.Instance.StartRebind(_actionName, _bindingIndex, rebindText, excludeMouse);
         }
 
         private void ResetBinding()
         {
-            InputManager.Instance.ResetBinding(actionName, bindingIndex);
+            InputManager.Instance.ResetBinding(_actionName, _bindingIndex);
             UpdateUI();
         }
     }

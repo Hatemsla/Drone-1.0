@@ -37,6 +37,8 @@ namespace Drone
         public event Action<float> CameraZoomEvent;
         public event Action LockCursorEvent;
         public event Action SwitchViewEvent;
+        public event Action JerkEvent;
+        public event Action ShieldEvent;
 
         public static event Action RebindComplete;
         public static event Action RebindCanceled;
@@ -64,6 +66,8 @@ namespace Drone
             _playerInput.Player.XRay.performed += _ => XRayEvent?.Invoke();
             _playerInput.Player.Exit.performed += _ => ExitEvent?.Invoke();
             _playerInput.Player.SwitchView.performed += _ => SwitchViewEvent?.Invoke();
+            _playerInput.Player.Jerk.performed += _ => JerkEvent?.Invoke();
+            _playerInput.Player.Shield.performed += _ => ShieldEvent?.Invoke();
 
             _playerInput.Builder.CopyObject.performed += _ => CopyObjectEvent?.Invoke();
             _playerInput.Builder.PasteObject.performed += _ => PasteObjectEvent?.Invoke();
@@ -188,7 +192,7 @@ namespace Drone
             if (actionToRebind == null || bindingIndex < 0)
                 return;
 
-            statusText.text = $"Press a {actionToRebind.expectedControlType}";
+            statusText.text = $"Нажмите на кнопку";
 
             actionToRebind.Disable();
 

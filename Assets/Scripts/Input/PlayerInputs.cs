@@ -78,7 +78,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""id"": ""da2d4641-72b1-4c1d-b5d0-0593766c8139"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": ""Press"",
+                    ""interactions"": """",
                     ""initialStateCheck"": false
                 },
                 {
@@ -87,7 +87,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""id"": ""f370e8f3-6554-495a-b316-34b919dc3758"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": ""Press"",
+                    ""interactions"": """",
                     ""initialStateCheck"": false
                 },
                 {
@@ -96,7 +96,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""id"": ""30b1808b-5dac-473e-8a26-c06ac45dd4eb"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": ""Press"",
+                    ""interactions"": """",
                     ""initialStateCheck"": false
                 },
                 {
@@ -105,7 +105,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""id"": ""852d6337-736a-4f75-89a5-82e83c40e00b"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": ""Press"",
+                    ""interactions"": """",
                     ""initialStateCheck"": false
                 },
                 {
@@ -114,7 +114,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""id"": ""2f9a679f-c2b7-443c-bb78-0ec9227ac44b"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": ""Press"",
+                    ""interactions"": """",
                     ""initialStateCheck"": false
                 },
                 {
@@ -123,7 +123,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""id"": ""71309863-2b47-4aad-9b54-c3cdf6979e80"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": ""Press"",
+                    ""interactions"": """",
                     ""initialStateCheck"": false
                 },
                 {
@@ -132,7 +132,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""id"": ""edf04660-1b3e-49b1-9ee3-0c92c2e529e3"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": ""Press"",
+                    ""interactions"": """",
                     ""initialStateCheck"": false
                 },
                 {
@@ -141,7 +141,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""id"": ""f5960587-641b-4998-b2ca-c0ae960a83a4"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": ""Press"",
+                    ""interactions"": """",
                     ""initialStateCheck"": false
                 },
                 {
@@ -150,7 +150,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""id"": ""e636066d-027b-4c30-b4ce-26d8c76f68b6"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": ""Press"",
+                    ""interactions"": """",
                     ""initialStateCheck"": false
                 },
                 {
@@ -159,7 +159,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""id"": ""5a815a8f-6fc5-44fa-bec0-8f31da24bcd3"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": ""Press"",
+                    ""interactions"": """",
                     ""initialStateCheck"": false
                 },
                 {
@@ -168,7 +168,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""id"": ""e7b5f400-881f-4db8-a581-dc6d48629a18"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": ""Press"",
+                    ""interactions"": """",
                     ""initialStateCheck"": false
                 },
                 {
@@ -177,7 +177,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""id"": ""eeb37332-39ea-485d-8d3b-efa4a6a73b4b"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": ""Press"",
+                    ""interactions"": """",
                     ""initialStateCheck"": false
                 },
                 {
@@ -186,7 +186,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""id"": ""db6a11f0-74ab-420c-872b-d6f116b7e326"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": ""Press"",
+                    ""interactions"": """",
                     ""initialStateCheck"": false
                 },
                 {
@@ -195,7 +195,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""id"": ""54eccb19-a767-4182-9a99-28343024f7d6"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": ""Press"",
+                    ""interactions"": """",
                     ""initialStateCheck"": false
                 }
             ],
