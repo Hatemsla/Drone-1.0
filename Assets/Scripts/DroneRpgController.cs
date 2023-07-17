@@ -7,7 +7,7 @@ namespace Drone
     {
         public DroneController droneBuilderController;
         public DroneData DroneData;
-        public int powerUsageRate;
+        public float powerUsageRate;
         public bool isAlive = true;
         public bool isCharged = true;
         [SerializeField] private float armorPercentage = 0.9f;

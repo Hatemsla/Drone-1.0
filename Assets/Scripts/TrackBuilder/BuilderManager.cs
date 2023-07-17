@@ -58,7 +58,8 @@ namespace Builder
 
         [HideInInspector] public Scene levelScene;
         public event Action TestLevelEvent;
-        public event Action LoadingComplete;
+        public event Action LoadingCompleteEvent;
+        public event Action ObjectChangeSceneEvent;
 
         private List<Lamp> _lamps;
         private int _currentGroundIndex;
@@ -94,8 +95,8 @@ namespace Builder
 
             builderUI.pathArrow.gameObject.SetActive(false);
 
-            LoadingComplete += RewindManager.Instance.FindRewindObjects;
-            LoadingComplete += RewindManager.Instance.RestartTracking;
+            LoadingCompleteEvent += RewindManager.Instance.FindRewindObjects;
+            LoadingCompleteEvent += RewindManager.Instance.RestartTracking;
 
             if (isLoadLevel)
             {
@@ -103,7 +104,7 @@ namespace Builder
             }
             else if (isGameLevel)
             {
-                LoadingComplete += TestLevel;
+                LoadingCompleteEvent += TestLevel;
                 StartLevel();
             }
             else
@@ -130,9 +131,9 @@ namespace Builder
 
         private void OnDisable()
         {
-            LoadingComplete -= RewindManager.Instance.FindRewindObjects;
-            LoadingComplete -= RewindManager.Instance.RestartTracking;
-            LoadingComplete -= TestLevel;
+            LoadingCompleteEvent -= RewindManager.Instance.FindRewindObjects;
+            LoadingCompleteEvent -= RewindManager.Instance.RestartTracking;
+            LoadingCompleteEvent -= TestLevel;
             TestLevelEvent -= InputManager.Instance.TurnActionMaps;
             InputManager.Instance.CopyObjectEvent -= CopyObject;
             InputManager.Instance.PasteObjectEvent -= PasteObject;
@@ -607,7 +608,7 @@ namespace Builder
             builderUI.loadLevelPanel.SetActive(false);
             audioManager.EndPlay();
             CreateObjectsPoolScene();
-            LoadingComplete?.Invoke();
+            LoadingCompleteEvent?.Invoke();
         }
 
 
@@ -676,7 +677,7 @@ namespace Builder
             currentSelectObjectIndex = index;
             pendingObject = Instantiate(objects[index], mousePos, transform.rotation);
             pendingObjects.Add(pendingObject);
-            SceneManager.MoveGameObjectToScene(pendingObject, levelScene);
+            MoveGameObjectToScene(pendingObject, levelScene);
             objectsPool.Add(pendingObject);
             _selection.Deselect();
             _selection.Select(pendingObject);
@@ -700,7 +701,7 @@ namespace Builder
             pendingObjects.Add(pendingObject);
             TrackBuilderUtils.ChangeLayerRecursively(pendingObject.transform, LayerMask.NameToLayer("Track"));
             TrackBuilderUtils.TurnTrackObjects(pendingObjects, true);
-            SceneManager.MoveGameObjectToScene(pendingObject, levelScene);
+            MoveGameObjectToScene(pendingObject, levelScene);
             objectsPool.Add(pendingObject);
             _selection.Deselect();
             _selection.Select(pendingObject);
@@ -727,7 +728,7 @@ namespace Builder
             {
                 if (obj.GetComponent<BuilderCheckpointTrigger>())
                     droneBuilderCheckNode.AddNode(obj.transform);
-                SceneManager.MoveGameObjectToScene(obj, levelScene);
+                MoveGameObjectToScene(obj, levelScene);
             }
 
             if (droneBuilderCheckNode.nodes.Count > 0)
@@ -736,6 +737,12 @@ namespace Builder
             }
 
             FindObjectOfType<Server>().player = droneBuilderController;
+        }
+
+        private void MoveGameObjectToScene(GameObject obj, Scene scene)
+        {
+            SceneManager.MoveGameObjectToScene(obj, scene);
+            ObjectChangeSceneEvent?.Invoke();
         }
 
         private void ClearObject()

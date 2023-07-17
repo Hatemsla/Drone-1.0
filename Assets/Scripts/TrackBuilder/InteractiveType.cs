@@ -13,6 +13,7 @@
         Lamp,
         Hint,
         Draw,
-        Door
+        Door,
+        Port
     }
 }

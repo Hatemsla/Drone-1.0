@@ -39,6 +39,10 @@ namespace Drone
         public event Action SwitchViewEvent;
         public event Action JerkEvent;
         public event Action ShieldEvent;
+        public event Action ApplyOpenEvent;
+        public event Action NextCameraEvent;
+        public event Action PreviousCameraEvent;
+        public event Action ExitPortEvent;
 
         public static event Action RebindComplete;
         public static event Action RebindCanceled;
@@ -68,6 +72,11 @@ namespace Drone
             _playerInput.Player.SwitchView.performed += _ => SwitchViewEvent?.Invoke();
             _playerInput.Player.Jerk.performed += _ => JerkEvent?.Invoke();
             _playerInput.Player.Shield.performed += _ => ShieldEvent?.Invoke();
+            _playerInput.Player.ApplyOpen.performed += _ => ApplyOpenEvent?.Invoke();
+            
+            _playerInput.Port.NextCamera.performed += _ => NextCameraEvent?.Invoke();
+            _playerInput.Port.PreviousCamera.performed += _ => PreviousCameraEvent?.Invoke();
+            _playerInput.Port.ExitPort.performed += _ => ExitPortEvent?.Invoke();
 
             _playerInput.Builder.CopyObject.performed += _ => CopyObjectEvent?.Invoke();
             _playerInput.Builder.PasteObject.performed += _ => PasteObjectEvent?.Invoke();

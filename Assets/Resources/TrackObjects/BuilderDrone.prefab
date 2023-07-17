@@ -2184,15 +2184,17 @@ MonoBehaviour:
   isStop: 0
   currentPercentSpeed: 0
   currentSpeed: 0
+  isShieldActive: 0
   boostsCount: 0
   jerkForce: 500
+  jerkDelay: 3
+  shieldDelay: 10
+  shield: {fileID: 1767986830470565287}
   flashLight: {fileID: 2559315850702973615}
   droneBuilderCheckNode: {fileID: 0}
   droneBuilderSoundController: {fileID: 0}
   droneRpgController: {fileID: 0}
   rb: {fileID: 0}
-  jerkDelay: 3
-  shield: {fileID: 1767986830470565287}
 --- !u!114 &5984266151265704062
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2221,7 +2223,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   droneBuilderController: {fileID: 5984266151265704063}
-  powerUsageRate: 1
+  powerUsageRate: 0.5
   isAlive: 1
   isCharged: 1
   armorPercentage: 0.9
