@@ -16,5 +16,8 @@
         Door,
         Port,
         SecureCamera,
+        ElectroGate,
+        Panel,
+        Button
     }
 }
