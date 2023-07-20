@@ -219,5 +219,29 @@ namespace Builder
                 drawLine.SetColor(Color.HSVToRGB(value, 1f, 1f));
             }
         }
+
+        public void OnElectroGateChanged(bool value)
+        {
+            if (currentObject.interactiveObject is ControledGate controledGate)
+            {
+                controledGate.set_activ(); 
+            }                       
+        }
+
+        public void OnElectroGateColorChanged(int value)
+        {
+            if (currentObject.interactiveObject is ControledGate controledGate)
+            {
+                controledGate.set_color_index(value); 
+            }  
+        }
+
+        public void OnControllerPanelHackedChanged(int value)
+        {
+            if (currentObject.interactiveObject is ControllerPanel ControllerPanel)
+            {
+                ControllerPanel.set_color_index(value); 
+            }
+        }
     }
 }

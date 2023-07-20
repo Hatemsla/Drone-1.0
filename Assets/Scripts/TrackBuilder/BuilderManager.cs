@@ -33,6 +33,10 @@ namespace Builder
         public bool isLoadLevel;
         public bool isGameLevel;
         public bool isInputText;
+        public bool isActivRed;
+        public bool isActivBlue;
+        public bool isActivYellow;
+        public bool isActivGreen;
         public BuilderUI builderUI;
         public EditMenu editMenu;
         public BuilderAudioManager audioManager;
