@@ -35,6 +35,11 @@ namespace Builder
         [SerializeField] private TMP_Text boostForceValue;
         [SerializeField] private Toggle freezing;
         [SerializeField] private Toggle lamp;
+        [SerializeField] private Toggle gate;
+        [SerializeField] private Dropdown color; 
+        [SerializeField] private Dropdown code_n1; 
+        [SerializeField] private Dropdown code_n2; 
+        [SerializeField] private Dropdown code_n3; 
         [SerializeField] private GameObject windmillPanel;
         [SerializeField] private GameObject magnetPanel;
         [SerializeField] private GameObject pendulumPanel;
@@ -44,8 +49,13 @@ namespace Builder
         [SerializeField] private GameObject lampPanel;
         [SerializeField] private GameObject boostPanel;
         [SerializeField] private GameObject hintPanel;
-        [SerializeField] private GameObject drawPanel;
+        [SerializeField] private GameObject drawPanel; 
+        [SerializeField] private GameObject electrogatePanel; 
+        [SerializeField] private GameObject controllerPanelPanel; 
+        [SerializeField] private GameObject controllerButtonPanel;
         [SerializeField] private List<GameObject> interactivePanels;
+        // добавить тооггл 
+        //dropdown 
 
         private Dictionary<float, int> _sliderValues = new Dictionary<float, int>()
         {
@@ -142,6 +152,22 @@ namespace Builder
                 case InteractiveType.Draw:
                     TurnInteractivePanels(drawPanel);
                     break;
+                case InteractiveType.ElectroGate:
+                    TurnInteractivePanels(electrogatePanel);
+                    gate.isOn = trackObject.interactiveObject.is_activ;
+                    color.value = trackObject.interactiveObject.color_index;
+                    break;
+                case InteractiveType.Panel:
+                    TurnInteractivePanels(controllerPanelPanel);
+                    // gate.isOn = trackObject.interactiveObject.is_activ;
+                    // color.value = trackObject.interactiveObject.color_index;
+                    break;
+                case InteractiveType.Button:
+                    TurnInteractivePanels(controllerButtonPanel);
+                    // gate.isOn = trackObject.interactiveObject.is_activ;
+                    // color.value = trackObject.interactiveObject.color_index;
+                    break;
+                                    
             }
         }
 

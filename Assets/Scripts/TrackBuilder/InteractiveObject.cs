@@ -16,5 +16,11 @@ namespace Builder
         [HideInInspector] public float boostSpeed = 2;
         [HideInInspector] public bool isLampTurn = true;
         [HideInInspector] public TMP_Text hintText;
+        [HideInInspector] public bool is_activ;
+        [HideInInspector] public int color_index;
+        [HideInInspector] public bool is_hacked;
+        [HideInInspector] public int n1;
+        [HideInInspector] public int n2;
+        [HideInInspector] public int n3;
     }
 }

@@ -71,6 +71,15 @@ namespace Builder
                     case InteractiveType.Draw:
                         selectedTrackObject.interactiveObject = selectedTrackObject.GetComponentInChildren<DrawLine>();
                         break;
+                    case InteractiveType.ElectroGate:
+                        selectedTrackObject.interactiveObject = selectedTrackObject.GetComponentInChildren<ControledGate>();
+                        break;
+                    case InteractiveType.Panel:
+                        selectedTrackObject.interactiveObject = selectedTrackObject.GetComponentInChildren<ControllerPanel>();
+                        break;
+                    case InteractiveType.Button:
+                        selectedTrackObject.interactiveObject = selectedTrackObject.GetComponentInChildren<ControllerButton>();
+                        break;
                 }
 
                 editObject.OnSelectObject(selectedTrackObject);
