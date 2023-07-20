@@ -805,7 +805,7 @@ GameObject:
   m_Component:
   - component: {fileID: 42562364}
   m_Layer: 5
-  m_Name: WindForceInput
+  m_Name: TimeDelayInput
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1659,7 +1659,7 @@ GameObject:
   - component: {fileID: 110039955}
   - component: {fileID: 110039956}
   m_Layer: 5
-  m_Name: ElectroGateInput
+  m_Name: Is_hacked
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2723,7 +2723,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -53, y: -42}
-  m_SizeDelta: {x: 50, y: 30}
+  m_SizeDelta: {x: 60, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &179642545
 MonoBehaviour:
@@ -2798,7 +2798,19 @@ MonoBehaviour:
       m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 950169329}
+        m_TargetAssemblyTypeName: Builder.EditObject, Assembly-CSharp
+        m_MethodName: OnControllerPanelHackN1Changed
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_AlphaFadeSpeed: 0.15
 --- !u!114 &179642546
 MonoBehaviour:
@@ -20707,7 +20719,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 185068648}
   m_Direction: 0
   m_MinValue: 0
-  m_MaxValue: 300
+  m_MaxValue: 30
   m_WholeNumbers: 0
   m_Value: 0
   m_OnValueChanged:
@@ -20715,7 +20727,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 950169329}
         m_TargetAssemblyTypeName: Builder.EditObject, Assembly-CSharp
-        m_MethodName: OnWindZoneForceChanged
+        m_MethodName: OnControllerButtonDelayChanged
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -20963,7 +20975,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 950169329}
         m_TargetAssemblyTypeName: Builder.EditObject, Assembly-CSharp
-        m_MethodName: OnLampChanged
+        m_MethodName: OnControllerPanelHackChanged
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -25823,7 +25835,7 @@ GameObject:
   - component: {fileID: 1193730583}
   - component: {fileID: 1193730582}
   m_Layer: 5
-  m_Name: Color
+  m_Name: Color_panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -25911,7 +25923,19 @@ MonoBehaviour:
       m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 950169329}
+        m_TargetAssemblyTypeName: Builder.EditObject, Assembly-CSharp
+        m_MethodName: OnControllerPanelColorChanged
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_AlphaFadeSpeed: 0.15
 --- !u!114 &1193730583
 MonoBehaviour:
@@ -27843,8 +27867,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1.9, y: -42}
-  m_SizeDelta: {x: 50, y: 30}
+  m_AnchoredPosition: {x: 7.3, y: -42}
+  m_SizeDelta: {x: 60, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1252761199
 MonoBehaviour:
@@ -27919,7 +27943,19 @@ MonoBehaviour:
       m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 950169329}
+        m_TargetAssemblyTypeName: Builder.EditObject, Assembly-CSharp
+        m_MethodName: OnControllerPanelHackN2Changed
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_AlphaFadeSpeed: 0.15
 --- !u!114 &1252761200
 MonoBehaviour:
@@ -30069,6 +30105,7 @@ MonoBehaviour:
   windForce: {fileID: 1131833677}
   batteryEnergy: {fileID: 515572975}
   boostForce: {fileID: 1464520516}
+  TimeDelaySlider: {fileID: 1002267819}
   xyzScaleValue: {fileID: 1754782162}
   windmillRotSpeedValue: {fileID: 138101208}
   magnetForceValue: {fileID: 1014563002}
@@ -30080,10 +30117,13 @@ MonoBehaviour:
   freezing: {fileID: 1491915480}
   lamp: {fileID: 1274485897}
   gate: {fileID: 310905649}
+  is_hacked: {fileID: 1004428038}
   color: {fileID: 2079065952}
-  code_n1: {fileID: 0}
-  code_n2: {fileID: 0}
-  code_n3: {fileID: 0}
+  color_panel: {fileID: 1193730582}
+  color_button: {fileID: 1872711119}
+  code_n1: {fileID: 179642545}
+  code_n2: {fileID: 1252761199}
+  code_n3: {fileID: 1678668212}
   windmillPanel: {fileID: 692088843}
   magnetPanel: {fileID: 1887676557}
   pendulumPanel: {fileID: 976684521}
@@ -30607,7 +30647,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 300
+  m_text: 30
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -38484,8 +38524,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 56.9, y: -42}
-  m_SizeDelta: {x: 50, y: 30}
+  m_AnchoredPosition: {x: 67.7, y: -42}
+  m_SizeDelta: {x: 60, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1678668212
 MonoBehaviour:
@@ -38560,7 +38600,19 @@ MonoBehaviour:
       m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 950169329}
+        m_TargetAssemblyTypeName: Builder.EditObject, Assembly-CSharp
+        m_MethodName: OnControllerPanelHackN3Changed
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_AlphaFadeSpeed: 0.15
 --- !u!114 &1678668213
 MonoBehaviour:
@@ -40424,6 +40476,7 @@ MonoBehaviour:
   levelResultPanel: {fileID: 1576345206}
   loadLevelPanel: {fileID: 1204503343}
   uiPanel: {fileID: 1749697423}
+  portUI: {fileID: 0}
   loadPanel: {fileID: 1070605405}
   objectEditPanel: {fileID: 1330915975}
   saveLevelPanel: {fileID: 981368313}
@@ -42644,7 +42697,19 @@ MonoBehaviour:
       m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 950169329}
+        m_TargetAssemblyTypeName: Builder.EditObject, Assembly-CSharp
+        m_MethodName: OnControllerButtonColorChanged
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_AlphaFadeSpeed: 0.15
 --- !u!114 &1872711120
 MonoBehaviour:
@@ -48739,7 +48804,7 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 0
+        m_CallState: 2
   m_AlphaFadeSpeed: 0.15
 --- !u!1 &2079437551
 GameObject:
@@ -50537,11 +50602,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 718910220148088089, guid: d02e1081ac5d4604e80dd2d3b7e27488, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.0000000042711803
+      value: -0.0000000042711794
       objectReference: {fileID: 0}
     - target: {fileID: 718910220148088089, guid: d02e1081ac5d4604e80dd2d3b7e27488, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -5.1063487e-10
+      value: 5.1063476e-10
       objectReference: {fileID: 0}
     - target: {fileID: 5984266150220761616, guid: d02e1081ac5d4604e80dd2d3b7e27488, type: 3}
       propertyPath: m_RootOrder

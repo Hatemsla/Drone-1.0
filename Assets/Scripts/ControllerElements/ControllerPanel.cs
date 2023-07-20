@@ -1,12 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Drone;
 
 namespace Builder
 {
     public class ControllerPanel : InteractiveObject
     {
-
         public enum ColorOption
         {
             Красный, 
@@ -31,6 +31,9 @@ namespace Builder
         private bool isActiv = false;
 
         public bool testV = true;
+        int N1 = 0;
+        int N2 = 0;
+        int N3 = 0;
 
 
         // Start is called before the first frame update
@@ -38,15 +41,16 @@ namespace Builder
         {
             objectRenderer = controllerPanelObject.GetComponent<Renderer>();
             SetColor(GetColorFromOption(selectedColorOption), false);  
+            ishacked = true;
         }
 
         // Update is called once per frame
         void Update()
         {
-            if (isConected)
-            {
-                CheckButton();                
-            }        
+            // if (isConected)
+            // {
+            //     CheckButton();                
+            // }        
         }
 
         private void SetColor(Color newColor, bool isGlowing)
@@ -103,9 +107,19 @@ namespace Builder
             }
         }
 
+        private void OnEnable()
+        {
+            InputManager.Instance.ApplyOpenEvent += CheckButton;
+        }
+
+        private void OnDisable()
+        {
+            InputManager.Instance.ApplyOpenEvent -= CheckButton;
+        }
+
         private void CheckButton()
         {
-            if (Input.GetKeyDown(KeyCode.F))
+            if (isConected)
             {
                 if (isHacked)
                 {
@@ -115,9 +129,11 @@ namespace Builder
                 else
                 {
                     Debug.Log("Start hacking");
+                    Debug.Log(N1);
+                    Debug.Log(N2);
+                    Debug.Log(N3);
                     isHacked = false;
-                }
- 
+                } 
             }
         } 
 
@@ -142,32 +158,43 @@ namespace Builder
         }
 
         public void set_hacked()
-        {
-           is_hacked = !is_hacked;
-           Debug.Log(is_hacked);
+        {            
+            ishacked = !ishacked;
+            // isHacked = ishacked;
+            // Debug.Log("is_hacked");
+            // Debug.Log(isHacked);
+           
         }
 
-        public void set_conde_n1(int value)
+        public void set_code_n1(int value)
         {
             n1 = value;
+            N1 = n1;
+            Debug.Log("n1");
             Debug.Log(n1);        
         }
 
-        public void set_conde_n2(int value)
+        public void set_code_n2(int value)
         {
             n2 = value;
+            N2 = n2;
+            Debug.Log("n2");        
             Debug.Log(n2);        
         }
 
-        public void set_conde_n3(int value)
+        public void set_code_n3(int value)
         {
             n3 = value;
+            N3 = n3;
+            Debug.Log("n3");        
             Debug.Log(n3);        
         }
 
         public void set_color_index(int value)
         {
-            Debug.Log(value);
+            color_index = value;
+            selectedColorOption = (ColorOption)value;
+            SetColor(GetColorFromOption(selectedColorOption), false);
         }
     }
 }

@@ -108,8 +108,9 @@ MonoBehaviour:
   n1: 0
   n2: 0
   n3: 0
-  controllerPanelObject: {fileID: 0}
-  selectedColorOption: 1
+  buttonDelay: 0
+  controllerPanelObject: {fileID: 5497644263683672496}
+  selectedColorOption: 0
   glowIntensity: 1
   testV: 1
 --- !u!114 &270953889861528690
@@ -128,7 +129,7 @@ MonoBehaviour:
   connection: {fileID: 0}
   objectType: 512
   hasPortal: 1
-  interactiveType: 0
+  interactiveType: 15
   effectType: 1
   yOffset: 1
   yOffsetIncrease: 0.5
@@ -149,6 +150,18 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 9a66d86e163df6f4ca950835fbeee124, type: 3}
       propertyPath: m_RootOrder
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 9a66d86e163df6f4ca950835fbeee124, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 9a66d86e163df6f4ca950835fbeee124, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 9a66d86e163df6f4ca950835fbeee124, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9a66d86e163df6f4ca950835fbeee124, type: 3}
       propertyPath: m_LocalPosition.x
@@ -190,6 +203,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 9a66d86e163df6f4ca950835fbeee124, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 9a66d86e163df6f4ca950835fbeee124, type: 3}
       propertyPath: m_Name
       value: camera_hack_panel
@@ -202,5 +219,10 @@ PrefabInstance:
 --- !u!4 &3681486742960893515 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 9a66d86e163df6f4ca950835fbeee124, type: 3}
+  m_PrefabInstance: {fileID: 3791465542012045728}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &5497644263683672496 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -516098083770646512, guid: 9a66d86e163df6f4ca950835fbeee124, type: 3}
   m_PrefabInstance: {fileID: 3791465542012045728}
   m_PrefabAsset: {fileID: 0}

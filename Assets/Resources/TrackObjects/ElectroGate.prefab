@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e9da15ea5f2fd643be065abb130fb50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isActive: 1
   windMillRotateSpeed: 0
   magnetForce: 0
   pendulumMoveSpeed: 0
@@ -57,10 +58,16 @@ MonoBehaviour:
   boostSpeed: 2
   isLampTurn: 1
   hintText: {fileID: 0}
-  gateObject: {fileID: 5426838307141791999}
   is_activ: 1
+  color_index: 0
+  ishacked: 0
+  n1: 0
+  n2: 0
+  n3: 0
+  buttonDelay: 0
+  gateObject: {fileID: 5426838307141791999}
   glowIntensity: 1
-  selectedColorOption: 1
+  selectedColorOption: 0
 --- !u!114 &6152197043552655436
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -77,7 +84,7 @@ MonoBehaviour:
   connection: {fileID: 0}
   objectType: 512
   hasPortal: 1
-  interactiveType: 12
+  interactiveType: 14
   effectType: 1
   yOffset: 1
   yOffsetIncrease: 0.54
@@ -151,9 +158,15 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -8391222552659086748, guid: 76124c043fd179845bdab6d3d2a6df42, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4180838651884995758}
+    - targetCorrespondingSourceObject: {fileID: -8391222552659086748, guid: 76124c043fd179845bdab6d3d2a6df42, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2288282842135335323}
     - targetCorrespondingSourceObject: {fileID: -7029948723529949830, guid: 76124c043fd179845bdab6d3d2a6df42, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6454095948261731687}
+    - targetCorrespondingSourceObject: {fileID: -7029948723529949830, guid: 76124c043fd179845bdab6d3d2a6df42, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 222013897330742735}
   m_SourcePrefab: {fileID: 100100000, guid: 76124c043fd179845bdab6d3d2a6df42, type: 3}
 --- !u!1 &5426838307141791999 stripped
 GameObject:
@@ -181,6 +194,20 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.027982686, y: 0.00010000042, z: 0.026457977}
   m_Center: {x: 0.00007876009, y: 0.000049999773, z: 0}
+--- !u!114 &222013897330742735
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5426838307141791999}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbf3575480402db40813e763382412fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: 0
+  eraseRenderer: 0
 --- !u!4 &5956612131869624942 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 76124c043fd179845bdab6d3d2a6df42, type: 3}
@@ -213,3 +240,17 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -5495902117074765545, guid: 76124c043fd179845bdab6d3d2a6df42, type: 3}
+--- !u!114 &2288282842135335323
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6822102266697244641}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbf3575480402db40813e763382412fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: 0
+  eraseRenderer: 0

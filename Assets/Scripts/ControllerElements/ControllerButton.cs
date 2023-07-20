@@ -45,7 +45,8 @@ namespace Builder
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.CompareTag("Block") || other.CompareTag("Player"))
+            if (other.GetComponentInParent<GrabbedObject>() || other.GetComponentInParent<DroneController>())
+            // if (other.CompareTag("Block") || other.CompareTag("Player"))
             {
                 SetColor(GetColorFromOption(selectedColorOption), true);
                 setColorActiv(selectedColorOption, true);
@@ -55,7 +56,8 @@ namespace Builder
 
         private void OnTriggerExit(Collider other)
         {
-            if (other.CompareTag("Block") || other.CompareTag("Player"))
+            if (other.GetComponentInParent<GrabbedObject>() || other.GetComponentInParent<DroneController>())
+            // if (other.CompareTag("Block") || other.CompareTag("Player")) 
             {
                 StartCoroutine(ChangeVariableAfterDelay(TriggerExitDelay));
             }
@@ -137,13 +139,19 @@ namespace Builder
 
         public void set_color_index(int value)
         {
-            Debug.Log(value);
+            color_index = value;
+            selectedColorOption = (ColorOption)value;
+            SetColor(GetColorFromOption(selectedColorOption), false);        
         }
 
         public void set_time_value(float value)
         {
-            Debug.Log(value);
+            buttonDelay = value;
             TriggerExitDelay = value;
+
+            Debug.Log("set_time_value");
+            Debug.Log(value);
+            // TriggerExitDelay = value;
         }
     }
 }

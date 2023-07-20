@@ -236,12 +236,62 @@ namespace Builder
             }  
         }
 
-        public void OnControllerPanelHackedChanged(int value)
+        public void OnControllerPanelColorChanged(int value)
         {
             if (currentObject.interactiveObject is ControllerPanel ControllerPanel)
             {
                 ControllerPanel.set_color_index(value); 
             }
         }
+
+        public void OnControllerPanelHackChanged(bool value)
+        {
+            if (currentObject.interactiveObject is ControllerPanel ControllerPanel)
+            {
+                ControllerPanel.set_hacked();
+            }
+        }
+
+        public void OnControllerPanelHackN1Changed(int value)
+        {
+            if (currentObject.interactiveObject is ControllerPanel ControllerPanel)
+            {
+                ControllerPanel.set_code_n1(value); 
+            }
+        }
+
+        public void OnControllerPanelHackN2Changed(int value)
+        {
+            if (currentObject.interactiveObject is ControllerPanel ControllerPanel)
+            {
+                ControllerPanel.set_code_n2(value); 
+            }
+        }
+
+        public void OnControllerPanelHackN3Changed(int value)
+        {
+            if (currentObject.interactiveObject is ControllerPanel ControllerPanel)
+            {
+                ControllerPanel.set_code_n3(value); 
+            }
+        }
+
+        public void OnControllerButtonColorChanged(int value)
+        {
+            if (currentObject.interactiveObject is ControllerButton ControllerButton)
+            {
+                ControllerButton.set_color_index(value); 
+            }
+        }
+
+        public void OnControllerButtonDelayChanged(float value)
+        {
+            if (currentObject.interactiveObject is ControllerButton ControllerButton)
+            {
+                ControllerButton.set_time_value(value); 
+            }
+        }
+
+
     }
 }
