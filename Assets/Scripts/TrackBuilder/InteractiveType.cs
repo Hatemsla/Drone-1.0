@@ -14,6 +14,7 @@
         Hint,
         Draw,
         Door,
-        Port
+        Port,
+        SecureCamera,
     }
 }

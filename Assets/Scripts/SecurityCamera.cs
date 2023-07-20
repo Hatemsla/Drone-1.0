@@ -1,10 +1,9 @@
-using System;
+using Builder;
 using Cinemachine;
-using UnityEngine;
 
 namespace Drone
 {
-    public class SecurityCamera : MonoBehaviour
+    public class SecurityCamera : InteractiveObject
     {
         private CinemachineVirtualCamera _camera;
 

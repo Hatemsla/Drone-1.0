@@ -47,6 +47,7 @@ namespace Builder
         public GameObject levelResultPanel;
         public GameObject loadLevelPanel;
         public GameObject uiPanel;
+        public GameObject portUI;
         public GameObject loadPanel;
         public GameObject objectEditPanel;
         public GameObject saveLevelPanel;

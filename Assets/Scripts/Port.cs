@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Drone;
@@ -5,10 +6,17 @@ using UnityEngine;
 
 namespace Builder
 {
-    public class Port : MonoBehaviour
+    public sealed class Port : MonoBehaviour
     {
         [SerializeField] private Prompt prompt;
-        [SerializeField] private List<SecurityCamera> securityCameras;
+        public bool isCameraChange;
+        public List<SecurityCamera> securityCameras;
+        public List<Lamp> lamps;
+        public List<InteractiveObject> interactiveObjects;
+
+        public event Action<Port> PortOpenEvent;
+        public event Action PortCloseEvent;
+
         private int _currentCameraIndex;
         private int _mainCameraIndex;
         private bool _previousIsMove;
@@ -19,6 +27,7 @@ namespace Builder
             InputManager.Instance.NextCameraEvent += NextCameraActivation;
             InputManager.Instance.PreviousCameraEvent += PreviousCameraActivation;
             InputManager.Instance.ExitPortEvent += ClosePort;
+            InputManager.Instance.ExitPortEvent += DeactivateAllCameras;
             BuilderManager.Instance.TestLevelEvent += GetAllSecurityCameras;
             BuilderManager.Instance.ObjectChangeSceneEvent += FindPrompt;
         }
@@ -29,10 +38,11 @@ namespace Builder
             InputManager.Instance.NextCameraEvent -= NextCameraActivation;
             InputManager.Instance.PreviousCameraEvent -= PreviousCameraActivation;
             InputManager.Instance.ExitPortEvent -= ClosePort;
+            InputManager.Instance.ExitPortEvent -= DeactivateAllCameras;
             BuilderManager.Instance.TestLevelEvent -= GetAllSecurityCameras;
             BuilderManager.Instance.ObjectChangeSceneEvent -= FindPrompt;
         }
-        
+
         private void FindPrompt()
         {
             prompt = FindObjectOfType<BuilderUI>().prompt;
@@ -46,7 +56,19 @@ namespace Builder
                 return;
             }
 
-            securityCameras = FindObjectsOfType<SecurityCamera>().ToList();   
+            interactiveObjects = FindObjectsOfType<InteractiveObject>().ToList();
+            foreach (var interactive in interactiveObjects)
+            {
+                switch (interactive)
+                {
+                    case SecurityCamera cam:
+                        securityCameras.Add(cam);
+                        break;
+                    case Lamp lamp:
+                        lamps.Add(lamp);
+                        break;
+                }
+            }
             Debug.Log("Найдено " + securityCameras.Count + " камер(ы) безопасности.");   
         }
         
@@ -55,25 +77,34 @@ namespace Builder
             if (!prompt.gameObject.activeSelf)
                 return;
             
+            PortOpenEvent?.Invoke(this);
             InputManager.Instance.TurnCustomActionMap("Port");
             BuilderManager.Instance.builderUI.droneView.SetActive(false);
             BuilderManager.Instance.builderUI.objectEditPanel.SetActive(false);
+            BuilderManager.Instance.builderUI.portUI.SetActive(true);
             prompt.SetActive(false);
-            NextCameraActivation();
         }
         
         private void ClosePort()
         {
-            foreach (var camera in securityCameras)
-                camera.SetPriority(0);
+            if(isCameraChange)
+                return;
             
+            PortCloseEvent?.Invoke();
             InputManager.Instance.TurnCustomActionMap("Player");
             BuilderManager.Instance.builderUI.droneView.SetActive(true);
+            BuilderManager.Instance.builderUI.portUI.SetActive(false);
+        }
+
+        public void ActivateSecurityCameras()
+        {
+            isCameraChange = true;
+            NextCameraActivation();
         }
         
         private void NextCameraActivation()
         {
-            if (securityCameras.Count < 1)
+            if (securityCameras.Count < 1 || !isCameraChange)
                 return;
 
             CheckCameraCurrentIndex();
@@ -88,7 +119,7 @@ namespace Builder
 
         private void PreviousCameraActivation()
         {
-            if (securityCameras.Count < 1)
+            if (securityCameras.Count < 1 || !isCameraChange)
                 return;
             
             CheckCameraCurrentIndex();
@@ -134,7 +165,23 @@ namespace Builder
 
         private void DeactivateAllCameras()
         {
+            if(!isCameraChange)
+                return;
+            
             foreach (var camera in securityCameras) camera.SetPriority(0);
+            BuilderManager.Instance.builderUI.portUI.SetActive(true);
+            isCameraChange = false;
+        }
+
+        public List<List<InteractiveObject>> GetAllInteractiveObjects()
+        {
+            var result = new List<List<InteractiveObject>>
+            {
+                new(securityCameras),
+                new(lamps)
+            };
+
+            return result;
         }
     }
 }

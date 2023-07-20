@@ -5,6 +5,7 @@ namespace Builder
 {
     public abstract class InteractiveObject : MonoBehaviour
     {
+        public bool isActive = true;
         [HideInInspector] public float windMillRotateSpeed;
         [HideInInspector] public float magnetForce;
         [HideInInspector] public float pendulumMoveSpeed;
