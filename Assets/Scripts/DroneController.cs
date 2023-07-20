@@ -15,4 +15,5 @@ public abstract class DroneController : MonoBehaviour
     public bool isStop;
     public float currentPercentSpeed;
     public float currentSpeed;
+    public bool isShieldActive;
 }

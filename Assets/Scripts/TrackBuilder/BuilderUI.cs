@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Drone;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -17,6 +18,7 @@ namespace Builder
         public TMP_Text checkpointsCountText;
         public TMP_Text coinsCountText;
         public TMP_Text crystalsCountText;
+        public Prompt prompt;
         public DroneBars healthBar;
         public DroneBars armorBar;
         

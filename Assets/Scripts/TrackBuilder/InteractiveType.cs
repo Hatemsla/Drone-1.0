@@ -13,9 +13,6 @@
         Lamp,
         Hint,
         Draw,
-        Door,
-        ElectroGate, 
-        Button,
-        Panel, 
+        Door
     }
 }

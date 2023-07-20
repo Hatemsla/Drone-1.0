@@ -7,7 +7,7 @@ namespace Drone
     {
         public DroneController droneBuilderController;
         public DroneData DroneData;
-        public int powerUsageRate;
+        public float powerUsageRate;
         public bool isAlive = true;
         public bool isCharged = true;
         [SerializeField] private float armorPercentage = 0.9f;
@@ -23,15 +23,23 @@ namespace Drone
         private void Update()
         {
             if (BuilderManager.Instance.isMove && !RewindManager.Instance.IsBeingRewinded)
-                DroneData.Battery -= powerUsageRate * Time.deltaTime;
+                ApplyEnergyUsage(powerUsageRate * Time.deltaTime);
 
             if (DroneData.Health <= 0) isAlive = false;
 
             if (DroneData.Battery <= 0) isCharged = false;
         }
 
+        public void ApplyEnergyUsage(float energyUsage)
+        {
+            DroneData.Battery -= energyUsage;
+        }
+
         public void ApplyDamage(float damage)
         {
+            if(droneBuilderController.isShieldActive)
+                return;
+            
             var healthPercentage = 1f - armorPercentage;
 
             var armorDamage = Mathf.RoundToInt(damage * armorPercentage);
