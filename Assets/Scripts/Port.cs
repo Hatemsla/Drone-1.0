@@ -11,8 +11,14 @@ namespace Builder
         [SerializeField] private Prompt prompt;
         public bool isOpen;
         public bool isCameraChange;
+        
         public List<SecurityCamera> securityCameras;
         public List<Lamp> lamps;
+        public List<Pendulum> pendulums;
+        public List<MagnetKiller> magnetKillers;
+        public List<RigidbodyMagnet> rigidbodyMagnets;
+        public List<Windmill> windmills;
+        public List<Battery> batteries;
         public List<InteractiveObject> interactiveObjects;
 
         public event Action<Port> PortOpenEvent;
@@ -71,9 +77,23 @@ namespace Builder
                     case Lamp lamp:
                         lamps.Add(lamp);
                         break;
+                    case MagnetKiller magnetKiller:
+                        magnetKillers.Add(magnetKiller);
+                        break;
+                    case Battery battery:
+                        batteries.Add(battery);
+                        break;
+                    case RigidbodyMagnet magnet:
+                        rigidbodyMagnets.Add(magnet);
+                        break;
+                    case Pendulum pendulum:
+                        pendulums.Add(pendulum);
+                        break;
+                    case Windmill windmill:
+                        windmills.Add(windmill);
+                        break;
                 }
             }
-            Debug.Log("Найдено " + securityCameras.Count + " камер(ы) безопасности.");   
         }
 
         private void CleatInteractiveObjects()
@@ -110,7 +130,12 @@ namespace Builder
 
         public void ActivateSecurityCameras()
         {
+            if(!Utils.GetActive(securityCameras))
+                return;
+            
             isCameraChange = true;
+            BuilderManager.Instance.builderUI.portUI.SetActive(false);
+            BuilderManager.Instance.builderUI.securityCameraView.SetActive(true);
             NextCameraActivation();
         }
         
@@ -120,11 +145,15 @@ namespace Builder
                 return;
             
             CheckCameraCurrentIndex();
-            
+
+            var isCameraUpdate = false;
             for (var i = 0; i < securityCameras.Count; i++)
             {
-                securityCameras[i].SetPriority(_currentCameraIndex == i ? 11 : 0);
+                isCameraUpdate = securityCameras[i].SetPriority(_currentCameraIndex == i ? 11 : 0);
             }
+            
+            if(!isCameraUpdate)
+                return;
             
             ChangeSecurityCameraEvent?.Invoke(_currentCameraIndex+1);
             
@@ -138,10 +167,14 @@ namespace Builder
             
             CheckCameraCurrentIndex();
 
+            var isCameraUpdate = false;
             for (var i = 0; i < securityCameras.Count; i++)
             {
-                securityCameras[i].SetPriority(_currentCameraIndex == i ? 11 : 0);
+                isCameraUpdate = securityCameras[i].SetPriority(_currentCameraIndex == i ? 11 : 0);
             }
+            
+            if(!isCameraUpdate)
+                return;
             
             ChangeSecurityCameraEvent?.Invoke(_currentCameraIndex+1);
             
@@ -175,6 +208,8 @@ namespace Builder
 
             if (other.GetComponentInParent<DroneController>() is DroneBuilderController drone)
             {
+                DeactivateAllCameras();
+                ClosePort();
                 prompt.SetActive(false);
             }
         }
@@ -195,7 +230,12 @@ namespace Builder
             var result = new List<List<InteractiveObject>>
             {
                 new(securityCameras),
-                new(lamps)
+                new(lamps),
+                new(batteries),
+                new(magnetKillers),
+                new(rigidbodyMagnets),
+                new(pendulums),
+                new(windmills),
             };
 
             return result;

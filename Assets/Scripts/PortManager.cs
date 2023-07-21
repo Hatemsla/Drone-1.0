@@ -79,11 +79,9 @@ namespace Drone
                     {
                         if(interactive.Count == 0)
                             continue;
-                        
-                        var objectType = interactive;
 
                         var interactiveType = InteractiveType.None;
-                        interactiveType = GetInteractiveType(objectType, interactiveType);
+                        interactiveType = GetInteractiveType(interactive, interactiveType);
                         
                         var portControl = _portControlsPool.Get();
                         portControl.AddControlObjects(interactive, currentPort, interactiveType);
@@ -101,6 +99,24 @@ namespace Drone
                     break;
                 case Lamp lamp:
                     interactiveType = InteractiveType.Lamp;
+                    break;
+                case Windmill windmill:
+                    interactiveType = InteractiveType.Windmill;
+                    break;
+                // case WindZoneScript windZone:
+                //     interactiveType = InteractiveType.Wind;
+                //     break;
+                case MagnetKiller magnetKiller:
+                    interactiveType = InteractiveType.Magnet;
+                    break;
+                case RigidbodyMagnet magnet:
+                    interactiveType = InteractiveType.Magnet;
+                    break;
+                case Pendulum pendulum:
+                    interactiveType = InteractiveType.Pendulum;
+                    break;
+                case Battery battery:
+                    interactiveType = InteractiveType.Battery;
                     break;
             }
 

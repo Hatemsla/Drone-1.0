@@ -25,4 +25,9 @@ public class BoostTrigger : InteractiveObject
         rb.velocity /= boostSpeed;
         drone.boostsCount--;
     }
+
+    public override void SetActive(bool active)
+    {
+        
+    }
 }

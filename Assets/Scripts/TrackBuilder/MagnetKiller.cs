@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Builder
 {
-    public class MagnetKiller : MonoBehaviour
+    public class MagnetKiller : InteractiveObject
     {
         public float rotationSpeed;
         public Transform leftRotor;
@@ -16,15 +16,21 @@ namespace Builder
 
         private void FixedUpdate()
         {
-            var leftRotation = rotationSpeed * Time.deltaTime;
-            var rightRotation = rotationSpeed * Time.deltaTime;
-            
-            leftRotor.Rotate(leftRotation, 0f, 0f);
-            rightRotor.Rotate(rightRotation, 0f, 0f);
+            if (isActive)
+            {
+                var leftRotation = rotationSpeed * Time.deltaTime;
+                var rightRotation = rotationSpeed * Time.deltaTime;
+
+                leftRotor.Rotate(leftRotation, 0f, 0f);
+                rightRotor.Rotate(rightRotation, 0f, 0f);
+            }
         }
 
         private void OnTriggerStay(Collider other)
         {
+            if(!isActive)
+                return;
+            
             var player = other.GetComponentInParent<DroneRpgController>();
             if (player)
             {
@@ -38,6 +44,11 @@ namespace Builder
                     _timer = 0.0f;
                 }
             }
+        }
+
+        public override void SetActive(bool active)
+        {
+            isActive = active;
         }
     }
 }

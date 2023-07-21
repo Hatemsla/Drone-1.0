@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using System;
+using TMPro;
 using UnityEngine;
 
 namespace Builder
@@ -17,7 +18,6 @@ namespace Builder
         [HideInInspector] public float boostSpeed = 2;
         [HideInInspector] public bool isLampTurn = true;
         [HideInInspector] public TMP_Text hintText;
-        [HideInInspector] public bool is_activ;
         [HideInInspector] public int color_index;
         [HideInInspector] public bool ishacked;
         [HideInInspector] public int n1;
@@ -25,5 +25,6 @@ namespace Builder
         [HideInInspector] public int n3;
         [HideInInspector] public float buttonDelay;
 
+        public abstract void SetActive(bool active);
     }
 }

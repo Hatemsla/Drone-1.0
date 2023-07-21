@@ -153,5 +153,10 @@ namespace Builder
             Debug.Log(value);
             // TriggerExitDelay = value;
         }
+
+        public override void SetActive(bool active)
+        {
+            
+        }
     }
 }

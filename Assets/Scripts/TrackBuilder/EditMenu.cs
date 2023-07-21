@@ -156,7 +156,7 @@ namespace Builder
                     break;
                 case InteractiveType.ElectroGate:
                     TurnInteractivePanels(electrogatePanel);
-                    gate.isOn = trackObject.interactiveObject.is_activ;
+                    gate.isOn = trackObject.interactiveObject.isActive;
                     color.value = trackObject.interactiveObject.color_index;
                     break;
                 case InteractiveType.Panel:

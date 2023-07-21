@@ -81,7 +81,7 @@ MonoBehaviour:
   effectType: 1
   yOffset: 6.45
   yOffsetIncrease: 3.19
-  isActive: 0
+  isActive: 1
   maxMouseDistance: 0
   damage: 1
   objectName: 
@@ -146,6 +146,14 @@ PrefabInstance:
     - target: {fileID: 7574866406393473570, guid: c6bb705a0227d2845b554d0b2e08ac10, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7968536393605582274, guid: c6bb705a0227d2845b554d0b2e08ac10, type: 3}
+      propertyPath: m_Convex
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7968536393605582303, guid: c6bb705a0227d2845b554d0b2e08ac10, type: 3}
+      propertyPath: m_Convex
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

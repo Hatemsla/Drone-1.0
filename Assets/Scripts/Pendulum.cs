@@ -17,7 +17,7 @@ namespace Drone
 
         public void Update()
         {
-            Move();
+            if (isActive) Move();
         }
 
         private void ChangeMoveDir()
@@ -46,6 +46,11 @@ namespace Drone
                     _rb.angularVelocity = new Vector3(0f, 0f, -pendulumMoveSpeed) * pendulumMoveSpeed;
                     break;
             }
+        }
+
+        public override void SetActive(bool active)
+        {
+            isActive = active;
         }
     }
 }

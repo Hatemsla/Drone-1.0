@@ -12,5 +12,10 @@ namespace Builder
                 StartCoroutine(other.gameObject.GetComponent<DroneBuilderController>().IsFreezing());
             }
         }
+
+        public override void SetActive(bool active)
+        {
+            
+        }
     }
 }

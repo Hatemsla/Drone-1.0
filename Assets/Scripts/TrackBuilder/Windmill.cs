@@ -11,16 +11,28 @@ namespace Builder
 
         private void FixedUpdate()
         {
-            trap.MoveRotation(trap.rotation * Quaternion.Euler(rotateDirection * (windMillRotateSpeed * Time.deltaTime)));
+            if (isActive)
+            {
+                trap.MoveRotation(trap.rotation *
+                                  Quaternion.Euler(rotateDirection * (windMillRotateSpeed * Time.deltaTime)));
+            }
         }
         
         private void OnCollisionEnter(Collision other)
         {
+            if(!isActive)
+                return;
+            
             var player = other.transform.root.GetComponentInParent<DroneBuilderController>();
             if (player)
             {
                 player.droneRpgController.ApplyDamage(windMillRotateSpeed / 10 / 2);
             }
+        }
+
+        public override void SetActive(bool active)
+        {
+            isActive = active;
         }
     }
 }

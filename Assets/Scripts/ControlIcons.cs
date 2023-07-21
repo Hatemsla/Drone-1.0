@@ -12,6 +12,6 @@ namespace Drone.SerializeDictionaries
         Battery,
         Portal,
         Magnet,
-        Swing
+        Pendulum
     }
 }

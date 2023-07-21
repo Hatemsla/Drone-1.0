@@ -50,6 +50,23 @@ namespace Drone
                 }
             }
         }
+        
+        public void TurnOff()
+        {
+            isLampTurn = false;
+            lamp.enabled = isLampTurn;
+            
+            foreach (var mesh in meshes)
+            {
+                foreach (var mat in mesh.materials)
+                {
+                    if (_emissions.TryGetValue(mat, out var isEmissionEnabled) && isEmissionEnabled)
+                    {
+                        mat.DisableKeyword("_EMISSION");
+                    }
+                }
+            }
+        }
 
         public void TurnLamp()
         {
@@ -66,6 +83,15 @@ namespace Drone
                         mat.DisableKeyword("_EMISSION");
                 }
             }
+        }
+
+        public override void SetActive(bool active)
+        {
+            isActive = active;
+            if(isActive)
+                TurnOn();
+            else
+                TurnOff();
         }
     }
 }

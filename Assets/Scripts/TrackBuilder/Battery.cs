@@ -8,6 +8,9 @@ namespace Builder
     {
         private void OnTriggerEnter(Collider other)
         {
+            if(!isActive)
+                return;
+            
             var player = other.GetComponentInParent<DroneRpgController>();
             if (player)
             {
@@ -17,6 +20,11 @@ namespace Builder
                 else
                     transform.root.gameObject.SetActive(false);
             }
+        }
+
+        public override void SetActive(bool active)
+        {
+            isActive = active;
         }
     }
 }

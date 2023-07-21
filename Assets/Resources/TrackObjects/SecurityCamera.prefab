@@ -54,7 +54,7 @@ MonoBehaviour:
   effectType: 1
   yOffset: 0.39
   yOffsetIncrease: 0.2
-  isActive: 0
+  isActive: 1
   maxMouseDistance: 3
   damage: 1
   objectName: 
@@ -189,6 +189,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf19d59aaec840819789eb5c7292d211, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isActive: 1
+  windMillRotateSpeed: 0
+  magnetForce: 0
+  pendulumMoveSpeed: 0
+  leftPendulumAngle: 0
+  rightPendulumAngle: 0
+  windForce: 0
+  isFreezing: 1
+  batteryEnergy: 0
+  boostSpeed: 2
+  isLampTurn: 1
+  hintText: {fileID: 0}
+  color_index: 0
+  ishacked: 0
+  n1: 0
+  n2: 0
+  n3: 0
+  buttonDelay: 0
 --- !u!1001 &1202287518581347433
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -13,5 +13,10 @@ namespace Builder
                 other.GetComponent<Rigidbody>().AddForce(transform.forward * windForce);
             }
         }
+
+        public override void SetActive(bool active)
+        {
+            
+        }
     }
 }

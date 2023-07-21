@@ -9,16 +9,22 @@ namespace Builder
 
         private void FixedUpdate()
         {
-            if (_caughtRigidbodies != null)
-                foreach (var caughtRb in _caughtRigidbodies)
-                    caughtRb.velocity +=
-                        (transform.position -
-                         (caughtRb.transform.position + caughtRb.centerOfMass)) *
-                        (magnetForce * Time.deltaTime);
+            if (isActive)
+            {
+                if (_caughtRigidbodies != null)
+                    foreach (var caughtRb in _caughtRigidbodies)
+                        caughtRb.velocity +=
+                            (transform.position -
+                             (caughtRb.transform.position + caughtRb.centerOfMass)) *
+                            (magnetForce * Time.deltaTime);
+            }
         }
 
         private void OnTriggerEnter(Collider other)
         {
+            if(!isActive)
+                return;
+            
             if (other.GetComponent<Rigidbody>())
             {
                 var r = other.GetComponent<Rigidbody>();
@@ -29,6 +35,9 @@ namespace Builder
 
         private void OnTriggerExit(Collider other)
         {
+            if(!isActive)
+                return;
+            
             if (other.GetComponent<Rigidbody>())
             {
                 var r = other.GetComponent<Rigidbody>();
@@ -36,6 +45,11 @@ namespace Builder
                 if (_caughtRigidbodies.Contains(r))
                     _caughtRigidbodies.Remove(r);
             }
+        }
+
+        public override void SetActive(bool active)
+        {
+            isActive = active;
         }
     }
 }

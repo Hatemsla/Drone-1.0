@@ -32,7 +32,7 @@ namespace Builder
             SetColor(GetColorFromOption(selectedColorOption)); 
             mesh = gateObject.GetComponent<MeshRenderer>();
             col = gateObject.GetComponent<Collider>();
-            if (!is_activ)
+            if (!isActive)
             {
                 DisableMeshAndCollider();
             }        
@@ -124,8 +124,8 @@ namespace Builder
 
         public void set_activ()
         {
-            is_activ = !is_activ;
-            if (!is_activ)
+            isActive = !isActive;
+            if (!isActive)
                 {
                     DisableMeshAndCollider();
                 }
@@ -140,6 +140,11 @@ namespace Builder
             color_index = value;
             selectedColorOption = (ColorOption)value;
             SetColor(GetColorFromOption(selectedColorOption));
+        }
+
+        public override void SetActive(bool active)
+        {
+            
         }
     }
 }

@@ -96,5 +96,10 @@ namespace Builder
         {
             lineColor = color;
         }
+
+        public override void SetActive(bool active)
+        {
+            
+        }
     }
 }

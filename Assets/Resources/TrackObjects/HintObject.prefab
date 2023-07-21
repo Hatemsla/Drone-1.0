@@ -233,6 +233,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa4975a9073e4365aa7173fef38f1e2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isActive: 1
   windMillRotateSpeed: 0
   magnetForce: 0
   pendulumMoveSpeed: 0
@@ -244,6 +245,12 @@ MonoBehaviour:
   boostSpeed: 2
   isLampTurn: 1
   hintText: {fileID: 5757330906488331096}
+  color_index: 0
+  ishacked: 0
+  n1: 0
+  n2: 0
+  n3: 0
+  buttonDelay: 0
 --- !u!1 &4396172083413437205
 GameObject:
   m_ObjectHideFlags: 0
@@ -418,7 +425,7 @@ MonoBehaviour:
   effectType: 3
   yOffset: 0.5
   yOffsetIncrease: 0.25
-  isActive: 0
+  isActive: 1
   maxMouseDistance: 3
   damage: 1
   objectName: "\u041F\u043E\u0434\u0441\u043A\u0430\u0437\u043A\u0430"

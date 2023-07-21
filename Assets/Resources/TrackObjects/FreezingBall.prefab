@@ -82,7 +82,7 @@ MonoBehaviour:
   effectType: 1
   yOffset: 0.446
   yOffsetIncrease: 0.224
-  isActive: 0
+  isActive: 1
   maxMouseDistance: 0
   damage: 1
   objectName: 
@@ -100,6 +100,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 754141a4512f43fb91c4dc889867554c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isActive: 1
   windMillRotateSpeed: 0
   magnetForce: 0
   pendulumMoveSpeed: 0
@@ -111,6 +112,12 @@ MonoBehaviour:
   boostSpeed: 2
   isLampTurn: 1
   hintText: {fileID: 0}
+  color_index: 0
+  ishacked: 0
+  n1: 0
+  n2: 0
+  n3: 0
+  buttonDelay: 0
 --- !u!1001 &1917226635795364144
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -225,13 +232,13 @@ PrefabInstance:
       addedObject: {fileID: 1373906805998917013}
     - targetCorrespondingSourceObject: {fileID: -1018664272722485354, guid: 549cfb50a9f0548408b5a674fe660f53, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 2568929200053822492}
-    - targetCorrespondingSourceObject: {fileID: -1018664272722485354, guid: 549cfb50a9f0548408b5a674fe660f53, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 3807692062536249292}
     - targetCorrespondingSourceObject: {fileID: -1018664272722485354, guid: 549cfb50a9f0548408b5a674fe660f53, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3205332228144099710}
+    - targetCorrespondingSourceObject: {fileID: -1018664272722485354, guid: 549cfb50a9f0548408b5a674fe660f53, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5037355829505282658}
   m_SourcePrefab: {fileID: 100100000, guid: 549cfb50a9f0548408b5a674fe660f53, type: 3}
 --- !u!4 &2094703837951729371 stripped
 Transform:
@@ -262,7 +269,7 @@ MeshCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 5
-  m_Convex: 1
+  m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 8314571269056883277, guid: 549cfb50a9f0548408b5a674fe660f53, type: 3}
 --- !u!114 &1949891354109652003
@@ -318,7 +325,7 @@ MeshCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 5
-  m_Convex: 1
+  m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -2124705421725058983, guid: 549cfb50a9f0548408b5a674fe660f53, type: 3}
 --- !u!114 &7184143135745275332
@@ -355,28 +362,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: -1018664272722485354, guid: 549cfb50a9f0548408b5a674fe660f53, type: 3}
   m_PrefabInstance: {fileID: 1917226635795364144}
   m_PrefabAsset: {fileID: 0}
---- !u!64 &2568929200053822492
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7730324624914867878}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4711208715938537054, guid: 549cfb50a9f0548408b5a674fe660f53, type: 3}
 --- !u!114 &3807692062536249292
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -406,6 +391,28 @@ MonoBehaviour:
   objectMaterials: []
   defaultColors: []
   hasEmissions: 
+--- !u!64 &5037355829505282658
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7730324624914867878}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4711208715938537054, guid: 549cfb50a9f0548408b5a674fe660f53, type: 3}
 --- !u!1 &7736981424315593594 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -1025663018108745142, guid: 549cfb50a9f0548408b5a674fe660f53, type: 3}
@@ -430,7 +437,7 @@ MeshCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 5
-  m_Convex: 1
+  m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 8999911773206952699, guid: 549cfb50a9f0548408b5a674fe660f53, type: 3}
 --- !u!114 &8261425741234059061

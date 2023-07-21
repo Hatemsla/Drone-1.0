@@ -21,11 +21,30 @@ namespace Drone
         [SerializeField] private SwitchToggle switchToggle;
         [SerializeField] private ControlSprites controlSprites;
 
-        public List<InteractiveObject> controlObjects;
+        private List<InteractiveObject> _controlObjects;
+
+        private void OnEnable()
+        {
+            switchToggle.SwitchEvent += OnSwitch;
+        }
+
+        private void OnDisable()
+        {
+            switchToggle.SwitchEvent -= OnSwitch;
+        }
+
+        private void OnSwitch(bool value)
+        {
+            foreach (var controlObject in _controlObjects)
+            {
+                controlObject.SetActive(value);
+            }
+        }
 
         public void AddControlObjects(List<InteractiveObject> controlObjs, Port port, InteractiveType interactiveType)
         {
-            controlObjects = controlObjs;
+            switchToggle.Toggle(Utils.GetActive(controlObjs));
+            _controlObjects = controlObjs;
             switch (interactiveType)
             {
                 case InteractiveType.SecureCamera:
@@ -39,6 +58,26 @@ namespace Drone
                     connectionText.SetActive(false);
                     controlImage.sprite = controlSprites.dictionary[ControlIcons.Lamp];
                     portObjectBackground.GetConnectionAction(port.ActivateSecurityCameras);
+                    break;
+                case InteractiveType.Magnet:
+                    controlName.text = "Магнит";
+                    connectionText.SetActive(false);
+                    controlImage.sprite = controlSprites.dictionary[ControlIcons.Magnet];
+                    break;
+                case InteractiveType.Pendulum:
+                    controlName.text = "Булава";
+                    connectionText.SetActive(false);
+                    controlImage.sprite = controlSprites.dictionary[ControlIcons.Pendulum];
+                    break;
+                case InteractiveType.Battery:
+                    controlName.text = "Батарейка";
+                    connectionText.SetActive(false);
+                    controlImage.sprite = controlSprites.dictionary[ControlIcons.Battery];
+                    break;
+                case InteractiveType.Windmill:
+                    controlName.text = "Вентилятор";
+                    connectionText.SetActive(false);
+                    controlImage.sprite = controlSprites.dictionary[ControlIcons.Windmill];
                     break;
             }
         }
