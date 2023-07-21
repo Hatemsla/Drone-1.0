@@ -137,7 +137,9 @@ namespace Builder
 
         public void set_color_index(int value)
         {
-            Debug.Log(value);
+            color_index = value;
+            selectedColorOption = (ColorOption)value;
+            SetColor(GetColorFromOption(selectedColorOption));
         }
     }
 }

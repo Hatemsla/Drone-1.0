@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Drone;
 
-namespace Drone
+namespace Builder
 {
     public class GrabbedObject : MonoBehaviour
     {
@@ -30,9 +31,22 @@ namespace Drone
             Debug.DrawRay(ray.origin, ray.direction * raycastDistance, Color.green);
 
 
-            if (Input.GetKeyDown(KeyCode.F))
-            {
-                if (!isObjectGrabbed)
+            // if (Input.GetKeyDown(KeyCode.F))
+            // {
+            //     if (!isObjectGrabbed)
+            //     {
+            //         TryGrabObject();
+            //     }
+            //     else
+            //     {
+            //         ReleaseObject();
+            //     }
+            // }
+        }
+
+        private void check_button()
+        {
+            if (!isObjectGrabbed)
                 {
                     TryGrabObject();
                 }
@@ -40,8 +54,16 @@ namespace Drone
                 {
                     ReleaseObject();
                 }
-            }
-        
+        }
+
+        private void OnEnable()
+        {
+            InputManager.Instance.ApplyOpenEvent += check_button;
+        }
+
+        private void OnDisable()
+        {
+            InputManager.Instance.ApplyOpenEvent -= check_button;
         }
 
         private void TryGrabObject()
