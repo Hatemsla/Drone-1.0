@@ -19,6 +19,7 @@ namespace Drone
         {
             _connectionAction();
             BuilderManager.Instance.builderUI.portUI.SetActive(false);
+            BuilderManager.Instance.builderUI.securityCameraView.SetActive(true);
         }
         
         public void GetConnectionAction(Action action)

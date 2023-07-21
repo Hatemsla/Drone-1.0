@@ -90,7 +90,7 @@ namespace Builder
         {
             if (!EventSystem.current.IsPointerOverGameObject())
             {
-                var ray = Camera.main!.ScreenPointToRay(Input.mousePosition);
+                var ray = Camera.main!.ScreenPointToRay(InputManager.Instance.mousePosition);
                 if (Physics.Raycast(ray, out var hit, 10000, layerMask))
                 {
                     if (selectedTrackObject && selectedObjects.Count == 1)
@@ -129,7 +129,7 @@ namespace Builder
         {
             if (!EventSystem.current.IsPointerOverGameObject())
             {
-                var ray = Camera.main!.ScreenPointToRay(Mouse.current.position.ReadValue());
+                var ray = Camera.main!.ScreenPointToRay(InputManager.Instance.mousePosition);
                 if (Physics.Raycast(ray, out var hit, 10000, layerMask))
                 {
                     if (selectedTrackObject && selectedObjects.Count == 1)

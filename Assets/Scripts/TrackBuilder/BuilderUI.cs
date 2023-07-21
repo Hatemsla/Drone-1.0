@@ -52,6 +52,7 @@ namespace Builder
         public GameObject objectEditPanel;
         public GameObject saveLevelPanel;
         public GameObject createButtonsParent;
+        public GameObject securityCameraView;
 
         public List<Button> createButtons;
         

@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 namespace Drone
 {
-    public sealed class PortControl : SerializableDictionary<ControlIcons, Sprite>
+    public sealed class PortControl : MonoBehaviour
     {
         [SerializeField] private TMP_Text controlName;
         [SerializeField] private GameObject connectionText;
@@ -18,6 +18,7 @@ namespace Drone
         [SerializeField] private Sprite onSliderSprite;
         [SerializeField] private Sprite offSliderSprite;
         [SerializeField] private PortObjectBackground portObjectBackground;
+        [SerializeField] private SwitchToggle switchToggle;
         [SerializeField] private ControlSprites controlSprites;
 
         public List<InteractiveObject> controlObjects;

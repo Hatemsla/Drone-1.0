@@ -11,6 +11,7 @@ namespace Drone
         [SerializeField] private int maxPortControlsCount;
         [SerializeField] private PortControl controlPrefab;
         [SerializeField] private RectTransform controlParent;
+        [SerializeField] private SecurityCameraView securityCameraView;
 
         private List<Port> _ports = new();
         private List<PortControl> _portControls = new();
@@ -72,7 +73,8 @@ namespace Drone
             {
                 if (port == currentPort)
                 {
-                    var allInteractiveObjects = currentPort.GetAllInteractiveObjects();
+                    securityCameraView.GetPort(currentPort);
+                    var allInteractiveObjects = currentPort.ReturnAllInteractiveObjects();
                     foreach (var interactive in allInteractiveObjects)
                     {
                         if(interactive.Count == 0)
