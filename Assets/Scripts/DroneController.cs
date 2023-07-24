@@ -2,7 +2,7 @@ using UnityEngine;
 
 public abstract class DroneController : MonoBehaviour
 {
-    public const float MaxVelocity = 13f; 
+    protected const float MaxVelocity = 13f; 
     public float minMaxPitch;
     public float minMaxRoll;
     public float yawPower;
@@ -15,5 +15,6 @@ public abstract class DroneController : MonoBehaviour
     public bool isStop;
     public float currentPercentSpeed;
     public float currentSpeed;
+    public int boostsCount;
     public bool isShieldActive;
 }

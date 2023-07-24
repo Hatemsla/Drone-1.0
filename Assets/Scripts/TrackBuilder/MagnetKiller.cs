@@ -14,6 +14,11 @@ namespace Builder
         private readonly float _damageInterval = 1.0f;
         private float _timer;
 
+        private void Start()
+        {
+            rotationSpeed = 100;
+        }
+
         private void FixedUpdate()
         {
             if (isActive)

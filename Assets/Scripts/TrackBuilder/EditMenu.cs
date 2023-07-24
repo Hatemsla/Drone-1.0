@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -34,9 +35,7 @@ namespace Builder
         [SerializeField] private TMP_Text windForceValue;
         [SerializeField] private TMP_Text batteryEnergyValue;
         [SerializeField] private TMP_Text boostForceValue;
-        [SerializeField] private Toggle freezing;
-        [SerializeField] private Toggle lamp;
-        [SerializeField] private Toggle gate;
+        [SerializeField] private Toggle activeToggle;
         [SerializeField] private Toggle is_hacked;
         [SerializeField] private Dropdown color; 
         [SerializeField] private Dropdown color_panel; 
@@ -44,13 +43,12 @@ namespace Builder
         [SerializeField] private Dropdown code_n1; 
         [SerializeField] private Dropdown code_n2; 
         [SerializeField] private Dropdown code_n3; 
+        [SerializeField] private GameObject isActivePanel;
         [SerializeField] private GameObject windmillPanel;
         [SerializeField] private GameObject magnetPanel;
         [SerializeField] private GameObject pendulumPanel;
         [SerializeField] private GameObject windPanel;
         [SerializeField] private GameObject batteryPanel;
-        [SerializeField] private GameObject freezingPanel;
-        [SerializeField] private GameObject lampPanel;
         [SerializeField] private GameObject boostPanel;
         [SerializeField] private GameObject hintPanel;
         [SerializeField] private GameObject drawPanel; 
@@ -102,65 +100,72 @@ namespace Builder
                     TurnInteractivePanels(gameObject);
                     break;
                 case InteractiveType.Windmill:
-                    TurnInteractivePanels(windmillPanel);
+                    TurnInteractivePanels(windmillPanel, isActivePanel);
                     windmillRotSpeed.value = trackObject.interactiveObject.windMillRotateSpeed;
                     windmillRotSpeedValue.text =
                         trackObject.interactiveObject.windMillRotateSpeed.ToString("f1", CultureInfo.CurrentCulture);
+                    activeToggle.isOn = trackObject.interactiveObject.isActive;
                     break;
                 case InteractiveType.Magnet:
-                    TurnInteractivePanels(magnetPanel);
+                    TurnInteractivePanels(magnetPanel, isActivePanel);
                     magnetForce.value = trackObject.interactiveObject.magnetForce;
                     magnetForceValue.text =
                         trackObject.interactiveObject.magnetForce.ToString("f1", CultureInfo.CurrentCulture);
+                    activeToggle.isOn = trackObject.interactiveObject.isActive;
                     break;
                 case InteractiveType.Pendulum:
-                    TurnInteractivePanels(pendulumPanel);
+                    TurnInteractivePanels(pendulumPanel, isActivePanel);
                     pendulumSpeed.value = trackObject.interactiveObject.pendulumMoveSpeed;
                     pendulumSpeedValue.text =
                         trackObject.interactiveObject.pendulumMoveSpeed.ToString("f1", CultureInfo.CurrentCulture);
                     pendulumAngle.value = trackObject.interactiveObject.rightPendulumAngle;
                     pendulumAngleValue.text =
                         (trackObject.interactiveObject.rightPendulumAngle * 360f).ToString("f1", CultureInfo.CurrentCulture);
+                    activeToggle.isOn = trackObject.interactiveObject.isActive;
                     break;
                 case InteractiveType.Wind:
-                    TurnInteractivePanels(windPanel);
+                    TurnInteractivePanels(windPanel, isActivePanel);
                     windForce.value = trackObject.interactiveObject.windForce;
                     windForceValue.text =
                         trackObject.interactiveObject.windForce.ToString("f1", CultureInfo.CurrentCulture);
+                    activeToggle.isOn = trackObject.interactiveObject.isActive;
                     break;
                 case InteractiveType.Battery:
-                    TurnInteractivePanels(batteryPanel);
+                    TurnInteractivePanels(batteryPanel, isActivePanel);
                     batteryEnergy.value = trackObject.interactiveObject.batteryEnergy;
                     batteryEnergyValue.text = trackObject.interactiveObject.batteryEnergy.ToString(CultureInfo.CurrentCulture);
+                    activeToggle.isOn = trackObject.interactiveObject.isActive;
                     break;
                 case InteractiveType.Freezing:
-                    TurnInteractivePanels(freezingPanel);
-                    freezing.isOn = trackObject.interactiveObject.isFreezing;
+                    TurnInteractivePanels(isActivePanel);
+                    activeToggle.isOn = trackObject.interactiveObject.isActive;
                     break;
                 case InteractiveType.Boost:
-                    TurnInteractivePanels(boostPanel);
+                    TurnInteractivePanels(boostPanel, isActivePanel);
                     boostForce.value = trackObject.interactiveObject.boostSpeed;
                     boostForceValue.text =
                         trackObject.interactiveObject.boostSpeed.ToString("f1", CultureInfo.CurrentCulture);
+                    activeToggle.isOn = trackObject.interactiveObject.isActive;
                     break;
                 case InteractiveType.Lamp:
-                    TurnInteractivePanels(lampPanel);
-                    lamp.isOn = trackObject.interactiveObject.isLampTurn;
+                    TurnInteractivePanels(isActivePanel);
+                    activeToggle.isOn = trackObject.interactiveObject.isLampTurn;
                     break;
                 case InteractiveType.Hint:
-                    TurnInteractivePanels(hintPanel);
+                    TurnInteractivePanels(hintPanel, isActivePanel);
                     hintInput.text = trackObject.interactiveObject.hintText.text;
+                    activeToggle.isOn = trackObject.interactiveObject.isActive;
                     break;
                 case InteractiveType.Draw:
-                    TurnInteractivePanels(drawPanel);
+                    TurnInteractivePanels(drawPanel, isActivePanel);
                     break;
                 case InteractiveType.ElectroGate:
-                    TurnInteractivePanels(electrogatePanel);
-                    gate.isOn = trackObject.interactiveObject.isActive;
+                    TurnInteractivePanels(electrogatePanel, isActivePanel);
+                    activeToggle.isOn = trackObject.interactiveObject.isActive;
                     color.value = trackObject.interactiveObject.color_index;
                     break;
                 case InteractiveType.Panel:
-                    TurnInteractivePanels(controllerPanelPanel);
+                    TurnInteractivePanels(controllerPanelPanel, isActivePanel);
                     is_hacked.isOn = trackObject.interactiveObject.ishacked;
                     code_n1.value = trackObject.interactiveObject.n1;
                     code_n2.value = trackObject.interactiveObject.n2;
@@ -168,16 +173,16 @@ namespace Builder
                     color_panel.value = trackObject.interactiveObject.color_index;
                     break;
                 case InteractiveType.Button:
-                    TurnInteractivePanels(controllerButtonPanel);
+                    TurnInteractivePanels(controllerButtonPanel, isActivePanel);
                     color_button.value = trackObject.interactiveObject.color_index;
                     break;            
             }
         }
 
-        private void TurnInteractivePanels(GameObject activePanel)
+        private void TurnInteractivePanels(params GameObject[] activePanels)
         {
             foreach (var interactivePanel in interactivePanels)
-                interactivePanel.SetActive(interactivePanel == activePanel);
+                interactivePanel.SetActive(activePanels.Any(x => x == interactivePanel));
         }
 
         private int ConvertScaleToSliderValue(float originValue)

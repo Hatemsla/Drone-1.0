@@ -9,7 +9,6 @@ namespace Builder
 {
     public class DroneBuilderController : DroneController
     {
-        public int boostsCount;
         public float jerkForce;
         [SerializeField] private float jerkDelay = 5f;
         [SerializeField] private float shieldDelay = 10f;

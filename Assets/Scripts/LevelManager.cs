@@ -60,7 +60,7 @@ namespace DroneFootball
                     [nameof(trackObj.interactiveObject.rightPendulumAngle)] = null,
                     [nameof(trackObj.interactiveObject.windForce)] = null,
                     [nameof(trackObj.interactiveObject.batteryEnergy)] = null,
-                    [nameof(trackObj.interactiveObject.isFreezing)] = null,
+                    ["isFreezing"] = null,
                     [nameof(trackObj.interactiveObject.boostSpeed)] = null,
                     [nameof(trackObj.interactiveObject.hintText)] = null,
                     [nameof(trackObj.interactiveObject.isLampTurn)] = null
@@ -95,8 +95,8 @@ namespace DroneFootball
                                 trackObj.interactiveObject.batteryEnergy.ToString(CultureInfo.CurrentCulture);
                             break;
                         case InteractiveType.Freezing:
-                            objData[nameof(trackObj.interactiveObject.isFreezing)] =
-                                trackObj.interactiveObject.isFreezing.ToString(CultureInfo.CurrentCulture);
+                            objData["isFreezing"] =
+                                trackObj.interactiveObject.isActive.ToString(CultureInfo.CurrentCulture);
                             break;
                         case InteractiveType.Boost:
                             objData[nameof(trackObj.interactiveObject.boostSpeed)] = trackObj.interactiveObject.boostSpeed.ToString(CultureInfo.CurrentCulture);

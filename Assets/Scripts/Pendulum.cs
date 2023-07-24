@@ -13,6 +13,10 @@ namespace Drone
         {
             _rb = GetComponent<Rigidbody>();
             _movingClockwise = true;
+
+            leftPendulumAngle = 0.6f;
+            rightPendulumAngle = 0.6f;
+            pendulumMoveSpeed = 5;
         }
 
         public void Update()

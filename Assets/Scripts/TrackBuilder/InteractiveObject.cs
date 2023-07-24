@@ -13,9 +13,8 @@ namespace Builder
         [HideInInspector] public float leftPendulumAngle;
         [HideInInspector] public float rightPendulumAngle;
         [HideInInspector] public float windForce;
-        [HideInInspector] public bool isFreezing = true;
         [HideInInspector] public float batteryEnergy;
-        [HideInInspector] public float boostSpeed = 2;
+        [HideInInspector] public float boostSpeed;
         [HideInInspector] public bool isLampTurn = true;
         [HideInInspector] public TMP_Text hintText;
         [HideInInspector] public int color_index;

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Builder
@@ -6,6 +7,11 @@ namespace Builder
     public class RigidbodyMagnet : InteractiveObject
     {
         private List<Rigidbody> _caughtRigidbodies = new();
+
+        private void Start()
+        {
+            magnetForce = 1;
+        }
 
         private void FixedUpdate()
         {

@@ -122,19 +122,6 @@ namespace Builder
             }
         }
 
-        public void set_activ()
-        {
-            isActive = !isActive;
-            if (!isActive)
-                {
-                    DisableMeshAndCollider();
-                }
-                else 
-                {
-                    EnableMeshAndCollider();
-                }
-        }
-
         public void set_color_index(int value)
         {
             color_index = value;
@@ -144,7 +131,15 @@ namespace Builder
 
         public override void SetActive(bool active)
         {
-            
+            isActive = active;
+            if (!isActive)
+            {
+                DisableMeshAndCollider();
+            }
+            else 
+            {
+                EnableMeshAndCollider();
+            }
         }
     }
 }

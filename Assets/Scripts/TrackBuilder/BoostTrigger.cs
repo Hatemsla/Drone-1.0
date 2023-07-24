@@ -1,23 +1,27 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using Builder;
 using UnityEngine;
 
 public class BoostTrigger : InteractiveObject
 {
+    private void Start()
+    {
+        boostSpeed = 2f;
+    }
+
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        var player = other.GetComponent<DroneController>();
+        if (player)
         {
-            if (other.GetComponent<DroneBuilderController>().boostsCount < 3)
+            if (player.boostsCount < 3)
             {
-                StartCoroutine(BoostDrone(other.GetComponent<Rigidbody>(), other.GetComponent<DroneBuilderController>()));
+                StartCoroutine(BoostDrone(other.GetComponent<Rigidbody>(), player));
             }
         }
     }
 
-    private IEnumerator BoostDrone(Rigidbody rb, DroneBuilderController drone)
+    private IEnumerator BoostDrone(Rigidbody rb, DroneController drone)
     {
         rb.velocity *= boostSpeed;
         drone.boostsCount++;

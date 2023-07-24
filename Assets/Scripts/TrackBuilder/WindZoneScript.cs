@@ -1,6 +1,5 @@
 ﻿using System;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 namespace Builder
 {
@@ -8,15 +7,19 @@ namespace Builder
     {
         private void OnTriggerStay(Collider other)
         {
-            if (other.CompareTag("Player"))
+            if(!isActive)
+                return;
+            
+            var player = other.GetComponent<DroneController>();
+            if (player)
             {
-                other.GetComponent<Rigidbody>().AddForce(transform.forward * windForce);
+                player.GetComponent<Rigidbody>().AddForce(transform.forward * windForce);
             }
         }
 
         public override void SetActive(bool active)
         {
-            
+            isActive = active;
         }
     }
 }

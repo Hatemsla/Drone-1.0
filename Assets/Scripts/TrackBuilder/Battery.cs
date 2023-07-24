@@ -6,6 +6,11 @@ namespace Builder
 {
     public class Battery : InteractiveObject
     {
+        private void Start()
+        {
+            batteryEnergy = 15f;
+        }
+
         private void OnTriggerEnter(Collider other)
         {
             if(!isActive)

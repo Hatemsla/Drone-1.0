@@ -9,6 +9,11 @@ namespace Builder
         [SerializeField] private Vector3 rotateDirection;
         [SerializeField] private Rigidbody trap;
 
+        private void Start()
+        {
+            windMillRotateSpeed = 300f;
+        }
+
         private void FixedUpdate()
         {
             if (isActive)

@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Builder
 {
@@ -7,15 +6,19 @@ namespace Builder
     {
         private void OnCollisionEnter(Collision other)
         {
-            if (other.gameObject.CompareTag("Player") && isFreezing)
+            if(!isActive)
+                return;
+            
+            var player = other.gameObject.GetComponent<DroneBuilderController>();
+            if (player)
             {
-                StartCoroutine(other.gameObject.GetComponent<DroneBuilderController>().IsFreezing());
+                StartCoroutine(player.IsFreezing());
             }
         }
 
         public override void SetActive(bool active)
         {
-            
+            isActive = active;
         }
     }
 }

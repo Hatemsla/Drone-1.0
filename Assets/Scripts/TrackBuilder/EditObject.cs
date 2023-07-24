@@ -153,20 +153,9 @@ namespace Builder
             currentObject.interactiveObject.batteryEnergy = value;
         }
 
-        public void OnFreezingBallChanged(bool value)
-        {
-            currentObject.interactiveObject.isFreezing = value;
-        }
-
         public void OnBoostChanged(float value)
         {
             currentObject.interactiveObject.boostSpeed = value;
-        }
-        
-        public void OnLampChanged(bool value)
-        {
-            if(currentObject.interactiveObject is Lamp lamp)
-                lamp.TurnLamp();
         }
 
         public void OnHintTextChanged(string value)
@@ -220,12 +209,9 @@ namespace Builder
             }
         }
 
-        public void OnElectroGateChanged(bool value)
+        public void OnSetActiveObject(bool value)
         {
-            if (currentObject.interactiveObject is ControledGate controledGate)
-            {
-                controledGate.set_activ(); 
-            }                       
+            currentObject.interactiveObject.SetActive(value);
         }
 
         public void OnElectroGateColorChanged(int value)
@@ -291,7 +277,5 @@ namespace Builder
                 ControllerButton.set_time_value(value); 
             }
         }
-
-
     }
 }

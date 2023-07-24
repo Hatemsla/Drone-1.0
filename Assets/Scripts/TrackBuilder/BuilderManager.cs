@@ -536,8 +536,8 @@ namespace Builder
                 var batteryEnergy = kvp.Value[nameof(currentObjectType.interactiveObject.batteryEnergy)] != "null"
                     ? Convert.ToSingle(kvp.Value[nameof(currentObjectType.interactiveObject.batteryEnergy)])
                     : 0f;
-                var freezing = kvp.Value[nameof(currentObjectType.interactiveObject.isFreezing)] != "null" &&
-                               Convert.ToBoolean(kvp.Value[nameof(currentObjectType.interactiveObject.isFreezing)]);
+                var freezing = kvp.Value["isFreezing"] != "null" &&
+                               Convert.ToBoolean(kvp.Value["isFreezing"]);
                 var boost = kvp.Value[nameof(currentObjectType.interactiveObject.boostSpeed)] != "null"
                     ? Convert.ToSingle(kvp.Value[nameof(currentObjectType.interactiveObject.boostSpeed)])
                     : 0f;
@@ -584,7 +584,7 @@ namespace Builder
                         break;
                     case InteractiveType.Freezing:
                         trackObj.interactiveObject = trackObj.GetComponentInChildren<FreezingBall>();
-                        trackObj.interactiveObject.isFreezing = freezing;
+                        trackObj.interactiveObject.isActive = freezing;
                         break;
                     case InteractiveType.Boost:
                         trackObj.interactiveObject = trackObj.GetComponentInChildren<BoostTrigger>();
