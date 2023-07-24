@@ -18,6 +18,7 @@ namespace Builder
         [SerializeField] private TMP_InputField yRot;
         [SerializeField] private TMP_InputField zRot;
         [SerializeField] private TMP_InputField hintInput;
+        [SerializeField] private TMP_InputField passwordInput;
         [SerializeField] private Slider xyzScale;
         [SerializeField] private Slider windmillRotSpeed;
         [SerializeField] private Slider magnetForce;
@@ -35,7 +36,9 @@ namespace Builder
         [SerializeField] private TMP_Text windForceValue;
         [SerializeField] private TMP_Text batteryEnergyValue;
         [SerializeField] private TMP_Text boostForceValue;
+        [SerializeField] private TMP_Text passwordHint;
         [SerializeField] private Toggle activeToggle;
+        [SerializeField] private Toggle hasPasswordToggle;
         [SerializeField] private Toggle is_hacked;
         [SerializeField] private Dropdown color; 
         [SerializeField] private Dropdown color_panel; 
@@ -55,6 +58,7 @@ namespace Builder
         [SerializeField] private GameObject electrogatePanel; 
         [SerializeField] private GameObject controllerPanelPanel; 
         [SerializeField] private GameObject controllerButtonPanel;
+        [SerializeField] private GameObject portPanel;
         [SerializeField] private List<GameObject> interactivePanels;
 
         private Dictionary<float, int> _sliderValues = new Dictionary<float, int>()
@@ -175,7 +179,13 @@ namespace Builder
                 case InteractiveType.Button:
                     TurnInteractivePanels(controllerButtonPanel, isActivePanel);
                     color_button.value = trackObject.interactiveObject.color_index;
-                    break;            
+                    break;
+                case InteractiveType.Port:
+                    TurnInteractivePanels(portPanel, isActivePanel);
+                    hasPasswordToggle.isOn = trackObject.interactiveObject.hasPassword;
+                    var portPassword = ((Port)trackObject.interactiveObject).portPassword.Password;
+                    passwordInput.text = portPassword;
+                    break;
             }
         }
 
@@ -191,6 +201,11 @@ namespace Builder
                 return value;
 
             return (int)xyzScale.value;
+        }
+
+        public void PasswordHintActive(bool active)
+        {
+            passwordHint.enabled = active;
         }
     }
 }

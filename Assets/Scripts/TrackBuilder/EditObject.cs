@@ -10,13 +10,13 @@ namespace Builder
         public TrackObject currentObject;
         [SerializeField] private BuilderUI builderUI;
         [SerializeField] private EditMenu editMenu;
-
+        
         private void Start()
         {
             HideEditMenu();
         }
 
-        private Dictionary<int, float> _sliderValues = new Dictionary<int, float>()
+        private readonly Dictionary<int, float> _sliderValues = new Dictionary<int, float>()
         {
             { 0, 0.5f },
             { 1, 1f },
@@ -212,6 +212,29 @@ namespace Builder
         public void OnSetActiveObject(bool value)
         {
             currentObject.interactiveObject.SetActive(value);
+        }
+        
+        public void OnHasPasswordChanged(bool value)
+        {
+            if (currentObject.interactiveObject is Port port)
+            {
+                port.hasPassword = value;
+            }
+        }
+
+        public void OnPasswordChanged(string password)
+        {
+            editMenu.PasswordHintActive(false);
+            if (password.Length < 3)
+            {
+                editMenu.PasswordHintActive(true);
+            }
+
+            if (currentObject.interactiveObject is Port port)
+            {
+                port.portPassword.Password = password;
+                port.hasPassword = password.Length >= 3;
+            }
         }
 
         public void OnElectroGateColorChanged(int value)

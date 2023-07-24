@@ -1837,6 +1837,158 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""PortPassword"",
+            ""id"": ""6fe34ebb-92db-455c-abe3-7d6befdab801"",
+            ""actions"": [
+                {
+                    ""name"": ""SpinNumbersYUp"",
+                    ""type"": ""Button"",
+                    ""id"": ""30defecf-68aa-4268-89b4-8b72292a40f2"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ExitPassword"",
+                    ""type"": ""Button"",
+                    ""id"": ""d839239b-1601-4ecc-8862-0e697aadad29"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SpinNumbersYDown"",
+                    ""type"": ""Button"",
+                    ""id"": ""733c8ed7-57b4-463a-9546-20fb9c12cc61"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SpinNumbersXLeft"",
+                    ""type"": ""Button"",
+                    ""id"": ""a1e9165e-dee6-41b2-a724-8c492de3f029"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SpinNumbersXRight"",
+                    ""type"": ""Button"",
+                    ""id"": ""c3013fc2-6997-4d79-890e-fb03262e9f77"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""dd44eddd-9b2a-4fb8-900a-c978b3be538a"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SpinNumbersYUp"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""52f77e5b-6c2b-4d8c-837b-89532c8c923e"",
+                    ""path"": ""<Keyboard>/upArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SpinNumbersYUp"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ba2c4788-7417-4f2b-b6c8-8b9dc21f3059"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SpinNumbersYDown"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""53fceb0d-a5a4-4e39-8b9e-aa2a1babbb06"",
+                    ""path"": ""<Keyboard>/downArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SpinNumbersYDown"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a8a3468c-530a-49ee-9f45-b5546412a336"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SpinNumbersXLeft"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""78399aa0-dd81-4fc2-8823-11e739369660"",
+                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SpinNumbersXLeft"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""497e5852-fc03-4307-bef1-3a964fa36011"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SpinNumbersXRight"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""bb531d87-6805-498b-b9ac-7661fae0e9b4"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SpinNumbersXRight"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""92e32cd7-0732-41ac-8351-84829daf8c15"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ExitPassword"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -1904,6 +2056,13 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         m_Port_ExitPort = m_Port.FindAction("ExitPort", throwIfNotFound: true);
         m_Port_NextCamera = m_Port.FindAction("NextCamera", throwIfNotFound: true);
         m_Port_PreviousCamera = m_Port.FindAction("PreviousCamera", throwIfNotFound: true);
+        // PortPassword
+        m_PortPassword = asset.FindActionMap("PortPassword", throwIfNotFound: true);
+        m_PortPassword_SpinNumbersYUp = m_PortPassword.FindAction("SpinNumbersYUp", throwIfNotFound: true);
+        m_PortPassword_ExitPassword = m_PortPassword.FindAction("ExitPassword", throwIfNotFound: true);
+        m_PortPassword_SpinNumbersYDown = m_PortPassword.FindAction("SpinNumbersYDown", throwIfNotFound: true);
+        m_PortPassword_SpinNumbersXLeft = m_PortPassword.FindAction("SpinNumbersXLeft", throwIfNotFound: true);
+        m_PortPassword_SpinNumbersXRight = m_PortPassword.FindAction("SpinNumbersXRight", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -2575,6 +2734,84 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         }
     }
     public PortActions @Port => new PortActions(this);
+
+    // PortPassword
+    private readonly InputActionMap m_PortPassword;
+    private List<IPortPasswordActions> m_PortPasswordActionsCallbackInterfaces = new List<IPortPasswordActions>();
+    private readonly InputAction m_PortPassword_SpinNumbersYUp;
+    private readonly InputAction m_PortPassword_ExitPassword;
+    private readonly InputAction m_PortPassword_SpinNumbersYDown;
+    private readonly InputAction m_PortPassword_SpinNumbersXLeft;
+    private readonly InputAction m_PortPassword_SpinNumbersXRight;
+    public struct PortPasswordActions
+    {
+        private @PlayerInputs m_Wrapper;
+        public PortPasswordActions(@PlayerInputs wrapper) { m_Wrapper = wrapper; }
+        public InputAction @SpinNumbersYUp => m_Wrapper.m_PortPassword_SpinNumbersYUp;
+        public InputAction @ExitPassword => m_Wrapper.m_PortPassword_ExitPassword;
+        public InputAction @SpinNumbersYDown => m_Wrapper.m_PortPassword_SpinNumbersYDown;
+        public InputAction @SpinNumbersXLeft => m_Wrapper.m_PortPassword_SpinNumbersXLeft;
+        public InputAction @SpinNumbersXRight => m_Wrapper.m_PortPassword_SpinNumbersXRight;
+        public InputActionMap Get() { return m_Wrapper.m_PortPassword; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(PortPasswordActions set) { return set.Get(); }
+        public void AddCallbacks(IPortPasswordActions instance)
+        {
+            if (instance == null || m_Wrapper.m_PortPasswordActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_PortPasswordActionsCallbackInterfaces.Add(instance);
+            @SpinNumbersYUp.started += instance.OnSpinNumbersYUp;
+            @SpinNumbersYUp.performed += instance.OnSpinNumbersYUp;
+            @SpinNumbersYUp.canceled += instance.OnSpinNumbersYUp;
+            @ExitPassword.started += instance.OnExitPassword;
+            @ExitPassword.performed += instance.OnExitPassword;
+            @ExitPassword.canceled += instance.OnExitPassword;
+            @SpinNumbersYDown.started += instance.OnSpinNumbersYDown;
+            @SpinNumbersYDown.performed += instance.OnSpinNumbersYDown;
+            @SpinNumbersYDown.canceled += instance.OnSpinNumbersYDown;
+            @SpinNumbersXLeft.started += instance.OnSpinNumbersXLeft;
+            @SpinNumbersXLeft.performed += instance.OnSpinNumbersXLeft;
+            @SpinNumbersXLeft.canceled += instance.OnSpinNumbersXLeft;
+            @SpinNumbersXRight.started += instance.OnSpinNumbersXRight;
+            @SpinNumbersXRight.performed += instance.OnSpinNumbersXRight;
+            @SpinNumbersXRight.canceled += instance.OnSpinNumbersXRight;
+        }
+
+        private void UnregisterCallbacks(IPortPasswordActions instance)
+        {
+            @SpinNumbersYUp.started -= instance.OnSpinNumbersYUp;
+            @SpinNumbersYUp.performed -= instance.OnSpinNumbersYUp;
+            @SpinNumbersYUp.canceled -= instance.OnSpinNumbersYUp;
+            @ExitPassword.started -= instance.OnExitPassword;
+            @ExitPassword.performed -= instance.OnExitPassword;
+            @ExitPassword.canceled -= instance.OnExitPassword;
+            @SpinNumbersYDown.started -= instance.OnSpinNumbersYDown;
+            @SpinNumbersYDown.performed -= instance.OnSpinNumbersYDown;
+            @SpinNumbersYDown.canceled -= instance.OnSpinNumbersYDown;
+            @SpinNumbersXLeft.started -= instance.OnSpinNumbersXLeft;
+            @SpinNumbersXLeft.performed -= instance.OnSpinNumbersXLeft;
+            @SpinNumbersXLeft.canceled -= instance.OnSpinNumbersXLeft;
+            @SpinNumbersXRight.started -= instance.OnSpinNumbersXRight;
+            @SpinNumbersXRight.performed -= instance.OnSpinNumbersXRight;
+            @SpinNumbersXRight.canceled -= instance.OnSpinNumbersXRight;
+        }
+
+        public void RemoveCallbacks(IPortPasswordActions instance)
+        {
+            if (m_Wrapper.m_PortPasswordActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IPortPasswordActions instance)
+        {
+            foreach (var item in m_Wrapper.m_PortPasswordActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_PortPasswordActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public PortPasswordActions @PortPassword => new PortPasswordActions(this);
     public interface IPlayerActions
     {
         void OnCyclic(InputAction.CallbackContext context);
@@ -2642,5 +2879,13 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         void OnExitPort(InputAction.CallbackContext context);
         void OnNextCamera(InputAction.CallbackContext context);
         void OnPreviousCamera(InputAction.CallbackContext context);
+    }
+    public interface IPortPasswordActions
+    {
+        void OnSpinNumbersYUp(InputAction.CallbackContext context);
+        void OnExitPassword(InputAction.CallbackContext context);
+        void OnSpinNumbersYDown(InputAction.CallbackContext context);
+        void OnSpinNumbersXLeft(InputAction.CallbackContext context);
+        void OnSpinNumbersXRight(InputAction.CallbackContext context);
     }
 }

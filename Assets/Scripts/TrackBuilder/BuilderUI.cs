@@ -48,6 +48,7 @@ namespace Builder
         public GameObject loadLevelPanel;
         public GameObject uiPanel;
         public GameObject portUI;
+        public GameObject passwordUI;
         public GameObject loadPanel;
         public GameObject objectEditPanel;
         public GameObject saveLevelPanel;
@@ -58,6 +59,7 @@ namespace Builder
         
         [Header("Animations")]
         public Animator savePanelAnimator;
+
 
         private void Awake()
         {

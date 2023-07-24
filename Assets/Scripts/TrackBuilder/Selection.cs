@@ -4,7 +4,6 @@ using System.Linq;
 using Drone;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.InputSystem;
 using Outline = cakeslice.Outline;
 
 namespace Builder
@@ -39,53 +38,59 @@ namespace Builder
 
             if (selectedObject)
             {
-                switch (selectedTrackObject.interactiveType)
-                {
-                    case InteractiveType.Windmill:
-                        selectedTrackObject.interactiveObject = selectedTrackObject.GetComponentInChildren<Windmill>();
-                        break;
-                    case InteractiveType.Magnet:
-                        selectedTrackObject.interactiveObject = selectedTrackObject.GetComponentInChildren<RigidbodyMagnet>();
-                        break;
-                    case InteractiveType.Pendulum:
-                        selectedTrackObject.interactiveObject = selectedTrackObject.GetComponentInChildren<Pendulum>();
-                        break;
-                    case InteractiveType.Battery:
-                        selectedTrackObject.interactiveObject = selectedTrackObject.GetComponentInChildren<Battery>();
-                        break;
-                    case InteractiveType.Freezing:
-                        selectedTrackObject.interactiveObject = selectedTrackObject.GetComponentInChildren<FreezingBall>();
-                        break;
-                    case InteractiveType.Wind:
-                        selectedTrackObject.interactiveObject = selectedTrackObject.GetComponentInChildren<WindZoneScript>();
-                        break;
-                    case InteractiveType.Boost:
-                        selectedTrackObject.interactiveObject = selectedTrackObject.GetComponentInChildren<BoostTrigger>();
-                        break;
-                    case InteractiveType.Lamp:
-                        selectedTrackObject.interactiveObject = selectedTrackObject.GetComponentInChildren<Lamp>();
-                        break;
-                    case InteractiveType.Hint:
-                        selectedTrackObject.interactiveObject = selectedTrackObject.GetComponentInChildren<Hint>();
-                        break;
-                    case InteractiveType.Draw:
-                        selectedTrackObject.interactiveObject = selectedTrackObject.GetComponentInChildren<DrawLine>();
-                        break;
-                    case InteractiveType.ElectroGate:
-                        selectedTrackObject.interactiveObject = selectedTrackObject.GetComponentInChildren<ControledGate>();
-                        break;
-                    case InteractiveType.Panel:
-                        selectedTrackObject.interactiveObject = selectedTrackObject.GetComponentInChildren<ControllerPanel>();
-                        break;
-                    case InteractiveType.Button:
-                        selectedTrackObject.interactiveObject = selectedTrackObject.GetComponentInChildren<ControllerButton>();
-                        break;
-                }
-
                 editObject.OnSelectObject(selectedTrackObject);
             }
         }
-        
+
+        private void GetInteractiveObject()
+        {
+            switch (selectedTrackObject.interactiveType)
+            {
+                case InteractiveType.Windmill:
+                    selectedTrackObject.interactiveObject = selectedTrackObject.GetComponentInChildren<Windmill>();
+                    break;
+                case InteractiveType.Magnet:
+                    selectedTrackObject.interactiveObject = selectedTrackObject.GetComponentInChildren<RigidbodyMagnet>();
+                    break;
+                case InteractiveType.Pendulum:
+                    selectedTrackObject.interactiveObject = selectedTrackObject.GetComponentInChildren<Pendulum>();
+                    break;
+                case InteractiveType.Battery:
+                    selectedTrackObject.interactiveObject = selectedTrackObject.GetComponentInChildren<Battery>();
+                    break;
+                case InteractiveType.Freezing:
+                    selectedTrackObject.interactiveObject = selectedTrackObject.GetComponentInChildren<FreezingBall>();
+                    break;
+                case InteractiveType.Wind:
+                    selectedTrackObject.interactiveObject = selectedTrackObject.GetComponentInChildren<WindZoneScript>();
+                    break;
+                case InteractiveType.Boost:
+                    selectedTrackObject.interactiveObject = selectedTrackObject.GetComponentInChildren<BoostTrigger>();
+                    break;
+                case InteractiveType.Lamp:
+                    selectedTrackObject.interactiveObject = selectedTrackObject.GetComponentInChildren<Lamp>();
+                    break;
+                case InteractiveType.Hint:
+                    selectedTrackObject.interactiveObject = selectedTrackObject.GetComponentInChildren<Hint>();
+                    break;
+                case InteractiveType.Draw:
+                    selectedTrackObject.interactiveObject = selectedTrackObject.GetComponentInChildren<DrawLine>();
+                    break;
+                case InteractiveType.ElectroGate:
+                    selectedTrackObject.interactiveObject = selectedTrackObject.GetComponentInChildren<ControledGate>();
+                    break;
+                case InteractiveType.Panel:
+                    selectedTrackObject.interactiveObject = selectedTrackObject.GetComponentInChildren<ControllerPanel>();
+                    break;
+                case InteractiveType.Button:
+                    selectedTrackObject.interactiveObject = selectedTrackObject.GetComponentInChildren<ControllerButton>();
+                    break;
+                case InteractiveType.Port:
+                    selectedTrackObject.interactiveObject = selectedTrackObject.GetComponentInChildren<Port>();
+                    break;
+            }
+        }
+
         private void SelectObjects()
         {
             if (!EventSystem.current.IsPointerOverGameObject())
@@ -204,6 +209,7 @@ namespace Builder
             TrackBuilderUtils.TurnAllOutlineEffects(outlines, true);
             selectedObjects.Add(obj);
             selectedObject = obj;
+            GetInteractiveObject();
             selectedTrackObject = obj.GetComponent<TrackObject>();
         }
 
@@ -232,6 +238,7 @@ namespace Builder
             TrackBuilderUtils.TurnAllOutlineEffects(outlines, true);
             selectedObject = obj;
             selectedTrackObject = obj.GetComponent<TrackObject>();
+            GetInteractiveObject();
             switch (selectedTrackObject.objectType)
             {
                 case ObjectsType.Floor:

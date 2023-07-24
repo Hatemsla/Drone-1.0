@@ -23,6 +23,7 @@ namespace Builder
         [HideInInspector] public int n2;
         [HideInInspector] public int n3;
         [HideInInspector] public float buttonDelay;
+        [HideInInspector] public bool hasPassword;
 
         public abstract void SetActive(bool active);
     }

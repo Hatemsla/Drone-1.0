@@ -44,6 +44,7 @@ namespace Drone
             InputManager.Instance.TurnCustomActionMap("Player");
             BuilderManager.Instance.builderUI.droneView.SetActive(true);
             BuilderManager.Instance.builderUI.portUI.SetActive(false);
+            BuilderManager.Instance.builderUI.passwordUI.SetActive(false);
         }
         
         private void GetPorts()
@@ -94,28 +95,28 @@ namespace Drone
         {
             switch (objectType[0])
             {
-                case SecurityCamera securityCamera:
+                case SecurityCamera:
                     interactiveType = InteractiveType.SecureCamera;
                     break;
-                case Lamp lamp:
+                case Lamp:
                     interactiveType = InteractiveType.Lamp;
                     break;
-                case Windmill windmill:
+                case Windmill:
                     interactiveType = InteractiveType.Windmill;
                     break;
                 // case WindZoneScript windZone:
                 //     interactiveType = InteractiveType.Wind;
                 //     break;
-                case MagnetKiller magnetKiller:
+                case MagnetKiller:
                     interactiveType = InteractiveType.Magnet;
                     break;
-                case RigidbodyMagnet magnet:
+                case RigidbodyMagnet:
                     interactiveType = InteractiveType.Magnet;
                     break;
-                case Pendulum pendulum:
+                case Pendulum:
                     interactiveType = InteractiveType.Pendulum;
                     break;
-                case Battery battery:
+                case Battery:
                     interactiveType = InteractiveType.Battery;
                     break;
             }

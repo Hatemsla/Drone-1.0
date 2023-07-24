@@ -43,6 +43,11 @@ namespace Drone
         public event Action NextCameraEvent;
         public event Action PreviousCameraEvent;
         public event Action ExitPortEvent;
+        public event Action ExitPasswordEvent;
+        public event Action SpinNumberYUpEvent;
+        public event Action SpinNumberYDownEvent;
+        public event Action SpinNumberXLeftEvent;
+        public event Action SpinNumberXRightEvent;
 
         public static event Action RebindComplete;
         public static event Action RebindCanceled;
@@ -77,6 +82,12 @@ namespace Drone
             _playerInput.Port.NextCamera.performed += _ => NextCameraEvent?.Invoke();
             _playerInput.Port.PreviousCamera.performed += _ => PreviousCameraEvent?.Invoke();
             _playerInput.Port.ExitPort.performed += _ => ExitPortEvent?.Invoke();
+
+            _playerInput.PortPassword.ExitPassword.performed += _ => ExitPasswordEvent?.Invoke();
+            _playerInput.PortPassword.SpinNumbersYUp.performed += _ => SpinNumberYUpEvent?.Invoke();
+            _playerInput.PortPassword.SpinNumbersYDown.performed += _ => SpinNumberYDownEvent?.Invoke();
+            _playerInput.PortPassword.SpinNumbersXLeft.performed += _ => SpinNumberXLeftEvent?.Invoke();
+            _playerInput.PortPassword.SpinNumbersXRight.performed += _ => SpinNumberXRightEvent?.Invoke();
 
             _playerInput.Builder.CopyObject.performed += _ => CopyObjectEvent?.Invoke();
             _playerInput.Builder.PasteObject.performed += _ => PasteObjectEvent?.Invoke();

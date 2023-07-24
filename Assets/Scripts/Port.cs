@@ -6,9 +6,10 @@ using UnityEngine;
 
 namespace Builder
 {
-    public sealed class Port : MonoBehaviour
+    public sealed class Port : InteractiveObject
     {
         [SerializeField] private Prompt prompt;
+        public PortPassword portPassword;
         public bool isOpen;
         public bool isCameraChange;
         
@@ -104,18 +105,38 @@ namespace Builder
 
         private void OpenPort()
         {
-            if (!prompt.gameObject.activeSelf)
+            if (!prompt.gameObject.activeSelf || !isActive)
                 return;
-            
+
+            if (hasPassword)
+            {
+                portPassword.OpenPassword();
+                return;
+            }
+
             PortOpenEvent?.Invoke(this);
             isOpen = true;
             InputManager.Instance.TurnCustomActionMap("Port");
             BuilderManager.Instance.builderUI.droneView.SetActive(false);
             BuilderManager.Instance.builderUI.objectEditPanel.SetActive(false);
             BuilderManager.Instance.builderUI.portUI.SetActive(true);
+            BuilderManager.Instance.builderUI.passwordUI.SetActive(false);
             prompt.SetActive(false);
         }
-        
+
+        public void OpenPortAfterPassword()
+        {
+            hasPassword = false;
+            PortOpenEvent?.Invoke(this);
+            isOpen = true;
+            InputManager.Instance.TurnCustomActionMap("Port");
+            BuilderManager.Instance.builderUI.droneView.SetActive(false);
+            BuilderManager.Instance.builderUI.objectEditPanel.SetActive(false);
+            BuilderManager.Instance.builderUI.portUI.SetActive(true);
+            BuilderManager.Instance.builderUI.passwordUI.SetActive(false);
+            prompt.SetActive(false);
+        }
+
         private void ClosePort()
         {
             if(isCameraChange || !isOpen)
@@ -192,7 +213,7 @@ namespace Builder
 
         private void OnTriggerEnter(Collider other)
         {
-            if(!BuilderManager.Instance.isMove)
+            if(!BuilderManager.Instance.isMove || !isActive)
                 return;
             
             if (other.GetComponentInParent<DroneController>() is DroneBuilderController drone)
@@ -203,7 +224,7 @@ namespace Builder
 
         private void OnTriggerExit(Collider other)
         {
-            if(!BuilderManager.Instance.isMove)
+            if(!BuilderManager.Instance.isMove || !isActive)
                 return;
 
             if (other.GetComponentInParent<DroneController>() is DroneBuilderController drone)
@@ -239,6 +260,11 @@ namespace Builder
             };
 
             return result;
+        }
+
+        public override void SetActive(bool active)
+        {
+            isActive = active;
         }
     }
 }

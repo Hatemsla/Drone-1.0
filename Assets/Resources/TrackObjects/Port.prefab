@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4222477086232187676}
   - component: {fileID: 2446065335339423679}
+  - component: {fileID: 9097170824769164962}
   - component: {fileID: 153136094914408284}
   m_Layer: 7
   m_Name: PortConnection
@@ -46,11 +47,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prompt: {fileID: 0}
+  portPassword: {fileID: 9097170824769164962}
   isOpen: 0
   isCameraChange: 0
+  hasPassword: 1
   securityCameras: []
   lamps: []
+  pendulums: []
+  magnetKillers: []
+  rigidbodyMagnets: []
+  windmills: []
+  batteries: []
   interactiveObjects: []
+--- !u!114 &9097170824769164962
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 197550826548972707}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21eceb48421146a794af8694a34c96fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  password: 777
 --- !u!65 &153136094914408284
 BoxCollider:
   m_ObjectHideFlags: 0
