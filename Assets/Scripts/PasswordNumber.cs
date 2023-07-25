@@ -33,49 +33,9 @@ namespace Drone
             _startNumberColor = passwordNumber.color;
         }
 
-        public void StartFading()
+        public void SetNumberColor(Color color)
         {
-            StartCoroutine(FadeText());
-        }
-
-        public void StopFading()
-        {
-            passwordNumber.color = _startNumberColor;
-        }
-
-        private IEnumerator FadeText()
-        {
-            var duration = 1.0f; // Измените значение, если хотите увеличить или уменьшить время анимации
-            var startAlpha = 1.0f; // Начальная прозрачность (100%)
-            var targetAlpha = 0.2f; // Конечная прозрачность (50%)
-
-            var startColor = passwordNumber.color;
-
-            while (isSelected)
-            {
-                // Прямая анимация от 100 до 50
-                float currentTime = 0;
-                while (currentTime < duration)
-                {
-                    currentTime += Time.deltaTime;
-                    var alpha = Mathf.Lerp(startAlpha, targetAlpha, currentTime / duration);
-                    passwordNumber.color = new Color(startColor.r, startColor.g, startColor.b, alpha);
-                    yield return null;
-                }
-
-                // Обратная анимация от 50 до 100
-                currentTime = 0;
-                while (currentTime < duration)
-                {
-                    currentTime += Time.deltaTime;
-                    var alpha = Mathf.Lerp(targetAlpha, startAlpha, currentTime / duration);
-                    passwordNumber.color = new Color(startColor.r, startColor.g, startColor.b, alpha);
-                    yield return null;
-                }
-            }
-
-            // Убедимся, что прозрачность установлена на окончательное значение (100%), когда isSelected становится ложным
-            passwordNumber.color = startColor;
+            passwordNumber.color = color;
         }
     }
 }

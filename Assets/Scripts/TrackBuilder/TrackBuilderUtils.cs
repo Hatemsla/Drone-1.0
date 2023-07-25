@@ -76,5 +76,19 @@ namespace Builder
 
             return layerMask;
         }
+        
+        public static Color HexToColor(string hex)
+        {
+            hex = hex.TrimStart('#');
+
+            var r = byte.Parse(hex.Substring(0, 2), System.Globalization.NumberStyles.HexNumber);
+            var g = byte.Parse(hex.Substring(2, 2), System.Globalization.NumberStyles.HexNumber);
+            var b = byte.Parse(hex.Substring(4, 2), System.Globalization.NumberStyles.HexNumber);
+
+            // Опционально, вы можете добавить альфа-компонент, если его нет в шестнадцатеричном коде.
+            byte a = 255; // Значение 255 означает полную непрозрачность (не прозрачный цвет).
+
+            return new Color32(r, g, b, a);
+        }
     }
 }
