@@ -116,6 +116,7 @@ namespace Drone
                     builderManager.droneBuilderController.isSimpleMode = gameData.isSimpleMode;
                     server.player = builderManager.droneBuilderController;
                     asyncLoad = builderManager.asyncLoad;
+                    builderManager.timer.timeForEndGame = gameData.gameTimeInSeconds;
 
                     if (gameData.isLoadLevel)
                     {

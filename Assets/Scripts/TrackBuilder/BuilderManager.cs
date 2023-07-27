@@ -27,7 +27,6 @@ namespace Builder
         public float interfaceScale;
         public float currentYawSensitivity;
         public int currentSelectObjectIndex;
-        public bool canPlace;
         public bool isMove;
         public bool isGameMode;
         public bool isLoadLevel;
@@ -292,8 +291,8 @@ namespace Builder
         private void SetDroneParameters()
         {
             builderUI.speedText.text = $"{droneBuilderController.currentSpeed:00}";
-            float minutes = Mathf.FloorToInt(timer.currentTime / 60);
-            float seconds = Mathf.FloorToInt(timer.currentTime % 60);
+            float minutes = Mathf.FloorToInt(timer.waitForEndGame / 60);
+            float seconds = Mathf.FloorToInt(timer.waitForEndGame % 60);
             builderUI.timeText.text = $"{minutes:00}:{seconds:00}";
             builderUI.terminalTimeText.text = $"{minutes:00}:{seconds:00}";
             builderUI.batteryText.text = $"{droneBuilderController.droneRpgController.Battery:00}";
@@ -428,6 +427,7 @@ namespace Builder
             {
                 _lamps = FindObjectsOfType<Lamp>().ToList();
                 timer.currentTime = 0;
+                timer.waitForEndGame = timer.timeForEndGame;
                 droneBuilderController.droneRpgController.ResetDroneData();
                 builderUI.droneView.SetActive(true);
                 freeFlyCamera.enabled = false;

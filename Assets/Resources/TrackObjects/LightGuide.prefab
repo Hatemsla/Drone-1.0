@@ -156,24 +156,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7577bbc19e3abcc44bb0bf1ad44efa86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isActive: 0
   windMillRotateSpeed: 0
   magnetForce: 0
   pendulumMoveSpeed: 0
   leftPendulumAngle: 0
   rightPendulumAngle: 0
   windForce: 0
-  isFreezing: 1
   batteryEnergy: 0
   boostSpeed: 2
   isLampTurn: 1
   hintText: {fileID: 0}
-  isActive: 0
   color_index: 0
   ishacked: 0
   n1: 0
   n2: 0
   n3: 0
   buttonDelay: 0
+  hasPassword: 0
 --- !u!1 &4347390786775142821
 GameObject:
   m_ObjectHideFlags: 0
@@ -185,6 +185,7 @@ GameObject:
   - component: {fileID: 5626206514994660916}
   - component: {fileID: 6138412131124779775}
   - component: {fileID: 6076051460733326506}
+  - component: {fileID: 4135371555509189874}
   m_Layer: 7
   m_Name: Cube.003
   m_TagString: Untagged
@@ -257,6 +258,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &4135371555509189874
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4347390786775142821}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbf3575480402db40813e763382412fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: 0
+  eraseRenderer: 0
 --- !u!1 &5281379214588711211
 GameObject:
   m_ObjectHideFlags: 0
@@ -269,8 +284,7 @@ GameObject:
   - component: {fileID: 6061501838604577942}
   - component: {fileID: 5073900792347817063}
   - component: {fileID: 2343978771433946576}
-  - component: {fileID: 2343978771433946578}
-  - component: {fileID: 2343978771433946540}
+  - component: {fileID: 7857183109011808938}
   m_Layer: 7
   m_Name: Cube.005
   m_TagString: Untagged
@@ -366,7 +380,7 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 2212009239438826721, guid: 2602ead69b760934487d779c9b93a4c6, type: 3}
---- !u!114 &2343978771433946578
+--- !u!114 &7857183109011808938
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -380,18 +394,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   color: 0
   eraseRenderer: 0
---- !u!114 &2343978771433946540
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5281379214588711211}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f40ab50b5cab1194998ad1fdc80e20ce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &6413196183296859824
 GameObject:
   m_ObjectHideFlags: 0
@@ -404,8 +406,7 @@ GameObject:
   - component: {fileID: 6626824986434847446}
   - component: {fileID: 9014900863525337627}
   - component: {fileID: 2343978771433946583}
-  - component: {fileID: 2343978771433946577}
-  - component: {fileID: 2343978771433946579}
+  - component: {fileID: 3767795134088005985}
   m_Layer: 7
   m_Name: Cube.006
   m_TagString: Untagged
@@ -501,7 +502,7 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -2228417370725966487, guid: 2602ead69b760934487d779c9b93a4c6, type: 3}
---- !u!114 &2343978771433946577
+--- !u!114 &3767795134088005985
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -515,15 +516,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   color: 0
   eraseRenderer: 0
---- !u!114 &2343978771433946579
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6413196183296859824}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f40ab50b5cab1194998ad1fdc80e20ce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

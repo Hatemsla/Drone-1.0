@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 5189700424572899145}
   - component: {fileID: 4915803619987626592}
   - component: {fileID: 9069196892458311313}
-  - component: {fileID: 581517693810836275}
   - component: {fileID: 8706094022570286581}
   m_Layer: 7
   m_Name: Plane.001
@@ -123,18 +122,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   color: 0
   eraseRenderer: 0
---- !u!114 &581517693810836275
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 237622774986076955}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f40ab50b5cab1194998ad1fdc80e20ce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &8706094022570286581
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -163,7 +150,6 @@ GameObject:
   - component: {fileID: 6538564584246029804}
   - component: {fileID: 4915803619987626595}
   - component: {fileID: 3610723323970064977}
-  - component: {fileID: 1826469671910066368}
   - component: {fileID: 1034291634427077234}
   m_Layer: 7
   m_Name: Plane.004
@@ -273,18 +259,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   color: 0
   eraseRenderer: 0
---- !u!114 &1826469671910066368
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 437205622444458943}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f40ab50b5cab1194998ad1fdc80e20ce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1034291634427077234
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -313,7 +287,6 @@ GameObject:
   - component: {fileID: 3535787277521366899}
   - component: {fileID: 4915803618500759559}
   - component: {fileID: 3235027276053504741}
-  - component: {fileID: 9127313647691029854}
   - component: {fileID: 5890827116483699874}
   m_Layer: 7
   m_Name: Circle
@@ -424,18 +397,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   color: 0
   eraseRenderer: 0
---- !u!114 &9127313647691029854
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 911892446289465052}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f40ab50b5cab1194998ad1fdc80e20ce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &5890827116483699874
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -564,7 +525,6 @@ GameObject:
   - component: {fileID: 2441746493596900648}
   - component: {fileID: 4915803619987626593}
   - component: {fileID: 3176736470856857518}
-  - component: {fileID: 5436383316331678858}
   - component: {fileID: 4562029309431226961}
   m_Layer: 7
   m_Name: Plane.002
@@ -674,18 +634,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   color: 0
   eraseRenderer: 0
---- !u!114 &5436383316331678858
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2191220050999812873}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f40ab50b5cab1194998ad1fdc80e20ce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &4562029309431226961
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -750,7 +698,6 @@ GameObject:
   - component: {fileID: 7103218697202397627}
   - component: {fileID: 4915803619987626594}
   - component: {fileID: 2712523840383515004}
-  - component: {fileID: 4027086914554405218}
   - component: {fileID: 1241372899927724660}
   m_Layer: 7
   m_Name: Plane.003
@@ -860,18 +807,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   color: 0
   eraseRenderer: 0
---- !u!114 &4027086914554405218
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5159623671662247592}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f40ab50b5cab1194998ad1fdc80e20ce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1241372899927724660
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -996,7 +931,6 @@ MonoBehaviour:
   leftPendulumAngle: 0
   rightPendulumAngle: 0
   windForce: 0
-  isFreezing: 1
   batteryEnergy: 0
   boostSpeed: 2
   isLampTurn: 1
@@ -1007,6 +941,7 @@ MonoBehaviour:
   n2: 0
   n3: 0
   buttonDelay: 0
+  hasPassword: 0
   rotateDirection: {x: 0, y: 1, z: 0}
   trap: {fileID: 4915803618500759553}
 --- !u!1 &6505708842789637494
@@ -1022,7 +957,6 @@ GameObject:
   - component: {fileID: 6207118192586830550}
   - component: {fileID: 4915803619987626599}
   - component: {fileID: 7806058487179233752}
-  - component: {fileID: 830438767017529823}
   - component: {fileID: 6522108809258326638}
   m_Layer: 7
   m_Name: Plane
@@ -1132,18 +1066,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   color: 0
   eraseRenderer: 0
---- !u!114 &830438767017529823
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6505708842789637494}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f40ab50b5cab1194998ad1fdc80e20ce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &6522108809258326638
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using Builder;
 using UnityEngine;
 
 public class Timer : MonoBehaviour
@@ -28,7 +25,7 @@ public class Timer : MonoBehaviour
             currentTime += Time.deltaTime;
     }
 
-    public void WaitForEndGame()
+    private void WaitForEndGame()
     {
         if (waitForEndGame >= 0 && waitForStartGame <= 0 && !RewindManager.Instance.IsBeingRewinded)
         {
@@ -36,7 +33,7 @@ public class Timer : MonoBehaviour
         }
     }
 
-    public void WaitForStartGame()
+    private void WaitForStartGame()
     {
         if (waitForStartGame >= 0)
         {

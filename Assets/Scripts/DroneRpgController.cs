@@ -18,7 +18,7 @@ namespace Drone
 
         public event Action SkillsCountChangedEvent;
 
-        private readonly float[] _thresholds = { 0, 12.5f, 25, 37.5f, 50, 62.5f, 75, 87.5f, 100 };
+        private readonly float[] _thresholds = { 0, 20f, 40f, 60f, 80f, 100f };
 
         public Dictionary<Skills, int> SkillsCount
         {

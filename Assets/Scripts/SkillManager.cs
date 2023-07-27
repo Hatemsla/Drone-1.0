@@ -24,6 +24,7 @@ namespace Drone
         [SerializeField] private Timer timer;
         [SerializeField] private List<Skill> skills = new();
         [SerializeField] private BoughtSkill[] boughtSkills;
+        [SerializeField] private SkillDroneView[] skillDroneViews;
 
         public event Action BuySkillEvent;
 
@@ -71,7 +72,7 @@ namespace Drone
 
         private void UpdateBuyButtonsUI()
         {
-            buySkillTime.sprite = timer.currentTime >= _currentSkill.timeCost && boughtSkills.Any(x => x.skill == Skills.None)
+            buySkillTime.sprite = timer.waitForEndGame >= _currentSkill.timeCost && boughtSkills.Any(x => x.skill == Skills.None)
                 ? enoughMoneySprite
                 : noEnoughMoneySprite;
             buySkillCoin.sprite = _droneRpgController.Coins >= _currentSkill.coinCost && boughtSkills.Any(x => x.skill == Skills.None)
@@ -85,7 +86,13 @@ namespace Drone
 
         public void BuyByTime()
         {
-            BuySkillEvent?.Invoke();
+            if (BuilderManager.Instance.timer.waitForEndGame >= _currentSkill.timeCost &&
+                boughtSkills.Any(x => x.skill == Skills.None))
+            {
+                BuilderManager.Instance.timer.waitForEndGame -= _currentSkill.timeCost;
+                AddBoughtSkill(_currentSkill.skill, _currentSkill.skillSprite);
+                BuySkillEvent?.Invoke();
+            }
         }
 
         public void BuyByCoins()
@@ -100,7 +107,12 @@ namespace Drone
 
         public void BuyByCrystals()
         {
-            BuySkillEvent?.Invoke();
+            if (_droneRpgController.Crystals >= _currentSkill.coinCost && boughtSkills.Any(x => x.skill == Skills.None))
+            {
+                _droneRpgController.Crystals -= _currentSkill.crystalCost;
+                AddBoughtSkill(_currentSkill.skill, _currentSkill.skillSprite);
+                BuySkillEvent?.Invoke();
+            }
         }
 
         private void AddBoughtSkill(Skills skill, Sprite currentSkillSkillSprite)
@@ -114,20 +126,26 @@ namespace Drone
                 }
             }
 
+            var i = 0;
             foreach (var boughtSkill in boughtSkills)
             {
                 if (boughtSkill.skill == Skills.None)
                 {
                     boughtSkill.GetSkillType(skill, currentSkillSkillSprite);
+                    skillDroneViews[i].GetSkill(currentSkillSkillSprite);
                     _droneRpgController.SkillsCount[skill] = boughtSkill.skillCount;
                     return;
                 }
+
+                i++;
             }
         }
 
         private void UpdateBoughtSkillsUI()
         {
             UpdateBuyButtonsUI();
+
+            var i = 0;
             foreach (var boughtSkill in boughtSkills)
             {
                 if(!_droneRpgController.SkillsCount.ContainsKey(boughtSkill.skill))
@@ -136,11 +154,14 @@ namespace Drone
                 if (_droneRpgController.SkillsCount[boughtSkill.skill] == 0)
                 {
                     boughtSkill.ResetBoughtSkill();
+                    skillDroneViews[i].ResetSkill();
                 }
                 else
                 {
                     boughtSkill.UpdateSkillCount(_droneRpgController.SkillsCount[boughtSkill.skill]);
                 }
+
+                i++;
             }   
         }
     }
