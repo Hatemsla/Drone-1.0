@@ -26,6 +26,7 @@ namespace Builder
         public event Action<int> ChangeSecurityCameraEvent;
         public event Action PortCloseEvent;
 
+        private bool _inTrigger;
         private int _currentCameraIndex;
         private int _mainCameraIndex;
         private bool _previousIsMove;
@@ -105,7 +106,7 @@ namespace Builder
 
         private void OpenPort()
         {
-            if (!prompt.gameObject.activeSelf || !isActive)
+            if (!_inTrigger || !isActive)
                 return;
 
             if (hasPassword)
@@ -147,6 +148,7 @@ namespace Builder
             InputManager.Instance.TurnCustomActionMap("Player");
             BuilderManager.Instance.builderUI.droneView.SetActive(true);
             BuilderManager.Instance.builderUI.portUI.SetActive(false);
+            BuilderManager.Instance.builderUI.passwordUI.SetActive(false);
         }
 
         public void ActivateSecurityCameras()
@@ -218,6 +220,7 @@ namespace Builder
             
             if (other.GetComponentInParent<DroneController>() is DroneBuilderController drone)
             {
+                _inTrigger = true;
                 prompt.SetActive(true);
             }
         }
@@ -231,6 +234,7 @@ namespace Builder
             {
                 DeactivateAllCameras();
                 ClosePort();
+                _inTrigger = false;
                 prompt.SetActive(false);
             }
         }

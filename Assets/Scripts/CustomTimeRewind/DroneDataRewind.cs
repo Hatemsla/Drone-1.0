@@ -27,15 +27,15 @@ public class DroneDataRewind : RewindAbstract
     
     private void TrackDroneData()
     {
-        _trackedHealth.WriteLastValue(droneRpgController.DroneData.Health);
-        _trackedArmor.WriteLastValue(droneRpgController.DroneData.Armor);
-        _trackedBattery.WriteLastValue(droneRpgController.DroneData.Battery);
+        _trackedHealth.WriteLastValue(droneRpgController.Health);
+        _trackedArmor.WriteLastValue(droneRpgController.Armor);
+        _trackedBattery.WriteLastValue(droneRpgController.Battery);
     }
 
     private void RestoreDroneData(float seconds)
     {
-        droneRpgController.DroneData.Health = _trackedHealth.ReadFromBuffer(seconds);
-        droneRpgController.DroneData.Armor = _trackedArmor.ReadFromBuffer(seconds);
-        droneRpgController.DroneData.Battery = _trackedBattery.ReadFromBuffer(seconds);
+        droneRpgController.Health = _trackedHealth.ReadFromBuffer(seconds);
+        droneRpgController.Armor = _trackedArmor.ReadFromBuffer(seconds);
+        droneRpgController.Battery = _trackedBattery.ReadFromBuffer(seconds);
     }
 }

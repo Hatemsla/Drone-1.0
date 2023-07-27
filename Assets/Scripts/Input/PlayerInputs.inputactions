@@ -96,7 +96,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Skill1",
+                    "name": "HpRestore",
                     "type": "Button",
                     "id": "71309863-2b47-4aad-9b54-c3cdf6979e80",
                     "expectedControlType": "Button",
@@ -105,7 +105,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Skill2",
+                    "name": "ArmorRestore",
                     "type": "Button",
                     "id": "edf04660-1b3e-49b1-9ee3-0c92c2e529e3",
                     "expectedControlType": "Button",
@@ -383,7 +383,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Skill1",
+                    "action": "HpRestore",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -394,7 +394,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Skill2",
+                    "action": "ArmorRestore",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -1963,6 +1963,34 @@
                     "processors": "",
                     "groups": "",
                     "action": "ExitPassword",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Terminal",
+            "id": "fc24394b-ecba-4269-a7e6-d47b1877ee04",
+            "actions": [
+                {
+                    "name": "ExitTerminal",
+                    "type": "Button",
+                    "id": "77f1d380-de81-4d82-ab3a-d6ea8be92efd",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "a44eeb4f-7142-49d7-832c-7f227dff57e6",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ExitTerminal",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

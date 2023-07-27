@@ -1,72 +1,81 @@
-﻿namespace Drone
+﻿using System.Collections.Generic;
+using UnityEngine;
+
+namespace Drone
 {
-    public class DroneData
+    [CreateAssetMenu]
+    public class DroneData : ScriptableObject
     {
-        private float _health;
-        private float _armor;
-        private float _battery;
-        private int _coins;
-        private int _crystals;
+        [SerializeField] private float health;
+        [SerializeField] private float armor;
+        [SerializeField] private float battery;
+        [SerializeField] private int coins;
+        [SerializeField] private int crystals;
+        
+        public Dictionary<Skills, int> skillsCount = new Dictionary<Skills, int>()
+        {
+            { Skills.Shield, 0 },
+            { Skills.HpRestore, 0 },
+            { Skills.ArmorRestore, 0 },
+            { Skills.Jerk, 0 },
+            { Skills.XRay, 0 },
+            { Skills.Thermal, 0 },
+            { Skills.TimeRewind, 0 },
+            { Skills.Flashlight, 0 },
+        };
 
         public int Crystals
         {
-            get => _crystals;
-            set => _crystals = value;
+            get => crystals;
+            set => crystals = value;
         }
         
         public int Coins
         {
-            get => _coins;
-            set => _coins = value;
+            get => coins;
+            set => coins = value;
         }
         
         public float Health
         {
-            get => _health;
+            get => health;
             set
             {
                 if (value > 100)
-                    _health = 100;
-                else if (_health < 0)
-                    _health = 0;
+                    health = 100;
+                else if (health < 0)
+                    health = 0;
                 else
-                    _health = value;
+                    health = value;
             }
         }
 
         public float Armor
         {
-            get => _armor;
+            get => armor;
             set
             {
                 if (value > 100)
-                    _armor = 100;
+                    armor = 100;
                 else if (value < 0)
-                    _armor = 0;
+                    armor = 0;
                 else
-                    _armor = value;
+                    armor = value;
             }
         }
         
         public float Battery
         {
-            get => _battery;
+            get => battery;
             set
             {
                 if (value > 100)
-                    _battery = 100;
+                    battery = 100;
                 else if (value < 0)
-                    _battery = 0;
+                    battery = 0;
                 else
-                    _battery = value;
+                    battery = value;
             }
-        }
-
-        public DroneData(float health, float armor, float battery)
-        {
-            _health = health;
-            _armor = armor;
-            _battery = battery;
         }
     }
 }

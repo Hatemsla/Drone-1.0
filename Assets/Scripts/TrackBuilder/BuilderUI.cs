@@ -15,6 +15,7 @@ namespace Builder
         public TMP_Text speedText;
         public TMP_Text batteryText;
         public TMP_Text timeText;
+        public TMP_Text terminalTimeText;
         public TMP_Text checkpointsCountText;
         public TMP_Text coinsCountText;
         public TMP_Text crystalsCountText;
@@ -49,6 +50,7 @@ namespace Builder
         public GameObject uiPanel;
         public GameObject portUI;
         public GameObject passwordUI;
+        public GameObject terminalUI;
         public GameObject loadPanel;
         public GameObject objectEditPanel;
         public GameObject saveLevelPanel;
@@ -59,6 +61,7 @@ namespace Builder
         
         [Header("Animations")]
         public Animator savePanelAnimator;
+
 
 
         private void Awake()

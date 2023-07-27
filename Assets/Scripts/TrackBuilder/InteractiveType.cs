@@ -18,6 +18,7 @@
         SecureCamera,
         ElectroGate,
         Panel,
-        Button
+        Button,
+        Terminal
     }
 }

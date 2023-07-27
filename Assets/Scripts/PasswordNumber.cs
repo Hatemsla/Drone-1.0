@@ -7,11 +7,9 @@ namespace Drone
 {
     public class PasswordNumber : MonoBehaviour
     {
-        public bool isSelected;
         [SerializeField] private TMP_Text passwordNumber;
 
         private int _number;
-        private Color _startNumberColor;
 
         public int Number
         {
@@ -26,11 +24,6 @@ namespace Drone
                 };
                 passwordNumber.text = _number.ToString();
             }
-        }
-
-        private void Start()
-        {
-            _startNumberColor = passwordNumber.color;
         }
 
         public void SetNumberColor(Color color)

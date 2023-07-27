@@ -44,10 +44,13 @@ namespace Drone
         public event Action PreviousCameraEvent;
         public event Action ExitPortEvent;
         public event Action ExitPasswordEvent;
+        public event Action ExitTerminalEvent;
         public event Action SpinNumberYUpEvent;
         public event Action SpinNumberYDownEvent;
         public event Action SpinNumberXLeftEvent;
         public event Action SpinNumberXRightEvent;
+        public event Action HpRestoreEvent;
+        public event Action ArmorRestoreEvent;
 
         public static event Action RebindComplete;
         public static event Action RebindCanceled;
@@ -78,6 +81,8 @@ namespace Drone
             _playerInput.Player.Jerk.performed += _ => JerkEvent?.Invoke();
             _playerInput.Player.Shield.performed += _ => ShieldEvent?.Invoke();
             _playerInput.Player.ApplyOpen.performed += _ => ApplyOpenEvent?.Invoke();
+            _playerInput.Player.HpRestore.performed += _ => HpRestoreEvent?.Invoke();
+            _playerInput.Player.ArmorRestore.performed += _ => ArmorRestoreEvent?.Invoke();
             
             _playerInput.Port.NextCamera.performed += _ => NextCameraEvent?.Invoke();
             _playerInput.Port.PreviousCamera.performed += _ => PreviousCameraEvent?.Invoke();
@@ -88,6 +93,8 @@ namespace Drone
             _playerInput.PortPassword.SpinNumbersYDown.performed += _ => SpinNumberYDownEvent?.Invoke();
             _playerInput.PortPassword.SpinNumbersXLeft.performed += _ => SpinNumberXLeftEvent?.Invoke();
             _playerInput.PortPassword.SpinNumbersXRight.performed += _ => SpinNumberXRightEvent?.Invoke();
+            
+            _playerInput.Terminal.ExitTerminal.performed += _ => ExitTerminalEvent?.Invoke();
 
             _playerInput.Builder.CopyObject.performed += _ => CopyObjectEvent?.Invoke();
             _playerInput.Builder.PasteObject.performed += _ => PasteObjectEvent?.Invoke();

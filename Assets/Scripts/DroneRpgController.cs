@@ -1,4 +1,6 @@
-﻿using Builder;
+﻿using System;
+using System.Collections.Generic;
+using Builder;
 using UnityEngine;
 
 namespace Drone
@@ -6,33 +8,105 @@ namespace Drone
     public class DroneRpgController : MonoBehaviour
     {
         public DroneController droneBuilderController;
-        public DroneData DroneData;
+        [SerializeField] private DroneData droneData;
         public float powerUsageRate;
         public bool isAlive = true;
         public bool isCharged = true;
+        public bool isEnergyUsage = true;
         [SerializeField] private float armorPercentage = 0.9f;
         [SerializeField] private ParticleSystem explosionPrefab;
 
+        public event Action SkillsCountChangedEvent;
+
         private readonly float[] _thresholds = { 0, 12.5f, 25, 37.5f, 50, 62.5f, 75, 87.5f, 100 };
 
-        private void Start()
+        public Dictionary<Skills, int> SkillsCount
         {
-            DroneData = new DroneData(100, 100, 100);
+            get => droneData.skillsCount;
+            set
+            {
+                droneData.skillsCount = value;
+                SkillsCountChangedEvent?.Invoke();
+            }
+        }
+
+        public float Battery
+        {
+            get => droneData.Battery;
+            set
+            {
+                droneData.Battery = value;
+                if (value <= 0)
+                    isCharged = false;
+            }
+        }
+
+        public float Health
+        {
+            get => droneData.Health;
+            set
+            {
+                droneData.Health = value;
+
+                if (droneData.Health > 100)
+                    droneData.Health = 100;
+                
+                if (value <= 0)
+                    isAlive = false;
+            }
+        }
+
+        public float Armor
+        {
+            get => droneData.Armor;
+            set
+            {
+                droneData.Armor = value;
+
+                if (droneData.Armor > 100)
+                    droneData.Armor = 100;
+            }
+        }
+
+        public int Coins
+        {
+            get => droneData.Coins;
+            set => droneData.Coins = value;
+        }
+
+        public int Crystals
+        {
+            get => droneData.Crystals;
+            set => droneData.Crystals = value;
+        }
+
+        public void UpdateSkillValue(Skills skill, int newValue)
+        {
+            SkillsCount[skill] = newValue;
+            SkillsCountChangedEvent?.Invoke();
         }
 
         private void Update()
         {
             if (BuilderManager.Instance.isMove && !RewindManager.Instance.IsBeingRewinded)
                 ApplyEnergyUsage(powerUsageRate * Time.deltaTime);
+        }
 
-            if (DroneData.Health <= 0) isAlive = false;
-
-            if (DroneData.Battery <= 0) isCharged = false;
+        public void ResetDroneData()
+        {
+            droneData.Battery = 100;
+            droneData.Health = 100;
+            droneData.Armor = 100;
+            droneData.Coins = 0;
+            droneData.Crystals = 0;
         }
 
         public void ApplyEnergyUsage(float energyUsage)
         {
-            DroneData.Battery -= energyUsage;
+            if(!isEnergyUsage)
+                return;
+            
+            droneData.Battery -= energyUsage;
         }
 
         public void ApplyDamage(float damage)
@@ -45,7 +119,7 @@ namespace Drone
             var armorDamage = Mathf.RoundToInt(damage * armorPercentage);
             var healthDamage = Mathf.RoundToInt(damage * healthPercentage);
 
-            var remainingArmor = (int)(DroneData.Armor - armorDamage);
+            var remainingArmor = (int)(droneData.Armor - armorDamage);
 
             if (remainingArmor < 0)
             {
@@ -53,8 +127,8 @@ namespace Drone
                 remainingArmor = 0;
             }
 
-            DroneData.Armor = remainingArmor;
-            DroneData.Health -= healthDamage;
+            droneData.Armor = remainingArmor;
+            droneData.Health -= healthDamage;
         }
 
         public int GetCurrentHealthIndex(float value)

@@ -9,6 +9,7 @@ namespace DroneFootball
 {
     public class ThermalVision : MonoBehaviour
     {
+        [SerializeField] private DroneRpgController droneRpgController;
         public Color thermalColor;
         public float darkeningAmount = 0.5f;
         public Shader xRayShader;
@@ -35,7 +36,7 @@ namespace DroneFootball
 
         private void OnXRay()
         {
-            if(!BuilderManager.Instance.isMove)
+            if(!BuilderManager.Instance.isMove || droneRpgController.SkillsCount[Skills.XRay] <= 0)
                 return;
             
             OnTurnOffThermalVision();
@@ -45,9 +46,9 @@ namespace DroneFootball
 
         private void OnThermalVision()
         {
-            if(!BuilderManager.Instance.isMove)
+            if(!BuilderManager.Instance.isMove || droneRpgController.SkillsCount[Skills.Thermal] <= 0)
                 return;
-            
+
             isXRay = false;
             TurnXRay();
             isThermalVision = !isThermalVision;

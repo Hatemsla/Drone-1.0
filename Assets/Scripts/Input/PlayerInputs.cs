@@ -118,7 +118,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Skill1"",
+                    ""name"": ""HpRestore"",
                     ""type"": ""Button"",
                     ""id"": ""71309863-2b47-4aad-9b54-c3cdf6979e80"",
                     ""expectedControlType"": ""Button"",
@@ -127,7 +127,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Skill2"",
+                    ""name"": ""ArmorRestore"",
                     ""type"": ""Button"",
                     ""id"": ""edf04660-1b3e-49b1-9ee3-0c92c2e529e3"",
                     ""expectedControlType"": ""Button"",
@@ -405,7 +405,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Skill1"",
+                    ""action"": ""HpRestore"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -416,7 +416,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Skill2"",
+                    ""action"": ""ArmorRestore"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -1989,6 +1989,34 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Terminal"",
+            ""id"": ""fc24394b-ecba-4269-a7e6-d47b1877ee04"",
+            ""actions"": [
+                {
+                    ""name"": ""ExitTerminal"",
+                    ""type"": ""Button"",
+                    ""id"": ""77f1d380-de81-4d82-ab3a-d6ea8be92efd"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""a44eeb4f-7142-49d7-832c-7f227dff57e6"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ExitTerminal"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -2005,8 +2033,8 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         m_Player_Jerk = m_Player.FindAction("Jerk", throwIfNotFound: true);
         m_Player_Shield = m_Player.FindAction("Shield", throwIfNotFound: true);
         m_Player_Map = m_Player.FindAction("Map", throwIfNotFound: true);
-        m_Player_Skill1 = m_Player.FindAction("Skill1", throwIfNotFound: true);
-        m_Player_Skill2 = m_Player.FindAction("Skill2", throwIfNotFound: true);
+        m_Player_HpRestore = m_Player.FindAction("HpRestore", throwIfNotFound: true);
+        m_Player_ArmorRestore = m_Player.FindAction("ArmorRestore", throwIfNotFound: true);
         m_Player_SpecialSkill1 = m_Player.FindAction("SpecialSkill1", throwIfNotFound: true);
         m_Player_SpecialSkill2 = m_Player.FindAction("SpecialSkill2", throwIfNotFound: true);
         m_Player_SpecialSkill3 = m_Player.FindAction("SpecialSkill3", throwIfNotFound: true);
@@ -2063,6 +2091,9 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         m_PortPassword_SpinNumbersYDown = m_PortPassword.FindAction("SpinNumbersYDown", throwIfNotFound: true);
         m_PortPassword_SpinNumbersXLeft = m_PortPassword.FindAction("SpinNumbersXLeft", throwIfNotFound: true);
         m_PortPassword_SpinNumbersXRight = m_PortPassword.FindAction("SpinNumbersXRight", throwIfNotFound: true);
+        // Terminal
+        m_Terminal = asset.FindActionMap("Terminal", throwIfNotFound: true);
+        m_Terminal_ExitTerminal = m_Terminal.FindAction("ExitTerminal", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -2134,8 +2165,8 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Jerk;
     private readonly InputAction m_Player_Shield;
     private readonly InputAction m_Player_Map;
-    private readonly InputAction m_Player_Skill1;
-    private readonly InputAction m_Player_Skill2;
+    private readonly InputAction m_Player_HpRestore;
+    private readonly InputAction m_Player_ArmorRestore;
     private readonly InputAction m_Player_SpecialSkill1;
     private readonly InputAction m_Player_SpecialSkill2;
     private readonly InputAction m_Player_SpecialSkill3;
@@ -2157,8 +2188,8 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         public InputAction @Jerk => m_Wrapper.m_Player_Jerk;
         public InputAction @Shield => m_Wrapper.m_Player_Shield;
         public InputAction @Map => m_Wrapper.m_Player_Map;
-        public InputAction @Skill1 => m_Wrapper.m_Player_Skill1;
-        public InputAction @Skill2 => m_Wrapper.m_Player_Skill2;
+        public InputAction @HpRestore => m_Wrapper.m_Player_HpRestore;
+        public InputAction @ArmorRestore => m_Wrapper.m_Player_ArmorRestore;
         public InputAction @SpecialSkill1 => m_Wrapper.m_Player_SpecialSkill1;
         public InputAction @SpecialSkill2 => m_Wrapper.m_Player_SpecialSkill2;
         public InputAction @SpecialSkill3 => m_Wrapper.m_Player_SpecialSkill3;
@@ -2205,12 +2236,12 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @Map.started += instance.OnMap;
             @Map.performed += instance.OnMap;
             @Map.canceled += instance.OnMap;
-            @Skill1.started += instance.OnSkill1;
-            @Skill1.performed += instance.OnSkill1;
-            @Skill1.canceled += instance.OnSkill1;
-            @Skill2.started += instance.OnSkill2;
-            @Skill2.performed += instance.OnSkill2;
-            @Skill2.canceled += instance.OnSkill2;
+            @HpRestore.started += instance.OnHpRestore;
+            @HpRestore.performed += instance.OnHpRestore;
+            @HpRestore.canceled += instance.OnHpRestore;
+            @ArmorRestore.started += instance.OnArmorRestore;
+            @ArmorRestore.performed += instance.OnArmorRestore;
+            @ArmorRestore.canceled += instance.OnArmorRestore;
             @SpecialSkill1.started += instance.OnSpecialSkill1;
             @SpecialSkill1.performed += instance.OnSpecialSkill1;
             @SpecialSkill1.canceled += instance.OnSpecialSkill1;
@@ -2266,12 +2297,12 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @Map.started -= instance.OnMap;
             @Map.performed -= instance.OnMap;
             @Map.canceled -= instance.OnMap;
-            @Skill1.started -= instance.OnSkill1;
-            @Skill1.performed -= instance.OnSkill1;
-            @Skill1.canceled -= instance.OnSkill1;
-            @Skill2.started -= instance.OnSkill2;
-            @Skill2.performed -= instance.OnSkill2;
-            @Skill2.canceled -= instance.OnSkill2;
+            @HpRestore.started -= instance.OnHpRestore;
+            @HpRestore.performed -= instance.OnHpRestore;
+            @HpRestore.canceled -= instance.OnHpRestore;
+            @ArmorRestore.started -= instance.OnArmorRestore;
+            @ArmorRestore.performed -= instance.OnArmorRestore;
+            @ArmorRestore.canceled -= instance.OnArmorRestore;
             @SpecialSkill1.started -= instance.OnSpecialSkill1;
             @SpecialSkill1.performed -= instance.OnSpecialSkill1;
             @SpecialSkill1.canceled -= instance.OnSpecialSkill1;
@@ -2812,6 +2843,52 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         }
     }
     public PortPasswordActions @PortPassword => new PortPasswordActions(this);
+
+    // Terminal
+    private readonly InputActionMap m_Terminal;
+    private List<ITerminalActions> m_TerminalActionsCallbackInterfaces = new List<ITerminalActions>();
+    private readonly InputAction m_Terminal_ExitTerminal;
+    public struct TerminalActions
+    {
+        private @PlayerInputs m_Wrapper;
+        public TerminalActions(@PlayerInputs wrapper) { m_Wrapper = wrapper; }
+        public InputAction @ExitTerminal => m_Wrapper.m_Terminal_ExitTerminal;
+        public InputActionMap Get() { return m_Wrapper.m_Terminal; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(TerminalActions set) { return set.Get(); }
+        public void AddCallbacks(ITerminalActions instance)
+        {
+            if (instance == null || m_Wrapper.m_TerminalActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_TerminalActionsCallbackInterfaces.Add(instance);
+            @ExitTerminal.started += instance.OnExitTerminal;
+            @ExitTerminal.performed += instance.OnExitTerminal;
+            @ExitTerminal.canceled += instance.OnExitTerminal;
+        }
+
+        private void UnregisterCallbacks(ITerminalActions instance)
+        {
+            @ExitTerminal.started -= instance.OnExitTerminal;
+            @ExitTerminal.performed -= instance.OnExitTerminal;
+            @ExitTerminal.canceled -= instance.OnExitTerminal;
+        }
+
+        public void RemoveCallbacks(ITerminalActions instance)
+        {
+            if (m_Wrapper.m_TerminalActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(ITerminalActions instance)
+        {
+            foreach (var item in m_Wrapper.m_TerminalActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_TerminalActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public TerminalActions @Terminal => new TerminalActions(this);
     public interface IPlayerActions
     {
         void OnCyclic(InputAction.CallbackContext context);
@@ -2824,8 +2901,8 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         void OnJerk(InputAction.CallbackContext context);
         void OnShield(InputAction.CallbackContext context);
         void OnMap(InputAction.CallbackContext context);
-        void OnSkill1(InputAction.CallbackContext context);
-        void OnSkill2(InputAction.CallbackContext context);
+        void OnHpRestore(InputAction.CallbackContext context);
+        void OnArmorRestore(InputAction.CallbackContext context);
         void OnSpecialSkill1(InputAction.CallbackContext context);
         void OnSpecialSkill2(InputAction.CallbackContext context);
         void OnSpecialSkill3(InputAction.CallbackContext context);
@@ -2887,5 +2964,9 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         void OnSpinNumbersYDown(InputAction.CallbackContext context);
         void OnSpinNumbersXLeft(InputAction.CallbackContext context);
         void OnSpinNumbersXRight(InputAction.CallbackContext context);
+    }
+    public interface ITerminalActions
+    {
+        void OnExitTerminal(InputAction.CallbackContext context);
     }
 }

@@ -1,21 +1,26 @@
 using System;
+using Builder;
 using UnityEngine;
 
 namespace Drone
 {
     public class ParticleEffect : MonoBehaviour
     {
-        public ParticleSystem effect;
-
-        private void Start()
+        [SerializeField] private ParticleSystem effect;
+        
+        private void OnParticleSystemStopped()
         {
-            effect = GetComponent<ParticleSystem>();
+            EffectsManager.Intsance.Return(this);
+        }
+
+        public void Play()
+        {
             effect.Play();
         }
 
-        private void OnParticleSystemStopped()
+        public void Stop()
         {
-            Destroy(gameObject);
+            effect.Stop();
         }
     }
 }

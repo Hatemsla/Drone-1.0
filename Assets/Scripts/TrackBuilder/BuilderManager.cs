@@ -295,17 +295,18 @@ namespace Builder
             float minutes = Mathf.FloorToInt(timer.currentTime / 60);
             float seconds = Mathf.FloorToInt(timer.currentTime % 60);
             builderUI.timeText.text = $"{minutes:00}:{seconds:00}";
-            builderUI.batteryText.text = $"{droneBuilderController.droneRpgController.DroneData.Battery:00}";
+            builderUI.terminalTimeText.text = $"{minutes:00}:{seconds:00}";
+            builderUI.batteryText.text = $"{droneBuilderController.droneRpgController.Battery:00}";
             builderUI.checkpointsCountText.text =
                 $"{droneBuilderCheckNode.currentNode}/{droneBuilderCheckNode.nodes.Count}";
-            builderUI.coinsCountText.text = $"{droneBuilderController.droneRpgController.DroneData.Coins}";
-            builderUI.crystalsCountText.text = $"{droneBuilderController.droneRpgController.DroneData.Crystals}";
+            builderUI.coinsCountText.text = $"{droneBuilderController.droneRpgController.Coins}";
+            builderUI.crystalsCountText.text = $"{droneBuilderController.droneRpgController.Crystals}";
             builderUI.armorBar.TurnBars(
                 droneBuilderController.droneRpgController.GetCurrentHealthIndex(droneBuilderController
-                    .droneRpgController.DroneData.Armor));
+                    .droneRpgController.Armor));
             builderUI.healthBar.TurnBars(
                 droneBuilderController.droneRpgController.GetCurrentHealthIndex(droneBuilderController
-                    .droneRpgController.DroneData.Health));
+                    .droneRpgController.Health));
         }
 
         private Vector3 CalculateCommonCenter(List<GameObject> objectsList)
@@ -427,7 +428,7 @@ namespace Builder
             {
                 _lamps = FindObjectsOfType<Lamp>().ToList();
                 timer.currentTime = 0;
-                droneBuilderController.droneRpgController.DroneData = new DroneData(100, 100, 100);
+                droneBuilderController.droneRpgController.ResetDroneData();
                 builderUI.droneView.SetActive(true);
                 freeFlyCamera.enabled = false;
                 freeFlyCamera.GetComponent<CinemachineVirtualCamera>().Priority = 0;

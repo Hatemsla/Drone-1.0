@@ -25,7 +25,7 @@ namespace Builder
         private float _finalYaw;
         private float _isMove;
         private float _jerkTime;
-        private bool _hasShield = true;
+        private bool _isShieldActive = true;
 
         private void Awake()
         {
@@ -53,8 +53,10 @@ namespace Builder
             InputManager.Instance.PedalsEvent += OnPedals;
             InputManager.Instance.JerkEvent += OnJerk;
             InputManager.Instance.ShieldEvent += OnShield;
+            InputManager.Instance.HpRestoreEvent += OnHpRestore;
+            InputManager.Instance.ArmorRestoreEvent += OnArmorRestore;
         }
-
+        
         private void OnThrottle(float value) => throttle = value;
         private void OnPedals(float value) => pedals = value;
         private void OnCyclic(Vector2 value) => cyclic = value;
@@ -67,6 +69,8 @@ namespace Builder
             InputManager.Instance.PedalsEvent -= OnPedals;
             InputManager.Instance.JerkEvent -= OnJerk;
             InputManager.Instance.ShieldEvent -= OnShield;
+            InputManager.Instance.HpRestoreEvent -= OnHpRestore;
+            InputManager.Instance.ArmorRestoreEvent -= OnArmorRestore;
         }
 
         private void FixedUpdate()
@@ -84,12 +88,32 @@ namespace Builder
             }
         }
         
+        private void OnHpRestore()
+        {
+            if (droneRpgController.SkillsCount[Skills.HpRestore] > 0)
+            {
+                droneRpgController.UpdateSkillValue(Skills.HpRestore, droneRpgController.SkillsCount[Skills.HpRestore] - 1);
+                droneRpgController.Health += 15f;
+            }
+        }
+
+        private void OnArmorRestore()
+        {
+            if (droneRpgController.SkillsCount[Skills.ArmorRestore] > 0)
+            {
+                droneRpgController.UpdateSkillValue(Skills.ArmorRestore, droneRpgController.SkillsCount[Skills.ArmorRestore] - 1);
+                droneRpgController.Armor += 20f;
+            }
+        }
+
+        
         private void OnShield()
         {
-            if (!isShieldActive && _hasShield)
+            if (!isShieldActive && _isShieldActive && droneRpgController.SkillsCount[Skills.Shield] > 0)
             {
+                droneRpgController.UpdateSkillValue(Skills.Shield, droneRpgController.SkillsCount[Skills.Shield] - 1);
                 isShieldActive = true;
-                _hasShield = false;
+                _isShieldActive = false;
                 droneRpgController.ApplyEnergyUsage(5);
                 shield.SetActive(true);
                 
@@ -106,8 +130,9 @@ namespace Builder
 
         private void OnJerk()
         {
-            if (_jerkTime >= 5)
+            if (_jerkTime >= jerkDelay && droneRpgController.SkillsCount[Skills.Jerk] > 0)
             {
+                droneRpgController.UpdateSkillValue(Skills.Jerk, droneRpgController.SkillsCount[Skills.Jerk] - 1);
                 rb.AddForce(rb.velocity.normalized * jerkForce, ForceMode.Impulse);
                 _jerkTime = 0;
             }
@@ -115,7 +140,7 @@ namespace Builder
 
         private void TurnFlashLight()
         {
-            if (BuilderManager.Instance.isMove)
+            if (BuilderManager.Instance.isMove && droneRpgController.SkillsCount[Skills.Flashlight] > 0)
             {
                 flashLight.enabled = !flashLight.enabled;
             }
