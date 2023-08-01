@@ -88,6 +88,9 @@ namespace Builder
                 case InteractiveType.Port:
                     selectedTrackObject.interactiveObject = selectedTrackObject.GetComponentInChildren<Port>();
                     break;
+                case InteractiveType.TrMessage:
+                    selectedTrackObject.interactiveObject = selectedTrackObject.GetComponentInChildren<TriggerMassege>();
+                    break;
             }
         }
 

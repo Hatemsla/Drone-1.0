@@ -59,6 +59,7 @@ namespace Builder
         [SerializeField] private GameObject controllerPanelPanel; 
         [SerializeField] private GameObject controllerButtonPanel;
         [SerializeField] private GameObject portPanel;
+        [SerializeField] private GameObject triggerMessagePanel;
         [SerializeField] private List<GameObject> interactivePanels;
 
         private Dictionary<float, int> _sliderValues = new Dictionary<float, int>()
@@ -186,6 +187,13 @@ namespace Builder
                     var portPassword = ((Port)trackObject.interactiveObject).portPassword.Password;
                     passwordInput.text = portPassword;
                     break;
+                case InteractiveType.TrMessage:
+                    Debug.Log("TrMessage");
+                    TurnInteractivePanels(triggerMessagePanel, isActivePanel);
+                    //hintInput.text = trackObject.interactiveObject.hintText.text;
+                    //activeToggle.isOn = trackObject.interactiveObject.isActive;
+                    break;
+
             }
         }
 

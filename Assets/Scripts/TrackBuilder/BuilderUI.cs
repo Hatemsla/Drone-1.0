@@ -20,8 +20,10 @@ namespace Builder
         public TMP_Text coinsCountText;
         public TMP_Text crystalsCountText;
         public Prompt prompt;
+        public HelpMessage helpMessage;
         public DroneBars healthBar;
         public DroneBars armorBar;
+
         
         [Header("UI")]
         public Button floorBtn;
