@@ -27,7 +27,7 @@ namespace Builder
         {
 
             ray = new Ray(transform.position, Vector3.up);
-            RaycastHit hit;
+            //RaycastHit hit;
             Debug.DrawRay(ray.origin, ray.direction * raycastDistance, Color.green);
 
 

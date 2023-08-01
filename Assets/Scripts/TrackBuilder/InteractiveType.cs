@@ -19,6 +19,7 @@
         ElectroGate,
         Panel,
         Button,
-        Terminal
+        Terminal,
+        TrMessage,
     }
 }
