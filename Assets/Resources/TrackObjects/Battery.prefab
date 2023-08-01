@@ -32,7 +32,7 @@ Transform:
   m_Children:
   - {fileID: 6101349974026216538}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 22
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &6362984205573141622
 Rigidbody:
@@ -84,8 +84,9 @@ MonoBehaviour:
   isActive: 1
   maxMouseDistance: 0
   damage: 1
-  objectName: 
-  objectDescription: 
+  objectName: "\u0411\u0410\u0422\u0410\u0420\u0415\u042F \u0417\u0410\u0420\u042F\u0414\u041D\u0410\u042F"
+  objectDescription: "\u0412\u043E\u0441\u0441\u0442\u0430\u043D\u0430\u0432\u043B\u0438\u0432\u0430\u0435\u0442
+    \u044D\u043D\u0435\u0440\u0433\u0438\u044E \u0434\u0440\u043E\u043D\u0430"
   interactiveObject: {fileID: 0}
 --- !u!1 &6910643701255225056
 GameObject:
@@ -152,9 +153,9 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 1539077798781546503, guid: 76d0bfb67feacd846b232e1c0d452eb3, type: 3}
-  - {fileID: -5656709519354267211, guid: 76d0bfb67feacd846b232e1c0d452eb3, type: 3}
-  - {fileID: -7625753277770169149, guid: 76d0bfb67feacd846b232e1c0d452eb3, type: 3}
+  - {fileID: 2100000, guid: 29ff0d7cc7341a4429ffabf79fe7571f, type: 2}
+  - {fileID: 2100000, guid: bea48fb61de03ac4f932739003f2c966, type: 2}
+  - {fileID: 2100000, guid: 22936e1d0e7db3b4787b6a345e7b5912, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -252,7 +253,6 @@ MonoBehaviour:
   leftPendulumAngle: 0
   rightPendulumAngle: 0
   windForce: 0
-  isFreezing: 1
   batteryEnergy: 0
   boostSpeed: 2
   isLampTurn: 1
@@ -263,3 +263,4 @@ MonoBehaviour:
   n2: 0
   n3: 0
   buttonDelay: 0
+  hasPassword: 0

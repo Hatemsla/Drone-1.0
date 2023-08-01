@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Drone;
 using UnityEngine;
 
@@ -106,7 +105,6 @@ namespace Builder
             }
         }
 
-        
         private void OnShield()
         {
             if (!isShieldActive && _isShieldActive && droneRpgController.SkillsCount[Skills.Shield] > 0)

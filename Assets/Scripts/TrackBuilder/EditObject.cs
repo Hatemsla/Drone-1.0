@@ -77,22 +77,19 @@ namespace Builder
                 currentObject.Position = new Vector3(currentObject.Position.x, currentObject.Position.y, z);
         }
         
-        public void OnXRotationChanged(string value)
+        public void OnXRotationChanged(float value)
         {
-            if(float.TryParse(value, out var x))
-                currentObject.Rotation = Quaternion.Euler(x, currentObject.Rotation.eulerAngles.y, currentObject.Rotation.eulerAngles.z);
+            currentObject.Rotation = Quaternion.Euler(value, currentObject.Rotation.eulerAngles.y, currentObject.Rotation.eulerAngles.z);
         }
         
-        public void OnYRotationChanged(string value)
+        public void OnYRotationChanged(float value)
         {
-            if(float.TryParse(value, out var y))
-                currentObject.Rotation = Quaternion.Euler(currentObject.Rotation.eulerAngles.x, y, currentObject.Rotation.eulerAngles.z);
+            currentObject.Rotation = Quaternion.Euler(currentObject.Rotation.eulerAngles.x, value, currentObject.Rotation.eulerAngles.z);
         }
         
-        public void OnZRotationChanged(string value)
+        public void OnZRotationChanged(float value)
         {
-            if(float.TryParse(value, out var z))
-                currentObject.Rotation = Quaternion.Euler(currentObject.Rotation.eulerAngles.x, currentObject.Rotation.eulerAngles.y, z);
+            currentObject.Rotation = Quaternion.Euler(currentObject.Rotation.eulerAngles.x, currentObject.Rotation.eulerAngles.y, value);
         }
 
         public void OnXYZScaleChanged(float value)

@@ -14,9 +14,12 @@ namespace Builder
         [SerializeField] private TMP_InputField xPos;
         [SerializeField] private TMP_InputField yPos;
         [SerializeField] private TMP_InputField zPos;
-        [SerializeField] private TMP_InputField xRot;
-        [SerializeField] private TMP_InputField yRot;
-        [SerializeField] private TMP_InputField zRot;
+        [SerializeField] private Slider xRot;
+        [SerializeField] private Slider yRot;
+        [SerializeField] private Slider zRot;
+        [SerializeField] private TMP_Text xRotValue;
+        [SerializeField] private TMP_Text yRotValue;
+        [SerializeField] private TMP_Text zRotValue;
         [SerializeField] private TMP_InputField hintInput;
         [SerializeField] private TMP_InputField passwordInput;
         [SerializeField] private Slider xyzScale;
@@ -85,18 +88,18 @@ namespace Builder
         {
             objectName.text = objName;
             objectDescription.text = objDesc;
-            xPos.text = xP.ToString("f2", CultureInfo.CurrentCulture);
-            yPos.text = yP.ToString("f2", CultureInfo.CurrentCulture);
-            zPos.text = zP.ToString("f2", CultureInfo.CurrentCulture);
-            xRot.text = xR.ToString("f2", CultureInfo.CurrentCulture);
-            yRot.text = yR.ToString("f2", CultureInfo.CurrentCulture);
-            zRot.text = zR.ToString("f2", CultureInfo.CurrentCulture);
+            xPos.text = xP.ToString("f1", CultureInfo.CurrentCulture);
+            yPos.text = yP.ToString("f1", CultureInfo.CurrentCulture);
+            zPos.text = zP.ToString("f1", CultureInfo.CurrentCulture);
+            xRotValue.text = xR.ToString("f1", CultureInfo.CurrentCulture);
+            yRotValue.text = yR.ToString("f1", CultureInfo.CurrentCulture);
+            zRotValue.text = zR.ToString("f1", CultureInfo.CurrentCulture);
             xyzScaleValue.text = xyzS.ToString("f1", CultureInfo.CurrentCulture);
             
             if(trackObject.objectType is ObjectsType.Gate or ObjectsType.Drone)
                 return;
 
-            xyzScale.value = ConvertScaleToSliderValue(xyzS);
+            // xyzScale.value = ConvertScaleToSliderValue(xyzS);
 
             switch (trackObject.interactiveType)
             {

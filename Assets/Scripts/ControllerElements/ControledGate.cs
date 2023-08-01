@@ -101,7 +101,6 @@ namespace Builder
             else if (option == ColorOption.Зелёный)
             {
                 isActiv = BuilderManager.Instance.isActivGreen;
-                
             }
             else if (option == ColorOption.Жёлтый)
             {

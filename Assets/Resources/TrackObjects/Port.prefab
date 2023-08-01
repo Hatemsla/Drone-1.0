@@ -46,11 +46,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec2bc65f8d8c2dc4f8e599bb3062859b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isActive: 1
+  windMillRotateSpeed: 0
+  magnetForce: 0
+  pendulumMoveSpeed: 0
+  leftPendulumAngle: 0
+  rightPendulumAngle: 0
+  windForce: 0
+  batteryEnergy: 0
+  boostSpeed: 0
+  isLampTurn: 1
+  hintText: {fileID: 0}
+  color_index: 0
+  ishacked: 0
+  n1: 0
+  n2: 0
+  n3: 0
+  buttonDelay: 0
+  hasPassword: 1
   prompt: {fileID: 0}
   portPassword: {fileID: 9097170824769164962}
   isOpen: 0
   isCameraChange: 0
-  hasPassword: 1
   securityCameras: []
   lamps: []
   pendulums: []
@@ -72,6 +89,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   password: 777
+  passwordInputLoss: 3
+  isBlocked: 0
 --- !u!65 &153136094914408284
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -149,8 +168,10 @@ MonoBehaviour:
   isActive: 1
   maxMouseDistance: 3
   damage: 1
-  objectName: 
-  objectDescription: 
+  objectName: "\u041F\u043E\u0440\u0442"
+  objectDescription: "\u0423\u043F\u0440\u0430\u0432\u043B\u044F\u0435\u0442 \u043C\u0435\u0445\u0430\u043D\u0438\u0437\u043C\u0430\u043C\u0438,
+    \u043C\u043E\u0436\u043D\u043E \u0432\u0437\u043B\u043E\u043C\u0430\u0442\u044C
+    \u0438 \u043E\u0442\u043A\u043B\u044E\u0447\u0438\u0442\u044C \u0447\u0442\u043E-\u043D\u0438\u0431\u0443\u0434\u044C"
   interactiveObject: {fileID: 0}
 --- !u!1001 &1838791018860162413
 PrefabInstance:

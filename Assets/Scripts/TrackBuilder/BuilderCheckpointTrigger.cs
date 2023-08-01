@@ -8,11 +8,10 @@ namespace Builder
 
         private void OnTriggerEnter(Collider other)
         {
-            if (!other.gameObject.CompareTag("Player") ||
-                other.GetComponentInParent<DroneBuilderCheckNode>().currentNode != checkpointId) return;
+            var player = other.GetComponentInParent<DroneBuilderCheckNode>();
+            if (!player || player.currentNode != checkpointId) return;
             
-            var drone = other.GetComponentInParent<DroneBuilderCheckNode>();
-            drone.CheckWaypoint();
+            player.CheckWaypoint();
         }
     }
 }

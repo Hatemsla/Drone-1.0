@@ -12,7 +12,7 @@ public class DroneBuilderCheckNode : CheckNode
         CalculateWayDistance();
     }
 
-    public void CalculateWayDistance()
+    private void CalculateWayDistance()
     {
         if(currentNode >= nodes.Count)
             return;
