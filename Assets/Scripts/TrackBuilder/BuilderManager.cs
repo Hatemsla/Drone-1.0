@@ -64,6 +64,7 @@ namespace Builder
         private List<Lamp> _lamps;
         private int _currentGroundIndex;
         private bool _isTabPanel;
+        private bool _isExitPanel;
         private bool _isLevelEnd;
         private Connection[] _connections;
         private RaycastHit _hit;
@@ -91,6 +92,9 @@ namespace Builder
             {
                 var i1 = i;
                 builderUI.createButtons[i].onClick.AddListener(delegate { SelectObject(i1); });
+                var trackObject = objects[i].GetComponent<TrackObject>();
+                builderUI.objectPreInfos[i].objectName = trackObject.objectName;
+                builderUI.objectPreInfos[i].objectDesc = trackObject.objectDescription;
             }
 
             builderUI.pathArrow.gameObject.SetActive(false);
@@ -126,7 +130,8 @@ namespace Builder
             InputManager.Instance.RotateXObjectEvent += RotateXObject;
             InputManager.Instance.ChangeObjectHeightEvent += ChangeObjectHeight;
             InputManager.Instance.ChangeObjectScaleEvent += ChangeObjectScale;
-            InputManager.Instance.ExitEvent += CheckTabPanel;
+            InputManager.Instance.ExitGameEvent += CheckTabPanel;
+            InputManager.Instance.ExitBuilderEvent += OpenExitPanel;
         }
 
         private void OnDisable()
@@ -145,6 +150,18 @@ namespace Builder
             InputManager.Instance.RotateXObjectEvent -= RotateXObject;
             InputManager.Instance.ChangeObjectHeightEvent -= ChangeObjectHeight;
             InputManager.Instance.ChangeObjectScaleEvent -= ChangeObjectScale;
+            InputManager.Instance.ExitGameEvent -= CheckTabPanel;
+            InputManager.Instance.ExitBuilderEvent -= OpenExitPanel;
+        }
+        
+        private void OpenExitPanel()
+        {
+            _isExitPanel = !_isExitPanel;
+            builderUI.exitBuilderPanel.SetActive(_isExitPanel);
+            builderUI.createPanel.SetActive(!_isExitPanel);
+            builderUI.editButtons.SetActive(!_isExitPanel);
+            builderUI.objectEditPanel.SetActive(!_isExitPanel);
+            Time.timeScale = _isExitPanel ? 0f : 1f;
         }
 
         private void RotateXObject(float value)

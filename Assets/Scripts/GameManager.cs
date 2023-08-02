@@ -94,13 +94,9 @@ namespace Drone
                 {
                     builderManager = FindObjectOfType<BuilderManager>();
                     builderManager.currentYawSensitivity = gameData.currentYawSensitivity;
+                    builderManager.builderUI.editorGameExitBtn.onClick.AddListener(GameManagerUtils.Exit);
                     builderManager.builderUI.editorExitBtn.onClick.AddListener(GameManagerUtils.Exit);
                     builderManager.builderUI.gameExitBtn.onClick.AddListener(GameManagerUtils.Exit);
-                    builderManager.builderUI.backBtn.onClick.AddListener(delegate
-                    {
-                        GameManagerUtils.BackToMenu(asyncLoad, builderManager.builderUI.uiPanel,
-                            builderManager.builderUI.loadPanel);
-                    });
                     builderManager.builderUI.backEditorTabBtn.onClick.AddListener(delegate
                     {
                         GameManagerUtils.BackToMenu(asyncLoad, builderManager.builderUI.uiPanel,

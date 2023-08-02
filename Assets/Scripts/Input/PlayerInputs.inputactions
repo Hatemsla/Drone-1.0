@@ -615,6 +615,15 @@
                     "processors": "",
                     "interactions": "Press",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "ExitBtn",
+                    "type": "Button",
+                    "id": "0714fe25-e54b-4fcd-b8e0-8c975b518950",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -1011,6 +1020,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "LockCursor",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7ee45ca6-19ce-4841-9ad2-6032b1687b52",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ExitBtn",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -10,7 +10,6 @@ namespace Builder
     public class EditMenu : MonoBehaviour
     {
         [SerializeField] private TMP_Text objectName;
-        [SerializeField] private TMP_Text objectDescription;
         [SerializeField] private TMP_InputField xPos;
         [SerializeField] private TMP_InputField yPos;
         [SerializeField] private TMP_InputField zPos;
@@ -43,12 +42,12 @@ namespace Builder
         [SerializeField] private Toggle activeToggle;
         [SerializeField] private Toggle hasPasswordToggle;
         [SerializeField] private Toggle is_hacked;
-        [SerializeField] private Dropdown color; 
-        [SerializeField] private Dropdown color_panel; 
-        [SerializeField] private Dropdown color_button; 
-        [SerializeField] private Dropdown code_n1; 
-        [SerializeField] private Dropdown code_n2; 
-        [SerializeField] private Dropdown code_n3; 
+        [SerializeField] private TMP_Dropdown color; 
+        [SerializeField] private TMP_Dropdown color_panel; 
+        [SerializeField] private TMP_Dropdown color_button; 
+        [SerializeField] private TMP_Dropdown code_n1; 
+        [SerializeField] private TMP_Dropdown code_n2; 
+        [SerializeField] private TMP_Dropdown code_n3; 
         [SerializeField] private GameObject isActivePanel;
         [SerializeField] private GameObject windmillPanel;
         [SerializeField] private GameObject magnetPanel;
@@ -88,19 +87,17 @@ namespace Builder
         public void SetEditPanelParams(string objName, string objDesc, float xP, float yP, float zP, float xR, float yR, float zR, float xyzS, TrackObject trackObject)
         {
             objectName.text = objName;
-            objectDescription.text = objDesc;
             xPos.text = xP.ToString("f1", CultureInfo.CurrentCulture);
             yPos.text = yP.ToString("f1", CultureInfo.CurrentCulture);
             zPos.text = zP.ToString("f1", CultureInfo.CurrentCulture);
             xRotValue.text = xR.ToString("f1", CultureInfo.CurrentCulture);
             yRotValue.text = yR.ToString("f1", CultureInfo.CurrentCulture);
             zRotValue.text = zR.ToString("f1", CultureInfo.CurrentCulture);
-            xyzScaleValue.text = xyzS.ToString("f1", CultureInfo.CurrentCulture);
             
             if(trackObject.objectType is ObjectsType.Gate or ObjectsType.Drone)
                 return;
 
-            // xyzScale.value = ConvertScaleToSliderValue(xyzS);
+            xyzScale.value = ConvertScaleToSliderValue(xyzS);
 
             switch (trackObject.interactiveType)
             {
@@ -115,6 +112,13 @@ namespace Builder
                     activeToggle.isOn = trackObject.interactiveObject.isActive;
                     break;
                 case InteractiveType.Magnet:
+                    TurnInteractivePanels(magnetPanel, isActivePanel);
+                    magnetForce.value = trackObject.interactiveObject.magnetForce;
+                    magnetForceValue.text =
+                        trackObject.interactiveObject.magnetForce.ToString("f1", CultureInfo.CurrentCulture);
+                    activeToggle.isOn = trackObject.interactiveObject.isActive;
+                    break;
+                case InteractiveType.MagnetKiller:
                     TurnInteractivePanels(magnetPanel, isActivePanel);
                     magnetForce.value = trackObject.interactiveObject.magnetForce;
                     magnetForceValue.text =
@@ -210,7 +214,7 @@ namespace Builder
         {
             if (_sliderValues.TryGetValue(originValue, out var value))
                 return value;
-
+            
             return (int)xyzScale.value;
         }
 

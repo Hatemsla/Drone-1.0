@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Drone;
 using UnityEngine;
 
@@ -7,22 +8,25 @@ namespace Builder
     public class MagnetKiller : InteractiveObject
     {
         public float rotationSpeed;
-        public Transform leftRotor;
-        public Transform rightRotor;
-        
-        private readonly float _baseDamage = 10.0f;
-        private readonly float _damageInterval = 1.0f;
+        [SerializeField] private Magnet magnet;
+        [SerializeField] private Transform leftRotor;
+        [SerializeField] private Transform rightRotor;
+        [SerializeField] private float baseDamage = 10.0f;
+        [SerializeField] private float damageInterval = 1.0f;
         private float _timer;
 
         private void Start()
         {
             rotationSpeed = 100;
+            magnetForce = 1;
         }
 
         private void FixedUpdate()
         {
             if (isActive)
             {
+                magnet.Attraction(magnetForce);
+                
                 var leftRotation = rotationSpeed * Time.deltaTime;
                 var rightRotation = rotationSpeed * Time.deltaTime;
 
@@ -30,7 +34,7 @@ namespace Builder
                 rightRotor.Rotate(rightRotation, 0f, 0f);
             }
         }
-
+        
         private void OnTriggerStay(Collider other)
         {
             if(!isActive)
@@ -41,9 +45,9 @@ namespace Builder
             {
                 _timer += Time.deltaTime;
 
-                if (_timer >= _damageInterval)
+                if (_timer >= damageInterval)
                 {
-                    var damage = _baseDamage + (_timer / _damageInterval) * _baseDamage;
+                    var damage = baseDamage + (_timer / damageInterval) * baseDamage;
 
                     player.ApplyDamage(damage);
                     _timer = 0.0f;
