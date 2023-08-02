@@ -30,9 +30,9 @@ namespace Builder
         public Button wallBtn;
         public Button slantBtn;
         public Button gateBtn;
+        public Button editorGameExitBtn;
         public Button editorExitBtn;
         public Button gameExitBtn;
-        public Button backBtn;
         public Button backEditorTabBtn;
         public Button backGameTabBtn;
         public Button saveBtn;
@@ -43,6 +43,7 @@ namespace Builder
         public Sprite pointerIcon;
         public Sprite outOfScreenIcon;
 
+        public GameObject exitBuilderPanel;
         public GameObject createPanel;
         public GameObject editButtons;
         public GameObject editorTabPanel;
@@ -60,7 +61,8 @@ namespace Builder
         public GameObject securityCameraView;
 
         public List<Button> createButtons;
-        
+        public List<ObjectPreInfo> objectPreInfos;
+
         [Header("Animations")]
         public Animator savePanelAnimator;
 
@@ -68,7 +70,11 @@ namespace Builder
 
         private void Awake()
         {
-            createButtons = createButtonsParent.GetComponentsInChildren<Button>().ToList();
+            // createButtons = createButtonsParent.GetComponentsInChildren<Button>().ToList();
+            foreach (var createButton in createButtons)
+            {
+                objectPreInfos.Add(createButton.GetComponent<ObjectPreInfo>());
+            }
         }
     }
 }

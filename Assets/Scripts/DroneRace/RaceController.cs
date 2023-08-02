@@ -55,12 +55,12 @@ namespace DroneRace
 
         private void OnEnable()
         {
-            InputManager.Instance.ExitEvent += CheckTabPanel;
+            InputManager.Instance.ExitGameEvent += CheckTabPanel;
         }
 
         private void OnDisable()
         {
-            InputManager.Instance.ExitEvent -= CheckTabPanel;
+            InputManager.Instance.ExitGameEvent -= CheckTabPanel;
         }
 
         private void Update()

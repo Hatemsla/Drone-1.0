@@ -52,6 +52,9 @@ namespace Builder
                 case InteractiveType.Magnet:
                     selectedTrackObject.interactiveObject = selectedTrackObject.GetComponentInChildren<RigidbodyMagnet>();
                     break;
+                case InteractiveType.MagnetKiller:
+                    selectedTrackObject.interactiveObject = selectedTrackObject.GetComponentInChildren<MagnetKiller>();
+                    break;
                 case InteractiveType.Pendulum:
                     selectedTrackObject.interactiveObject = selectedTrackObject.GetComponentInChildren<Pendulum>();
                     break;

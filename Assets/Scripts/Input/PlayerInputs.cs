@@ -637,6 +637,15 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": ""Press"",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ExitBtn"",
+                    ""type"": ""Button"",
+                    ""id"": ""0714fe25-e54b-4fcd-b8e0-8c975b518950"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -1033,6 +1042,17 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""LockCursor"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7ee45ca6-19ce-4841-9ad2-6032b1687b52"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ExitBtn"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -2059,6 +2079,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         m_Builder_RotateXObject = m_Builder.FindAction("RotateXObject", throwIfNotFound: true);
         m_Builder_MouseScroll = m_Builder.FindAction("MouseScroll", throwIfNotFound: true);
         m_Builder_LockCursor = m_Builder.FindAction("LockCursor", throwIfNotFound: true);
+        m_Builder_ExitBtn = m_Builder.FindAction("ExitBtn", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -2360,6 +2381,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
     private readonly InputAction m_Builder_RotateXObject;
     private readonly InputAction m_Builder_MouseScroll;
     private readonly InputAction m_Builder_LockCursor;
+    private readonly InputAction m_Builder_ExitBtn;
     public struct BuilderActions
     {
         private @PlayerInputs m_Wrapper;
@@ -2379,6 +2401,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         public InputAction @RotateXObject => m_Wrapper.m_Builder_RotateXObject;
         public InputAction @MouseScroll => m_Wrapper.m_Builder_MouseScroll;
         public InputAction @LockCursor => m_Wrapper.m_Builder_LockCursor;
+        public InputAction @ExitBtn => m_Wrapper.m_Builder_ExitBtn;
         public InputActionMap Get() { return m_Wrapper.m_Builder; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -2433,6 +2456,9 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @LockCursor.started += instance.OnLockCursor;
             @LockCursor.performed += instance.OnLockCursor;
             @LockCursor.canceled += instance.OnLockCursor;
+            @ExitBtn.started += instance.OnExitBtn;
+            @ExitBtn.performed += instance.OnExitBtn;
+            @ExitBtn.canceled += instance.OnExitBtn;
         }
 
         private void UnregisterCallbacks(IBuilderActions instance)
@@ -2482,6 +2508,9 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @LockCursor.started -= instance.OnLockCursor;
             @LockCursor.performed -= instance.OnLockCursor;
             @LockCursor.canceled -= instance.OnLockCursor;
+            @ExitBtn.started -= instance.OnExitBtn;
+            @ExitBtn.performed -= instance.OnExitBtn;
+            @ExitBtn.canceled -= instance.OnExitBtn;
         }
 
         public void RemoveCallbacks(IBuilderActions instance)
@@ -2928,6 +2957,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         void OnRotateXObject(InputAction.CallbackContext context);
         void OnMouseScroll(InputAction.CallbackContext context);
         void OnLockCursor(InputAction.CallbackContext context);
+        void OnExitBtn(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

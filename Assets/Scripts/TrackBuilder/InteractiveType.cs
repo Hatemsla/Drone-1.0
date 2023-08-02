@@ -21,5 +21,6 @@
         Button,
         Terminal,
         TrMessage,
+        MagnetKiller,
     }
 }

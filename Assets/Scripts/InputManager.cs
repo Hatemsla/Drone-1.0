@@ -29,7 +29,7 @@ namespace Drone
         public event Action XRayEvent;
         public event Action<float> ChangeObjectHeightEvent;
         public event Action<float> ChangeObjectScaleEvent;
-        public event Action ExitEvent;
+        public event Action ExitGameEvent;
         public event Action SetCursorEvent;
         public event Action CameraBoostEvent;
         public event Action<Vector2> CameraMoveEvent;
@@ -51,6 +51,7 @@ namespace Drone
         public event Action SpinNumberXRightEvent;
         public event Action HpRestoreEvent;
         public event Action ArmorRestoreEvent;
+        public event Action ExitBuilderEvent;
 
         public static event Action RebindComplete;
         public static event Action RebindCanceled;
@@ -76,7 +77,7 @@ namespace Drone
             _playerInput.Player.RewindTime.canceled += _ => RewindTimeEvent?.Invoke(false);
             _playerInput.Player.ThermalVision.performed += _ => ThermalVisionEvent?.Invoke();
             _playerInput.Player.XRay.performed += _ => XRayEvent?.Invoke();
-            _playerInput.Player.Exit.performed += _ => ExitEvent?.Invoke();
+            _playerInput.Player.Exit.performed += _ => ExitGameEvent?.Invoke();
             _playerInput.Player.SwitchView.performed += _ => SwitchViewEvent?.Invoke();
             _playerInput.Player.Jerk.performed += _ => JerkEvent?.Invoke();
             _playerInput.Player.Shield.performed += _ => ShieldEvent?.Invoke();
@@ -112,6 +113,7 @@ namespace Drone
             _playerInput.Builder.ChangeObjectHeight.canceled += _ => ChangeObjectHeightEvent?.Invoke(0f);
             _playerInput.Builder.ChangeObjectScale.performed += _ => ChangeObjectScaleEvent?.Invoke(_.ReadValue<float>());
             _playerInput.Builder.LockCursor.performed += _ => LockCursorEvent?.Invoke();
+            _playerInput.Builder.ExitBtn.performed += _ => ExitBuilderEvent?.Invoke();
             
             _playerInput.Camera.SetCursor.performed += _ => SetCursorEvent?.Invoke();
             _playerInput.Camera.CameraBoostSpeed.performed += _ => CameraBoostEvent?.Invoke();

@@ -402,15 +402,17 @@ MonoBehaviour:
   connection: {fileID: 0}
   objectType: 512
   hasPortal: 1
-  interactiveType: 2
+  interactiveType: 19
   effectType: 1
   yOffset: 0.429
   yOffsetIncrease: 0.28
   isActive: 1
   maxMouseDistance: 0
   damage: 1
-  objectName: 
-  objectDescription: 
+  objectName: "\u041C\u0430\u0433\u043D\u0438\u0442 \u043B\u043E\u0432\u0443\u0448\u043A\u0430"
+  objectDescription: "\u0414\u0435\u0439\u0441\u0442\u0432\u0443\u0435\u0442 \u043A\u0430\u043A
+    \u043C\u0430\u0433\u043D\u0438\u0442, \u043C\u043E\u0436\u0435\u0442 \u0443\u043D\u0438\u0447\u0442\u043E\u0436\u0438\u0442\u044C
+    \u0434\u0440\u043E\u043D"
   interactiveObject: {fileID: 0}
 --- !u!1 &4420926778266880387
 GameObject:
@@ -1089,8 +1091,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2273833403049074225}
-  - component: {fileID: 4668416592035826617}
   - component: {fileID: 3271833837789513555}
+  - component: {fileID: 365131175647004451}
   m_Layer: 2
   m_Name: MagnetTrigger
   m_TagString: Untagged
@@ -1113,36 +1115,6 @@ Transform:
   m_Father: {fileID: 3896064304808219449}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4668416592035826617
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7142197897921497704}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2da39162af5542c18603e0e6a9fa86f0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isActive: 1
-  windMillRotateSpeed: 0
-  magnetForce: 0.7
-  pendulumMoveSpeed: 0
-  leftPendulumAngle: 0
-  rightPendulumAngle: 0
-  windForce: 0
-  isFreezing: 1
-  batteryEnergy: 0
-  boostSpeed: 2
-  isLampTurn: 1
-  hintText: {fileID: 0}
-  color_index: 0
-  ishacked: 0
-  n1: 0
-  n2: 0
-  n3: 0
-  buttonDelay: 0
 --- !u!135 &3271833837789513555
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1164,6 +1136,18 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 3.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &365131175647004451
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7142197897921497704}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3423f8972cc23fa418711b855dd004d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8082848854336553996
 GameObject:
   m_ObjectHideFlags: 0
@@ -1218,7 +1202,6 @@ MonoBehaviour:
   leftPendulumAngle: 0
   rightPendulumAngle: 0
   windForce: 0
-  isFreezing: 1
   batteryEnergy: 0
   boostSpeed: 0
   isLampTurn: 1
@@ -1229,9 +1212,13 @@ MonoBehaviour:
   n2: 0
   n3: 0
   buttonDelay: 0
+  hasPassword: 0
   rotationSpeed: 100
+  magnet: {fileID: 365131175647004451}
   leftRotor: {fileID: 3047688588121842911}
   rightRotor: {fileID: 2281667350719568027}
+  baseDamage: 10
+  damageInterval: 1
 --- !u!65 &1588413927931421681
 BoxCollider:
   m_ObjectHideFlags: 0
