@@ -9,5 +9,9 @@ namespace Builder
         {
             
         }
+
+        public override void SetColorIndex(int active)
+        {
+        }
     }
 }

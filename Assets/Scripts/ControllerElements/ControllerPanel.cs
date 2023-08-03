@@ -197,6 +197,13 @@ namespace Builder
             SetColor(GetColorFromOption(selectedColorOption), false);
         }
 
+        public override void SetColorIndex(int value)
+        {
+            color_index = value;
+            selectedColorOption = (ColorOption)value;
+            SetColor(GetColorFromOption(selectedColorOption), false);
+        }
+
         public override void SetActive(bool active)
         {
             

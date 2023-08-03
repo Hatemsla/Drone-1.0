@@ -7,41 +7,37 @@ namespace Builder
 {
     public class GrabbedObject : MonoBehaviour
     {
+        [SerializeField] private Prompt prompt;
+
+        public Rigidbody grabbedObjectRigidbody;
+
+
+        private GameObject grabberObject;
+        private Rigidbody grabberObjectRigidbody;
+
+
         private bool isObjectGrabbed = false;
-        private GameObject grabbedObject;
-        private Rigidbody grabbedObjectRigidbody;
+        private bool isMovePrev = false;
+        //private Rigidbody grabbedObjectRigidbody;
         private FixedJoint joint;
         public float raycastDistance = 5f;
         private Ray ray;
-        // public Transform target;
-        
 
-        // Start is called before the first frame update
-        void Start()
-        {
-        
-        }
-
-        // Update is called once per frame
         void Update()
         {
-
+            CheckGrab();
             ray = new Ray(transform.position, Vector3.up);
-            //RaycastHit hit;
-            Debug.DrawRay(ray.origin, ray.direction * raycastDistance, Color.green);
+            set_gravity_if_move();
+        }
 
+        private void set_gravity_if_move()
+        {
+            if (isMovePrev == BuilderManager.Instance.isMove)
+            { 
+                isMovePrev = !isMovePrev;
+                grabbedObjectRigidbody.isKinematic = !BuilderManager.Instance.isMove;
+            }
 
-            // if (Input.GetKeyDown(KeyCode.F))
-            // {
-            //     if (!isObjectGrabbed)
-            //     {
-            //         TryGrabObject();
-            //     }
-            //     else
-            //     {
-            //         ReleaseObject();
-            //     }
-            // }
         }
 
         private void check_button()
@@ -59,34 +55,61 @@ namespace Builder
         private void OnEnable()
         {
             InputManager.Instance.ApplyOpenEvent += check_button;
+            BuilderManager.Instance.ObjectChangeSceneEvent += FindPrompt;
+
         }
 
         private void OnDisable()
         {
             InputManager.Instance.ApplyOpenEvent -= check_button;
+            BuilderManager.Instance.ObjectChangeSceneEvent -= FindPrompt;
+
+        }
+
+        private void FindPrompt()
+        {
+            prompt = FindObjectOfType<BuilderUI>().prompt;
+        }
+
+        private void CheckGrab()
+        {
+            if (!isObjectGrabbed)
+            {
+                RaycastHit hit;
+                if (Physics.Raycast(ray, out hit, raycastDistance))
+                {
+                    if (hit.collider.GetComponentInParent<DroneController>())//if (hit.collider.CompareTag("Player"))//
+                    {
+                        //prompt.ChangePromptText("Для захвата нажмите F");
+                        prompt.SetActive(BuilderManager.Instance.isMove);
+                    }
+                }
+                else
+                {
+                    prompt.SetActive(false);
+                }
+            }
+            else
+            {
+                prompt.SetActive(false);
+            }
         }
 
         private void TryGrabObject()
         {
-            Debug.Log("TryGrab");
             RaycastHit hit;
-            Debug.Log(Physics.Raycast(ray, out hit, raycastDistance));            
-
             if (Physics.Raycast(ray, out hit, raycastDistance))
             {
                 if (hit.collider.GetComponentInParent<DroneController>())//if (hit.collider.CompareTag("Player"))//
                 {
-                    Debug.Log("Grabbed");
-                    grabbedObject = hit.collider.gameObject;
-                    grabbedObjectRigidbody = grabbedObject.GetComponent<Rigidbody>();
+                    grabberObject = hit.collider.gameObject;
+                    grabberObjectRigidbody = grabberObject.GetComponent<Rigidbody>();
 
                     joint = gameObject.AddComponent<FixedJoint>();
-                    joint.connectedBody = grabbedObjectRigidbody;
+                    joint.connectedBody = grabberObjectRigidbody;
                     
                     isObjectGrabbed = true;
-
-
-                }
+                 }
             }
         }
 
@@ -95,8 +118,8 @@ namespace Builder
             if (joint != null)
             {
                 Destroy(joint);
-                grabbedObject = null;
-                grabbedObjectRigidbody = null;
+                grabberObject = null;
+                grabberObjectRigidbody = null;
                 isObjectGrabbed = false;
             }
         }

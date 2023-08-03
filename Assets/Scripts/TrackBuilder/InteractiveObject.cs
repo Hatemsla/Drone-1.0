@@ -25,6 +25,8 @@ namespace Builder
         [HideInInspector] public float buttonDelay;
         [HideInInspector] public bool hasPassword;
 
+
         public abstract void SetActive(bool active);
+        public abstract void SetColorIndex(int color);
     }
 }

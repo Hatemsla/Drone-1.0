@@ -96,7 +96,9 @@ namespace Builder
         {
             lineColor = color;
         }
-
+        public override void SetColorIndex(int active)
+        {
+        }
         public override void SetActive(bool active)
         {
             

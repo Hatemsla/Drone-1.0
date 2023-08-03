@@ -32,5 +32,9 @@ namespace Builder
         {
             isActive = active;
         }
+
+        public override void SetColorIndex(int active)
+        {
+        }
     }
 }

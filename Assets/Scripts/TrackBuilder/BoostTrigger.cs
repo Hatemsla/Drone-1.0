@@ -34,4 +34,8 @@ public class BoostTrigger : InteractiveObject
     {
         
     }
+
+    public override void SetColorIndex(int active)
+    {
+    }
 }

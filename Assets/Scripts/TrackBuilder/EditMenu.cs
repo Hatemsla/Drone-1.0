@@ -49,6 +49,7 @@ namespace Builder
         [SerializeField] private TMP_Dropdown code_n2; 
         [SerializeField] private TMP_Dropdown code_n3; 
         [SerializeField] private GameObject isActivePanel;
+        [SerializeField] private GameObject colorPanel;
         [SerializeField] private GameObject windmillPanel;
         [SerializeField] private GameObject magnetPanel;
         [SerializeField] private GameObject pendulumPanel;
@@ -160,8 +161,9 @@ namespace Builder
                     activeToggle.isOn = trackObject.interactiveObject.isActive;
                     break;
                 case InteractiveType.Lamp:
-                    TurnInteractivePanels(isActivePanel);
+                    TurnInteractivePanels(isActivePanel, colorPanel);
                     activeToggle.isOn = trackObject.interactiveObject.isLampTurn;
+                    color.value = trackObject.interactiveObject.color_index;
                     break;
                 case InteractiveType.Hint:
                     TurnInteractivePanels(hintPanel, isActivePanel);
@@ -185,7 +187,7 @@ namespace Builder
                     color_panel.value = trackObject.interactiveObject.color_index;
                     break;
                 case InteractiveType.Button:
-                    TurnInteractivePanels(controllerButtonPanel, isActivePanel);
+                    TurnInteractivePanels(controllerButtonPanel);
                     color_button.value = trackObject.interactiveObject.color_index;
                     break;
                 case InteractiveType.Port:

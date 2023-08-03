@@ -210,6 +210,11 @@ namespace Builder
         {
             currentObject.interactiveObject.SetActive(value);
         }
+
+        public void OnSetColorObject(int value)
+        {
+            currentObject.interactiveObject.SetColorIndex(value);
+        }
         
         public void OnHasPasswordChanged(bool value)
         {

@@ -562,6 +562,15 @@ namespace Builder
                 var isLampTurn = kvp.Value[Idents.Tags.SaveLoadTags.IsLampTurn] != "null" &&
                                  Convert.ToBoolean(kvp.Value[Idents.Tags.SaveLoadTags.IsLampTurn]);
 
+                var color_index = kvp.Value[nameof(currentObjectType.interactiveObject.color_index)] != "null"
+                                ? Convert.ToInt32(kvp.Value[nameof(currentObjectType.interactiveObject.color_index)])
+                                : 0;
+
+                var isActive = kvp.Value[nameof(currentObjectType.interactiveObject.isActive)] != "null" &&
+                                 Convert.ToBoolean(kvp.Value[nameof(currentObjectType.interactiveObject.isActive)]);
+
+
+
                 var newObj = Instantiate(Resources.Load<GameObject>("TrackObjects/" + objectName), position,
                     Quaternion.Euler(rotation));
                 yield return new WaitForSeconds(0.01f);
@@ -612,6 +621,12 @@ namespace Builder
                     case InteractiveType.Lamp:
                         trackObj.interactiveObject = trackObj.GetComponentInChildren<Lamp>();
                         trackObj.interactiveObject.isLampTurn = isLampTurn;
+                        break;
+                    case InteractiveType.ElectroGate:
+                        trackObj.interactiveObject = trackObj.GetComponentInChildren<ControledGate>();
+                        trackObj.interactiveObject.color_index = color_index;
+                        trackObj.interactiveObject.isActive = isActive;
+
                         break;
                     case InteractiveType.Draw:
                         break;

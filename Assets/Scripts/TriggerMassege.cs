@@ -30,10 +30,10 @@ namespace Builder
 
         private void OnTriggerEnter(Collider other)
         {
-            //if (!FirstEnter || !BuilderManager.Instance.isMove)
-            //{
-            //    return;
-            //}
+            if (!FirstEnter || !BuilderManager.Instance.isMove)
+            {
+                return;
+            }
             if (other.GetComponentInParent<DroneController>() is DroneBuilderController drone)
             {
                 message.SetActive(true);
@@ -45,11 +45,6 @@ namespace Builder
         private void ShowMassage()
         {
 
-        }
-
-        public override void SetActive(bool active)
-        {
-            isActive = active;
         }
 
         private void FindMassge()
@@ -72,6 +67,14 @@ namespace Builder
         private void SetMessageText(string value)
         {
             messageText = value;
+        }
+
+        public override void SetActive(bool active)
+        {
+        }
+
+        public override void SetColorIndex(int active)
+        {
         }
     }
 }

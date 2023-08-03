@@ -16,6 +16,7 @@ namespace Builder
 
         public enum ColorOption
         {
+            Белый,
             Красный, 
             Зелёный,
             Жёлтый,
@@ -29,7 +30,7 @@ namespace Builder
         void Start()
         {
             objectRenderer = gateObject.GetComponent<Renderer>();
-            SetColor(GetColorFromOption(selectedColorOption)); 
+            //SetColor(GetColorFromOption(selectedColorOption)); 
             mesh = gateObject.GetComponent<MeshRenderer>();
             col = gateObject.GetComponent<Collider>();
             if (!isActive)
@@ -71,6 +72,8 @@ namespace Builder
         {
             switch (option)
             {
+                case ColorOption.Белый:
+                    return Color.white;
                 case ColorOption.Красный:
                     return Color.red;
                 case ColorOption.Зелёный:
@@ -122,6 +125,13 @@ namespace Builder
         }
 
         public void set_color_index(int value)
+        {
+            color_index = value;
+            selectedColorOption = (ColorOption)value;
+            SetColor(GetColorFromOption(selectedColorOption));
+        }
+
+        public override void SetColorIndex(int value)
         {
             color_index = value;
             selectedColorOption = (ColorOption)value;
