@@ -520,47 +520,47 @@ namespace Builder
 
             foreach (var kvp in loadedData)
             {
-                var objectName = kvp.Value["name"].Substring(0, kvp.Value["name"].IndexOf('('));
-                var position = TrackBuilderUtils.ParseVector3(kvp.Value["position"]);
-                var rotation = TrackBuilderUtils.ParseVector3(kvp.Value["rotation"]);
-                var scale = TrackBuilderUtils.ParseVector3(kvp.Value["scale"]);
-                var layer = Convert.ToInt32(kvp.Value["layer"]);
-                var yOffset = Convert.ToSingle(kvp.Value[nameof(currentObjectType.yOffset)]);
-                var maxMouseDistance = Convert.ToSingle(kvp.Value[nameof(currentObjectType.maxMouseDistance)]);
-                var rotSpeed = kvp.Value[nameof(currentObjectType.interactiveObject.windMillRotateSpeed)] != "null"
-                    ? Convert.ToSingle(kvp.Value[nameof(currentObjectType.interactiveObject.magnetForce)])
+                var objectName = kvp.Value[Idents.Tags.SaveLoadTags.ObjectName].Substring(0, kvp.Value[Idents.Tags.SaveLoadTags.ObjectName].IndexOf('('));
+                var position = TrackBuilderUtils.ParseVector3(kvp.Value[Idents.Tags.SaveLoadTags.Position]);
+                var rotation = TrackBuilderUtils.ParseVector3(kvp.Value[Idents.Tags.SaveLoadTags.Rotation]);
+                var scale = TrackBuilderUtils.ParseVector3(kvp.Value[Idents.Tags.SaveLoadTags.Scale]);
+                var layer = Convert.ToInt32(kvp.Value[Idents.Tags.SaveLoadTags.Layer]);
+                var yOffset = Convert.ToSingle(kvp.Value[Idents.Tags.SaveLoadTags.YOffset]);
+                var maxMouseDistance = Convert.ToSingle(kvp.Value[Idents.Tags.SaveLoadTags.MaxMouseDistance]);
+                var rotSpeed = kvp.Value[Idents.Tags.SaveLoadTags.WindMillRotateSpeed] != "null"
+                    ? Convert.ToSingle(kvp.Value[Idents.Tags.SaveLoadTags.MagnetForce])
                     : 0f;
-                var magnetForce = kvp.Value[nameof(currentObjectType.interactiveObject.magnetForce)] != "null"
-                    ? Convert.ToSingle(kvp.Value[nameof(currentObjectType.interactiveObject.magnetForce)])
+                var magnetForce = kvp.Value[Idents.Tags.SaveLoadTags.MagnetForce] != "null"
+                    ? Convert.ToSingle(kvp.Value[Idents.Tags.SaveLoadTags.MagnetForce])
                     : 0f;
                 var pendulumMoveSpeed =
-                    kvp.Value[nameof(currentObjectType.interactiveObject.pendulumMoveSpeed)] != "null"
-                        ? Convert.ToSingle(kvp.Value[nameof(currentObjectType.interactiveObject.pendulumMoveSpeed)])
+                    kvp.Value[Idents.Tags.SaveLoadTags.PendulumMoveSpeed] != "null"
+                        ? Convert.ToSingle(kvp.Value[Idents.Tags.SaveLoadTags.PendulumMoveSpeed])
                         : 0f;
                 var leftPendulumAngle =
-                    kvp.Value[nameof(currentObjectType.interactiveObject.leftPendulumAngle)] != "null"
-                        ? Convert.ToSingle(kvp.Value[nameof(currentObjectType.interactiveObject.leftPendulumAngle)])
+                    kvp.Value[Idents.Tags.SaveLoadTags.LeftPendulumAngle] != "null"
+                        ? Convert.ToSingle(kvp.Value[Idents.Tags.SaveLoadTags.LeftPendulumAngle])
                         : 0f;
                 var rightPendulumAngle =
-                    kvp.Value[nameof(currentObjectType.interactiveObject.rightPendulumAngle)] != "null"
-                        ? Convert.ToSingle(kvp.Value[nameof(currentObjectType.interactiveObject.rightPendulumAngle)])
+                    kvp.Value[Idents.Tags.SaveLoadTags.RightPendulumAngle] != "null"
+                        ? Convert.ToSingle(kvp.Value[Idents.Tags.SaveLoadTags.RightPendulumAngle])
                         : 0f;
-                var windForce = kvp.Value[nameof(currentObjectType.interactiveObject.windForce)] != "null"
-                    ? Convert.ToSingle(kvp.Value[nameof(currentObjectType.interactiveObject.windForce)])
+                var windForce = kvp.Value[Idents.Tags.SaveLoadTags.WindForce] != "null"
+                    ? Convert.ToSingle(kvp.Value[Idents.Tags.SaveLoadTags.WindForce])
                     : 0f;
-                var batteryEnergy = kvp.Value[nameof(currentObjectType.interactiveObject.batteryEnergy)] != "null"
-                    ? Convert.ToSingle(kvp.Value[nameof(currentObjectType.interactiveObject.batteryEnergy)])
+                var batteryEnergy = kvp.Value[Idents.Tags.SaveLoadTags.BatteryEnergy] != "null"
+                    ? Convert.ToSingle(kvp.Value[Idents.Tags.SaveLoadTags.BatteryEnergy])
                     : 0f;
-                var freezing = kvp.Value["isFreezing"] != "null" &&
-                               Convert.ToBoolean(kvp.Value["isFreezing"]);
-                var boost = kvp.Value[nameof(currentObjectType.interactiveObject.boostSpeed)] != "null"
-                    ? Convert.ToSingle(kvp.Value[nameof(currentObjectType.interactiveObject.boostSpeed)])
+                var freezing = kvp.Value[Idents.Tags.SaveLoadTags.IsFreezing] != "null" &&
+                               Convert.ToBoolean(kvp.Value[Idents.Tags.SaveLoadTags.IsFreezing]);
+                var boost = kvp.Value[Idents.Tags.SaveLoadTags.BoostSpeed] != "null"
+                    ? Convert.ToSingle(kvp.Value[Idents.Tags.SaveLoadTags.BoostSpeed])
                     : 0f;
-                var hintText = kvp.Value[nameof(currentObjectType.interactiveObject.hintText)] != "null"
-                    ? kvp.Value[nameof(currentObjectType.interactiveObject.hintText)]
+                var hintText = kvp.Value[Idents.Tags.SaveLoadTags.HintText] != "null"
+                    ? kvp.Value[Idents.Tags.SaveLoadTags.HintText]
                     : "";
-                var isLampTurn = kvp.Value[nameof(currentObjectType.interactiveObject.isLampTurn)] != "null" &&
-                                 Convert.ToBoolean(kvp.Value[nameof(currentObjectType.interactiveObject.isLampTurn)]);
+                var isLampTurn = kvp.Value[Idents.Tags.SaveLoadTags.IsLampTurn] != "null" &&
+                                 Convert.ToBoolean(kvp.Value[Idents.Tags.SaveLoadTags.IsLampTurn]);
 
                 var newObj = Instantiate(Resources.Load<GameObject>("TrackObjects/" + objectName), position,
                     Quaternion.Euler(rotation));

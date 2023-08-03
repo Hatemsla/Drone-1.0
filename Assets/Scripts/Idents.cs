@@ -4,7 +4,34 @@ namespace Drone
     {
         public static class Tags
         {
+            public static class SaveLoadTags
+            {
+                public const string ObjectName = "name";
+                public const string Position = "position";
+                public const string Rotation = "rotation";
+                public const string Scale = "scale";
+                public const string Layer = "layer";
+                public const string YOffset = "yOffset";
+                public const string MaxMouseDistance = "maxMouseDistance";
+                public const string Damage = "damage";
+                public const string WindMillRotateSpeed = "windMillRotateSpeed";
+                public const string MagnetForce = "magnetForce";
+                public const string PendulumMoveSpeed = "pendulumMoveSpeed";
+                public const string LeftPendulumAngle = "leftPendulumAngle";
+                public const string RightPendulumAngle = "rightPendulumAngle";
+                public const string WindForce = "windForce";
+                public const string BatteryEnergy = "batteryEnergy";
+                public const string IsFreezing = "isFreezing";
+                public const string BoostSpeed = "boostSpeed";
+                public const string HintText = "hintText";
+                public const string IsLampTurn = "isLampTurn";
+            }
             
+            public static class PromptText
+            {
+                public const string DefaultText = "Для доступа нажмите F";
+                public const string NotEnoughText = "У вас недостаточно монет (не хаватает ";
+            }
         }
         
         public static class ActionMaps

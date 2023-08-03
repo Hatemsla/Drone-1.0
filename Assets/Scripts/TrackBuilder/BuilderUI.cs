@@ -19,6 +19,7 @@ namespace Builder
         public TMP_Text checkpointsCountText;
         public TMP_Text coinsCountText;
         public TMP_Text crystalsCountText;
+        public TMP_Text restoreHealthText;
         public Prompt prompt;
         public HelpMessage helpMessage;
         public DroneBars healthBar;

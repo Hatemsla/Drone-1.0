@@ -22,5 +22,6 @@
         Terminal,
         TrMessage,
         MagnetKiller,
+        PitStop,
     }
 }

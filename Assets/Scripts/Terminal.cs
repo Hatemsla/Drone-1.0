@@ -55,6 +55,7 @@ namespace Drone
             {
                 droneRpgController = drone.droneRpgController;
                 _inTrigger = true;
+                prompt.PromptText = Idents.Tags.PromptText.DefaultText;
                 prompt.SetActive(true);
             }
         }

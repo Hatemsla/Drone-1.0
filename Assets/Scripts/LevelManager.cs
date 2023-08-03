@@ -4,6 +4,7 @@ using System.Globalization;
 using System.IO;
 using System.Text.RegularExpressions;
 using Builder;
+using Drone;
 using Newtonsoft.Json;
 using UnityEngine;
 
@@ -45,25 +46,26 @@ namespace DroneFootball
                 var trackObj = obj.GetComponent<TrackObject>();
                 var objData = new Dictionary<string, string>
                 {
-                    [nameof(obj.name)] = obj.name,
-                    ["position"] = FormatVector3(obj.transform.position),
-                    ["rotation"] = FormatVector3(obj.transform.rotation.eulerAngles),
-                    ["scale"] = FormatVector3(obj.transform.localScale),
-                    ["layer"] = obj.layer.ToString(),
-                    [nameof(trackObj.yOffset)] = trackObj.yOffset.ToString(CultureInfo.CurrentCulture),
-                    [nameof(trackObj.maxMouseDistance)] = trackObj.maxMouseDistance.ToString(CultureInfo.CurrentCulture),
-                    [nameof(trackObj.damage)] = trackObj.damage.ToString(CultureInfo.CurrentCulture),
-                    [nameof(trackObj.interactiveObject.windMillRotateSpeed)] = null,
-                    [nameof(trackObj.interactiveObject.magnetForce)] = null,
-                    [nameof(trackObj.interactiveObject.pendulumMoveSpeed)] = null,
-                    [nameof(trackObj.interactiveObject.leftPendulumAngle)] = null,
-                    [nameof(trackObj.interactiveObject.rightPendulumAngle)] = null,
-                    [nameof(trackObj.interactiveObject.windForce)] = null,
-                    [nameof(trackObj.interactiveObject.batteryEnergy)] = null,
-                    ["isFreezing"] = null,
-                    [nameof(trackObj.interactiveObject.boostSpeed)] = null,
-                    [nameof(trackObj.interactiveObject.hintText)] = null,
-                    [nameof(trackObj.interactiveObject.isLampTurn)] = null
+                    [Idents.Tags.SaveLoadTags.ObjectName] = obj.name,
+                    [Idents.Tags.SaveLoadTags.Position] = FormatVector3(obj.transform.position),
+                    [Idents.Tags.SaveLoadTags.Rotation] = FormatVector3(obj.transform.rotation.eulerAngles),
+                    [Idents.Tags.SaveLoadTags.Scale] = FormatVector3(obj.transform.localScale),
+                    [Idents.Tags.SaveLoadTags.Layer] = obj.layer.ToString(),
+                    [Idents.Tags.SaveLoadTags.YOffset] = trackObj.yOffset.ToString(CultureInfo.CurrentCulture),
+                    [Idents.Tags.SaveLoadTags.MaxMouseDistance] = trackObj.maxMouseDistance.ToString(CultureInfo.CurrentCulture),
+                    [Idents.Tags.SaveLoadTags.Damage] = trackObj.damage.ToString(CultureInfo.CurrentCulture),
+                    [Idents.Tags.SaveLoadTags.IsLampTurn] = null,
+                    [Idents.Tags.SaveLoadTags.WindMillRotateSpeed] = null,
+                    [Idents.Tags.SaveLoadTags.MagnetForce] = null,
+                    [Idents.Tags.SaveLoadTags.PendulumMoveSpeed] = null,
+                    [Idents.Tags.SaveLoadTags.LeftPendulumAngle] = null,
+                    [Idents.Tags.SaveLoadTags.RightPendulumAngle] = null,
+                    [Idents.Tags.SaveLoadTags.WindForce] = null,
+                    [Idents.Tags.SaveLoadTags.BatteryEnergy] = null,
+                    [Idents.Tags.SaveLoadTags.IsFreezing] = null,
+                    [Idents.Tags.SaveLoadTags.BoostSpeed] = null,
+                    [Idents.Tags.SaveLoadTags.HintText] = null,
+                    [Idents.Tags.SaveLoadTags.IsLampTurn] = null,
                 };
 
                 if (trackObj.interactiveObject)
@@ -71,42 +73,42 @@ namespace DroneFootball
                     switch (trackObj.interactiveType)
                     {
                         case InteractiveType.Windmill:
-                            objData[nameof(trackObj.interactiveObject.windMillRotateSpeed)] =
+                            objData[Idents.Tags.SaveLoadTags.WindMillRotateSpeed] =
                                 trackObj.interactiveObject.windMillRotateSpeed.ToString(CultureInfo.CurrentCulture);
                             break;
                         case InteractiveType.Magnet:
-                            objData[nameof(trackObj.interactiveObject.magnetForce)] =
+                            objData[Idents.Tags.SaveLoadTags.MagnetForce] =
                                 trackObj.interactiveObject.magnetForce.ToString(CultureInfo.CurrentCulture);
                             break;
                         case InteractiveType.Pendulum:
-                            objData[nameof(trackObj.interactiveObject.pendulumMoveSpeed)] =
+                            objData[Idents.Tags.SaveLoadTags.PendulumMoveSpeed] =
                                 trackObj.interactiveObject.pendulumMoveSpeed.ToString(CultureInfo.CurrentCulture);
-                            objData[nameof(trackObj.interactiveObject.leftPendulumAngle)] =
+                            objData[Idents.Tags.SaveLoadTags.LeftPendulumAngle] =
                                 trackObj.interactiveObject.leftPendulumAngle.ToString(CultureInfo.CurrentCulture);
-                            objData[nameof(trackObj.interactiveObject.rightPendulumAngle)] =
+                            objData[Idents.Tags.SaveLoadTags.RightPendulumAngle] =
                                 trackObj.interactiveObject.rightPendulumAngle.ToString(CultureInfo.CurrentCulture);
                             break;
                         case InteractiveType.Wind:
-                            objData[nameof(trackObj.interactiveObject.windForce)] =
+                            objData[Idents.Tags.SaveLoadTags.WindForce] =
                                 trackObj.interactiveObject.windForce.ToString(CultureInfo.CurrentCulture);
                             break;
                         case InteractiveType.Battery:
-                            objData[nameof(trackObj.interactiveObject.batteryEnergy)] =
+                            objData[Idents.Tags.SaveLoadTags.BatteryEnergy] =
                                 trackObj.interactiveObject.batteryEnergy.ToString(CultureInfo.CurrentCulture);
                             break;
                         case InteractiveType.Freezing:
-                            objData["isFreezing"] =
+                            objData[Idents.Tags.SaveLoadTags.IsFreezing] =
                                 trackObj.interactiveObject.isActive.ToString(CultureInfo.CurrentCulture);
                             break;
                         case InteractiveType.Boost:
-                            objData[nameof(trackObj.interactiveObject.boostSpeed)] = trackObj.interactiveObject.boostSpeed.ToString(CultureInfo.CurrentCulture);
+                            objData[Idents.Tags.SaveLoadTags.BoostSpeed] = trackObj.interactiveObject.boostSpeed.ToString(CultureInfo.CurrentCulture);
                             break;
                         case InteractiveType.Hint:
-                            objData[nameof(trackObj.interactiveObject.hintText)] =
+                            objData[Idents.Tags.SaveLoadTags.HintText] =
                                 trackObj.interactiveObject.hintText.text.ToString(CultureInfo.CurrentCulture);
                             break;
                         case InteractiveType.Lamp:
-                            objData[nameof(trackObj.interactiveObject.isLampTurn)] =
+                            objData[Idents.Tags.SaveLoadTags.IsLampTurn] =
                                 trackObj.interactiveObject.isLampTurn.ToString(CultureInfo.CurrentCulture);
                             break;
                     }

@@ -1,8 +1,7 @@
-using System;
 using TMPro;
 using UnityEngine;
 
-namespace Drone
+namespace Builder
 {
     public sealed class Prompt : MonoBehaviour
     {
@@ -16,15 +15,10 @@ namespace Drone
             set
             {
                 _promptText = value;
-                OnPromptTextChanged();
+                prompt.text = value;
             }
         }
-
-        private void OnPromptTextChanged()
-        {
-            prompt.text = PromptText;
-        }
-
+        
         public void SetActive(bool active)
         {
             gameObject.SetActive(active);

@@ -55,7 +55,7 @@ namespace Builder
 
         private void FindPrompt()
         {
-            prompt = FindObjectOfType<BuilderUI>().prompt;
+            prompt = BuilderManager.Instance.builderUI.prompt;
         }
 
         private void GetAllInteractiveObjects()
@@ -221,6 +221,7 @@ namespace Builder
             if (other.GetComponentInParent<DroneController>() is DroneBuilderController drone)
             {
                 _inTrigger = true;
+                prompt.PromptText = Idents.Tags.PromptText.DefaultText;
                 prompt.SetActive(true);
             }
         }
