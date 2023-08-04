@@ -7,13 +7,6 @@ namespace Builder
 {
     public class ControllerPanel : InteractiveObject
     {
-        public enum ColorOption
-        {
-            Красный, 
-            Зелёный,
-            Жёлтый,
-            Синий            
-        }
         public GameObject controllerPanelObject;
         // public GameObject promptTextObject;
         // private Text promptText;
@@ -40,7 +33,7 @@ namespace Builder
         void Start()
         {
             objectRenderer = controllerPanelObject.GetComponent<Renderer>();
-            SetColor(GetColorFromOption(selectedColorOption), false);  
+            SetColor(TrackBuilderUtils.GetColorFromOption(selectedColorOption), false);  
             ishacked = true;
         }
 
@@ -70,29 +63,12 @@ namespace Builder
             }
         }
 
-        private Color GetColorFromOption(ColorOption option)
-        {
-            switch (option)
-            {
-                case ColorOption.Красный:
-                    return Color.red;
-                case ColorOption.Зелёный:
-                    return Color.green;
-                case ColorOption.Жёлтый:
-                    return Color.yellow;
-                case ColorOption.Синий:
-                    return Color.blue;
-                default:
-                    return Color.red;
-            }
-        }
-
         private void OnTriggerEnter(Collider other)
         {
             if (other.CompareTag("Player"))
             {
                 isConected = true;
-                SetColor(GetColorFromOption(selectedColorOption), isConected);
+                SetColor(TrackBuilderUtils.GetColorFromOption(selectedColorOption), isConected);
                 // promptText.enabled = true;
             }
         }
@@ -102,7 +78,7 @@ namespace Builder
             if (other.CompareTag("Player"))
             {
                 isConected = false;
-                SetColor(GetColorFromOption(selectedColorOption), isConected);
+                SetColor(TrackBuilderUtils.GetColorFromOption(selectedColorOption), isConected);
 
             }
         }
@@ -194,14 +170,14 @@ namespace Builder
         {
             color_index = value;
             selectedColorOption = (ColorOption)value;
-            SetColor(GetColorFromOption(selectedColorOption), false);
+            SetColor(TrackBuilderUtils.GetColorFromOption(selectedColorOption), false);
         }
 
         public override void SetColorIndex(int value)
         {
             color_index = value;
             selectedColorOption = (ColorOption)value;
-            SetColor(GetColorFromOption(selectedColorOption), false);
+            SetColor(TrackBuilderUtils.GetColorFromOption(selectedColorOption), false);
         }
 
         public override void SetActive(bool active)

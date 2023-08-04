@@ -6,13 +6,6 @@ namespace Builder
 {
     public class ControllerButton : InteractiveObject
     {
-        public enum ColorOption
-        {
-            Красный, 
-            Зелёный,
-            Жёлтый,
-            Синий            
-        }
         public GameObject controllerButtonObject;
         public GameObject controllerButtonObject2;
 
@@ -34,7 +27,7 @@ namespace Builder
         {
             objectRenderer = controllerButtonObject.GetComponent<Renderer>();
             objectRenderer2 = controllerButtonObject2.GetComponent<Renderer>();
-            SetColor(GetColorFromOption(selectedColorOption), false);       
+            SetColor(TrackBuilderUtils.GetColorFromOption(selectedColorOption), false);       
         }
 
         // Update is called once per frame
@@ -48,7 +41,7 @@ namespace Builder
             if (other.GetComponentInParent<GrabbedObject>() || other.GetComponentInParent<DroneController>())
             // if (other.CompareTag("Block") || other.CompareTag("Player"))
             {
-                SetColor(GetColorFromOption(selectedColorOption), true);
+                SetColor(TrackBuilderUtils.GetColorFromOption(selectedColorOption), true);
                 setColorActiv(selectedColorOption, true);
                 isChanged = true;
             }
@@ -72,26 +65,9 @@ namespace Builder
             Debug.Log(isChanged);
             if (!isChanged)
             {
-                SetColor(GetColorFromOption(selectedColorOption), false);
+                SetColor(TrackBuilderUtils.GetColorFromOption(selectedColorOption), false);
                 setColorActiv(selectedColorOption, false);
                 isChanged = true;
-            }
-        }
-
-        private Color GetColorFromOption(ColorOption option)
-        {
-            switch (option)
-            {
-                case ColorOption.Красный:
-                    return Color.red;
-                case ColorOption.Зелёный:
-                    return Color.green;
-                case ColorOption.Жёлтый:
-                    return Color.yellow;
-                case ColorOption.Синий:
-                    return Color.blue;
-                default:
-                    return Color.red;
             }
         }
 
@@ -141,14 +117,14 @@ namespace Builder
         {
             color_index = value;
             selectedColorOption = (ColorOption)value;
-            SetColor(GetColorFromOption(selectedColorOption), false);        
+            SetColor(TrackBuilderUtils.GetColorFromOption(selectedColorOption), false);        
         }
 
         public override void SetColorIndex(int value)
         {
             color_index = value;
             selectedColorOption = (ColorOption)value;
-            SetColor(GetColorFromOption(selectedColorOption), false);
+            SetColor(TrackBuilderUtils.GetColorFromOption(selectedColorOption), false);
         }
 
         public void set_time_value(float value)

@@ -54,7 +54,7 @@ namespace Drone
                 skill.SelectSkillEvent -= OnSelectSkill;
             
             BuilderManager.Instance.TestLevelEvent -= FindDroneRpg;
-            _droneRpgController.SkillsCountChangedEvent -= UpdateBoughtSkillsUI;
+            // _droneRpgController.SkillsCountChangedEvent -= UpdateBoughtSkillsUI;
         }
 
         private void OnSelectSkill(Skill skill)

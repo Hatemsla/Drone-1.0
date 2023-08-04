@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Drone;
 using UnityEngine;
 
 namespace Builder
@@ -14,14 +15,6 @@ namespace Builder
 
         public float glowIntensity = 1f;
 
-        public enum ColorOption
-        {
-            Белый,
-            Красный, 
-            Зелёный,
-            Жёлтый,
-            Синий            
-        }
         public ColorOption selectedColorOption;
         private bool isActiv;
         private bool previousIsActiv;
@@ -68,25 +61,6 @@ namespace Builder
             col.enabled = true;
         }
 
-        private Color GetColorFromOption(ColorOption option)
-        {
-            switch (option)
-            {
-                case ColorOption.Белый:
-                    return Color.white;
-                case ColorOption.Красный:
-                    return Color.red;
-                case ColorOption.Зелёный:
-                    return Color.green;
-                case ColorOption.Жёлтый:
-                    return Color.yellow;
-                case ColorOption.Синий:
-                    return Color.blue;
-                default:
-                    return Color.red;
-            }
-        }
-
         private void SetColor(Color newColor)
         {            
             objectRenderer.material.SetColor("_Color", newColor);
@@ -128,14 +102,14 @@ namespace Builder
         {
             color_index = value;
             selectedColorOption = (ColorOption)value;
-            SetColor(GetColorFromOption(selectedColorOption));
+            SetColor(TrackBuilderUtils.GetColorFromOption(selectedColorOption));
         }
 
         public override void SetColorIndex(int value)
         {
             color_index = value;
             selectedColorOption = (ColorOption)value;
-            SetColor(GetColorFromOption(selectedColorOption));
+            SetColor(TrackBuilderUtils.GetColorFromOption(selectedColorOption));
         }
 
         public override void SetActive(bool active)

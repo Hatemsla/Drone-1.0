@@ -77,6 +77,25 @@ namespace Builder
             return layerMask;
         }
         
+        public static Color GetColorFromOption(ColorOption option)
+        {
+            switch (option)
+            {
+                case ColorOption.Белый:
+                    return Color.white;
+                case ColorOption.Красный:
+                    return Color.red;
+                case ColorOption.Зелёный:
+                    return Color.green;
+                case ColorOption.Жёлтый:
+                    return Color.yellow;
+                case ColorOption.Синий:
+                    return Color.blue;
+                default:
+                    return Color.white;
+            }
+        }
+        
         public static Color HexToColor(string hex)
         {
             hex = hex.TrimStart('#');

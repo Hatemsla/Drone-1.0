@@ -20644,7 +20644,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &646535332
 RectTransform:
   m_ObjectHideFlags: 0
@@ -20661,9 +20661,9 @@ RectTransform:
   m_Father: {fileID: 435427305}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 180.8, y: -50.342003}
   m_SizeDelta: {x: 361.6, y: 25.302}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &648699751
@@ -22193,7 +22193,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 180.8, y: -56.5148}
+  m_AnchoredPosition: {x: 180.8, y: -91.8168}
   m_SizeDelta: {x: 361.6, y: 37.6476}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &695254464
@@ -31601,7 +31601,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.22159657, y: 0.3543879, z: -0.08683823, w: 0.9043027}
+  m_LocalRotation: {x: 0.22159657, y: 0.35438788, z: -0.08683823, w: 0.90430266}
   m_LocalPosition: {x: -9.888079, y: 6.9804707, z: -8.340385}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -32508,7 +32508,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 180.80005, y: -46.0935}
+  m_AnchoredPosition: {x: 180.80005, y: -214.7851}
   m_SizeDelta: {x: 361.6, y: 92.187}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &980503743
@@ -43568,10 +43568,10 @@ RectTransform:
   m_Father: {fileID: 1434525480}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 719.9, y: -386}
-  m_SizeDelta: {x: 213, y: 118}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1295056334
 MonoBehaviour:
@@ -44540,7 +44540,6 @@ GameObject:
   - component: {fileID: 1330915977}
   - component: {fileID: 1330915980}
   - component: {fileID: 1330915981}
-  - component: {fileID: 1330915979}
   m_Layer: 5
   m_Name: EditPanelScroll
   m_TagString: Untagged
@@ -44608,88 +44607,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1330915975}
   m_CullTransparentMesh: 1
---- !u!114 &1330915979
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1330915975}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d20331754a3740f890e73dfe321b364a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  objectName: {fileID: 0}
-  xPos: {fileID: 0}
-  yPos: {fileID: 0}
-  zPos: {fileID: 0}
-  xRot: {fileID: 0}
-  yRot: {fileID: 0}
-  zRot: {fileID: 0}
-  xRotValue: {fileID: 0}
-  yRotValue: {fileID: 0}
-  zRotValue: {fileID: 0}
-  hintInput: {fileID: 2001570581}
-  passwordInput: {fileID: 1799533374}
-  xyzScale: {fileID: 0}
-  windmillRotSpeed: {fileID: 292691377}
-  magnetForce: {fileID: 0}
-  pendulumSpeed: {fileID: 0}
-  pendulumAngle: {fileID: 0}
-  windForce: {fileID: 0}
-  batteryEnergy: {fileID: 0}
-  boostForce: {fileID: 0}
-  TimeDelaySlider: {fileID: 0}
-  xyzScaleValue: {fileID: 0}
-  windmillRotSpeedValue: {fileID: 138101208}
-  magnetForceValue: {fileID: 0}
-  pendulumSpeedValue: {fileID: 0}
-  pendulumAngleValue: {fileID: 0}
-  windForceValue: {fileID: 0}
-  batteryEnergyValue: {fileID: 0}
-  boostForceValue: {fileID: 0}
-  passwordHint: {fileID: 347575866}
-  activeToggle: {fileID: 965884967}
-  hasPasswordToggle: {fileID: 0}
-  is_hacked: {fileID: 1004428038}
-  color: {fileID: 1519901616}
-  color_panel: {fileID: 0}
-  color_button: {fileID: 0}
-  code_n1: {fileID: 0}
-  code_n2: {fileID: 0}
-  code_n3: {fileID: 0}
-  isActivePanel: {fileID: 955271516}
-  colorPanel: {fileID: 646535331}
-  windmillPanel: {fileID: 692088843}
-  magnetPanel: {fileID: 1887676557}
-  pendulumPanel: {fileID: 976684521}
-  windPanel: {fileID: 1514376686}
-  batteryPanel: {fileID: 1198270322}
-  boostPanel: {fileID: 1412783461}
-  hintPanel: {fileID: 1606307630}
-  drawPanel: {fileID: 808678094}
-  electrogatePanel: {fileID: 48916586}
-  controllerPanelPanel: {fileID: 1197773479}
-  controllerButtonPanel: {fileID: 1518171050}
-  portPanel: {fileID: 1539435253}
-  triggerMessagePanel: {fileID: 418105725}
-  interactivePanels:
-  - {fileID: 955271516}
-  - {fileID: 692088843}
-  - {fileID: 1887676557}
-  - {fileID: 976684521}
-  - {fileID: 1514376686}
-  - {fileID: 1198270322}
-  - {fileID: 1412783461}
-  - {fileID: 1606307630}
-  - {fileID: 808678094}
-  - {fileID: 48916586}
-  - {fileID: 1197773479}
-  - {fileID: 1518171050}
-  - {fileID: 1539435253}
-  - {fileID: 418105725}
-  - {fileID: 646535331}
 --- !u!114 &1330915980
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -53801,14 +53718,14 @@ MonoBehaviour:
   activeToggle: {fileID: 965884967}
   hasPasswordToggle: {fileID: 319989616}
   is_hacked: {fileID: 1004428038}
-  color: {fileID: 1654150451}
+  color: {fileID: 1519901616}
   color_panel: {fileID: 1163987751}
   color_button: {fileID: 550510266}
   code_n1: {fileID: 1486104068}
   code_n2: {fileID: 1104432732}
   code_n3: {fileID: 902415561}
   isActivePanel: {fileID: 955271516}
-  colorPanel: {fileID: 0}
+  colorPanel: {fileID: 646535331}
   windmillPanel: {fileID: 692088843}
   magnetPanel: {fileID: 1887676557}
   pendulumPanel: {fileID: 976684521}
@@ -53837,6 +53754,7 @@ MonoBehaviour:
   - {fileID: 1518171050}
   - {fileID: 1539435253}
   - {fileID: 418105725}
+  - {fileID: 646535331}
 --- !u!1 &1594253594
 GameObject:
   m_ObjectHideFlags: 0
@@ -59941,8 +59859,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 180.8, y: -12.269108}
-  m_SizeDelta: {x: 361.6, y: 24.5382}
+  m_AnchoredPosition: {x: 191.71687, y: -12.269108}
+  m_SizeDelta: {x: 339.7663, y: 24.5382}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1783599410
 GameObject:
@@ -63654,7 +63572,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 180.8, y: -104.3641}
+  m_AnchoredPosition: {x: 180.8, y: -139.6661}
   m_SizeDelta: {x: 361.6, y: 38.051}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1896116249

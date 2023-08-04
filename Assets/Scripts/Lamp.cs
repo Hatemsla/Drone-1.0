@@ -11,27 +11,28 @@ namespace Drone
         [SerializeField] private MeshRenderer[] meshes;
         public GameObject lampObject;
 
-        private Renderer objectRenderer;
-
-
-        public enum ColorOption
-        {
-            Белый,
-            Красный,
-            Зелёный,
-            Жёлтый,
-            Синий
-        }
-        public ColorOption selectedColorOption;
-
-        private Dictionary<Material, bool> _emissions = new Dictionary<Material, bool>();
+        private readonly Dictionary<Material, bool> _emissions = new();
 
         private void Start()
         {
-            //objectRenderer = lampObject.GetComponent<Renderer>();
-            SetColor(GetColorFromOption(selectedColorOption));
+            foreach (var mesh in meshes)
+            {
+                foreach (var mat in mesh.materials)
+                {
+                    _emissions.Add(mat, mat.IsKeywordEnabled("_EMISSION"));
+                }
+            }
             
-            //TurnOff();
+            foreach (var mesh in meshes)
+            {
+                foreach (var mat in mesh.materials)
+                {
+                    if(isLampTurn && _emissions.TryGetValue(mat, out var isEmissionEnabled) && isEmissionEnabled)
+                        mat.EnableKeyword("_EMISSION");
+                    else
+                        mat.DisableKeyword("_EMISSION");
+                }
+            }
         }
 
         public void TurnOn()
@@ -45,8 +46,6 @@ namespace Drone
                 {
                     if (_emissions.TryGetValue(mat, out var isEmissionEnabled) && isEmissionEnabled)
                     {
-                        Debug.Log(selectedColorOption);
-                        mat.SetColor("_EmissionColor", GetColorFromOption(selectedColorOption));
                         mat.EnableKeyword("_EMISSION");
                     }
                 }
@@ -80,56 +79,27 @@ namespace Drone
                 foreach (var mat in mesh.materials)
                 {
                     if (isLampTurn && _emissions.TryGetValue(mat, out var isEmissionEnabled) && isEmissionEnabled)
-                    {
-                        mat.SetColor("_EmissionColor", GetColorFromOption(selectedColorOption));
                         mat.EnableKeyword("_EMISSION");
-                    }
                     else
-                    {
                         mat.DisableKeyword("_EMISSION");
-                    }
-                        
-
                 }
             }
         }
 
         private void SetColor(Color newColor)
         {
-            lamp.color = GetColorFromOption(selectedColorOption);
-            //objectRenderer.material.color = newColor;
-            //objectRenderer.material.SetColor("_EmissionColor", GetColorFromOption(selectedColorOption));
+            lamp.color = newColor;
             foreach (var mesh in meshes)
             {
                 foreach (var mat in mesh.materials)
                 {
-                    if (isLampTurn && _emissions.TryGetValue(mat, out var isEmissionEnabled) && isEmissionEnabled)
+                    if (_emissions.TryGetValue(mat, out var isEmissionEnabled) && isEmissionEnabled)
                     {
-                        mat.SetColor("_EmissionColor", GetColorFromOption(selectedColorOption));
-                        mat.SetColor("_Color", GetColorFromOption(selectedColorOption));
-
+                        mat.SetColor("_EmissionColor", newColor);
+                        mat.SetColor("_Color", newColor);
                     }
                 }
             }            
-        }
-
-        private Color GetColorFromOption(ColorOption option)
-        {
-            switch (option)
-            {
-                case ColorOption.Белый:
-                    return Color.white;
-                case ColorOption.Красный:
-                    return Color.red;
-                case ColorOption.Зелёный:
-                    return Color.green;
-                case ColorOption.Жёлтый:
-                    return Color.yellow;
-                case ColorOption.Синий:
-                    return Color.blue;
-                default:
-                    return Color.white;
-            }
         }
 
         public override void SetActive(bool active)
@@ -139,15 +109,12 @@ namespace Drone
                 TurnOn();
             else
                 TurnOff();
-
         }
 
         public override void SetColorIndex(int value)
         {
             color_index = value;
-            selectedColorOption = (ColorOption)value;
-            SetColor(GetColorFromOption(selectedColorOption));
-
+            SetColor(TrackBuilderUtils.GetColorFromOption((ColorOption)value));
         }
     }
 }
