@@ -8,6 +8,7 @@ namespace Builder
     public sealed class PitStop : InteractiveObject
     {
         [SerializeField] private Transform pitStopCenter;
+        [SerializeField] private ParticleEffect restoreEffect;
         [SerializeField] private int pitStopCost = 10;
         [SerializeField] private Prompt prompt;
         
@@ -55,11 +56,14 @@ namespace Builder
             var targetArmor = 100f;
 
             InputManager.Instance.TurnCustomActionMap("");
-            _drone.transform.position = pitStopCenter.position;
+            StartCoroutine(TrackBuilderUtils.SetPositionSmoothly(_drone.transform, _drone.transform.position,pitStopCenter.position));
             BuilderManager.Instance.builderUI.restoreHealthText.enabled = true;
 
             while (elapsedTime < healingTime && _inTrigger)
             {
+                if(elapsedTime >= 0.5f && !restoreEffect.Effect.isPlaying)
+                    restoreEffect.Effect.Play();
+                
                 elapsedTime += Time.deltaTime;
                 var waitTime = healingTime - elapsedTime;
                 BuilderManager.Instance.builderUI.restoreHealthText.text = $"Время починки: {waitTime:f1}";
@@ -75,6 +79,7 @@ namespace Builder
             
             InputManager.Instance.TurnCustomActionMap(Idents.ActionMaps.Player);
             BuilderManager.Instance.builderUI.restoreHealthText.enabled = false;
+            restoreEffect.Effect.Stop();
         }
 
         private void FindPrompt()

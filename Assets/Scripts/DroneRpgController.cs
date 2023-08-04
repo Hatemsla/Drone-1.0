@@ -14,7 +14,6 @@ namespace Drone
         public bool isCharged = true;
         public bool isEnergyUsage = true;
         [SerializeField] private float armorPercentage = 0.9f;
-        [SerializeField] private ParticleSystem explosionPrefab;
 
         public event Action SkillsCountChangedEvent;
 
@@ -145,6 +144,9 @@ namespace Drone
         private void OnCollisionEnter(Collision other)
         {
             var trackObject = other.transform.GetComponentInParent<TrackObject>();
+            
+            EffectsManager.Intsance.GetSparksEffect(other.contacts[0].point, droneBuilderController.currentPercentSpeed);
+
             if (trackObject && droneBuilderController.currentPercentSpeed >= 50f)
             {
                 switch (trackObject.effectType)
@@ -154,7 +156,6 @@ namespace Drone
                         break;
                     case EffectType.Destructible:
                         CreateExplosion(trackObject, other);
-
                         break;
                     case EffectType.Hybrid:
                         if (trackObject.objectType == ObjectsType.Lamp)
@@ -181,8 +182,7 @@ namespace Drone
 
         private void CreateExplosion(TrackObject trackObject, Collision other)
         {
-            var explosion = Instantiate(explosionPrefab, other.transform.position, Quaternion.identity);
-            explosion.transform.localScale = new Vector3(trackObject.Scale.x, trackObject.Scale.y, trackObject.Scale.z);
+            EffectsManager.Intsance.GetExplosionEffect(other.transform.position, trackObject.Scale);
             if (BuilderManager.Instance.isGameMode)
                 Destroy(trackObject.gameObject);
             else

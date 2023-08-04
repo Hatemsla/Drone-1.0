@@ -55,6 +55,11 @@ namespace ObjectsPool
             _active.Remove(item);
         }
 
+        public bool HasItem(T item)
+        {
+            return _active.Contains(item);
+        }
+
         public void ReturnAll()
         {
             foreach (var item in _active.ToArray()) Return(item);

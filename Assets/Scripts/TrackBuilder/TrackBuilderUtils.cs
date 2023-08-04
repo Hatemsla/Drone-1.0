@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using cakeslice;
 using UnityEngine;
 
@@ -30,7 +31,8 @@ namespace Builder
         {
             if (LayerMask.LayerToName(obj.gameObject.layer) != "FloorConnection" && LayerMask.LayerToName(obj.gameObject.layer) != "WallConnection" 
                 && LayerMask.LayerToName(obj.gameObject.layer) != "SlantConnection" && LayerMask.LayerToName(obj.gameObject.layer) != "Ignore Raycast"
-                && LayerMask.LayerToName(obj.gameObject.layer) != "Hint" && LayerMask.LayerToName(obj.gameObject.layer) != "Draw")
+                && LayerMask.LayerToName(obj.gameObject.layer) != "Hint" && LayerMask.LayerToName(obj.gameObject.layer) != "Draw"
+                && LayerMask.LayerToName(obj.gameObject.layer) != "Intangible")
             {
                 obj.gameObject.layer = layer;
             }
@@ -70,11 +72,27 @@ namespace Builder
             var trackGroundLayer = LayerMask.NameToLayer("TrackGround");
             var trackHintLayer = LayerMask.NameToLayer("Hint");
             var trackDrawLayer = LayerMask.NameToLayer("Draw");
+            var trackIntangibleLayer = LayerMask.NameToLayer("Intangible");
             var activeLayerIndex = LayerMask.NameToLayer(activeLayer);
 
-            var layerMask = (1 << trackGroundLayer) | (1 << trackHintLayer) | (1 << trackDrawLayer) | (1 << activeLayerIndex);
+            var layerMask = (1 << trackGroundLayer) | (1 << trackHintLayer) | (1 << trackDrawLayer) | (1 << activeLayerIndex) | (1 << trackIntangibleLayer);
 
             return layerMask;
+        }
+
+        public static IEnumerator SetPositionSmoothly(Transform objectTransform, Vector3 startPos, Vector3 endPos, float time = 0.5f)
+        {
+            float elapsedTime = 0;
+
+            while (elapsedTime < time)
+            {
+                var t = elapsedTime / time;
+                objectTransform.position = Vector3.Lerp(startPos, endPos, t);
+                elapsedTime += Time.deltaTime;
+                yield return null;
+            }
+
+            objectTransform.position = endPos;
         }
         
         public static Color GetColorFromOption(ColorOption option)
@@ -103,9 +121,8 @@ namespace Builder
             var r = byte.Parse(hex.Substring(0, 2), System.Globalization.NumberStyles.HexNumber);
             var g = byte.Parse(hex.Substring(2, 2), System.Globalization.NumberStyles.HexNumber);
             var b = byte.Parse(hex.Substring(4, 2), System.Globalization.NumberStyles.HexNumber);
-
-            // Опционально, вы можете добавить альфа-компонент, если его нет в шестнадцатеричном коде.
-            byte a = 255; // Значение 255 означает полную непрозрачность (не прозрачный цвет).
+            
+            byte a = 255;
 
             return new Color32(r, g, b, a);
         }

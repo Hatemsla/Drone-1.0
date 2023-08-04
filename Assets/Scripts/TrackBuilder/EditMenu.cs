@@ -85,7 +85,7 @@ namespace Builder
             { 8f, 15 },
         };
 
-        public void SetEditPanelParams(string objName, string objDesc, float xP, float yP, float zP, float xR, float yR, float zR, float xyzS, TrackObject trackObject)
+        public void SetEditPanelParams(string objName, float xP, float yP, float zP, float xR, float yR, float zR, float xyzS, TrackObject trackObject)
         {
             objectName.text = objName;
             xPos.text = xP.ToString("f1", CultureInfo.CurrentCulture);
@@ -94,6 +94,7 @@ namespace Builder
             xRotValue.text = xR.ToString("f1", CultureInfo.CurrentCulture);
             yRotValue.text = yR.ToString("f1", CultureInfo.CurrentCulture);
             zRotValue.text = zR.ToString("f1", CultureInfo.CurrentCulture);
+            xyzScaleValue.text = xyzS.ToString("f1", CultureInfo.CurrentCulture);
             
             if(trackObject.objectType is ObjectsType.Gate or ObjectsType.Drone)
                 return;

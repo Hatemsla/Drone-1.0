@@ -19,7 +19,7 @@ namespace Builder
             var player = other.GetComponentInParent<DroneRpgController>();
             if (player)
             {
-                EffectsManager.Intsance.Get(transform.position);
+                EffectsManager.Intsance.GetGetEffect(transform.position);
                 player.Battery += batteryEnergy;
                 if(BuilderManager.Instance.isGameMode)
                     Destroy(transform.root.gameObject);

@@ -17,7 +17,7 @@ namespace Drone
 
         public void Connection()
         {
-            _connectionAction();
+            _connectionAction?.Invoke();
         }
         
         public void GetConnectionAction(Action action)

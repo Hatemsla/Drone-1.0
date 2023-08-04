@@ -10,10 +10,13 @@ namespace Builder
 
         private void OnTriggerEnter(Collider other)
         {
+            if(!BuilderManager.Instance.isMove)
+                return;
+            
             var player = other.GetComponentInParent<DroneRpgController>();
             if (player)
             {
-                EffectsManager.Intsance.Get(transform.position);
+                EffectsManager.Intsance.GetGetEffect(transform.position);
                 player.Coins += coin;
                 if(BuilderManager.Instance.isGameMode)
                     Destroy(transform.root);

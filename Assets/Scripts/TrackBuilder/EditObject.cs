@@ -53,7 +53,7 @@ namespace Builder
             var angleY = currentObject.Rotation.eulerAngles.y;
             var angleZ = currentObject.Rotation.eulerAngles.z;
 
-            editMenu.SetEditPanelParams(currentObject.objectName, currentObject.objectDescription,
+            editMenu.SetEditPanelParams(currentObject.objectName,
                 currentObject.Position.x, currentObject.Position.y, currentObject.Position.z, 
                 angleX, angleY, angleZ,
                 currentObject.Scale.x, currentObject);
