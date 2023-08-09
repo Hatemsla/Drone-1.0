@@ -1,45 +1,62 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using Builder;
 using UnityEngine;
 
-public class DroneBuilderCheckNode : CheckNode
+namespace Builder
 {
-    private void Update()
+    public class DroneBuilderCheckNode : CheckNode
     {
-        CalculateWayDistance();
-    }
+        private Vector3 _lastSavePosition;
+        private Quaternion _lastSaveRotation;
 
-    private void CalculateWayDistance()
-    {
-        if(currentNode >= nodes.Count)
-            return;
-    }
-
-    public void CheckWaypoint()
-    {
-        currentNode++;
-    }
-
-    public void AddNode(Transform t)
-    {
-        nodes.Add(t);
-        SetCheckpointsId();
-    }
-
-    public void RemoveNode(Transform t)
-    {
-        nodes.Remove(t);
-        SetCheckpointsId();
-    }
-
-    private void SetCheckpointsId()
-    {
-        for (var i = 0; i < nodes.Count; i++)
+        private void Start()
         {
-            nodes[i].GetComponent<BuilderCheckpointTrigger>().checkpointId = i;
+            _lastSavePosition = transform.position;
+            _lastSaveRotation = transform.rotation;
         }
+
+        private void Update()
+        {
+            CalculateWayDistance();
+        }
+
+        private void CalculateWayDistance()
+        {
+            if(currentNode >= nodes.Count)
+                return;
+        }
+
+        public void CheckWaypoint()
+        {
+            currentNode++;
+        }
+
+        public void AddNode(Transform t)
+        {
+            nodes.Add(t);
+            SetCheckpointsId();
+        }
+
+        public void RemoveNode(Transform t)
+        {
+            nodes.Remove(t);
+            SetCheckpointsId();
+        }
+
+        private void SetCheckpointsId()
+        {
+            for (var i = 0; i < nodes.Count; i++)
+            {
+                nodes[i].GetComponent<BuilderCheckpointTrigger>().checkpointId = i;
+            }
+        }
+
+        public void SetRespawn(Transform respawn)
+        {
+            _lastSavePosition = respawn.position;
+            _lastSaveRotation = respawn.rotation;
+        }
+
+        public Vector3 GetRespawnPosition() => _lastSavePosition;
+        public Quaternion GetRespawnRotation() => _lastSaveRotation;
     }
 }

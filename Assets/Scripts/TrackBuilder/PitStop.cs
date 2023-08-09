@@ -9,19 +9,12 @@ namespace Builder
     {
         [SerializeField] private Transform pitStopCenter;
         [SerializeField] private ParticleEffect restoreEffect;
-        [SerializeField] private int pitStopCost = 10;
         [SerializeField] private Prompt prompt;
         
         private bool _inTrigger;
         private float _healingTime;
-        private float _currentHealingTime;
         private DroneRpgController _drone;
         private HealingStation _healingStation = new();
-
-        private void Start()
-        {
-            _currentHealingTime = _healingTime + 1;
-        }
 
         private void OnEnable()
         {
@@ -42,8 +35,7 @@ namespace Builder
             
             prompt.SetActive(false);
             _healingTime = _healingStation.GetHealingTime(_drone.Health + _drone.Armor);
-            _currentHealingTime = 0f;
-            
+
             StartCoroutine(RestoreDrone(_healingTime));
         }
 
@@ -106,7 +98,6 @@ namespace Builder
             _inTrigger = false;
             prompt.SetActive(false);
             InputManager.Instance.TurnCustomActionMap(Idents.ActionMaps.Player);
-            _currentHealingTime = _healingTime;
         }
 
         public override void SetActive(bool active)

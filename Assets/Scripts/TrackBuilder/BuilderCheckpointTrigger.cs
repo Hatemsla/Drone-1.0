@@ -10,7 +10,8 @@ namespace Builder
         {
             var player = other.GetComponentInParent<DroneBuilderCheckNode>();
             if (!player || player.currentNode != checkpointId) return;
-            
+
+            player.SetRespawn(transform);
             player.CheckWaypoint();
         }
     }

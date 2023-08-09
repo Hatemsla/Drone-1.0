@@ -12,12 +12,15 @@ namespace Builder
         [SerializeField] private TMP_Text objectNameText;
         [SerializeField] private TMP_Text objectDescText;
         [SerializeField] private Image objectPreImage;
+        [SerializeField] private Image preObjectImage;
         [SerializeField] private Image objectImage;
         [SerializeField] private Image preInfoBack;
+        [SerializeField] private Image preInfoEllipseImage;
         [SerializeField] private Image background;
         [SerializeField] private Sprite backgroundDefault;
         [SerializeField] private Sprite backgroundHover;
         [SerializeField] private Sprite preInfoBackground;
+        [SerializeField] private Sprite preInfoEllipse;
         [SerializeField] private Color objectNameColor;
         public string objectName;
         public string objectDesc;
@@ -35,7 +38,9 @@ namespace Builder
             objectDescText.text = objectDesc;
             background.sprite = backgroundHover;
             preInfoBack.sprite = preInfoBackground;
-            
+            preInfoEllipseImage.sprite = preInfoEllipse;
+            preObjectImage.sprite = objectImage.sprite;
+
             Vector2 newPosition = preInfo.localPosition;
             newPosition.x = transform.localPosition.x;
             preInfo.localPosition = newPosition;

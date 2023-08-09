@@ -1,5 +1,6 @@
 using System.Collections;
 using Builder;
+using Drone;
 using UnityEngine;
 
 public class BoostTrigger : InteractiveObject

@@ -1,22 +1,26 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
-using Builder;
+using Drone;
 using UnityEngine;
 
-namespace Drone
+namespace Builder
 {
     public class DroneRpgController : MonoBehaviour
     {
         public DroneController droneBuilderController;
         [SerializeField] private DroneData droneData;
+        [SerializeField] private DroneBuilderCheckNode droneBuilderCheckNode;
         public float powerUsageRate;
         public bool isAlive = true;
         public bool isCharged = true;
         public bool isEnergyUsage = true;
         [SerializeField] private float armorPercentage = 0.9f;
+        [SerializeField] private float respawnTime = 3f;
 
         public event Action SkillsCountChangedEvent;
 
+        private bool _isRespawning;
         private readonly float[] _thresholds = { 0, 20f, 40f, 60f, 80f, 100f };
 
         public Dictionary<Skills, int> SkillsCount
@@ -36,7 +40,11 @@ namespace Drone
             {
                 droneData.Battery = value;
                 if (value <= 0)
+                {
                     isCharged = false;
+                    if(!_isRespawning)
+                        StartCoroutine(Respawn());
+                }
             }
         }
 
@@ -45,13 +53,17 @@ namespace Drone
             get => droneData.Health;
             set
             {
-                droneData.Health = value;
-
-                if (droneData.Health > 100)
+                if (value > 100)
                     droneData.Health = 100;
-                
+                else
+                    droneData.Health = value;
+
                 if (value <= 0)
+                {
                     isAlive = false;
+                    if(!_isRespawning)
+                        StartCoroutine(Respawn());
+                }
             }
         }
 
@@ -60,10 +72,10 @@ namespace Drone
             get => droneData.Armor;
             set
             {
-                droneData.Armor = value;
-
-                if (droneData.Armor > 100)
+                if (value > 100)
                     droneData.Armor = 100;
+                else
+                    droneData.Armor = value;
             }
         }
 
@@ -77,6 +89,36 @@ namespace Drone
         {
             get => droneData.Crystals;
             set => droneData.Crystals = value;
+        }
+        
+        private IEnumerator Respawn()
+        {
+            var elapsedTime = 0f;
+            
+            _isRespawning = true;
+            BuilderManager.Instance.builderUI.restoreHealthText.enabled = true;
+
+            while (elapsedTime < respawnTime)
+            {
+                elapsedTime += Time.deltaTime;
+                var waitTime = respawnTime - elapsedTime;
+                BuilderManager.Instance.builderUI.restoreHealthText.text = $"Респавн через: {waitTime:f1}";
+                yield return null;
+            }
+            transform.position = droneBuilderCheckNode.GetRespawnPosition();
+            droneBuilderController.yaw = droneBuilderCheckNode.GetRespawnRotation().eulerAngles.y;
+            isCharged = true;
+            isAlive = true;
+
+            if (Health <= 0)
+                Health = 50;
+            
+            if (Battery <= 0)
+                Battery = 50;
+
+            _isRespawning = false;
+            BuilderManager.Instance.builderUI.restoreHealthText.enabled = false;
+
         }
 
         public void UpdateSkillValue(Skills skill, int newValue)
@@ -93,11 +135,11 @@ namespace Drone
 
         public void ResetDroneData()
         {
-            droneData.Battery = 100;
-            droneData.Health = 100;
-            droneData.Armor = 100;
-            droneData.Coins = 0;
-            droneData.Crystals = 0;
+            Battery = 100;
+            Health = 100;
+            Armor = 100;
+            Coins = 0;
+            Crystals = 0;
         }
 
         public void ApplyEnergyUsage(float energyUsage)
@@ -105,7 +147,7 @@ namespace Drone
             if(!isEnergyUsage)
                 return;
             
-            droneData.Battery -= energyUsage;
+            Battery -= energyUsage;
         }
 
         public void ApplyDamage(float damage)
@@ -118,7 +160,7 @@ namespace Drone
             var armorDamage = Mathf.RoundToInt(damage * armorPercentage);
             var healthDamage = Mathf.RoundToInt(damage * healthPercentage);
 
-            var remainingArmor = (int)(droneData.Armor - armorDamage);
+            var remainingArmor = (int)(Armor - armorDamage);
 
             if (remainingArmor < 0)
             {
@@ -126,8 +168,8 @@ namespace Drone
                 remainingArmor = 0;
             }
 
-            droneData.Armor = remainingArmor;
-            droneData.Health -= healthDamage;
+            Armor = remainingArmor;
+            Health -= healthDamage;
         }
 
         public int GetCurrentHealthIndex(float value)
