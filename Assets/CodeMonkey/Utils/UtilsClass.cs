@@ -312,7 +312,7 @@ namespace CodeMonkey.Utils
             if (EventSystem.current.IsPointerOverGameObject()) return true;
 
             var pe = new PointerEventData(EventSystem.current);
-            pe.position = InputManager.Instance.mousePosition;
+            pe.position = Mouse.current.position.ReadValue();
             var hits = new List<RaycastResult>();
             EventSystem.current.RaycastAll(pe, hits);
             return hits.Count > 0;

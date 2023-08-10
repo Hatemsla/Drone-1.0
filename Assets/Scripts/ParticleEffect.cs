@@ -16,7 +16,6 @@ namespace Drone
 
         private void OnParticleSystemStopped()
         {
-            Debug.Log("OnParticleSystemStopped");
             EffectsManager.Intsance.Return(this);
         }
 

@@ -122,6 +122,9 @@ namespace Drone
                 case FreezingBall:
                     interactiveType = InteractiveType.Freezing;
                     break;
+                case PitStop:
+                    interactiveType = InteractiveType.PitStop;
+                    break;
             }
 
             return interactiveType;

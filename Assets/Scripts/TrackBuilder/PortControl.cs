@@ -82,6 +82,11 @@ namespace Drone
                     connectionText.SetActive(false);
                     controlImage.sprite = controlSprites.dictionary[ControlIcons.Shoсker];
                     break;
+                case InteractiveType.PitStop:
+                    controlName.text = "Пит-стоп";
+                    connectionText.SetActive(false);
+                    controlImage.sprite = controlSprites.dictionary[ControlIcons.PitStop];
+                    break;
             }
         }
     }

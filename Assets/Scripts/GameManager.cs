@@ -50,7 +50,6 @@ namespace Drone
 
                     asyncLoad = FindObjectOfType<AsyncLoad>();
                     InputManager.Instance.TurnCustomActionMap("UI");
-                    Debug.Log(InputManager.Instance.EnabledMaps());
                     break;
                 }
                 case 2:
@@ -68,7 +67,7 @@ namespace Drone
                     raceController.timer.timeForEndGame = gameData.gameTimeInSeconds;
 
                     asyncLoad = raceController.asyncLoad;
-                    
+
                     InputManager.Instance.TurnCustomActionMap("Player");
                     break;
                 case 3:
@@ -103,6 +102,11 @@ namespace Drone
                             builderManager.builderUI.loadPanel);
                     });
                     builderManager.builderUI.backGameTabBtn.onClick.AddListener(delegate
+                    {
+                        GameManagerUtils.BackToMenu(asyncLoad, builderManager.builderUI.uiPanel,
+                            builderManager.builderUI.loadPanel);
+                    });
+                    builderManager.builderUI.backBuilderTabBtn.onClick.AddListener(delegate
                     {
                         GameManagerUtils.BackToMenu(asyncLoad, builderManager.builderUI.uiPanel,
                             builderManager.builderUI.loadPanel);

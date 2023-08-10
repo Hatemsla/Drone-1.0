@@ -8,7 +8,6 @@ namespace Drone
     public class InputManager : MonoBehaviour
     {
         public static InputManager Instance;
-        public Vector3 mousePosition;
         public event Action FlashlightEvent;
         public event Action CopyObjectEvent;
         public event Action PasteObjectEvent;
@@ -127,11 +126,6 @@ namespace Drone
             _playerInput.Camera.MouseScroll.canceled += _ => CameraZoomEvent?.Invoke(0f);
             _playerInput.Camera.MouseScroll.performed += _ => RotateXObjectEvent?.Invoke(_.ReadValue<float>());
             _playerInput.Camera.LockCursor.performed += _ => LockCursorEvent?.Invoke();
-        }
-
-        private void Update()
-        {
-            mousePosition = Mouse.current.position.ReadValue();
         }
 
         private void OnEnable()

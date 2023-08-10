@@ -181,7 +181,7 @@ namespace Drone.Menu
         
         public void LoadLevel()
         {
-            if(!LevelManager.LoadLevel(menuUIManager.levelInput.text))
+            if(!LevelManager.IsLevelExist(menuUIManager.levelInput.text))
                 return;
 
             gameData.levelName = menuUIManager.levelInput.text;
@@ -204,7 +204,7 @@ namespace Drone.Menu
 
         public void StartBuilder()
         {
-            if(!LevelManager.LoadLevel(menuUIManager.levelInput.text))
+            if(!LevelManager.IsLevelExist(menuUIManager.levelInput.text))
                 return;
             
             gameData.levelName = menuUIManager.levelInput.text;

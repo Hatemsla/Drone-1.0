@@ -35,7 +35,7 @@ namespace Drone.Builder.Text3D
                 _charactersHeights.Add(d.Value, dRender.bounds.size.y);
             }
         }
-        
+
         private void PrintTextIn3D()
         {
             ResetLetter();
@@ -72,6 +72,15 @@ namespace Drone.Builder.Text3D
             selectCube.SetActive(Text.Length == 0);
         }
 
+        private void SetActiveText(bool active)
+        {
+            if(active)
+                PrintTextIn3D();
+            
+            foreach (Transform child in charactersParent)
+                child.gameObject.SetActive(active);
+        }
+
         private void ResetLetter()
         {
             foreach (Transform child in charactersParent)
@@ -81,6 +90,7 @@ namespace Drone.Builder.Text3D
         public override void SetActive(bool active)
         {
             isActive = active;
+            SetActiveText(active);
         }
 
         public override void SetColorIndex(int color)

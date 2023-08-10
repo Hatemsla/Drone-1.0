@@ -12,6 +12,8 @@ namespace Drone.Builder
         Battery,
         Portal,
         Magnet,
-        Pendulum
+        Pendulum,
+        PitStop,
+        Smoke,
     }
 }

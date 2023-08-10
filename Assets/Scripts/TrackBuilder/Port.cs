@@ -20,6 +20,7 @@ namespace Drone.Builder
         public List<Windmill> windmills;
         public List<Battery> batteries;
         public List<FreezingBall> freezingBalls;
+        public List<PitStop> pitStops;
         public List<InteractiveObject> interactiveObjects;
 
         public event Action<Port> PortOpenEvent;
@@ -95,6 +96,9 @@ namespace Drone.Builder
                         break;
                     case FreezingBall freezingBall:
                         freezingBalls.Add(freezingBall);
+                        break;
+                    case PitStop pitStop:
+                        pitStops.Add(pitStop);
                         break;
                 }
             }
@@ -265,6 +269,7 @@ namespace Drone.Builder
                 new(pendulums),
                 new(windmills),
                 new(freezingBalls),
+                new(pitStops),
             };
 
             return result;

@@ -21,10 +21,21 @@ namespace Drone
                 public const string RightPendulumAngle = "rightPendulumAngle";
                 public const string WindForce = "windForce";
                 public const string BatteryEnergy = "batteryEnergy";
-                public const string IsFreezing = "isFreezing";
                 public const string BoostSpeed = "boostSpeed";
                 public const string HintText = "hintText";
-                public const string IsLampTurn = "isLampTurn";
+                public const string ColorIndex = "colorIndex";
+                public const string IsActive = "isActive";
+                public const string Text3DText = "Text";
+
+                public const string Windmill = "Windmill";
+                public const string Magnet = "Magnet";
+                public const string Pendulum = "Pendulum";
+                public const string Battery = "Battery";
+                public const string Wind = "Wind";
+                public const string Boost = "Boost";
+                public const string Hint = "Hint";
+                public const string Interactive = "Interactive";
+                public const string Text3D = "Text3D";
             }
             
             public static class PromptText

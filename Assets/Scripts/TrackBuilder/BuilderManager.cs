@@ -6,6 +6,7 @@ using System.Linq;
 using Cinemachine;
 using Drone;
 using Drone.Builder.ControllerElements;
+using Drone.Builder.Text3D;
 using Drone.DroneFootball;
 using Newtonsoft.Json;
 using Drone.Sockets;
@@ -506,130 +507,81 @@ namespace Drone.Builder
             builderUI.createPanel.SetActive(false);
             builderUI.loadLevelPanel.SetActive(true);
             audioManager.StartPlay();
-            Dictionary<string, Dictionary<string, string>> loadedData;
 
             if (objectsPool.Count > 0)
                 ClearObject();
+            
+            var loadedData = LevelManager.LoadLevel(levelName);
 
-            var filePath = Application.dataPath + "/Levels/" + levelName + ".json";
-
-            var jsonData = File.ReadAllText(filePath);
-            loadedData = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, string>>>(jsonData);
-
-            foreach (var kvp in loadedData)
+            foreach (var objInfo in loadedData)
             {
-                var objectName = kvp.Value[Idents.Tags.SaveLoadTags.ObjectName].Substring(0, kvp.Value[Idents.Tags.SaveLoadTags.ObjectName].IndexOf('('));
-                var position = TrackBuilderUtils.ParseVector3(kvp.Value[Idents.Tags.SaveLoadTags.Position]);
-                var rotation = TrackBuilderUtils.ParseVector3(kvp.Value[Idents.Tags.SaveLoadTags.Rotation]);
-                var scale = TrackBuilderUtils.ParseVector3(kvp.Value[Idents.Tags.SaveLoadTags.Scale]);
-                var layer = Convert.ToInt32(kvp.Value[Idents.Tags.SaveLoadTags.Layer]);
-                var yOffset = Convert.ToSingle(kvp.Value[Idents.Tags.SaveLoadTags.YOffset]);
-                var maxMouseDistance = Convert.ToSingle(kvp.Value[Idents.Tags.SaveLoadTags.MaxMouseDistance]);
-                var rotSpeed = kvp.Value[Idents.Tags.SaveLoadTags.WindMillRotateSpeed] != "null"
-                    ? Convert.ToSingle(kvp.Value[Idents.Tags.SaveLoadTags.MagnetForce])
-                    : 0f;
-                var magnetForce = kvp.Value[Idents.Tags.SaveLoadTags.MagnetForce] != "null"
-                    ? Convert.ToSingle(kvp.Value[Idents.Tags.SaveLoadTags.MagnetForce])
-                    : 0f;
-                var pendulumMoveSpeed =
-                    kvp.Value[Idents.Tags.SaveLoadTags.PendulumMoveSpeed] != "null"
-                        ? Convert.ToSingle(kvp.Value[Idents.Tags.SaveLoadTags.PendulumMoveSpeed])
-                        : 0f;
-                var leftPendulumAngle =
-                    kvp.Value[Idents.Tags.SaveLoadTags.LeftPendulumAngle] != "null"
-                        ? Convert.ToSingle(kvp.Value[Idents.Tags.SaveLoadTags.LeftPendulumAngle])
-                        : 0f;
-                var rightPendulumAngle =
-                    kvp.Value[Idents.Tags.SaveLoadTags.RightPendulumAngle] != "null"
-                        ? Convert.ToSingle(kvp.Value[Idents.Tags.SaveLoadTags.RightPendulumAngle])
-                        : 0f;
-                var windForce = kvp.Value[Idents.Tags.SaveLoadTags.WindForce] != "null"
-                    ? Convert.ToSingle(kvp.Value[Idents.Tags.SaveLoadTags.WindForce])
-                    : 0f;
-                var batteryEnergy = kvp.Value[Idents.Tags.SaveLoadTags.BatteryEnergy] != "null"
-                    ? Convert.ToSingle(kvp.Value[Idents.Tags.SaveLoadTags.BatteryEnergy])
-                    : 0f;
-                var freezing = kvp.Value[Idents.Tags.SaveLoadTags.IsFreezing] != "null" &&
-                               Convert.ToBoolean(kvp.Value[Idents.Tags.SaveLoadTags.IsFreezing]);
-                var boost = kvp.Value[Idents.Tags.SaveLoadTags.BoostSpeed] != "null"
-                    ? Convert.ToSingle(kvp.Value[Idents.Tags.SaveLoadTags.BoostSpeed])
-                    : 0f;
-                var hintText = kvp.Value[Idents.Tags.SaveLoadTags.HintText] != "null"
-                    ? kvp.Value[Idents.Tags.SaveLoadTags.HintText]
-                    : "";
-                var isLampTurn = kvp.Value[Idents.Tags.SaveLoadTags.IsLampTurn] != "null" &&
-                                 Convert.ToBoolean(kvp.Value[Idents.Tags.SaveLoadTags.IsLampTurn]);
-
-                var color_index = kvp.Value[nameof(currentObjectType.interactiveObject.color_index)] != "null"
-                                ? Convert.ToInt32(kvp.Value[nameof(currentObjectType.interactiveObject.color_index)])
-                                : 0;
-
-                var isActive = kvp.Value[nameof(currentObjectType.interactiveObject.isActive)] != "null" &&
-                                 Convert.ToBoolean(kvp.Value[nameof(currentObjectType.interactiveObject.isActive)]);
-
-
-
-                var newObj = Instantiate(Resources.Load<GameObject>("TrackObjects/" + objectName), position,
-                    Quaternion.Euler(rotation));
+                var newObj = Instantiate(Resources.Load<GameObject>("TrackObjects/" + objInfo.ObjectName), objInfo.Position,
+                    Quaternion.Euler(objInfo.Rotation));
+                
                 yield return new WaitForSeconds(0.01f);
-                TrackBuilderUtils.ChangeLayerRecursively(newObj.transform, layer);
+                TrackBuilderUtils.ChangeLayerRecursively(newObj.transform, objInfo.Layer);
                 TrackBuilderUtils.OffOutlineRecursively(newObj.transform);
-                newObj.transform.localScale = scale;
-                newObj.name = kvp.Value["name"];
+                newObj.transform.localScale = objInfo.Scale;
                 var trackObj = newObj.GetComponent<TrackObject>();
-                trackObj.yOffset = yOffset;
-                trackObj.maxMouseDistance = maxMouseDistance;
+                trackObj.yOffset = objInfo.YOffset;
+                trackObj.maxMouseDistance = objInfo.MaxMouseDistance;
+                trackObj.damage = objInfo.Damage;
 
                 switch (trackObj.interactiveType)
                 {
                     case InteractiveType.Windmill:
                         trackObj.interactiveObject = trackObj.GetComponentInChildren<Windmill>();
-                        trackObj.interactiveObject.windMillRotateSpeed = rotSpeed;
+                        trackObj.interactiveObject.windMillRotateSpeed = objInfo.WindMillRotateSpeed;
                         break;
                     case InteractiveType.Magnet:
                         trackObj.interactiveObject = trackObj.GetComponentInChildren<RigidbodyMagnet>();
-                        trackObj.interactiveObject.magnetForce = magnetForce;
+                        trackObj.interactiveObject.magnetForce = objInfo.MagnetForce;
                         break;
                     case InteractiveType.Pendulum:
                         trackObj.interactiveObject = trackObj.GetComponentInChildren<Pendulum>();
-                        trackObj.interactiveObject.pendulumMoveSpeed = pendulumMoveSpeed;
-                        trackObj.interactiveObject.leftPendulumAngle = leftPendulumAngle;
-                        trackObj.interactiveObject.rightPendulumAngle = rightPendulumAngle;
+                        trackObj.interactiveObject.pendulumMoveSpeed = objInfo.PendulumMoveSpeed;
+                        trackObj.interactiveObject.leftPendulumAngle = objInfo.LeftPendulumAngle;
+                        trackObj.interactiveObject.rightPendulumAngle = objInfo.RightPendulumAngle;
                         break;
                     case InteractiveType.Wind:
                         trackObj.interactiveObject = trackObj.GetComponentInChildren<WindZoneScript>();
-                        trackObj.interactiveObject.windForce = windForce;
+                        trackObj.interactiveObject.windForce = objInfo.WindForce;
                         break;
                     case InteractiveType.Battery:
                         trackObj.interactiveObject = trackObj.GetComponentInChildren<Battery>();
-                        trackObj.interactiveObject.batteryEnergy = batteryEnergy;
+                        trackObj.interactiveObject.batteryEnergy = objInfo.BatteryEnergy;
                         break;
                     case InteractiveType.Freezing:
                         trackObj.interactiveObject = trackObj.GetComponentInChildren<FreezingBall>();
-                        trackObj.interactiveObject.isActive = freezing;
                         break;
                     case InteractiveType.Boost:
                         trackObj.interactiveObject = trackObj.GetComponentInChildren<BoostTrigger>();
-                        trackObj.interactiveObject.boostSpeed = boost;
+                        trackObj.interactiveObject.boostSpeed = objInfo.BoostSpeed;
                         break;
                     case InteractiveType.Hint:
                         trackObj.interactiveObject = trackObj.GetComponentInChildren<Hint>();
-                        trackObj.interactiveObject.hintText.text = hintText;
+                        trackObj.interactiveObject.hintText.text = objInfo.HintText;
                         break;
                     case InteractiveType.Lamp:
                         trackObj.interactiveObject = trackObj.GetComponentInChildren<Lamp>();
-                        trackObj.interactiveObject.isLampTurn = isLampTurn;
                         break;
                     case InteractiveType.ElectroGate:
                         trackObj.interactiveObject = trackObj.GetComponentInChildren<ControledGate>();
-                        trackObj.interactiveObject.color_index = color_index;
-                        trackObj.interactiveObject.isActive = isActive;
-
                         break;
                     case InteractiveType.Draw:
                         break;
+                    case InteractiveType.Text3D:
+                        trackObj.interactiveObject = trackObj.GetComponentInChildren<TextWriter3D>();
+                        trackObj.interactiveObject.text3D = objInfo.Text3d;
+                        break;
                     case InteractiveType.None:
                         break;
+                }
+                
+                if (trackObj.interactiveType != InteractiveType.None)
+                {
+                    trackObj.interactiveObject.SetColorIndex(objInfo.ColorIndex);
+                    trackObj.interactiveObject.SetActive(objInfo.IsActive);
                 }
 
                 objectsPool.Add(newObj);
@@ -642,7 +594,6 @@ namespace Drone.Builder
             CreateObjectsPoolScene();
             LoadingCompleteEvent?.Invoke();
         }
-
 
         public void PlaceObjects()
         {
