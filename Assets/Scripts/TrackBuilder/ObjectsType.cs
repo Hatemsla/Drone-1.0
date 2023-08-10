@@ -1,4 +1,4 @@
-﻿namespace Builder
+﻿namespace Drone.Builder
 {
     [System.Flags]
     public enum ObjectsType
@@ -12,7 +12,7 @@
         Hint    = 1 << 6,
         Draw    = 1 << 7,
         Enemy   = 1 << 8,
-        Other   = 1 << 9,
-        PitStop = 1 << 10,
+        PitStop = 1 << 9,
+        Text3D  = 1 << 10,
     }
 }

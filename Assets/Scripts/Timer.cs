@@ -1,43 +1,46 @@
 using UnityEngine;
 
-public class Timer : MonoBehaviour
+namespace Drone
 {
-    public float timeForStartGame;
-    public float timeForEndGame;
-
-    public float waitForStartGame;
-    public float waitForEndGame;
-
-    public float currentTime;
-
-    private void Start()
+    public class Timer : MonoBehaviour
     {
-        waitForEndGame = timeForEndGame;
-        waitForStartGame = timeForStartGame;
-    }
+        public float timeForStartGame;
+        public float timeForEndGame;
 
-    private void Update()
-    {
-        WaitForEndGame();
-        WaitForStartGame();
-        
-        if(!RewindManager.Instance.IsBeingRewinded)
-            currentTime += Time.deltaTime;
-    }
+        public float waitForStartGame;
+        public float waitForEndGame;
 
-    private void WaitForEndGame()
-    {
-        if (waitForEndGame >= 0 && waitForStartGame <= 0 && !RewindManager.Instance.IsBeingRewinded)
+        public float currentTime;
+
+        private void Start()
         {
-            waitForEndGame -= Time.deltaTime;
+            waitForEndGame = timeForEndGame;
+            waitForStartGame = timeForStartGame;
         }
-    }
 
-    private void WaitForStartGame()
-    {
-        if (waitForStartGame >= 0)
+        private void Update()
         {
-            waitForStartGame -= Time.deltaTime;
+            WaitForEndGame();
+            WaitForStartGame();
+        
+            if(!RewindManager.Instance.IsBeingRewinded)
+                currentTime += Time.deltaTime;
+        }
+
+        private void WaitForEndGame()
+        {
+            if (waitForEndGame >= 0 && waitForStartGame <= 0 && !RewindManager.Instance.IsBeingRewinded)
+            {
+                waitForEndGame -= Time.deltaTime;
+            }
+        }
+
+        private void WaitForStartGame()
+        {
+            if (waitForStartGame >= 0)
+            {
+                waitForStartGame -= Time.deltaTime;
+            }
         }
     }
 }

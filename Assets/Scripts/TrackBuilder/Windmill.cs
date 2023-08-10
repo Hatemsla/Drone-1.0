@@ -2,7 +2,7 @@
 using Drone;
 using UnityEngine;
 
-namespace Builder
+namespace Drone.Builder
 {
     public class Windmill : InteractiveObject
     {
@@ -18,8 +18,7 @@ namespace Builder
         {
             if (isActive)
             {
-                trap.MoveRotation(trap.rotation *
-                                  Quaternion.Euler(rotateDirection * (windMillRotateSpeed * Time.deltaTime)));
+                trap.MoveRotation(trap.rotation * Quaternion.Euler(rotateDirection * (windMillRotateSpeed * Time.deltaTime)));
             }
         }
         

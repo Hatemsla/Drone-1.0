@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using Drone;
+using Drone.Builder.Text3D;
+using Drone.Builder.ControllerElements;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
-namespace Builder
+namespace Drone.Builder
 {
     public class EditObject : MonoBehaviour
     {
@@ -79,9 +81,9 @@ namespace Builder
         
         public void OnXRotationChanged(float value)
         {
-            currentObject.Rotation = Quaternion.Euler(value, currentObject.Rotation.eulerAngles.y, currentObject.Rotation.eulerAngles.z);
+            currentObject.Rotation = Quaternion.Euler(value, 0, 0);
         }
-        
+
         public void OnYRotationChanged(float value)
         {
             currentObject.Rotation = Quaternion.Euler(currentObject.Rotation.eulerAngles.x, value, currentObject.Rotation.eulerAngles.z);
@@ -157,17 +159,24 @@ namespace Builder
 
         public void OnHintTextChanged(string value)
         {
-            currentObject.interactiveObject.hintText.text = value;
+            if (currentObject.interactiveObject is TextWriter3D text3D)
+            {
+                text3D.Text = value;
+            }
+            else
+            {
+                currentObject.interactiveObject.hintText.text = value;
+            }
         }
 
         public void OnSelectTextHint(string value)
         {
-            BuilderManager.Instance.isInputText = true;
+            InputSystem.DisableDevice(Keyboard.current);
         }
         
         public void OnDeselectTextHint(string value)
         {
-            BuilderManager.Instance.isInputText = false;
+            InputSystem.EnableDevice(Keyboard.current);
         }
 
         public void OnStartDrawButton()

@@ -3,7 +3,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Menu
+namespace Drone.Menu
 {
     public class ColorPreview : MonoBehaviour
     {

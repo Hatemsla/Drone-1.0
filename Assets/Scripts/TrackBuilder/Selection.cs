@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using Drone;
+using Drone.Builder.ControllerElements;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using Outline = cakeslice.Outline;
 
-namespace Builder
+namespace Drone.Builder
 {
     public class Selection : MonoBehaviour
     {
@@ -33,9 +34,6 @@ namespace Builder
         
         private void Update()
         {
-            if(BuilderManager.Instance.isInputText)
-                return;
-
             if (selectedObject)
             {
                 editObject.OnSelectObject(selectedTrackObject);
@@ -93,6 +91,9 @@ namespace Builder
                     break;
                 case InteractiveType.TrMessage:
                     selectedTrackObject.interactiveObject = selectedTrackObject.GetComponentInChildren<TriggerMassege>();
+                    break;
+                case InteractiveType.Text3D:
+                    selectedTrackObject.interactiveObject = selectedTrackObject.GetComponentInChildren<Text3D.TextWriter3D>();
                     break;
             }
         }
@@ -201,6 +202,7 @@ namespace Builder
             BuilderManager.Instance.pendingObjects.Clear();
             selectedObjects.Clear();
             BuilderManager.Instance.pendingObject = null;
+            editObject.HideEditMenu();
         }
 
         public void AddSelection(GameObject obj)

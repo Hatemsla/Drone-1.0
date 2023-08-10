@@ -1,12 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using cakeslice;
 using UnityEngine;
 
-namespace Builder
+namespace Drone.Builder
 {
     public static class TrackBuilderUtils
     {
+        public static bool GetActive(IEnumerable<InteractiveObject> controlObjs)
+        {
+            return controlObjs.Any(x => x.isActive);
+        }
+        
         public static void OffOutlineRecursively(Transform obj)
         {
             if(obj.gameObject.GetComponent<Outline>())
@@ -32,7 +38,7 @@ namespace Builder
             if (LayerMask.LayerToName(obj.gameObject.layer) != "FloorConnection" && LayerMask.LayerToName(obj.gameObject.layer) != "WallConnection" 
                 && LayerMask.LayerToName(obj.gameObject.layer) != "SlantConnection" && LayerMask.LayerToName(obj.gameObject.layer) != "Ignore Raycast"
                 && LayerMask.LayerToName(obj.gameObject.layer) != "Hint" && LayerMask.LayerToName(obj.gameObject.layer) != "Draw"
-                && LayerMask.LayerToName(obj.gameObject.layer) != "Intangible")
+                && LayerMask.LayerToName(obj.gameObject.layer) != "Intangible" && LayerMask.LayerToName(obj.gameObject.layer) != "Text3D")
             {
                 obj.gameObject.layer = layer;
             }
@@ -73,9 +79,11 @@ namespace Builder
             var trackHintLayer = LayerMask.NameToLayer("Hint");
             var trackDrawLayer = LayerMask.NameToLayer("Draw");
             var trackIntangibleLayer = LayerMask.NameToLayer("Intangible");
+            var trackText3DLayer = LayerMask.NameToLayer("Text3D");
             var activeLayerIndex = LayerMask.NameToLayer(activeLayer);
 
-            var layerMask = (1 << trackGroundLayer) | (1 << trackHintLayer) | (1 << trackDrawLayer) | (1 << activeLayerIndex) | (1 << trackIntangibleLayer);
+            var layerMask = (1 << trackGroundLayer) | (1 << trackHintLayer) | (1 << trackDrawLayer) |
+                            (1 << activeLayerIndex) | (1 << trackIntangibleLayer) | (1 << trackText3DLayer);
 
             return layerMask;
         }

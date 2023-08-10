@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Drone
+namespace Drone.Builder
 {
     public class SkillDroneView : MonoBehaviour
     {

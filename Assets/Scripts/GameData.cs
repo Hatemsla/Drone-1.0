@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace DroneFootball
+namespace Drone
 {
     [CreateAssetMenu]
     public class GameData : ScriptableObject

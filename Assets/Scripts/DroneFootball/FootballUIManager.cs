@@ -2,7 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace DroneFootball
+namespace Drone.DroneFootball
 {
     public class FootballUIManager : MonoBehaviour
     {

@@ -2,7 +2,7 @@
 using Drone;
 using UnityEngine;
 
-namespace Builder
+namespace Drone.Builder
 {
     public class Battery : InteractiveObject
     {

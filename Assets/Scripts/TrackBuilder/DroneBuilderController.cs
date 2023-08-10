@@ -4,7 +4,7 @@ using System.Linq;
 using Drone;
 using UnityEngine;
 
-namespace Builder
+namespace Drone.Builder
 {
     public class DroneBuilderController : DroneController
     {

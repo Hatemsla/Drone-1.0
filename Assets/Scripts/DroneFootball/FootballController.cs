@@ -1,12 +1,12 @@
 using System.Collections;
 using Cinemachine;
-using DB;
+using Drone.DB;
 using Drone;
-using Menu;
+using Drone.Menu;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace DroneFootball
+namespace Drone.DroneFootball
 {
     public class FootballController : MonoBehaviour
     {

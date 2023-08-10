@@ -3,7 +3,7 @@ using System.Collections;
 using Drone;
 using UnityEngine;
 
-namespace Builder
+namespace Drone.Builder
 {
     public sealed class PitStop : InteractiveObject
     {
@@ -81,7 +81,7 @@ namespace Builder
 
         private void OnTriggerEnter(Collider other)
         {
-            if(!BuilderManager.Instance.isMove)
+            if(!BuilderManager.Instance.isMove || !isActive)
                 return;
             
             _inTrigger = true;
@@ -92,7 +92,7 @@ namespace Builder
 
         private void OnTriggerExit(Collider other)
         {
-            if(!BuilderManager.Instance.isMove)
+            if(!BuilderManager.Instance.isMove || !isActive)
                 return;
             
             _inTrigger = false;

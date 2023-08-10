@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using Builder;
+using Drone.Builder;
 using UnityEngine;
 
-namespace Drone
+namespace Drone.Builder
 {
     public class PortalGun : MonoBehaviour
     {

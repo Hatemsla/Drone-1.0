@@ -3,13 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Cinemachine;
-using DB;
+using Drone.DB;
 using Drone;
-using DroneFootball;
+using Drone.DroneFootball;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace DroneRace
+namespace Drone.DroneRace
 {
     public class RaceController : MonoBehaviour
     {

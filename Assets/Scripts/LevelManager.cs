@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Text.RegularExpressions;
-using Builder;
+using Drone.Builder;
 using Newtonsoft.Json;
 using UnityEngine;
 
-namespace DroneFootball
+namespace Drone
 {
     public static class LevelManager
     {

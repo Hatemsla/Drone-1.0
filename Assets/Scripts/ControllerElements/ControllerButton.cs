@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Drone;
 using UnityEngine;
 
-namespace Builder
+namespace Drone.Builder.ControllerElements
 {
     public class ControllerButton : InteractiveObject
     {

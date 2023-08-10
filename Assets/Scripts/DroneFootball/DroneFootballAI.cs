@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
-using DroneRace;
+using Drone.DroneRace;
 using UnityEngine;
 
-namespace DroneFootball
+namespace Drone.DroneFootball
 {
     [RequireComponent(typeof(DroneFootballCheckNode), typeof(Rigidbody))]
     public class DroneFootballAI : DroneAI

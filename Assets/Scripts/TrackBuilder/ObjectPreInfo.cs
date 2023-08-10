@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace Builder
+namespace Drone.Builder
 {
     public sealed class ObjectPreInfo : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {

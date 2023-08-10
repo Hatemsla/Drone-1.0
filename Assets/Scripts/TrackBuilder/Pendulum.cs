@@ -1,8 +1,8 @@
 ﻿using System;
-using Builder;
+using Drone.Builder;
 using UnityEngine;
 
-namespace Drone
+namespace Drone.Builder
 {
     public class Pendulum : InteractiveObject
     {

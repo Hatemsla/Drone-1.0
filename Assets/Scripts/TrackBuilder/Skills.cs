@@ -1,4 +1,4 @@
-namespace Drone
+namespace Drone.Builder
 {
     public enum Skills
     {

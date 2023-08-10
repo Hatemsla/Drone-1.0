@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.Audio;
 
-namespace DroneRace
+namespace Drone.DroneRace
 {
     public class DroneRaceAudioController : MonoBehaviour
     {

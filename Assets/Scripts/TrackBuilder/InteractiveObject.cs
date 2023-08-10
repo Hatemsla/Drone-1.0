@@ -2,7 +2,7 @@
 using TMPro;
 using UnityEngine;
 
-namespace Builder
+namespace Drone.Builder
 {
     public abstract class InteractiveObject : MonoBehaviour
     {
@@ -17,6 +17,7 @@ namespace Builder
         [HideInInspector] public float boostSpeed;
         [HideInInspector] public bool isLampTurn = true;
         [HideInInspector] public TMP_Text hintText;
+        [HideInInspector] public string text3D;
         [HideInInspector] public int color_index;
         [HideInInspector] public bool ishacked;
         [HideInInspector] public int n1;

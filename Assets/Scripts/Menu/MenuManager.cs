@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Drone;
-using DroneFootball;
+using Drone.DroneFootball;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace Menu
+namespace Drone.Menu
 {
     public class MenuManager : MonoBehaviour
     {

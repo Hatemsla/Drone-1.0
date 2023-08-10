@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3661553598910160927}
   - component: {fileID: 5832602253587293964}
   - component: {fileID: 4314725124152842845}
+  - component: {fileID: 3386294949885427241}
   m_Layer: 7
   m_Name: Cylinder.001
   m_TagString: Untagged
@@ -122,6 +123,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   color: 0
   eraseRenderer: 0
+--- !u!114 &3386294949885427241
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2798667254540626326}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6a2ee1df35846d481af696799a59aa3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectMaterials: []
+  defaultColors: []
+  hasEmissions: 
 --- !u!1 &2893531280122726581
 GameObject:
   m_ObjectHideFlags: 0
@@ -137,6 +153,7 @@ GameObject:
   - component: {fileID: 5446718760121195197}
   - component: {fileID: 9108655233492854999}
   - component: {fileID: 858723859442751755}
+  - component: {fileID: 3775462576778257426}
   m_Layer: 7
   m_Name: Cube.001
   m_TagString: Untagged
@@ -305,6 +322,21 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4493585093827132993, guid: 94d64498daa0c744e8984d9b926d8264, type: 3}
+--- !u!114 &3775462576778257426
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2893531280122726581}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6a2ee1df35846d481af696799a59aa3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectMaterials: []
+  defaultColors: []
+  hasEmissions: 
 --- !u!1 &5832602253355858749
 GameObject:
   m_ObjectHideFlags: 0
@@ -352,7 +384,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 27
   connection: {fileID: 0}
-  objectType: 512
+  objectType: 0
   hasPortal: 1
   interactiveType: 1
   effectType: 1
@@ -380,7 +412,8 @@ GameObject:
   - component: {fileID: 8066460733835337322}
   - component: {fileID: 5832602252319459518}
   - component: {fileID: 8312404450811144990}
-  - component: {fileID: 2435380478475156166}
+  - component: {fileID: 3323488532655005319}
+  - component: {fileID: 1462619061135328138}
   m_Layer: 7
   m_Name: Cube
   m_TagString: Untagged
@@ -490,7 +523,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   color: 0
   eraseRenderer: 0
---- !u!114 &2435380478475156166
+--- !u!114 &3323488532655005319
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -499,7 +532,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 6592692974061566657}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b71dfc85cbca413d973d51f0d6ce387a, type: 3}
+  m_Script: {fileID: 11500000, guid: a6a2ee1df35846d481af696799a59aa3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectMaterials: []
+  defaultColors: []
+  hasEmissions: 
+--- !u!114 &1462619061135328138
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6592692974061566657}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6a2ee1df35846d481af696799a59aa3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   objectMaterials: []
@@ -553,6 +601,7 @@ GameObject:
   - component: {fileID: 3675512761548586618}
   - component: {fileID: 5832602252319459519}
   - component: {fileID: 5897935718430576119}
+  - component: {fileID: 2395453907823196317}
   m_Layer: 7
   m_Name: Cylinder
   m_TagString: Untagged
@@ -661,3 +710,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   color: 0
   eraseRenderer: 0
+--- !u!114 &2395453907823196317
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7082116305774315173}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6a2ee1df35846d481af696799a59aa3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectMaterials: []
+  defaultColors: []
+  hasEmissions: 

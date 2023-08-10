@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-namespace Menu
+namespace Drone.Menu
 {
     public class Menu : MonoBehaviour
     {

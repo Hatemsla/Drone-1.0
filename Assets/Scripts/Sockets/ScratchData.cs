@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using UnityEngine;
 
-namespace Sockets
+namespace Drone.Sockets
 {
     public class ScratchData
     {

@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace Sockets
+namespace Drone.Sockets
 {
     public class MioData
     {

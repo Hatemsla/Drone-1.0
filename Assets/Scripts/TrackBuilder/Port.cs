@@ -1,10 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Drone;
 using UnityEngine;
 
-namespace Builder
+namespace Drone.Builder
 {
     public sealed class Port : InteractiveObject
     {
@@ -156,7 +155,7 @@ namespace Builder
 
         public void ActivateSecurityCameras()
         {
-            if(!Utils.GetActive(securityCameras))
+            if(!TrackBuilderUtils.GetActive(securityCameras))
                 return;
             
             isCameraChange = true;

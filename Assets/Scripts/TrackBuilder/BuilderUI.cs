@@ -6,7 +6,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Builder
+namespace Drone.Builder
 {
     public class BuilderUI : MonoBehaviour
     {

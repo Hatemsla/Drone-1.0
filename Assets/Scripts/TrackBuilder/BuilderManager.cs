@@ -5,9 +5,10 @@ using System.IO;
 using System.Linq;
 using Cinemachine;
 using Drone;
-using DroneFootball;
+using Drone.Builder.ControllerElements;
+using Drone.DroneFootball;
 using Newtonsoft.Json;
-using Sockets;
+using Drone.Sockets;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -15,7 +16,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Outline = cakeslice.Outline;
 
-namespace Builder
+namespace Drone.Builder
 {
     public class BuilderManager : MonoBehaviour
     {
@@ -28,13 +29,13 @@ namespace Builder
         public bool isGameMode;
         public bool isLoadLevel;
         public bool isGameLevel;
-        public bool isInputText;
         public bool isActivRed;
         public bool isActivBlue;
         public bool isActivYellow;
         public bool isActivGreen;
         public BuilderUI builderUI;
         public EditMenu editMenu;
+        public EditObject editObject;
         public BuilderAudioManager audioManager;
         public DroneBuilderController droneBuilderController;
         public DroneBuilderCheckNode droneBuilderCheckNode;
@@ -224,9 +225,6 @@ namespace Builder
 
         private void Update()
         {
-            if (isInputText)
-                return;
-
             if (isMove)
             {
                 SetDroneParameters();

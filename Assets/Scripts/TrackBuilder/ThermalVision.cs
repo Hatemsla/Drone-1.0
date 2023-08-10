@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Builder;
-using Drone;
 using UnityEngine;
 
-namespace DroneFootball
+namespace Drone.Builder
 {
     public class ThermalVision : MonoBehaviour
     {

@@ -1,35 +1,37 @@
 using System;
-using Builder;
-using Drone;
-using DroneFootball;
+using Drone.Builder;
+using Drone.DroneFootball;
 
-public class YawRewind : RewindAbstract
+namespace Drone.CustomTimeRewind
 {
-    public DroneController droneController;
-    private CircularBuffer<float> _trackedDroneYaws;
-
-    private void Start()
+    public class YawRewind : RewindAbstract
     {
-        _trackedDroneYaws = new CircularBuffer<float>();
-    }
+        public DroneController droneController;
+        private CircularBuffer<float> _trackedDroneYaws;
 
-    public override void Track()
-    {
-        TrackDroneYaw();
-    }
+        private void Start()
+        {
+            _trackedDroneYaws = new CircularBuffer<float>();
+        }
 
-    public override void Rewind(float seconds)
-    {
-        RestoreDroneYaw(seconds);
-    }
+        public override void Track()
+        {
+            TrackDroneYaw();
+        }
 
-    public void TrackDroneYaw()
-    {
-        _trackedDroneYaws.WriteLastValue(droneController.yaw);
-    }
+        public override void Rewind(float seconds)
+        {
+            RestoreDroneYaw(seconds);
+        }
 
-    public void RestoreDroneYaw(float seconds)
-    {
-        droneController.yaw = _trackedDroneYaws.ReadFromBuffer(seconds);
+        public void TrackDroneYaw()
+        {
+            _trackedDroneYaws.WriteLastValue(droneController.yaw);
+        }
+
+        public void RestoreDroneYaw(float seconds)
+        {
+            droneController.yaw = _trackedDroneYaws.ReadFromBuffer(seconds);
+        }
     }
 }

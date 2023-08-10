@@ -6,7 +6,7 @@ using Drone;
 using TMPro;
 using UnityEngine;
 
-namespace Builder
+namespace Drone.Builder
 {
     public class TerminalManager : MonoBehaviour
     {

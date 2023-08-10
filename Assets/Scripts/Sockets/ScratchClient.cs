@@ -1,11 +1,11 @@
 ﻿using System.Collections;
 using Drone;
-using DroneFootball;
+using Drone.DroneFootball;
 using Newtonsoft.Json;
 using UnityEngine;
 using UnityEngine.Networking;
 
-namespace Sockets
+namespace Drone.Sockets
 {
     public class ScratchClient : MonoBehaviour
     {

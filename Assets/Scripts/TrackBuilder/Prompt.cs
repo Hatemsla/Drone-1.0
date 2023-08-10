@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-namespace Builder
+namespace Drone.Builder
 {
     public sealed class Prompt : MonoBehaviour
     {

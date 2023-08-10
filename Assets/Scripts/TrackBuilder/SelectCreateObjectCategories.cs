@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Builder
+namespace Drone.Builder
 {
     public sealed class SelectCreateObjectCategories : MonoBehaviour
     {

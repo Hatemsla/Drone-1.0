@@ -63,6 +63,7 @@ namespace Drone
         private void Awake()
         {
             Instance = this;
+            InputSystem.EnableDevice(Keyboard.current);
             
             _playerInput ??= new PlayerInputs();
 
@@ -113,6 +114,7 @@ namespace Drone
             _playerInput.Builder.ChangeObjectHeight.canceled += _ => ChangeObjectHeightEvent?.Invoke(0f);
             _playerInput.Builder.ChangeObjectScale.performed += _ => ChangeObjectScaleEvent?.Invoke(_.ReadValue<float>());
             _playerInput.Builder.LockCursor.performed += _ => LockCursorEvent?.Invoke();
+            _playerInput.Builder.LockCursor.performed += _ => InputSystem.EnableDevice(Keyboard.current);
             _playerInput.Builder.ExitBtn.performed += _ => ExitBuilderEvent?.Invoke();
             
             _playerInput.Camera.SetCursor.performed += _ => SetCursorEvent?.Invoke();

@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using DroneRace;
+using Drone.DroneRace;
 using UnityEngine;
 
-namespace DroneFootball
+namespace Drone.DroneFootball
 {
     public class DroneFootballCheckNode : CheckNode
     {

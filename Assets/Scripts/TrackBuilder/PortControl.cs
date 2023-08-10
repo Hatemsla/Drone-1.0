@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
-using Builder;
-using Drone.SerializeDictionaries;
+using Drone.Builder;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -43,7 +42,7 @@ namespace Drone
 
         public void AddControlObjects(List<InteractiveObject> controlObjs, Port port, InteractiveType interactiveType)
         {
-            switchToggle.Toggle(Utils.GetActive(controlObjs));
+            switchToggle.Toggle(TrackBuilderUtils.GetActive(controlObjs));
             _controlObjects = controlObjs;
             switch (interactiveType)
             {

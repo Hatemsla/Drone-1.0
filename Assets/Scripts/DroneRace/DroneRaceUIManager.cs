@@ -2,7 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace DroneRace
+namespace Drone.DroneRace
 {
     public class DroneRaceUIManager : MonoBehaviour
     {

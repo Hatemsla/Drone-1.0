@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace Menu
+namespace Drone.Menu
 {
     public class MenuSettingsSpriteSwitcherHandler : MonoBehaviour
     {

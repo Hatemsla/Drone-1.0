@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace DroneFootball
+namespace Drone
 {
     public static class GameManagerUtils
     {

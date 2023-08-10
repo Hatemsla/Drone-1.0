@@ -1,13 +1,13 @@
 using System;
 using Drone;
-using DroneFootball;
-using Menu;
+using Drone.DroneFootball;
+using Drone.Menu;
 using Npgsql;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace DB
+namespace Drone.DB
 {
     public class DBManager : MonoBehaviour
     {

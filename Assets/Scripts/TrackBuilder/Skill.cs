@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace Drone
+namespace Drone.Builder
 {
     public class Skill : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
     {

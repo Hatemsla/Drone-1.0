@@ -1,4 +1,4 @@
-﻿namespace Sockets
+﻿namespace Drone.Sockets
 {
     public enum DroneMode
     {

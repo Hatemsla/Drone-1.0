@@ -3,7 +3,7 @@ using Drone;
 using ObjectsPool;
 using UnityEngine;
 
-namespace Builder
+namespace Drone.Builder
 {
     public sealed class EffectsManager : MonoBehaviour
     {

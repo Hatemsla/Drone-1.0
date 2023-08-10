@@ -3,7 +3,7 @@ using System.Collections;
 using Drone;
 using UnityEngine;
 
-namespace DroneFootball
+namespace Drone
 {
     public class Sensors : MonoBehaviour
     {

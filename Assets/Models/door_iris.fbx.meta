@@ -1,9 +1,29 @@
 fileFormatVersion: 2
-guid: 48293bc444a40604aa254aba017c2c13
+guid: b9243058f768bf94c8a14e555c1d5216
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: emission
+    second: {fileID: 2100000, guid: 2330f319d511cc74fac62fb22b16fa97, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: metal
+    second: {fileID: 2100000, guid: 33d2629003384bf46a2932f759021ab9, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: paint_black
+    second: {fileID: 2100000, guid: e82a88e8fb970df49b7759b4503bd3b5, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: paint_orange
+    second: {fileID: 2100000, guid: 354a2e804d3004748b62a3449378fe2f, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -78,7 +98,7 @@ ModelImporter:
     blendShapeNormalImportMode: 1
     normalSmoothingSource: 0
   referencedClips: []
-  importAnimation: 1
+  importAnimation: 0
   humanDescription:
     serializedVersion: 3
     human: []

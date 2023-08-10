@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace DroneRace
+namespace Drone.DroneRace
 {
     public class DroneRaceCheckNode : CheckNode
     {

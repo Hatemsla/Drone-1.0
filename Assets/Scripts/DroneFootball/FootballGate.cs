@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace DroneFootball
+namespace Drone.DroneFootball
 {
     public class FootballGate : MonoBehaviour
     {

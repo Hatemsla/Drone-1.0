@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Drone;
 
-namespace Builder
+namespace Drone.Builder.ControllerElements
 {
     public class GrabbedObject : MonoBehaviour
     {
@@ -37,7 +37,6 @@ namespace Builder
                 isMovePrev = !isMovePrev;
                 grabbedObjectRigidbody.isKinematic = !BuilderManager.Instance.isMove;
             }
-
         }
 
         private void check_button()

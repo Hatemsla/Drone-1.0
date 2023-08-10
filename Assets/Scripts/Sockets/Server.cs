@@ -4,14 +4,14 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Builder;
+using Drone.Builder;
 using Drone;
-using DroneFootball;
-using DroneRace;
+using Drone.DroneFootball;
+using Drone.DroneRace;
 using Newtonsoft.Json;
 using UnityEngine;
 
-namespace Sockets
+namespace Drone.Sockets
 {
     public class Server : MonoBehaviour
     {

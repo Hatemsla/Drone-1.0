@@ -3,26 +3,28 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-
-public class ColorSwapper : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+namespace Drone
 {
-    public TMP_Text text;
-    public Color defaultColor;
-    public Color hoverColor;
-
-    private void Start()
+    public class ColorSwapper : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
-        if(text == null)
-            text = GetComponent<TMP_Text>();
-    }
+        public TMP_Text text;
+        public Color defaultColor;
+        public Color hoverColor;
 
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        text.color = hoverColor;
-    }
+        private void Start()
+        {
+            if(text == null)
+                text = GetComponent<TMP_Text>();
+        }
 
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        text.color = defaultColor;
+        public void OnPointerEnter(PointerEventData eventData)
+        {
+            text.color = hoverColor;
+        }
+
+        public void OnPointerExit(PointerEventData eventData)
+        {
+            text.color = defaultColor;
+        }
     }
 }

@@ -4,7 +4,7 @@ using Drone;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace DroneRace
+namespace Drone.DroneRace
 {
     [RequireComponent(typeof(Rigidbody), typeof(DroneRaceCheckNode))]
     public class DroneRaceController : DroneController

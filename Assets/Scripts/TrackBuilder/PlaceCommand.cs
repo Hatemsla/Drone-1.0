@@ -1,7 +1,7 @@
-﻿using Builder.Interfaces;
+﻿using Drone.Builder.Interfaces;
 using UnityEngine;
 
-namespace Builder
+namespace Drone.Builder
 {
     public class PlaceCommand : IAction
     {

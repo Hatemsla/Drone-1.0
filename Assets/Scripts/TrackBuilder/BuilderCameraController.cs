@@ -3,7 +3,7 @@ using Cinemachine;
 using Drone;
 using UnityEngine;
 
-namespace Builder
+namespace Drone.Builder
 {
     public class BuilderCameraController : MonoBehaviour
     {

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Builder
+namespace Drone.Builder
 {
     public class BuilderCheckpointTrigger : MonoBehaviour
     {

@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.Audio;
 
-namespace DroneFootball
+namespace Drone.DroneFootball
 {
     public class FootballAudioManager : MonoBehaviour
     {

@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-namespace Menu
+namespace Drone.Menu
 {
     [Serializable]
     public class ColorEvent : UnityEvent<Color> { }

@@ -75,7 +75,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 26
   connection: {fileID: 0}
-  objectType: 512
+  objectType: 0
   hasPortal: 1
   interactiveType: 0
   effectType: 1
@@ -166,12 +166,18 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -5568371526223589888, guid: 1c02650a42e18904e80d3fdc9f827b11, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6220257689366460772}
+    - targetCorrespondingSourceObject: {fileID: -5568371526223589888, guid: 1c02650a42e18904e80d3fdc9f827b11, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5440221744434133321}
     - targetCorrespondingSourceObject: {fileID: -7029948723529949830, guid: 1c02650a42e18904e80d3fdc9f827b11, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6694145650182905542}
     - targetCorrespondingSourceObject: {fileID: -7029948723529949830, guid: 1c02650a42e18904e80d3fdc9f827b11, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8096766830982513121}
+    - targetCorrespondingSourceObject: {fileID: -7029948723529949830, guid: 1c02650a42e18904e80d3fdc9f827b11, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6566577955254992656}
   m_SourcePrefab: {fileID: 100100000, guid: 1c02650a42e18904e80d3fdc9f827b11, type: 3}
 --- !u!1 &4798296101099242400 stripped
 GameObject:
@@ -214,6 +220,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   color: 0
   eraseRenderer: 0
+--- !u!114 &6566577955254992656
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4798296101099242400}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6a2ee1df35846d481af696799a59aa3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectMaterials: []
+  defaultColors: []
+  hasEmissions: 
 --- !u!4 &6587881685111388465 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 1c02650a42e18904e80d3fdc9f827b11, type: 3}
@@ -260,3 +281,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   color: 0
   eraseRenderer: 0
+--- !u!114 &5440221744434133321
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7953156388504195290}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6a2ee1df35846d481af696799a59aa3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectMaterials: []
+  defaultColors: []
+  hasEmissions: 

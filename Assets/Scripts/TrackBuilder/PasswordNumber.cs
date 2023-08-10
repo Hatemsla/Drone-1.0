@@ -3,7 +3,7 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 
-namespace Drone
+namespace Drone.Builder
 {
     public class PasswordNumber : MonoBehaviour
     {

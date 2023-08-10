@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Menu
+namespace Drone.Menu
 {
     public class SpriteSwapperController : MonoBehaviour
     {

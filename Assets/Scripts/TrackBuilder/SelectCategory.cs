@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Builder
+namespace Drone.Builder
 {
     public sealed class SelectCategory : MonoBehaviour
     {

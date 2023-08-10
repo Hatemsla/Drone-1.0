@@ -1,33 +1,36 @@
-﻿using DroneFootball;
+﻿using Drone.DroneFootball;
 using UnityEngine;
 
-public class ScoreRewind : RewindAbstract
+namespace Drone.CustomTimeRewind
 {
-    public CheckNode checkNode;
-    private CircularBuffer<int> _trackedCurrentNodes;
-
-    private void Start()
+    public class ScoreRewind : RewindAbstract
     {
-        _trackedCurrentNodes = new CircularBuffer<int>();
-    }
+        public CheckNode checkNode;
+        private CircularBuffer<int> _trackedCurrentNodes;
 
-    public override void Track()
-    {
-        TrackTargetTransform();
-    }
+        private void Start()
+        {
+            _trackedCurrentNodes = new CircularBuffer<int>();
+        }
 
-    public override void Rewind(float seconds)
-    {
-        RestoreTargetTransform(seconds);
-    }
+        public override void Track()
+        {
+            TrackTargetTransform();
+        }
 
-    private void RestoreTargetTransform(float seconds)
-    {
-        checkNode.currentNode = _trackedCurrentNodes.ReadFromBuffer(seconds);
-    }
+        public override void Rewind(float seconds)
+        {
+            RestoreTargetTransform(seconds);
+        }
 
-    private void TrackTargetTransform()
-    {
-        _trackedCurrentNodes.WriteLastValue(checkNode.currentNode);
+        private void RestoreTargetTransform(float seconds)
+        {
+            checkNode.currentNode = _trackedCurrentNodes.ReadFromBuffer(seconds);
+        }
+
+        private void TrackTargetTransform()
+        {
+            _trackedCurrentNodes.WriteLastValue(checkNode.currentNode);
+        }
     }
 }

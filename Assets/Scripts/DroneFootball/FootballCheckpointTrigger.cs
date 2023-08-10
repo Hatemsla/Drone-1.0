@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Drone;
 using UnityEngine;
 
-namespace DroneFootball
+namespace Drone.DroneFootball
 {
     public class FootballCheckpointTrigger : MonoBehaviour
     {

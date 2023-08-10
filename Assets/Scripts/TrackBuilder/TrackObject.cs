@@ -2,13 +2,13 @@ using System;
 using Drone;
 using UnityEngine;
 
-namespace Builder
+namespace Drone.Builder
 {
     public class TrackObject : MonoBehaviour
     {
         public int id;
         public Transform connection;
-        public ObjectsType objectType = ObjectsType.Other;
+        public ObjectsType objectType;
         public HasPortal hasPortal = HasPortal.No;
         public InteractiveType interactiveType = InteractiveType.None;
         public EffectType effectType = EffectType.Massive;

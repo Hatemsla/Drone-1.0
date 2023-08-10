@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Builder
+namespace Drone.Builder
 {
     public class EditMenu : MonoBehaviour
     {
@@ -203,7 +203,17 @@ namespace Builder
                     //hintInput.text = trackObject.interactiveObject.hintText.text;
                     //activeToggle.isOn = trackObject.interactiveObject.isActive;
                     break;
-
+                case InteractiveType.Terminal:
+                    TurnInteractivePanels(isActivePanel);
+                    break;
+                case InteractiveType.PitStop:
+                    TurnInteractivePanels(isActivePanel);
+                    break;
+                case InteractiveType.Text3D:
+                    TurnInteractivePanels(hintPanel);
+                    hintInput.text = trackObject.interactiveObject.text3D;
+                    activeToggle.isOn = trackObject.interactiveObject.isActive;
+                    break;
             }
         }
 

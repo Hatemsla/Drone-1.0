@@ -4,7 +4,7 @@ using System.Linq;
 using Cinemachine;
 using UnityEngine;
 
-namespace Builder
+namespace Drone.Builder
 {
     public class Line : MonoBehaviour
     {

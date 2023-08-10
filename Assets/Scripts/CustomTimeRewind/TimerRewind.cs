@@ -1,34 +1,37 @@
-﻿public class TimerRewind : RewindAbstract
+﻿namespace Drone.CustomTimeRewind
 {
-    public Timer timer;
-    private CircularBuffer<float> _trackedTime;
-    private CircularBuffer<float> _trackedCurrentTime;
-
-    private void Start()
+    public class TimerRewind : RewindAbstract
     {
-        _trackedTime = new CircularBuffer<float>();
-        _trackedCurrentTime = new CircularBuffer<float>();
-    }
+        public Timer timer;
+        private CircularBuffer<float> _trackedTime;
+        private CircularBuffer<float> _trackedCurrentTime;
 
-    public override void Track()
-    {
-        TrackTargetTransform();
-    }
+        private void Start()
+        {
+            _trackedTime = new CircularBuffer<float>();
+            _trackedCurrentTime = new CircularBuffer<float>();
+        }
 
-    public override void Rewind(float seconds)
-    {
-        RestoreTargetTransform(seconds);
-    }
+        public override void Track()
+        {
+            TrackTargetTransform();
+        }
 
-    private void RestoreTargetTransform(float seconds)
-    {
-        timer.waitForEndGame = _trackedTime.ReadFromBuffer(seconds);
-        timer.currentTime = _trackedCurrentTime.ReadFromBuffer(seconds);
-    }
+        public override void Rewind(float seconds)
+        {
+            RestoreTargetTransform(seconds);
+        }
 
-    private void TrackTargetTransform()
-    {
-        _trackedTime.WriteLastValue(timer.waitForEndGame);
-        _trackedCurrentTime.WriteLastValue(timer.currentTime);
+        private void RestoreTargetTransform(float seconds)
+        {
+            timer.waitForEndGame = _trackedTime.ReadFromBuffer(seconds);
+            timer.currentTime = _trackedCurrentTime.ReadFromBuffer(seconds);
+        }
+
+        private void TrackTargetTransform()
+        {
+            _trackedTime.WriteLastValue(timer.waitForEndGame);
+            _trackedCurrentTime.WriteLastValue(timer.currentTime);
+        }
     }
 }

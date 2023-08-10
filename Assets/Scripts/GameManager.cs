@@ -1,8 +1,8 @@
-﻿using Builder;
-using DB;
-using DroneFootball;
-using DroneRace;
-using Sockets;
+﻿using Drone.Builder;
+using Drone.DB;
+using Drone.DroneFootball;
+using Drone.DroneRace;
+using Drone.Sockets;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 

@@ -1,4 +1,4 @@
-﻿namespace Builder
+﻿namespace Drone.Builder
 {
     public enum InteractiveType
     {
@@ -23,5 +23,6 @@
         TrMessage,
         MagnetKiller,
         PitStop,
+        Text3D,
     }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Drone;
 using UnityEngine;
 
-namespace Builder
+namespace Drone.Builder
 {
     public class MagnetKiller : InteractiveObject
     {
