@@ -49,7 +49,7 @@ namespace Drone
                             Destroy(gameManager.gameObject);
 
                     asyncLoad = FindObjectOfType<AsyncLoad>();
-                    InputManager.Instance.TurnCustomActionMap("UI");
+                    InputManager.Instance.TurnCustomActionMap(Idents.ActionMaps.Ui);
                     break;
                 }
                 case 2:
@@ -64,11 +64,11 @@ namespace Drone
                     raceController.droneRaceController.yawPower = gameData.currentYawSensitivity;
                     server.player = raceController.droneRaceController;
                     raceController.currentAIDroneSpeed = gameData.currentAIDroneSpeed;
-                    raceController.timer.timeForEndGame = gameData.gameTimeInSeconds;
+                    raceController.timer.timeForEndGame = gameData.raceTimeInSeconds;
 
                     asyncLoad = raceController.asyncLoad;
 
-                    InputManager.Instance.TurnCustomActionMap("Player");
+                    InputManager.Instance.TurnCustomActionMap(Idents.ActionMaps.Player);
                     break;
                 case 3:
                     footballController = FindObjectOfType<FootballController>();
@@ -83,11 +83,11 @@ namespace Drone
                     server.player = footballController.droneFootballController;
                     footballController.currentGateScale = gameData.currentGateScale;
                     footballController.currentAIDroneSpeed = gameData.currentAIDroneSpeed;
-                    footballController.timer.timeForEndGame = gameData.gameTimeInSeconds;
+                    footballController.timer.timeForEndGame = gameData.footballTimeInSeconds;
 
                     asyncLoad = footballController.asyncLoad;
                     
-                    InputManager.Instance.TurnCustomActionMap("Player");
+                    InputManager.Instance.TurnCustomActionMap(Idents.ActionMaps.Player);
                     break;
                 case 4:
                 {
@@ -116,7 +116,7 @@ namespace Drone
                     builderManager.droneBuilderController.isSimpleMode = gameData.isSimpleMode;
                     server.player = builderManager.droneBuilderController;
                     asyncLoad = builderManager.asyncLoad;
-                    builderManager.timer.timeForEndGame = gameData.gameTimeInSeconds;
+                    builderManager.timer.timeForEndGame = gameData.builderTimeInSeconds;
 
                     if (gameData.isLoadLevel)
                     {
@@ -130,11 +130,11 @@ namespace Drone
                         // builderManager.StartLevel();
                         builderManager.isGameMode = true;
                         builderManager.isGameLevel = true;
-                        InputManager.Instance.TurnCustomActionMap("Player");
+                        InputManager.Instance.TurnCustomActionMap(Idents.ActionMaps.Player);
                         return;
                     }
                     
-                    InputManager.Instance.TurnCustomActionMap("Builder");
+                    InputManager.Instance.TurnCustomActionMap(Idents.ActionMaps.Builder);
                     break;
                 }
             }

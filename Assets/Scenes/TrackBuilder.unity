@@ -37228,7 +37228,7 @@ MonoBehaviour:
   crystalCostText: {fileID: 1501649713}
   enoughMoneySprite: {fileID: 21300000, guid: b19e0bac5cee6b148a4f300807a46362, type: 3}
   noEnoughMoneySprite: {fileID: 21300000, guid: 09e42510cb3338f43ae89e9f78d65ae6, type: 3}
-  timer: {fileID: 2022248676}
+  timer: {fileID: 0}
   skills:
   - {fileID: 614767318}
   - {fileID: 1254454598}
@@ -72527,12 +72527,12 @@ MonoBehaviour:
   editMenu: {fileID: 1593392418}
   droneBuilderController: {fileID: 6554557505293662352}
   droneBuilderCheckNode: {fileID: 6554557505293662353}
-  droneBuilderSoundController: {fileID: 0}
+  droneBuilderSoundController: {fileID: 718910219344683249}
   undoRedoManager: {fileID: 780171831}
   asyncLoad: {fileID: 1043567121}
-  timer: {fileID: 2022248676}
+  timer: {fileID: 2022248679}
   cameraBrain: {fileID: 963194234}
-  cameraController: {fileID: 0}
+  cameraController: {fileID: 718910219344683250}
   freeFlyCamera: {fileID: 847449149}
   layerMask:
     serializedVersion: 2
@@ -75039,8 +75039,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2022248677}
-  - component: {fileID: 2022248676}
   - component: {fileID: 2022248678}
+  - component: {fileID: 2022248679}
   m_Layer: 0
   m_Name: Timer
   m_TagString: Untagged
@@ -75048,23 +75048,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &2022248676
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2022248675}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 914a88127ba045742a41e192a27dbc2f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  timeForStartGame: 0
-  timeForEndGame: 0
-  waitForStartGame: 0
-  waitForEndGame: 0
-  currentTime: 0
 --- !u!4 &2022248677
 Transform:
   m_ObjectHideFlags: 0
@@ -75092,7 +75075,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3058dd3b10594e8fa8decfc72ba820c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timer: {fileID: 2022248676}
+  timer: {fileID: 2022248679}
+--- !u!114 &2022248679
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2022248675}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2664433ee2eb4ae6b4c5125dfd110b8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeForStartGame: 5
+  timeForEndGame: 300
+  waitForStartGame: 0
+  waitForEndGame: 0
+  currentTime: 0
 --- !u!1 &2023741399
 GameObject:
   m_ObjectHideFlags: 0
@@ -80267,6 +80267,28 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d7cdb0f40e12437783a873c339137952, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &718910219344683249 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3929679829912247987, guid: d02e1081ac5d4604e80dd2d3b7e27488, type: 3}
+  m_PrefabInstance: {fileID: 718910219344683247}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6554557504242428667}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d21c97f703b440ebeeaa1b80a4224d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &718910219344683250 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8451796036726758168, guid: d02e1081ac5d4604e80dd2d3b7e27488, type: 3}
+  m_PrefabInstance: {fileID: 718910219344683247}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6554557504242428667}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35b5464252714608b43a3c822572e8f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &3337281413007714884

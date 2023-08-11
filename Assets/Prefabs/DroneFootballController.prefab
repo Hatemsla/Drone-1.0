@@ -341,11 +341,8 @@ GameObject:
   - component: {fileID: 1453430633061339100}
   - component: {fileID: 7332079272930706101}
   - component: {fileID: 7332079272930706102}
-  - component: {fileID: 5430043757699130301}
   - component: {fileID: 1855145131561151248}
-  - component: {fileID: 4272947804060353753}
-  - component: {fileID: 8204415379081165065}
-  - component: {fileID: 6632334960164955541}
+  - component: {fileID: 3474775285670459327}
   m_Layer: 3
   m_Name: DroneFootballController
   m_TagString: Player
@@ -444,6 +441,8 @@ MonoBehaviour:
   isStop: 0
   currentPercentSpeed: 0
   currentSpeed: 0
+  boostsCount: 0
+  isShieldActive: 0
   footballController: {fileID: 0}
   rb: {fileID: 0}
 --- !u!114 &7332079272930706101
@@ -475,19 +474,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thirdView: {fileID: 7332079272853604459}
   firstView: {fileID: 9149510638919537513}
---- !u!114 &5430043757699130301
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 951934840236228989}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e45d2be07504b40bae54d75a4ee1c53, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  droneFly: {fileID: 1855145131561151248}
 --- !u!82 &1855145131561151248
 AudioSource:
   m_ObjectHideFlags: 0
@@ -584,7 +570,7 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &4272947804060353753
+--- !u!114 &3474775285670459327
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -593,46 +579,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 951934840236228989}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b1853014c10a6eb46a8363fdc11758e7, type: 3}
+  m_Script: {fileID: 11500000, guid: 034505d39534485c967e8fdd1facf58e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  trackObjectActiveState: 0
-  trackTransform: 1
-  trackVelocity: 1
-  trackAnimator: 0
-  trackAudio: 0
-  trackParticles:
-    enabled: 0
-    value:
-      particleTrackingLimit: 0
-      particleRestartFrom: 0
-      particleSystems: []
---- !u!114 &8204415379081165065
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 951934840236228989}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5ead070b9f24323bb010aa43c6535fb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  droneController: {fileID: 1453430633061339100}
---- !u!114 &6632334960164955541
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 951934840236228989}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df39eaa033de4f7b8cfc9f2d652fc575, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  checkNode: {fileID: 7332079272930706101}
+  droneFly: {fileID: 1855145131561151248}
 --- !u!1 &951934840275595955
 GameObject:
   m_ObjectHideFlags: 0
@@ -2684,7 +2634,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7332079272853604453}
-  m_LocalRotation: {x: 0.11870821, y: -0.0000000042711794, z: 5.1063465e-10, w: 0.9929292}
+  m_LocalRotation: {x: 0.11870821, y: 0.0000000042711794, z: -5.1063465e-10, w: 0.9929292}
   m_LocalPosition: {x: 0, y: 1.19, z: -2.0200005}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0

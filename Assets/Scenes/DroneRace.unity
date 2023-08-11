@@ -132,8 +132,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 36402595}
-  - component: {fileID: 36402594}
-  - component: {fileID: 36402596}
+  - component: {fileID: 36402597}
   m_Layer: 0
   m_Name: Timer
   m_TagString: Untagged
@@ -141,23 +140,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &36402594
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 36402593}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 914a88127ba045742a41e192a27dbc2f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  timeForStartGame: 5
-  timeForEndGame: 300
-  waitForStartGame: 0
-  waitForEndGame: 0
-  currentTime: 0
 --- !u!4 &36402595
 Transform:
   m_ObjectHideFlags: 0
@@ -173,7 +155,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &36402596
+--- !u!114 &36402597
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -182,10 +164,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 36402593}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3058dd3b10594e8fa8decfc72ba820c3, type: 3}
+  m_Script: {fileID: 11500000, guid: 586546b02624463e96718867e3677da6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timer: {fileID: 36402594}
+  timeForStartGame: 5
+  timeForEndGame: 300
+  waitForStartGame: 0
+  waitForEndGame: 0
+  currentTime: 0
 --- !u!1 &79870872
 GameObject:
   m_ObjectHideFlags: 0
@@ -1034,7 +1020,7 @@ MonoBehaviour:
   clipIndex: 0
   isSimpleMode: 0
   isGameStart: 0
-  timer: {fileID: 36402594}
+  timer: {fileID: 36402597}
   asyncLoad: {fileID: 2143235888}
 --- !u!1001 &657865432
 PrefabInstance:
@@ -2993,43 +2979,24 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7824339973260118088, guid: 39489b8482e035f4ebf6cc797a082af8, type: 3}
+    - {fileID: 4147310631201919366, guid: 39489b8482e035f4ebf6cc797a082af8, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 6226538643810807266, guid: 39489b8482e035f4ebf6cc797a082af8, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1187477262}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 39489b8482e035f4ebf6cc797a082af8, type: 3}
 --- !u!114 &1187477258 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 559114011915233090, guid: 39489b8482e035f4ebf6cc797a082af8, type: 3}
   m_PrefabInstance: {fileID: 1187477256}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1187477259}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7ebd6d8ee48e40b45be0ccb58711199c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &1187477259 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6226538643810807266, guid: 39489b8482e035f4ebf6cc797a082af8, type: 3}
-  m_PrefabInstance: {fileID: 1187477256}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1187477262
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1187477259}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9665e5496f694495a10f28a04596eadf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  droneAi: {fileID: 1187477258}
 --- !u!114 &1188795002 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4632446992205922069, guid: a4b8c742255f2d34aaeee1ce81817b8d, type: 3}
@@ -5069,67 +5036,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1626796090}
   m_CullTransparentMesh: 1
---- !u!1 &1635283387
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1635283389}
-  - component: {fileID: 1635283388}
-  - component: {fileID: 1635283390}
-  m_Layer: 0
-  m_Name: RewindManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1635283388
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1635283387}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e64d270227f9e234d98e01d146ee25a5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <HowManySecondsToTrack>k__BackingField: 10
-  rewindedObjects: []
---- !u!4 &1635283389
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1635283387}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 12
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1635283390
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1635283387}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f99cb2ae89fb47fea0f16d374e8886cc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rewindIntensity: 0.02
-  rewindSound: {fileID: 0}
 --- !u!1 &1747898011
 GameObject:
   m_ObjectHideFlags: 0
@@ -6159,7 +6065,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: DroneRaceController
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2415706454668404041, guid: a4b8c742255f2d34aaeee1ce81817b8d, type: 3}
+    - {fileID: 4887995949127366010, guid: a4b8c742255f2d34aaeee1ce81817b8d, type: 3}
+    - {fileID: 1214954555577063236, guid: a4b8c742255f2d34aaeee1ce81817b8d, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

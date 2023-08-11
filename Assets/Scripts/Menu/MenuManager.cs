@@ -75,7 +75,7 @@ namespace Drone.Menu
             menuUIManager.regBackBtn.onClick.AddListener(ClearRegInputs);
             menuUIManager.startExitAccBtn.onClick.AddListener(delegate { OpenMenu("Auth"); });
             menuUIManager.statBackBtn.onClick.AddListener(delegate { OpenMenu("Start"); });
-            menuUIManager.gameTimeInput.text = gameData.gameTimeInSeconds > 0 ? gameData.gameTimeInSeconds.ToString() : "300";
+            menuUIManager.gameTimeInput.text = gameData.builderTimeInSeconds > 0 ? gameData.builderTimeInSeconds.ToString() : "300";
 
             SetDropdownResolutions();
             menuUIManager.resolutionDropdown.onValueChanged.AddListener(SetResolution);
@@ -274,10 +274,7 @@ namespace Drone.Menu
 
         private void GameTimeHandler()
         {
-            if (!string.IsNullOrEmpty(menuUIManager.gameTimeInput.text))
-                gameData.gameTimeInSeconds = Convert.ToInt32(menuUIManager.gameTimeInput.text);
-            else
-                gameData.gameTimeInSeconds = 300;
+            gameData.builderTimeInSeconds = !string.IsNullOrEmpty(menuUIManager.gameTimeInput.text) ? Convert.ToInt32(menuUIManager.gameTimeInput.text) : 300;
         }
     }
 }

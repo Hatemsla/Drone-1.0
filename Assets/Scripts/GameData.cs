@@ -13,7 +13,9 @@ namespace Drone
         public float currentYawSensitivity = 1;
         public float currentEffectsVolume;
         public float currentMusicsVolume;
-        public int gameTimeInSeconds;
+        public int raceTimeInSeconds;
+        public int footballTimeInSeconds;
+        public int builderTimeInSeconds;
         public float currentAIDroneSpeed;
         public float currentGateScale;
         public bool isLoadLevel;

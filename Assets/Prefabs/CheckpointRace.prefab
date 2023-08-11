@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 483596223145953454}
   - component: {fileID: 1878489562480663848}
   - component: {fileID: 8593175009206053152}
-  - component: {fileID: 5750199042071710500}
   m_Layer: 0
   m_Name: CheckpointRace
   m_TagString: Untagged
@@ -180,29 +179,6 @@ MonoBehaviour:
   - {fileID: 8300000, guid: f510669096d805a48bc09fb2b5592c9a, type: 3}
   - {fileID: 8300000, guid: e5d84c391aaa5ea48970c35cf1e0c59d, type: 3}
   - {fileID: 8300000, guid: 9341dc4af7d4a724ebb724cbe5794a2a, type: 3}
---- !u!114 &5750199042071710500
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8593175009206053158}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b1853014c10a6eb46a8363fdc11758e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  trackObjectActiveState: 1
-  trackTransform: 0
-  trackVelocity: 0
-  trackAnimator: 0
-  trackAudio: 0
-  trackParticles:
-    enabled: 0
-    value:
-      particleTrackingLimit: 0
-      particleRestartFrom: 0
-      particleSystems: []
 --- !u!1001 &5788511267919474083
 PrefabInstance:
   m_ObjectHideFlags: 0

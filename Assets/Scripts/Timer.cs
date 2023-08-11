@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Drone
 {
-    public class Timer : MonoBehaviour
+    public abstract class Timer : MonoBehaviour
     {
         public float timeForStartGame;
         public float timeForEndGame;
@@ -14,58 +14,8 @@ namespace Drone
 
         public float currentTime;
 
-        private void Start()
-        {
-            waitForEndGame = timeForEndGame;
-            waitForStartGame = timeForStartGame;
-        }
+        public abstract void ResetTimeScale();
+        public abstract void WaitForStartGame();
 
-        private void OnEnable()
-        {
-            BuilderManager.Instance.StartGame += ResetGameTime;
-            BuilderManager.Instance.TestLevelEvent += ResetTimeScale;
-        }
-
-        private void OnDestroy()
-        {
-            BuilderManager.Instance.StartGame -= ResetGameTime;
-            BuilderManager.Instance.TestLevelEvent -= ResetTimeScale;
-        }
-
-        private void ResetTimeScale()
-        {
-            Time.timeScale = 1f;
-        }
-
-        private void ResetGameTime()
-        {
-            currentTime = 0;
-            waitForEndGame = timeForEndGame;
-        }
-
-        private void Update()
-        {
-            WaitForEndGame();
-            WaitForStartGame();
-        
-            if(!RewindManager.Instance.IsBeingRewinded)
-                currentTime += Time.deltaTime;
-        }
-
-        private void WaitForEndGame()
-        {
-            if (waitForEndGame >= 0 && waitForStartGame <= 0 && !RewindManager.Instance.IsBeingRewinded)
-            {
-                waitForEndGame -= Time.deltaTime;
-            }
-        }
-
-        private void WaitForStartGame()
-        {
-            if (waitForStartGame >= 0)
-            {
-                waitForStartGame -= Time.deltaTime;
-            }
-        }
     }
 }
