@@ -42,6 +42,8 @@ namespace Drone.Builder
         private void Start()
         {
             yawPower = BuilderManager.Instance.currentYawSensitivity;
+            BuilderManager.Instance.StartGame += ActivatePhysics;
+            BuilderManager.Instance.StopGame += DeactivatePhysics;
         }
 
         private void OnEnable()
@@ -55,10 +57,6 @@ namespace Drone.Builder
             InputManager.Instance.HpRestoreEvent += OnHpRestore;
             InputManager.Instance.ArmorRestoreEvent += OnArmorRestore;
         }
-        
-        private void OnThrottle(float value) => throttle = value;
-        private void OnPedals(float value) => pedals = value;
-        private void OnCyclic(Vector2 value) => cyclic = value;
 
         private void OnDisable()
         {
@@ -70,7 +68,25 @@ namespace Drone.Builder
             InputManager.Instance.ShieldEvent -= OnShield;
             InputManager.Instance.HpRestoreEvent -= OnHpRestore;
             InputManager.Instance.ArmorRestoreEvent -= OnArmorRestore;
+            BuilderManager.Instance.StartGame -= ActivatePhysics;
+            BuilderManager.Instance.StopGame -= DeactivatePhysics;
         }
+
+        private void ActivatePhysics()
+        {
+            rb.isKinematic = false;
+            rb.useGravity = true;
+        }
+        
+        private void DeactivatePhysics()
+        {
+            rb.isKinematic = true;
+            rb.useGravity = false;
+        }
+        
+        private void OnThrottle(float value) => throttle = value;
+        private void OnPedals(float value) => pedals = value;
+        private void OnCyclic(Vector2 value) => cyclic = value;
 
         private void FixedUpdate()
         {

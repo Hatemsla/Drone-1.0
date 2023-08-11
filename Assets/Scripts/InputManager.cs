@@ -137,10 +137,6 @@ namespace Drone
             _playerInput.Camera.Disable();
         }
 
-        /// <summary>
-        /// Action map logs
-        /// </summary>
-        /// <returns></returns>
         public string EnabledMaps()
         {
             return
@@ -160,36 +156,6 @@ namespace Drone
                     action.Enable();
                 else
                     action.Disable();
-            }
-        }
-
-        public void TurnActionMaps()
-        {
-            _isPlayerAction = !_isPlayerAction;
-
-            if (_isPlayerAction)
-            {
-                _playerInput.Player.Enable();
-                _playerInput.Builder.Disable();
-            }
-            else
-            {
-                _playerInput.Player.Disable();
-                _playerInput.Builder.Enable();
-            }
-        }
-
-        public void TurnCameraActionMap()
-        {
-            if (_playerInput.Camera.enabled)
-            {
-                _playerInput.Camera.Disable();
-                _playerInput.Builder.Enable();
-            }
-            else
-            {
-                _playerInput.Camera.Enable();
-                _playerInput.Builder.Disable();
             }
         }
 

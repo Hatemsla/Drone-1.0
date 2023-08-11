@@ -1,4 +1,7 @@
-﻿using Drone;
+﻿using System;
+using Cinemachine;
+using Drone;
+using Drone.Builder;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -14,6 +17,15 @@ public class FreeFlyCamera : MonoBehaviour
 
     private CursorLockMode _wantedMode;
 
+    private CinemachineVirtualCamera _cinemachineVirtualCamera;
+
+    private void Start()
+    {
+        _cinemachineVirtualCamera = GetComponent<CinemachineVirtualCamera>();
+        BuilderManager.Instance.StartGame += DeactivateFreeFlyCamera;
+        BuilderManager.Instance.StopGame += ActivateFreeFlyCamera;
+    }
+
     private void OnEnable()
     {
         InputManager.Instance.SetCursorEvent += CursorState;
@@ -24,6 +36,30 @@ public class FreeFlyCamera : MonoBehaviour
         InputManager.Instance.LockCursorEvent += LockCursor;
     }
 
+    private void OnDestroy()
+    {
+        InputManager.Instance.SetCursorEvent -= CursorState;
+        InputManager.Instance.CameraBoostEvent -= CameraBoost;
+        InputManager.Instance.CameraMoveEvent -= CameraMove;
+        InputManager.Instance.CameraZoomEvent -= CameraZoom;
+        InputManager.Instance.CameraChangeHeightEvent -= CameraChangeHeight;
+        InputManager.Instance.LockCursorEvent -= LockCursor;
+        BuilderManager.Instance.StartGame -= DeactivateFreeFlyCamera;
+        BuilderManager.Instance.StopGame -= ActivateFreeFlyCamera;
+    }
+
+    private void DeactivateFreeFlyCamera()
+    {
+        enabled = false;
+        _cinemachineVirtualCamera.Priority = 0;
+    }
+
+    private void ActivateFreeFlyCamera()
+    {
+        enabled = true;
+        _cinemachineVirtualCamera.Priority = 10;
+    }
+    
     private void CameraMove(Vector2 value)
     {
         SetDefaultParameters();
@@ -33,20 +69,12 @@ public class FreeFlyCamera : MonoBehaviour
         _deltaPosition += moveDirection;
     }
 
-    private void OnDisable()
-    {
-        InputManager.Instance.SetCursorEvent -= CursorState;
-        InputManager.Instance.CameraBoostEvent -= CameraBoost;
-        InputManager.Instance.CameraMoveEvent -= CameraMove;
-        InputManager.Instance.CameraZoomEvent -= CameraZoom;
-        InputManager.Instance.CameraChangeHeightEvent -= CameraChangeHeight;
-        InputManager.Instance.LockCursorEvent -= LockCursor;
-    }
-
     private void LockCursor()
     {
         _wantedMode = _wantedMode == CursorLockMode.Locked ? CursorLockMode.None : CursorLockMode.Locked;
-        InputManager.Instance.TurnCameraActionMap();
+        InputManager.Instance.TurnCustomActionMap(_wantedMode == CursorLockMode.Locked
+            ? Idents.ActionMaps.Camera
+            : Idents.ActionMaps.Builder);
     }
 
     private void CameraChangeHeight(float value)
@@ -91,6 +119,7 @@ public class FreeFlyCamera : MonoBehaviour
     private void CursorState()
     {
         Cursor.lockState = _wantedMode = CursorLockMode.None;
+        InputManager.Instance.TurnCustomActionMap(Idents.ActionMaps.Builder);
     }
 
     private void Update()

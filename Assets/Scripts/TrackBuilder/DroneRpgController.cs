@@ -90,7 +90,17 @@ namespace Drone
             get => droneData.Crystals;
             set => droneData.Crystals = value;
         }
-        
+
+        private void OnEnable()
+        {
+            BuilderManager.Instance.StartGame += ResetDroneData;
+        }
+
+        private void OnDestroy()
+        {
+            BuilderManager.Instance.StartGame -= ResetDroneData;
+        }
+
         private IEnumerator Respawn()
         {
             var elapsedTime = 0f;
@@ -133,7 +143,7 @@ namespace Drone
                 ApplyEnergyUsage(powerUsageRate * Time.deltaTime);
         }
 
-        public void ResetDroneData()
+        private void ResetDroneData()
         {
             Battery = 100;
             Health = 100;

@@ -11,8 +11,10 @@ using Drone.DroneFootball;
 using Newtonsoft.Json;
 using Drone.Sockets;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Outline = cakeslice.Outline;
@@ -36,8 +38,6 @@ namespace Drone.Builder
         public bool isActivGreen;
         public BuilderUI builderUI;
         public EditMenu editMenu;
-        public EditObject editObject;
-        public BuilderAudioManager audioManager;
         public DroneBuilderController droneBuilderController;
         public DroneBuilderCheckNode droneBuilderCheckNode;
         public DroneBuilderSoundController droneBuilderSoundController;
@@ -60,6 +60,8 @@ namespace Drone.Builder
 
         [HideInInspector] public Scene levelScene;
         public event Action TestLevelEvent;
+        public event Action StartGame;
+        public event Action StopGame;
         public event Action LoadingCompleteEvent;
         public event Action ObjectChangeSceneEvent;
 
@@ -121,7 +123,8 @@ namespace Drone.Builder
 
         private void OnEnable()
         {
-            TestLevelEvent += InputManager.Instance.TurnActionMaps;
+            StartGame += TurnPlayerActionMap;
+            StopGame += TurnBuilderActionMap;
             InputManager.Instance.CopyObjectEvent += CopyObject;
             InputManager.Instance.PasteObjectEvent += PasteObject;
             InputManager.Instance.UndoObjectEvent += UndoCommand;
@@ -141,7 +144,8 @@ namespace Drone.Builder
             LoadingCompleteEvent -= RewindManager.Instance.FindRewindObjects;
             LoadingCompleteEvent -= RewindManager.Instance.RestartTracking;
             LoadingCompleteEvent -= TestLevel;
-            TestLevelEvent -= InputManager.Instance.TurnActionMaps;
+            StartGame -= TurnPlayerActionMap;
+            StopGame -= TurnBuilderActionMap;
             InputManager.Instance.CopyObjectEvent -= CopyObject;
             InputManager.Instance.PasteObjectEvent -= PasteObject;
             InputManager.Instance.UndoObjectEvent -= UndoCommand;
@@ -155,6 +159,9 @@ namespace Drone.Builder
             InputManager.Instance.ExitGameEvent -= CheckTabPanel;
             InputManager.Instance.ExitBuilderEvent -= OpenExitPanel;
         }
+
+        private void TurnPlayerActionMap() => InputManager.Instance.TurnCustomActionMap(Idents.ActionMaps.Player);
+        private void TurnBuilderActionMap() => InputManager.Instance.TurnCustomActionMap(Idents.ActionMaps.Builder);
         
         private void OpenExitPanel()
         {
@@ -435,89 +442,62 @@ namespace Drone.Builder
         {
             isMove = !isMove;
             TestLevelEvent?.Invoke();
-            Time.timeScale = 1f;
             if (isMove)
             {
+                StartGame?.Invoke();
                 _lamps = FindObjectsOfType<Lamp>().ToList();
-                timer.currentTime = 0;
-                timer.waitForEndGame = timer.timeForEndGame;
-                droneBuilderController.droneRpgController.ResetDroneData();
-                builderUI.droneView.SetActive(true);
-                builderUI.exitBuilderPanel.SetActive(false);
-                freeFlyCamera.enabled = false;
-                freeFlyCamera.GetComponent<CinemachineVirtualCamera>().Priority = 0;
-                cameraController.isSwitch = true;
-                cameraController.SetUpCamerasDefaultPriority();
                 var outlines = FindObjectsOfType<Outline>();
-                TrackBuilderUtils.TurnAllOutlineEffects(outlines, false);
                 _connections = FindObjectsOfType<Connection>();
+                TrackBuilderUtils.TurnAllOutlineEffects(outlines, false);
                 TrackBuilderUtils.TurnAllConnections(_connections, false);
                 _dronePrevRotationY = droneBuilderController.transform.localRotation.eulerAngles.y;
                 droneBuilderController.yaw = _dronePrevRotationY;
                 _dronePrevPosition = droneBuilderController.transform.position;
                 cameraBrain.transform.SetParent(droneBuilderController.transform);
-                droneBuilderController.rb.isKinematic = false;
-                droneBuilderController.rb.useGravity = true;
-                builderUI.createPanel.SetActive(false);
-                builderUI.editButtons.SetActive(false);
                 if (droneBuilderCheckNode.nodes.Count > 0)
                     builderUI.pathArrow.gameObject.SetActive(true);
                 droneBuilderCheckNode.currentNode = 0;
-                droneBuilderSoundController.droneFly.Play();
-                _selection.Deselect();
-                _selection.enabled = false;
             }
             else
             {
+                StopGame?.Invoke();
                 TurnOnLamps();
-                builderUI.droneView.SetActive(false);
-                freeFlyCamera.enabled = true;
-                freeFlyCamera.GetComponent<CinemachineVirtualCamera>().Priority = 10;
-                cameraController.isSwitch = false;
-                cameraController.SetUpCamerasZeroPriority();
                 TrackBuilderUtils.TurnAllConnections(_connections, true);
                 droneBuilderController.yaw = _dronePrevRotationY;
                 droneBuilderController.transform.position = _dronePrevPosition;
                 droneBuilderController.transform.localRotation = Quaternion.Euler(0, _dronePrevRotationY, 0);
-                droneBuilderController.rb.isKinematic = true;
-                droneBuilderController.rb.useGravity = false;
-                builderUI.editorTabPanel.SetActive(false);
-                builderUI.gameTabPanel.SetActive(false);
                 _isTabPanel = false;
-                builderUI.createPanel.SetActive(true);
-                builderUI.editButtons.SetActive(true);
-                builderUI.pathArrow.gameObject.SetActive(false);
-                droneBuilderSoundController.droneFly.Stop();
-                _selection.enabled = true;
             }
 
             foreach (var obj in objectsPool)
                 obj.SetActive(true);
         }
 
-        public void StartLevel()
+        private void StartLevel()
         {
             StartCoroutine(LoadScene());
         }
 
-        public IEnumerator LoadScene()
+        private IEnumerator LoadScene()
         {
-            builderUI.pathArrow.gameObject.SetActive(false);
-            builderUI.editButtons.SetActive(false);
-            builderUI.createPanel.SetActive(false);
-            builderUI.loadLevelPanel.SetActive(true);
-            audioManager.StartPlay();
-
+            var loadedData = LevelManager.LoadLevel(levelName);
+            
             if (objectsPool.Count > 0)
                 ClearObject();
-            
-            var loadedData = LevelManager.LoadLevel(levelName);
 
             foreach (var objInfo in loadedData)
             {
-                var newObj = Instantiate(Resources.Load<GameObject>("TrackObjects/" + objInfo.ObjectName), objInfo.Position,
-                    Quaternion.Euler(objInfo.Rotation));
+                var loadOp = Addressables.LoadAssetAsync<GameObject>("TrackObjects/" + objInfo.ObjectName);
+                yield return loadOp;
                 
+                if (loadOp.Status != AsyncOperationStatus.Succeeded || loadOp.Result == null)
+                {
+                    Debug.LogError("Failed to load asset: " + objInfo.ObjectName);
+                    continue;
+                }
+                
+                var newObj = Instantiate(loadOp.Result, objInfo.Position, Quaternion.Euler(objInfo.Rotation));
+
                 yield return new WaitForSeconds(0.01f);
                 TrackBuilderUtils.ChangeLayerRecursively(newObj.transform, objInfo.Layer);
                 TrackBuilderUtils.OffOutlineRecursively(newObj.transform);
@@ -574,6 +554,24 @@ namespace Drone.Builder
                         trackObj.interactiveObject = trackObj.GetComponentInChildren<TextWriter3D>();
                         trackObj.interactiveObject.text3D = objInfo.Text3d;
                         break;
+                    case InteractiveType.Door:
+                        break;
+                    case InteractiveType.Port:
+                        break;
+                    case InteractiveType.SecureCamera:
+                        break;
+                    case InteractiveType.Panel:
+                        break;
+                    case InteractiveType.Button:
+                        break;
+                    case InteractiveType.Terminal:
+                        break;
+                    case InteractiveType.TrMessage:
+                        break;
+                    case InteractiveType.MagnetKiller:
+                        break;
+                    case InteractiveType.PitStop:
+                        break;
                     case InteractiveType.None:
                         break;
                 }
@@ -586,16 +584,14 @@ namespace Drone.Builder
 
                 objectsPool.Add(newObj);
             }
-
-            builderUI.editButtons.SetActive(true);
-            builderUI.createPanel.SetActive(true);
-            builderUI.loadLevelPanel.SetActive(false);
-            audioManager.EndPlay();
+            
+            yield return null;
+            
             CreateObjectsPoolScene();
             LoadingCompleteEvent?.Invoke();
         }
 
-        public void PlaceObjects()
+        private void PlaceObjects()
         {
             try
             {

@@ -3,11 +3,11 @@ using UnityEngine;
 
 namespace Drone.Builder
 {
-    public class DroneBuilderCheckNode : CheckNode
+    public sealed class DroneBuilderCheckNode : CheckNode
     {
         private Vector3 _lastSavePosition;
         private Quaternion _lastSaveRotation;
-
+        
         private void Start()
         {
             _lastSavePosition = transform.position;

@@ -17,13 +17,25 @@ namespace Drone.Builder
             audioMixer.SetFloat("Effects", 0);
         }
 
-        public void StartPlay()
+        private void OnEnable()
+        {
+            LevelManager.StartLevelLoading += StartPlay;
+            BuilderManager.Instance.LoadingCompleteEvent += EndPlay;
+        }
+
+        private void OnDestroy()
+        {
+            LevelManager.StartLevelLoading -= StartPlay;
+            BuilderManager.Instance.LoadingCompleteEvent -= EndPlay;
+        }
+
+        private void StartPlay()
         {
             loadVideo.Play();
             loadAudio.Play();
         }
 
-        public void EndPlay()
+        private void EndPlay()
         {
             loadVideo.Stop();
             loadAudio.Stop();

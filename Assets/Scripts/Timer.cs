@@ -1,3 +1,5 @@
+using System;
+using Drone.Builder;
 using UnityEngine;
 
 namespace Drone
@@ -16,6 +18,29 @@ namespace Drone
         {
             waitForEndGame = timeForEndGame;
             waitForStartGame = timeForStartGame;
+        }
+
+        private void OnEnable()
+        {
+            BuilderManager.Instance.StartGame += ResetGameTime;
+            BuilderManager.Instance.TestLevelEvent += ResetTimeScale;
+        }
+
+        private void OnDestroy()
+        {
+            BuilderManager.Instance.StartGame -= ResetGameTime;
+            BuilderManager.Instance.TestLevelEvent -= ResetTimeScale;
+        }
+
+        private void ResetTimeScale()
+        {
+            Time.timeScale = 1f;
+        }
+
+        private void ResetGameTime()
+        {
+            currentTime = 0;
+            waitForEndGame = timeForEndGame;
         }
 
         private void Update()

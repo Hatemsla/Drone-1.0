@@ -19,18 +19,20 @@ namespace Drone.Builder
         [SerializeField] private EditObject editObject;
         private Connection _selectedConnection;
 
-        private void OnEnable()
+        private void Start()
         {
             InputManager.Instance.SelectObjectEvent += SelectObject;
             InputManager.Instance.SelectObjectsEvent += SelectObjects;
             InputManager.Instance.DeleteObjectEvent += Delete;
+            BuilderManager.Instance.StartGame += Deselect;
         }
 
-        private void OnDisable()
+        private void OnDestroy()
         {
             InputManager.Instance.SelectObjectEvent -= SelectObject;
             InputManager.Instance.SelectObjectsEvent -= SelectObjects;
             InputManager.Instance.DeleteObjectEvent -= Delete;
+            BuilderManager.Instance.StartGame -= Deselect;
         }
         
         private void Update()
@@ -40,140 +42,80 @@ namespace Drone.Builder
                 editObject.OnSelectObject(selectedTrackObject);
             }
         }
-
-        private void GetInteractiveObject()
-        {
-            switch (selectedTrackObject.interactiveType)
-            {
-                case InteractiveType.Windmill:
-                    selectedTrackObject.interactiveObject = selectedTrackObject.GetComponentInChildren<Windmill>();
-                    break;
-                case InteractiveType.Magnet:
-                    selectedTrackObject.interactiveObject = selectedTrackObject.GetComponentInChildren<RigidbodyMagnet>();
-                    break;
-                case InteractiveType.MagnetKiller:
-                    selectedTrackObject.interactiveObject = selectedTrackObject.GetComponentInChildren<MagnetKiller>();
-                    break;
-                case InteractiveType.Pendulum:
-                    selectedTrackObject.interactiveObject = selectedTrackObject.GetComponentInChildren<Pendulum>();
-                    break;
-                case InteractiveType.Battery:
-                    selectedTrackObject.interactiveObject = selectedTrackObject.GetComponentInChildren<Battery>();
-                    break;
-                case InteractiveType.Freezing:
-                    selectedTrackObject.interactiveObject = selectedTrackObject.GetComponentInChildren<FreezingBall>();
-                    break;
-                case InteractiveType.Wind:
-                    selectedTrackObject.interactiveObject = selectedTrackObject.GetComponentInChildren<WindZoneScript>();
-                    break;
-                case InteractiveType.Boost:
-                    selectedTrackObject.interactiveObject = selectedTrackObject.GetComponentInChildren<BoostTrigger>();
-                    break;
-                case InteractiveType.Lamp:
-                    selectedTrackObject.interactiveObject = selectedTrackObject.GetComponentInChildren<Lamp>();
-                    break;
-                case InteractiveType.Hint:
-                    selectedTrackObject.interactiveObject = selectedTrackObject.GetComponentInChildren<Hint>();
-                    break;
-                case InteractiveType.Draw:
-                    selectedTrackObject.interactiveObject = selectedTrackObject.GetComponentInChildren<DrawLine>();
-                    break;
-                case InteractiveType.ElectroGate:
-                    selectedTrackObject.interactiveObject = selectedTrackObject.GetComponentInChildren<ControledGate>();
-                    break;
-                case InteractiveType.Panel:
-                    selectedTrackObject.interactiveObject = selectedTrackObject.GetComponentInChildren<ControllerPanel>();
-                    break;
-                case InteractiveType.Button:
-                    selectedTrackObject.interactiveObject = selectedTrackObject.GetComponentInChildren<ControllerButton>();
-                    break;
-                case InteractiveType.Port:
-                    selectedTrackObject.interactiveObject = selectedTrackObject.GetComponentInChildren<Port>();
-                    break;
-                case InteractiveType.TrMessage:
-                    selectedTrackObject.interactiveObject = selectedTrackObject.GetComponentInChildren<TriggerMassege>();
-                    break;
-                case InteractiveType.Text3D:
-                    selectedTrackObject.interactiveObject = selectedTrackObject.GetComponentInChildren<Text3D.TextWriter3D>();
-                    break;
-            }
-        }
-
+        
         private void SelectObjects()
         {
-            if (!EventSystem.current.IsPointerOverGameObject())
+            if (EventSystem.current.IsPointerOverGameObject() || BuilderManager.Instance.isMove) return;
+            
+            var ray = Camera.main!.ScreenPointToRay(Mouse.current.position.ReadValue());
+            if (Physics.Raycast(ray, out var hit, 10000, layerMask))
             {
-                var ray = Camera.main!.ScreenPointToRay(Mouse.current.position.ReadValue());
-                if (Physics.Raycast(ray, out var hit, 10000, layerMask))
+                if (selectedTrackObject && selectedObjects.Count == 1)
                 {
-                    if (selectedTrackObject && selectedObjects.Count == 1)
+                    if (hit.collider.GetComponent<Connection>() && _selectedConnection)
                     {
-                        if (hit.collider.GetComponent<Connection>() && _selectedConnection)
-                        {
-                            var otherConnection = hit.collider.GetComponent<Connection>();
+                        var otherConnection = hit.collider.GetComponent<Connection>();
                             
-                            switch (otherConnection.connectionType)
+                        switch (otherConnection.connectionType)
+                        {
+                            case ConnectionType.Floor:
                             {
-                                case ConnectionType.Floor:
-                                {
-                                    var sizeMultiplier = (selectedTrackObject.Scale.x - 1f) * 2.5f;
-                                    var offset = _selectedConnection.GetObjectOffset(otherConnection, sizeMultiplier);
-                                    selectedObject.transform.position = otherConnection.transform.position + offset;
-                                    selectedObject.transform.rotation = otherConnection.transform.rotation;
-                                    return;
-                                }
-                                case ConnectionType.Wall:
-                                case ConnectionType.Slant:
-                                    selectedObject.transform.position = new Vector3(otherConnection.transform.position.x,
-                                        otherConnection.transform.position.y + selectedTrackObject.yOffset,
-                                        otherConnection.transform.position.z);
-                                    return;
+                                var sizeMultiplier = (selectedTrackObject.Scale.x - 1f) * 2.5f;
+                                var offset = _selectedConnection.GetObjectOffset(otherConnection, sizeMultiplier);
+                                selectedObject.transform.position = otherConnection.transform.position + offset;
+                                selectedObject.transform.rotation = otherConnection.transform.rotation;
+                                return;
                             }
+                            case ConnectionType.Wall:
+                            case ConnectionType.Slant:
+                                selectedObject.transform.position = new Vector3(otherConnection.transform.position.x,
+                                    otherConnection.transform.position.y + selectedTrackObject.yOffset,
+                                    otherConnection.transform.position.z);
+                                return;
                         }
                     }
-                    
-                    if (hit.collider.transform.root.gameObject.layer == LayerMask.NameToLayer("TrackGround"))
-                        AddSelection(hit.collider.transform.root.gameObject);
                 }
+                    
+                if (hit.collider.transform.root.gameObject.layer == LayerMask.NameToLayer("TrackGround"))
+                    AddSelection(hit.collider.transform.root.gameObject);
             }
         }
 
         private void SelectObject()
         {
-            if (!EventSystem.current.IsPointerOverGameObject())
+            if (EventSystem.current.IsPointerOverGameObject() || BuilderManager.Instance.isMove) return;
+            
+            var ray = Camera.main!.ScreenPointToRay(Mouse.current.position.ReadValue());
+            if (Physics.Raycast(ray, out var hit, 10000, layerMask))
             {
-                var ray = Camera.main!.ScreenPointToRay(Mouse.current.position.ReadValue());
-                if (Physics.Raycast(ray, out var hit, 10000, layerMask))
+                if (selectedTrackObject && selectedObjects.Count == 1)
                 {
-                    if (selectedTrackObject && selectedObjects.Count == 1)
+                    if (hit.collider.GetComponent<Connection>() && _selectedConnection)
                     {
-                        if (hit.collider.GetComponent<Connection>() && _selectedConnection)
-                        {
-                            var otherConnection = hit.collider.GetComponent<Connection>();
+                        var otherConnection = hit.collider.GetComponent<Connection>();
                             
-                            switch (otherConnection.connectionType)
+                        switch (otherConnection.connectionType)
+                        {
+                            case ConnectionType.Floor:
                             {
-                                case ConnectionType.Floor:
-                                {
-                                    var sizeMultiplier = (selectedTrackObject.Scale.x - 1f) * 2.5f;
-                                    var offset = _selectedConnection.GetObjectOffset(otherConnection, sizeMultiplier);
-                                    selectedObject.transform.position = otherConnection.transform.position + offset;
-                                    selectedObject.transform.rotation = otherConnection.transform.rotation;
-                                    return;
-                                }
-                                case ConnectionType.Wall:
-                                case ConnectionType.Slant:
-                                    selectedObject.transform.position = new Vector3(otherConnection.transform.position.x,
-                                        otherConnection.transform.position.y + selectedTrackObject.yOffset,
-                                        otherConnection.transform.position.z);
-                                    return;
+                                var sizeMultiplier = (selectedTrackObject.Scale.x - 1f) * 2.5f;
+                                var offset = _selectedConnection.GetObjectOffset(otherConnection, sizeMultiplier);
+                                selectedObject.transform.position = otherConnection.transform.position + offset;
+                                selectedObject.transform.rotation = otherConnection.transform.rotation;
+                                return;
                             }
+                            case ConnectionType.Wall:
+                            case ConnectionType.Slant:
+                                selectedObject.transform.position = new Vector3(otherConnection.transform.position.x,
+                                    otherConnection.transform.position.y + selectedTrackObject.yOffset,
+                                    otherConnection.transform.position.z);
+                                return;
                         }
                     }
-                    
-                    if (hit.collider.transform.root.gameObject.layer == LayerMask.NameToLayer("TrackGround"))
-                        Select(hit.collider.transform.root.gameObject);
                 }
+                    
+                if (hit.collider.transform.root.gameObject.layer == LayerMask.NameToLayer("TrackGround"))
+                    Select(hit.collider.transform.root.gameObject);
             }
         }
 
@@ -218,7 +160,6 @@ namespace Drone.Builder
             TrackBuilderUtils.TurnAllOutlineEffects(outlines, true);
             selectedObjects.Add(obj);
             selectedObject = obj;
-            GetInteractiveObject();
             selectedTrackObject = obj.GetComponent<TrackObject>();
         }
 
@@ -247,7 +188,6 @@ namespace Drone.Builder
             TrackBuilderUtils.TurnAllOutlineEffects(outlines, true);
             selectedObject = obj;
             selectedTrackObject = obj.GetComponent<TrackObject>();
-            GetInteractiveObject();
             switch (selectedTrackObject.objectType)
             {
                 case ObjectsType.Floor:

@@ -183,19 +183,19 @@ namespace Drone
                 var jTokenPosition = property.Value[Idents.Tags.SaveLoadTags.Position]!.Value<string>();
                 var jTokenRotation = property.Value[Idents.Tags.SaveLoadTags.Rotation]!.Value<string>();
                 var jTokenScale = property.Value[Idents.Tags.SaveLoadTags.Scale]!.Value<string>();
-                var jTokenLayer = property.Value[Idents.Tags.SaveLoadTags.Layer]!.Value<int>();
-                var jTokenYOffset = property.Value[Idents.Tags.SaveLoadTags.YOffset]!.Value<float>();
-                var jTokenMaxMouseDistance = property.Value[Idents.Tags.SaveLoadTags.MaxMouseDistance]!.Value<float>();
-                var jTokenDamage = property.Value[Idents.Tags.SaveLoadTags.Damage]!.Value<float>();
+                var jTokenLayer = property.Value[Idents.Tags.SaveLoadTags.Layer]!.Value<string>();
+                var jTokenYOffset = property.Value[Idents.Tags.SaveLoadTags.YOffset]!.Value<string>();
+                var jTokenMaxMouseDistance = property.Value[Idents.Tags.SaveLoadTags.MaxMouseDistance]!.Value<string>();
+                var jTokenDamage = property.Value[Idents.Tags.SaveLoadTags.Damage]!.Value<string>();
 
                 var objectName = jTokenObjectName.Substring(0, jTokenObjectName.IndexOf('('));
                 var position = TrackBuilderUtils.ParseVector3(jTokenPosition);
                 var rotation = TrackBuilderUtils.ParseVector3(jTokenRotation);
                 var scale = TrackBuilderUtils.ParseVector3(jTokenScale);
-                var layer = jTokenLayer;
-                var yOffset = jTokenYOffset;
-                var maxMouseDistance = jTokenMaxMouseDistance;
-                var damage = jTokenDamage;
+                var layer = int.Parse(jTokenLayer);
+                var yOffset = float.Parse(jTokenYOffset);
+                var maxMouseDistance = float.Parse(jTokenMaxMouseDistance);
+                var damage = float.Parse(jTokenDamage);
                 
                 var jTokenInteractive = property.Value[Idents.Tags.SaveLoadTags.Interactive];
 

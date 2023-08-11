@@ -78,5 +78,50 @@ namespace Drone.Builder
                 objectPreInfos.Add(createButton.GetComponent<ObjectPreInfo>());
             }
         }
+
+        private void Start()
+        {
+            LevelManager.StartLevelLoading += ActivateLoadUI;
+            BuilderManager.Instance.LoadingCompleteEvent += ActivateBuilderUI;
+            BuilderManager.Instance.StartGame += ActivateDroneUI;
+            BuilderManager.Instance.StopGame += ActivateBuilderUI;
+        }
+
+        private void OnDestroy()
+        {
+            LevelManager.StartLevelLoading -= ActivateLoadUI;
+            BuilderManager.Instance.LoadingCompleteEvent -= ActivateBuilderUI;
+            BuilderManager.Instance.StartGame -= ActivateDroneUI;
+            BuilderManager.Instance.StopGame -= ActivateBuilderUI;
+        }
+
+        private void ActivateDroneUI()
+        {
+            droneView.SetActive(true);
+            exitBuilderPanel.SetActive(false);
+            createPanel.SetActive(false);
+            editButtons.SetActive(false);
+        }
+        
+        private void ActivateBuilderUI()
+        {
+            editButtons.SetActive(true);
+            createPanel.SetActive(true);
+            createPanel.SetActive(true);
+            editButtons.SetActive(true);
+            droneView.SetActive(false);
+            pathArrow.gameObject.SetActive(false);
+            editorTabPanel.SetActive(false);
+            gameTabPanel.SetActive(false);
+            loadLevelPanel.SetActive(false);
+        }
+
+        private void ActivateLoadUI()
+        {
+            pathArrow.gameObject.SetActive(false);
+            editButtons.SetActive(false);
+            createPanel.SetActive(false);
+            loadLevelPanel.SetActive(true);
+        }
     }
 }

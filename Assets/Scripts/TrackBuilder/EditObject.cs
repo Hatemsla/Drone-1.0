@@ -81,7 +81,8 @@ namespace Drone.Builder
         
         public void OnXRotationChanged(float value)
         {
-            currentObject.Rotation = Quaternion.Euler(value, 0, 0);
+            currentObject.Rotation = Quaternion.Euler(value, currentObject.Rotation.eulerAngles.y, currentObject.Rotation.eulerAngles.z);
+            Debug.Log(currentObject.Rotation.eulerAngles);
         }
 
         public void OnYRotationChanged(float value)

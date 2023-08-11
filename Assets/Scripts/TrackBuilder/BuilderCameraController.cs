@@ -23,6 +23,26 @@ namespace Drone.Builder
         private void OnDisable()
         {
             InputManager.Instance.SwitchViewEvent -= SwitchView;
+            BuilderManager.Instance.StartGame -= ActivateCamera;
+            BuilderManager.Instance.StopGame -= DeactivateCamera;
+        }
+
+        private void Start()
+        {
+            BuilderManager.Instance.StartGame += ActivateCamera;
+            BuilderManager.Instance.StopGame += DeactivateCamera;
+        }
+
+        private void ActivateCamera()
+        {
+            isSwitch = true;
+            SetUpCamerasDefaultPriority();
+        }
+
+        private void DeactivateCamera()
+        {
+            isSwitch = false;
+            SetUpCamerasZeroPriority();
         }
 
         private void SwitchView()
