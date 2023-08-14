@@ -11,6 +11,8 @@ namespace Drone.Builder
         [SerializeField] private Magnet magnet;
         [SerializeField] private Transform leftRotor;
         [SerializeField] private Transform rightRotor;
+        [SerializeField] private AudioSource workSound;
+        [SerializeField] private AudioSource rotorSound;
         [SerializeField] private float baseDamage = 10.0f;
         [SerializeField] private float damageInterval = 1.0f;
         private float _timer;
@@ -19,6 +21,26 @@ namespace Drone.Builder
         {
             rotationSpeed = 100;
             magnetForce = 1;
+            BuilderManager.Instance.TestLevelEvent += TurnSound;
+        }
+
+        private void OnDestroy()
+        {
+            BuilderManager.Instance.TestLevelEvent -= TurnSound;
+        }
+
+        private void TurnSound()
+        {
+            if (isActive && BuilderManager.Instance.isMove)
+            {
+                workSound.Play();
+                rotorSound.Play();
+            }
+            else
+            {
+                workSound.Stop();
+                rotorSound.Stop();
+            }
         }
 
         private void FixedUpdate()

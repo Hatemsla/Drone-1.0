@@ -44,8 +44,6 @@ namespace Drone
             {
                 if (value > 100)
                     health = 100;
-                else if (health < 0)
-                    health = 0;
                 else
                     health = value;
             }
@@ -58,8 +56,6 @@ namespace Drone
             {
                 if (value > 100)
                     armor = 100;
-                else if (value < 0)
-                    armor = 0;
                 else
                     armor = value;
             }
@@ -72,8 +68,6 @@ namespace Drone
             {
                 if (value > 100)
                     battery = 100;
-                else if (value < 0)
-                    battery = 0;
                 else
                     battery = value;
             }

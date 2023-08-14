@@ -16802,7 +16802,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec2d3f8847164b40a72f7b8e5702e580, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  droneRpgController: {fileID: 0}
+  droneRpgController: {fileID: 718910219344683248}
   armorText: {fileID: 1861125906}
   healthText: {fileID: 839375201}
   batteryText: {fileID: 1349642280}
@@ -24277,6 +24277,55 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 50, y: 177.8, z: 0}
+--- !u!1 &706382134
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 706382136}
+  - component: {fileID: 706382135}
+  m_Layer: 0
+  m_Name: SoundManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &706382135
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 706382134}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12e93fea00464c989997e84db25b5deb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundsCount: 10
+  sound: {fileID: 5822848377981221420, guid: 2596f0d909387fe4daa3137756f8a100, type: 3}
+  collisionClip: {fileID: 8300000, guid: 1cb19962a4eef1b4d81376944c7f1bfb, type: 3}
+  explosionClip: {fileID: 8300000, guid: 5259bfb3c088c7d45b3fa11aca028eb6, type: 3}
+  lampOffClip: {fileID: 8300000, guid: 5ce31beb301c48845849b202e8e56d6c, type: 3}
+--- !u!4 &706382136
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 706382134}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 21
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &711196923
 GameObject:
   m_ObjectHideFlags: 0
@@ -27691,7 +27740,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 0ba34eab19bcb8c4987108fed2cf5952, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c32d79a4725b4574d95453a9379ea809, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -27730,11 +27779,11 @@ MonoBehaviour:
   preInfoBack: {fileID: 740940821}
   preInfoEllipseImage: {fileID: 2025326351}
   background: {fileID: 5919241}
-  backgroundDefault: {fileID: 21300000, guid: 0ba34eab19bcb8c4987108fed2cf5952, type: 3}
-  backgroundHover: {fileID: 21300000, guid: a4694bbba1dde8946a06e61b617f2c68, type: 3}
-  preInfoBackground: {fileID: 21300000, guid: b93d176f58f25b149a88654e109345b7, type: 3}
-  preInfoEllipse: {fileID: 21300000, guid: ac265787d064cb34ca766279409d90c7, type: 3}
-  objectNameColor: {r: 0.101960786, g: 0.37254903, b: 0.75686276, a: 1}
+  backgroundDefault: {fileID: 21300000, guid: c32d79a4725b4574d95453a9379ea809, type: 3}
+  backgroundHover: {fileID: 21300000, guid: 467220eb729a9bf45837cbb9eb4c94ee, type: 3}
+  preInfoBackground: {fileID: 21300000, guid: 43069620ddd1f7548b108ea5a7ced37f, type: 3}
+  preInfoEllipse: {fileID: 21300000, guid: 27bfcf429f4ee94429fdb3d2757c3acb, type: 3}
+  objectNameColor: {r: 0.32156864, g: 1, b: 0.22352941, a: 1}
   objectName: "\u0411\u0443\u0441\u0442\u0435\u0440"
   objectDesc: "\u0423\u0441\u043A\u043E\u0440\u044F\u0435\u0442 \u0434\u0440\u043E\u043D
     \u0432 \u043D\u0435\u0441\u043A\u043E\u043B\u044C\u043A\u043E \u0440\u0430\u0437"
@@ -35634,6 +35683,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 982201001}
   m_CullTransparentMesh: 1
+--- !u!82 &984605103 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 2312833579678271362, guid: d02e1081ac5d4604e80dd2d3b7e27488, type: 3}
+  m_PrefabInstance: {fileID: 718910219344683247}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &996821540
 GameObject:
   m_ObjectHideFlags: 0
@@ -37228,7 +37282,7 @@ MonoBehaviour:
   crystalCostText: {fileID: 1501649713}
   enoughMoneySprite: {fileID: 21300000, guid: b19e0bac5cee6b148a4f300807a46362, type: 3}
   noEnoughMoneySprite: {fileID: 21300000, guid: 09e42510cb3338f43ae89e9f78d65ae6, type: 3}
-  timer: {fileID: 0}
+  timer: {fileID: 2022248679}
   skills:
   - {fileID: 614767318}
   - {fileID: 1254454598}
@@ -72525,6 +72579,7 @@ MonoBehaviour:
   isActivGreen: 0
   builderUI: {fileID: 1761431778}
   editMenu: {fileID: 1593392418}
+  builderAudioManager: {fileID: 2083759232}
   droneBuilderController: {fileID: 6554557505293662352}
   droneBuilderCheckNode: {fileID: 6554557505293662353}
   droneBuilderSoundController: {fileID: 718910219344683249}
@@ -72532,8 +72587,6 @@ MonoBehaviour:
   asyncLoad: {fileID: 1043567121}
   timer: {fileID: 2022248679}
   cameraBrain: {fileID: 963194234}
-  cameraController: {fileID: 718910219344683250}
-  freeFlyCamera: {fileID: 847449149}
   layerMask:
     serializedVersion: 2
     m_Bits: 320
@@ -80280,17 +80333,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d21c97f703b440ebeeaa1b80a4224d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &718910219344683250 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8451796036726758168, guid: d02e1081ac5d4604e80dd2d3b7e27488, type: 3}
-  m_PrefabInstance: {fileID: 718910219344683247}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6554557504242428667}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 35b5464252714608b43a3c822572e8f7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &3337281413007714884
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -80305,7 +80347,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxTimeRewind: 10
   rewindIntensity: 0.02
-  rewindSound: {fileID: 0}
+  rewindSound: {fileID: 984605103}
   droneRpgController: {fileID: 718910219344683248}
 --- !u!4 &5501926392612501753
 Transform:

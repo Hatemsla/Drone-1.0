@@ -6,6 +6,8 @@ namespace Drone.Builder
 {
     public class Battery : InteractiveObject
     {
+        [SerializeField] private AudioClip pickupSound;
+        
         private void Start()
         {
             batteryEnergy = 15f;
@@ -20,6 +22,7 @@ namespace Drone.Builder
             if (player)
             {
                 EffectsManager.Intsance.GetGetEffect(transform.position);
+                SoundManager.Instance.GetSound(transform.position, pickupSound);
                 player.Battery += batteryEnergy;
                 if(BuilderManager.Instance.isGameMode)
                     Destroy(transform.root.gameObject);

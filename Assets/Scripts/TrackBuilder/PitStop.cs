@@ -10,6 +10,7 @@ namespace Drone.Builder
         [SerializeField] private Transform pitStopCenter;
         [SerializeField] private ParticleEffect restoreEffect;
         [SerializeField] private Prompt prompt;
+        [SerializeField] private AudioSource restoreSound;
         
         private bool _inTrigger;
         private float _healingTime;
@@ -41,6 +42,7 @@ namespace Drone.Builder
 
         private IEnumerator RestoreDrone(float healingTime)
         {
+            restoreSound.Play();
             var elapsedTime = 0f;
             var startHealth = _drone.Health;
             var startArmor = _drone.Armor;
@@ -72,6 +74,7 @@ namespace Drone.Builder
             InputManager.Instance.TurnCustomActionMap(Idents.ActionMaps.Player);
             BuilderManager.Instance.builderUI.restoreHealthText.enabled = false;
             restoreEffect.Effect.Stop();
+            restoreSound.Stop();
         }
 
         private void FindPrompt()

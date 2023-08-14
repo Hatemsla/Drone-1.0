@@ -6,6 +6,7 @@ namespace Drone.Builder
     public class Crystal : MonoBehaviour
     {
         [SerializeField] private int crystal = 1;
+        [SerializeField] private AudioClip pickupSound;
 
         private void OnTriggerEnter(Collider other)
         {

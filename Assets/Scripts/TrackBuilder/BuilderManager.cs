@@ -38,6 +38,7 @@ namespace Drone.Builder
         public bool isActivGreen;
         public BuilderUI builderUI;
         public EditMenu editMenu;
+        public BuilderAudioManager builderAudioManager;
         public DroneBuilderController droneBuilderController;
         public DroneBuilderCheckNode droneBuilderCheckNode;
         public DroneBuilderSoundController droneBuilderSoundController;
@@ -45,8 +46,6 @@ namespace Drone.Builder
         public AsyncLoad asyncLoad;
         public Timer timer;
         public CinemachineBrain cameraBrain;
-        public BuilderCameraController cameraController;
-        public FreeFlyCamera freeFlyCamera;
         public LayerMask layerMask;
         public GameObject pendingObject;
         public ObjectsType noScaleEditableObjects;
@@ -347,9 +346,9 @@ namespace Drone.Builder
             {
                 _isTabPanel = !_isTabPanel;
                 if (_isTabPanel)
-                    droneBuilderSoundController.droneFly.Stop();
+                    droneBuilderSoundController.droneFlySound.Stop();
                 else
-                    droneBuilderSoundController.droneFly.Play();
+                    droneBuilderSoundController.droneFlySound.Play();
                 builderUI.editorTabPanel.SetActive(_isTabPanel && !isGameMode);
                 builderUI.gameTabPanel.SetActive(_isTabPanel && isGameMode);
                 builderUI.levelResultPanel.SetActive(false);

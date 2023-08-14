@@ -5,6 +5,7 @@ namespace Drone.Builder
     public class BuilderCheckpointTrigger : MonoBehaviour
     {
         public int checkpointId;
+        [SerializeField] private AudioSource saveSound;
 
         private void OnTriggerEnter(Collider other)
         {
@@ -13,6 +14,7 @@ namespace Drone.Builder
 
             player.SetRespawn(transform);
             player.CheckWaypoint();
+            saveSound.Play();
         }
     }
 }

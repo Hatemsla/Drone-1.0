@@ -28,7 +28,10 @@ public class RewindByKeyPressInGame : MonoBehaviour
     private void FindDroneRpg()
     {
         if (!droneRpgController)
+        {
             droneRpgController = FindObjectOfType<DroneRpgController>();
+            rewindSound = droneRpgController.GetComponent<DroneBuilderSoundController>().timeRewindSound;
+        }
     }
 
     private void OnDisable()
@@ -55,7 +58,8 @@ public class RewindByKeyPressInGame : MonoBehaviour
             if (!_isRewinding)
             {
                 RewindManager.Instance.StartRewindTimeBySeconds(_rewindValue);
-                // rewindSound.Play();
+                BuilderManager.Instance.builderAudioManager.StartTimeRewind();
+                rewindSound.Play();
             }
             else
             {
@@ -70,7 +74,8 @@ public class RewindByKeyPressInGame : MonoBehaviour
             if (_isRewinding)
             {
                 RewindManager.Instance.StopRewindTimeBySeconds();
-                // rewindSound.Stop();
+                BuilderManager.Instance.builderAudioManager.StopTimeRewind();
+                rewindSound.Stop();
                 _rewindValue = 0;
                 _isRewinding = false;
                 

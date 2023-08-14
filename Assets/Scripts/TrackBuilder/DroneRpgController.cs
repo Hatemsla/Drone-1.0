@@ -11,6 +11,7 @@ namespace Drone
         public DroneController droneBuilderController;
         [SerializeField] private DroneData droneData;
         [SerializeField] private DroneBuilderCheckNode droneBuilderCheckNode;
+        [SerializeField] private DroneBuilderSoundController droneBuilderSoundController;
         public float powerUsageRate;
         public bool isAlive = true;
         public bool isCharged = true;
@@ -128,7 +129,6 @@ namespace Drone
 
             _isRespawning = false;
             BuilderManager.Instance.builderUI.restoreHealthText.enabled = false;
-
         }
 
         public void UpdateSkillValue(Skills skill, int newValue)
@@ -198,6 +198,7 @@ namespace Drone
             var trackObject = other.transform.GetComponentInParent<TrackObject>();
             
             EffectsManager.Intsance.GetSparksEffect(other.contacts[0].point, droneBuilderController.currentPercentSpeed);
+            SoundManager.Instance.GetSound(other.contacts[0].point, SoundManager.Instance.collisionClip, droneBuilderController.currentPercentSpeed / 100);
 
             if (trackObject && droneBuilderController.currentPercentSpeed >= 50f)
             {
@@ -207,6 +208,7 @@ namespace Drone
                         ApplyDamage(droneBuilderController.currentPercentSpeed / 2);
                         break;
                     case EffectType.Destructible:
+                        SoundManager.Instance.GetSound(trackObject.transform.position, SoundManager.Instance.explosionClip);
                         CreateExplosion(trackObject, other);
                         break;
                     case EffectType.Hybrid:
@@ -215,16 +217,19 @@ namespace Drone
                             var lamp = trackObject.GetComponent<Lamp>();
                             if (lamp && lamp.isLampTurn)
                             {
+                                SoundManager.Instance.GetSound(trackObject.transform.position, SoundManager.Instance.lampOffClip);
                                 lamp.TurnLamp();
                             }
                             else
                             {
+                                SoundManager.Instance.GetSound(trackObject.transform.position, SoundManager.Instance.explosionClip);
                                 CreateExplosion(trackObject, other);
                             }
                             return;
                         }
                         
                         ApplyDamage(trackObject.damage);
+                        SoundManager.Instance.GetSound(trackObject.transform.position, SoundManager.Instance.explosionClip);
                         CreateExplosion(trackObject, other);
 
                         break;

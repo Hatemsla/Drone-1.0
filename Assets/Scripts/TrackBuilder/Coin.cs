@@ -6,7 +6,9 @@ namespace Drone.Builder
 {
     public class Coin : MonoBehaviour
     {
-        [SerializeField] public int coin = 1;
+        [SerializeField] private int coin = 1;
+
+        [SerializeField] private AudioClip pickupSound;
 
         private void OnTriggerEnter(Collider other)
         {
@@ -17,11 +19,13 @@ namespace Drone.Builder
             if (player)
             {
                 EffectsManager.Intsance.GetGetEffect(transform.position);
+                SoundManager.Instance.GetSound(transform.position, pickupSound);
                 player.Coins += coin;
                 if(BuilderManager.Instance.isGameMode)
                     Destroy(transform.root);
                 else
                     transform.root.gameObject.SetActive(false);
+                
             }
         }
     }

@@ -55,6 +55,16 @@ namespace Drone
             public const string Camera = "Camera";
         }
         
+        public static class AudioMixer
+        {
+            public const string Music = "Music";
+            public const string Effects = "Effects";
+            public const string UI = "UI";
+            public const string LoadMusic = "LoadMusic";
+            public const string Master = "Master";
+            public const string TimeRewind = "TimeRewind";
+        }
+        
         public static class HexColors
         {
             public const string YellowFaff00 = "FAFF00";

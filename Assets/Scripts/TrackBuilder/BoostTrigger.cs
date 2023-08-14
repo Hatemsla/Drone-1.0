@@ -5,6 +5,8 @@ namespace Drone.Builder
 {
     public class BoostTrigger : InteractiveObject
     {
+        [SerializeField] private AudioSource boostSound;
+        
         private void Start()
         {
             boostSpeed = 2f;
@@ -12,11 +14,15 @@ namespace Drone.Builder
 
         private void OnTriggerEnter(Collider other)
         {
+            if(!isActive || !BuilderManager.Instance.isMove)
+                return;
+            
             var player = other.GetComponent<DroneController>();
             if (player)
             {
                 if (player.boostsCount < 3)
                 {
+                    boostSound.Play();
                     StartCoroutine(BoostDrone(other.GetComponent<Rigidbody>(), player));
                 }
             }
@@ -33,7 +39,7 @@ namespace Drone.Builder
 
         public override void SetActive(bool active)
         {
-        
+            isActive = active;
         }
 
         public override void SetColorIndex(int active)

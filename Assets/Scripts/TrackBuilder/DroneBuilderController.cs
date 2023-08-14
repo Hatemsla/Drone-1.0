@@ -2,19 +2,20 @@
 using System.Collections.Generic;
 using System.Linq;
 using Drone;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Drone.Builder
 {
     public class DroneBuilderController : DroneController
     {
-        public float jerkForce;
+        [SerializeField] private float jerkForce;
         [SerializeField] private float jerkDelay = 5f;
         [SerializeField] private float shieldDelay = 10f;
         [SerializeField] private GameObject shield;
-        public Light flashLight;
-        public DroneBuilderCheckNode droneBuilderCheckNode;
-        public DroneBuilderSoundController droneBuilderSoundController;
+        [SerializeField] private Light flashLight;
+        [SerializeField] private DroneBuilderCheckNode droneBuilderCheckNode;
+        [SerializeField] private DroneBuilderSoundController droneBuilderSoundController;
         public DroneRpgController droneRpgController;
         public Rigidbody rb;
         
@@ -34,7 +35,6 @@ namespace Drone.Builder
             BuilderManager.Instance.droneBuilderController = this;
             BuilderManager.Instance.droneBuilderCheckNode = droneBuilderCheckNode;
             BuilderManager.Instance.droneBuilderSoundController = droneBuilderSoundController;
-            BuilderManager.Instance.cameraController = GetComponent<BuilderCameraController>();
             rb = GetComponent<Rigidbody>();
             _engines = GetComponentsInChildren<DroneEngine>().ToList();
         }
@@ -130,6 +130,7 @@ namespace Drone.Builder
                 _isShieldActive = false;
                 droneRpgController.ApplyEnergyUsage(5);
                 shield.SetActive(true);
+                droneBuilderSoundController.activateShieldSound.Play();
                 
                 StartCoroutine(DisableShield());
             }
@@ -138,6 +139,7 @@ namespace Drone.Builder
         private IEnumerator DisableShield()
         {
             yield return new WaitForSeconds(shieldDelay);
+            droneBuilderSoundController.deactivateShieldSound.Play();
             shield.SetActive(false);
             isShieldActive = false;
         }
@@ -157,6 +159,7 @@ namespace Drone.Builder
             if (BuilderManager.Instance.isMove && droneRpgController.SkillsCount[Skills.Flashlight] > 0)
             {
                 flashLight.enabled = !flashLight.enabled;
+                droneBuilderSoundController.flashlightSound.Play();
             }
         }
 

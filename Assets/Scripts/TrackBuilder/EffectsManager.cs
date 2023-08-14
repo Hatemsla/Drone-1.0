@@ -58,11 +58,13 @@ namespace Drone.Builder
             obj.gameObject.SetActive(true);
             obj.Play();
         }
+        
         private void GetParticleSparksEffectAction(ParticleEffect obj)
         {
             obj.gameObject.SetActive(true);
             obj.Play();
         }
+        
         private void GetParticleExplosionEffectAction(ParticleEffect obj)
         {
             obj.gameObject.SetActive(true);
@@ -74,18 +76,19 @@ namespace Drone.Builder
             obj.gameObject.SetActive(false);
             obj.Stop();
         }
+        
         private void ReturnParticleSparksEffectAction(ParticleEffect obj)
         {
             obj.gameObject.SetActive(false);
             obj.Stop();
         }
+        
         private void ReturnParticleExplosionEffectAction(ParticleEffect obj)
         {
             obj.gameObject.SetActive(false);
             obj.Stop();
         }
-
-
+        
         public void Return(ParticleEffect particleEffect)
         {
             if(_particleGetEffectsPool.HasItem(particleEffect))

@@ -11,10 +11,13 @@ namespace Drone.Builder
         public VideoPlayer loadVideo;
         public AudioSource loadAudio;
 
+        private float _previousMusicValue;
+        private float _previousEffectsValue;
+
         private void Start()
         {
-            audioMixer.SetFloat("Music", 0);
-            audioMixer.SetFloat("Effects", 0);
+            // audioMixer.SetFloat(Idents.AudioMixer.Music, 0);
+            // audioMixer.SetFloat(Idents.AudioMixer.Effects, 0);
         }
 
         private void OnEnable()
@@ -39,6 +42,21 @@ namespace Drone.Builder
         {
             loadVideo.Stop();
             loadAudio.Stop();
+        }
+
+        public void StartTimeRewind()
+        {
+            audioMixer.GetFloat(Idents.AudioMixer.Effects, out _previousEffectsValue);
+            audioMixer.GetFloat(Idents.AudioMixer.Music, out _previousMusicValue);
+            
+            audioMixer.SetFloat(Idents.AudioMixer.Effects, -80);
+            audioMixer.SetFloat(Idents.AudioMixer.Music, -80);
+        }
+
+        public void StopTimeRewind()
+        {
+            audioMixer.SetFloat(Idents.AudioMixer.Effects, _previousEffectsValue);
+            audioMixer.SetFloat(Idents.AudioMixer.Music, _previousMusicValue);
         }
     }
 }
