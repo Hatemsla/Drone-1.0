@@ -24,16 +24,13 @@ namespace Drone.Builder.ControllerElements
         private bool isActiv = false;
 
         public bool testV = true;
-        int N1 = 0;
-        int N2 = 0;
-        int N3 = 0;
 
 
         // Start is called before the first frame update
         void Start()
         {
             objectRenderer = controllerPanelObject.GetComponent<Renderer>();
-            SetColor(TrackBuilderUtils.GetColorFromOption(selectedColorOption), false);  
+            SetColor(GetColorFromOption(selectedColorOption), false);  
             ishacked = true;
         }
 
@@ -68,7 +65,7 @@ namespace Drone.Builder.ControllerElements
             if (other.CompareTag("Player"))
             {
                 isConected = true;
-                SetColor(TrackBuilderUtils.GetColorFromOption(selectedColorOption), isConected);
+                SetColor(GetColorFromOption(selectedColorOption), isConected);
                 // promptText.enabled = true;
             }
         }
@@ -78,7 +75,7 @@ namespace Drone.Builder.ControllerElements
             if (other.CompareTag("Player"))
             {
                 isConected = false;
-                SetColor(TrackBuilderUtils.GetColorFromOption(selectedColorOption), isConected);
+                SetColor(GetColorFromOption(selectedColorOption), isConected);
 
             }
         }
@@ -97,7 +94,7 @@ namespace Drone.Builder.ControllerElements
         {
             if (isConected)
             {
-                if (isHacked)
+                if (!isHacked)
                 {
                     isActiv = !isActiv;
                     setColorActiv(selectedColorOption, isActiv);
@@ -105,9 +102,7 @@ namespace Drone.Builder.ControllerElements
                 else
                 {
                     Debug.Log("Start hacking");
-                    Debug.Log(N1);
-                    Debug.Log(N2);
-                    Debug.Log(N3);
+                    Debug.Log(password);
                     isHacked = false;
                 } 
             }
@@ -115,7 +110,11 @@ namespace Drone.Builder.ControllerElements
 
         private void setColorActiv(ColorOption option, bool isActiv)
         {
-            if (option == ColorOption.Красный)
+            if (option == ColorOption.Белый)
+            {
+                BuilderManager.Instance.isActivWhite = isActiv;
+            }
+            else if (option == ColorOption.Красный)
             {
                 BuilderManager.Instance.isActivRed = isActiv;
             }
@@ -136,48 +135,30 @@ namespace Drone.Builder.ControllerElements
         public void set_hacked()
         {            
             ishacked = !ishacked;
-            // isHacked = ishacked;
-            // Debug.Log("is_hacked");
-            // Debug.Log(isHacked);
+
            
         }
 
-        public void set_code_n1(int value)
+        public void SetPassword(string value, bool hacked)
         {
-            n1 = value;
-            N1 = n1;
-            Debug.Log("n1");
-            Debug.Log(n1);        
-        }
+            hasPassword = hacked;
+            password = value;
+            isHacked = hasPassword;
 
-        public void set_code_n2(int value)
-        {
-            n2 = value;
-            N2 = n2;
-            Debug.Log("n2");        
-            Debug.Log(n2);        
-        }
-
-        public void set_code_n3(int value)
-        {
-            n3 = value;
-            N3 = n3;
-            Debug.Log("n3");        
-            Debug.Log(n3);        
         }
 
         public void set_color_index(int value)
         {
             color_index = value;
             selectedColorOption = (ColorOption)value;
-            SetColor(TrackBuilderUtils.GetColorFromOption(selectedColorOption), false);
+            SetColor(GetColorFromOption(selectedColorOption), false);
         }
 
         public override void SetColorIndex(int value)
         {
             color_index = value;
             selectedColorOption = (ColorOption)value;
-            SetColor(TrackBuilderUtils.GetColorFromOption(selectedColorOption), false);
+            SetColor(GetColorFromOption(selectedColorOption), false);
         }
 
         public override void SetActive(bool active)

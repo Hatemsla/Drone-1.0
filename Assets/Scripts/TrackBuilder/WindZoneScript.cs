@@ -6,6 +6,24 @@ namespace Drone.Builder
 {
     public class WindZoneScript : InteractiveObject
     {
+
+        public GameObject colorObject;
+        private Renderer objectRenderer;
+        public ColorOption selectedColorOption;
+
+
+        private void SetColor(Color scolor)
+        {   
+            Color newColor = new Color(scolor.r, scolor.g, scolor.b, 0.07843138f);
+            objectRenderer.material.SetColor("_Color", newColor);
+
+        }
+
+        private void Start()
+        {
+            objectRenderer = colorObject.GetComponent<Renderer>();
+            SetColor(GetColorFromOption(selectedColorOption)); 
+        }
         private void OnTriggerStay(Collider other)
         {
             if(!isActive)
@@ -21,11 +39,13 @@ namespace Drone.Builder
         public override void SetActive(bool active)
         {
             isActive = active;
+            SetColor(GetColorFromOption((ColorOption)color_index));
         }
 
         public override void SetColorIndex(int value)
         {
-
+            color_index = value;
+            SetColor(GetColorFromOption((ColorOption)value));
         }
     }
 }

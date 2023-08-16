@@ -29,7 +29,7 @@ namespace Drone.Builder
         [SerializeField] private Slider windForce;
         [SerializeField] private Slider batteryEnergy;
         [SerializeField] private Slider boostForce;
-        [SerializeField] private Slider TimeDelaySlider;
+        [SerializeField] private Slider TimeDelay;
         [SerializeField] private TMP_Text xyzScaleValue;
         [SerializeField] private TMP_Text windmillRotSpeedValue;
         [SerializeField] private TMP_Text magnetForceValue;
@@ -39,6 +39,7 @@ namespace Drone.Builder
         [SerializeField] private TMP_Text batteryEnergyValue;
         [SerializeField] private TMP_Text boostForceValue;
         [SerializeField] private TMP_Text passwordHint;
+        [SerializeField] private TMP_Text TimeDelayValue;
         [SerializeField] private Toggle activeToggle;
         [SerializeField] private Toggle hasPasswordToggle;
         [SerializeField] private Toggle is_hacked;
@@ -107,28 +108,31 @@ namespace Drone.Builder
                     TurnInteractivePanels(gameObject);
                     break;
                 case InteractiveType.Windmill:
-                    TurnInteractivePanels(windmillPanel, isActivePanel);
+                    TurnInteractivePanels(windmillPanel, isActivePanel, colorPanel);
                     windmillRotSpeed.value = trackObject.interactiveObject.windMillRotateSpeed;
                     windmillRotSpeedValue.text =
                         trackObject.interactiveObject.windMillRotateSpeed.ToString("f1", CultureInfo.CurrentCulture);
                     activeToggle.isOn = trackObject.interactiveObject.isActive;
+                    color.value = trackObject.interactiveObject.color_index;
                     break;
                 case InteractiveType.Magnet:
-                    TurnInteractivePanels(magnetPanel, isActivePanel);
+                    TurnInteractivePanels(magnetPanel, isActivePanel, colorPanel);
                     magnetForce.value = trackObject.interactiveObject.magnetForce;
                     magnetForceValue.text =
                         trackObject.interactiveObject.magnetForce.ToString("f1", CultureInfo.CurrentCulture);
                     activeToggle.isOn = trackObject.interactiveObject.isActive;
+                    color.value = trackObject.interactiveObject.color_index;
                     break;
                 case InteractiveType.MagnetKiller:
-                    TurnInteractivePanels(magnetPanel, isActivePanel);
+                    TurnInteractivePanels(magnetPanel, isActivePanel, colorPanel);
                     magnetForce.value = trackObject.interactiveObject.magnetForce;
                     magnetForceValue.text =
                         trackObject.interactiveObject.magnetForce.ToString("f1", CultureInfo.CurrentCulture);
                     activeToggle.isOn = trackObject.interactiveObject.isActive;
+                    color.value = trackObject.interactiveObject.color_index;
                     break;
                 case InteractiveType.Pendulum:
-                    TurnInteractivePanels(pendulumPanel, isActivePanel);
+                    TurnInteractivePanels(pendulumPanel, isActivePanel, colorPanel);
                     pendulumSpeed.value = trackObject.interactiveObject.pendulumMoveSpeed;
                     pendulumSpeedValue.text =
                         trackObject.interactiveObject.pendulumMoveSpeed.ToString("f1", CultureInfo.CurrentCulture);
@@ -136,30 +140,35 @@ namespace Drone.Builder
                     pendulumAngleValue.text =
                         (trackObject.interactiveObject.rightPendulumAngle * 360f).ToString("f1", CultureInfo.CurrentCulture);
                     activeToggle.isOn = trackObject.interactiveObject.isActive;
+                    color.value = trackObject.interactiveObject.color_index;
                     break;
                 case InteractiveType.Wind:
-                    TurnInteractivePanels(windPanel, isActivePanel);
+                    TurnInteractivePanels(windPanel, isActivePanel, colorPanel);
                     windForce.value = trackObject.interactiveObject.windForce;
                     windForceValue.text =
                         trackObject.interactiveObject.windForce.ToString("f1", CultureInfo.CurrentCulture);
                     activeToggle.isOn = trackObject.interactiveObject.isActive;
+                    color.value = trackObject.interactiveObject.color_index;
                     break;
                 case InteractiveType.Battery:
-                    TurnInteractivePanels(batteryPanel, isActivePanel);
+                    TurnInteractivePanels(batteryPanel, isActivePanel, colorPanel);
                     batteryEnergy.value = trackObject.interactiveObject.batteryEnergy;
                     batteryEnergyValue.text = trackObject.interactiveObject.batteryEnergy.ToString(CultureInfo.CurrentCulture);
                     activeToggle.isOn = trackObject.interactiveObject.isActive;
+                    color.value = trackObject.interactiveObject.color_index;
                     break;
                 case InteractiveType.Freezing:
-                    TurnInteractivePanels(isActivePanel);
+                    TurnInteractivePanels(isActivePanel, colorPanel);
                     activeToggle.isOn = trackObject.interactiveObject.isActive;
+                    color.value = trackObject.interactiveObject.color_index;
                     break;
                 case InteractiveType.Boost:
-                    TurnInteractivePanels(boostPanel, isActivePanel);
+                    TurnInteractivePanels(boostPanel, isActivePanel, colorPanel);
                     boostForce.value = trackObject.interactiveObject.boostSpeed;
                     boostForceValue.text =
                         trackObject.interactiveObject.boostSpeed.ToString("f1", CultureInfo.CurrentCulture);
                     activeToggle.isOn = trackObject.interactiveObject.isActive;
+                    color.value = trackObject.interactiveObject.color_index;
                     break;
                 case InteractiveType.Lamp:
                     TurnInteractivePanels(isActivePanel, colorPanel);
@@ -175,21 +184,24 @@ namespace Drone.Builder
                     TurnInteractivePanels(drawPanel, isActivePanel);
                     break;
                 case InteractiveType.ElectroGate:
-                    TurnInteractivePanels(electrogatePanel, isActivePanel);
+                    TurnInteractivePanels(isActivePanel, colorPanel);
                     activeToggle.isOn = trackObject.interactiveObject.isActive;
                     color.value = trackObject.interactiveObject.color_index;
                     break;
                 case InteractiveType.Panel:
-                    TurnInteractivePanels(controllerPanelPanel, isActivePanel);
-                    is_hacked.isOn = trackObject.interactiveObject.ishacked;
-                    code_n1.value = trackObject.interactiveObject.n1;
-                    code_n2.value = trackObject.interactiveObject.n2;
-                    code_n3.value = trackObject.interactiveObject.n3;                    
-                    color_panel.value = trackObject.interactiveObject.color_index;
+                    TurnInteractivePanels(colorPanel, portPanel);
+                    hasPasswordToggle.isOn = trackObject.interactiveObject.hasPassword;
+                    var panelPassword = trackObject.interactiveObject.password;                   
+                    passwordInput.text = panelPassword;
+                    color.value = trackObject.interactiveObject.color_index;
                     break;
                 case InteractiveType.Button:
-                    TurnInteractivePanels(controllerButtonPanel);
-                    color_button.value = trackObject.interactiveObject.color_index;
+                    TurnInteractivePanels(colorPanel, controllerButtonPanel);
+                    color.value = trackObject.interactiveObject.color_index;
+                    TimeDelay.value = trackObject.interactiveObject.TimeDelay;
+                    TimeDelayValue.text =
+                        trackObject.interactiveObject.TimeDelay.ToString("f1", CultureInfo.CurrentCulture);
+                    
                     break;
                 case InteractiveType.Port:
                     TurnInteractivePanels(portPanel, isActivePanel);
@@ -198,10 +210,9 @@ namespace Drone.Builder
                     passwordInput.text = portPassword;
                     break;
                 case InteractiveType.TrMessage:
-                    Debug.Log("TrMessage");
-                    TurnInteractivePanels(triggerMessagePanel, isActivePanel);
-                    //hintInput.text = trackObject.interactiveObject.hintText.text;
-                    //activeToggle.isOn = trackObject.interactiveObject.isActive;
+                    TurnInteractivePanels(colorPanel, hintPanel);
+                    hintInput.text = trackObject.interactiveObject.text3D;
+                    color.value = trackObject.interactiveObject.color_index;
                     break;
                 case InteractiveType.Terminal:
                     TurnInteractivePanels(isActivePanel);

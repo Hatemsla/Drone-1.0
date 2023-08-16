@@ -26,9 +26,10 @@ namespace Drone.Builder.ControllerElements
 
         void Start()
         {
+            TimeDelay = 0;
             objectRenderer = controllerButtonObject.GetComponent<Renderer>();
             objectRenderer2 = controllerButtonObject2.GetComponent<Renderer>();
-            SetColor(TrackBuilderUtils.GetColorFromOption(selectedColorOption), false);       
+            SetColor(GetColorFromOption(selectedColorOption), false);       
         }
 
         // Update is called once per frame
@@ -42,7 +43,7 @@ namespace Drone.Builder.ControllerElements
             if (other.GetComponentInParent<GrabbedObject>() || other.GetComponentInParent<DroneController>())
             // if (other.CompareTag("Block") || other.CompareTag("Player"))
             {
-                SetColor(TrackBuilderUtils.GetColorFromOption(selectedColorOption), true);
+                SetColor(GetColorFromOption(selectedColorOption), true);
                 setColorActiv(selectedColorOption, true);
                 isChanged = true;
             }
@@ -66,7 +67,7 @@ namespace Drone.Builder.ControllerElements
             Debug.Log(isChanged);
             if (!isChanged)
             {
-                SetColor(TrackBuilderUtils.GetColorFromOption(selectedColorOption), false);
+                SetColor(GetColorFromOption(selectedColorOption), false);
                 setColorActiv(selectedColorOption, false);
                 isChanged = true;
             }
@@ -96,7 +97,11 @@ namespace Drone.Builder.ControllerElements
 
         private void setColorActiv(ColorOption option, bool isActiv)
         {
-            if (option == ColorOption.Красный)
+            if (option == ColorOption.Белый)
+            {
+                BuilderManager.Instance.isActivWhite = isActiv;
+            }
+            else if (option == ColorOption.Красный)
             {
                 BuilderManager.Instance.isActivRed = isActiv;
             }
@@ -118,18 +123,19 @@ namespace Drone.Builder.ControllerElements
         {
             color_index = value;
             selectedColorOption = (ColorOption)value;
-            SetColor(TrackBuilderUtils.GetColorFromOption(selectedColorOption), false);        
+            SetColor(GetColorFromOption(selectedColorOption), false);        
         }
 
         public override void SetColorIndex(int value)
         {
             color_index = value;
             selectedColorOption = (ColorOption)value;
-            SetColor(TrackBuilderUtils.GetColorFromOption(selectedColorOption), false);
+            SetColor(GetColorFromOption(selectedColorOption), false);
         }
 
         public void set_time_value(float value)
         {
+            TimeDelay = value;
             buttonDelay = value;
             TriggerExitDelay = value;
 

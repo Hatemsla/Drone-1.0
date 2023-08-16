@@ -114,7 +114,7 @@ namespace Drone.Builder
         public override void SetColorIndex(int value)
         {
             color_index = value;
-            SetColor(TrackBuilderUtils.GetColorFromOption((ColorOption)value));
+            SetColor(GetColorFromOption((ColorOption)value));
         }
     }
 }

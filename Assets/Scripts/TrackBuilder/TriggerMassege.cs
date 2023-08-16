@@ -9,18 +9,47 @@ namespace Drone.Builder
     {
         [SerializeField] private HelpMessage message;
         public GameObject TriggerObject;
-        public string messageText;
+        private Renderer objectRenderer;
+        public ColorOption selectedColorOption;
+        private MeshRenderer mesh;
+        private bool FirstEnter;
 
-        private bool FirstEnter = true;
+
+        float openTime;
 
         void Start()
         {
-        
+            FirstEnter = true;
+            objectRenderer = TriggerObject.GetComponent<Renderer>();
+            mesh = TriggerObject.GetComponent<MeshRenderer>();
+            SetColor(GetColorFromOption(selectedColorOption));  
+
         }
 
         void Update()
         {
-        
+            if (BuilderManager.Instance.isMove)
+            {
+                mesh.enabled = false;
+            }
+            else
+            {
+                mesh.enabled = true;
+            }
+            // Debug.Log((openTime - Time.deltaTime));
+            if ((openTime - Time.deltaTime) < -5)
+            {
+                
+                message.SetActive(false);
+            }
+
+        }
+
+        private void SetColor(Color scolor)
+        {   
+            Color newColor = new Color(scolor.r, scolor.g, scolor.b, 0.3529412f);
+            objectRenderer.material.SetColor("_Color", newColor);
+
         }
 
         private void FindMassege()
@@ -37,10 +66,23 @@ namespace Drone.Builder
             if (other.GetComponentInParent<DroneController>() is DroneBuilderController drone)
             {
                 message.SetActive(true);
-                message.ChangeMessageText(messageText);
+                message.ChangeMessageText(text3D);
                 FirstEnter = false;
+                StartCoroutine(closeMessage());
+
+
             }
         }
+
+        IEnumerator closeMessage()
+        {
+
+            yield return new WaitForSeconds(5);
+
+            message.SetActive(false);
+
+        }
+
 
         private void ShowMassage()
         {
@@ -66,15 +108,19 @@ namespace Drone.Builder
 
         private void SetMessageText(string value)
         {
-            messageText = value;
+            text3D = value;
         }
 
         public override void SetActive(bool active)
         {
+
         }
 
-        public override void SetColorIndex(int active)
+        public override void SetColorIndex(int value)
         {
+            color_index = value;
+            selectedColorOption = (ColorOption)value;
+            SetColor(GetColorFromOption(selectedColorOption));
         }
     }
 }

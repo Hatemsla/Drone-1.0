@@ -16,14 +16,14 @@ namespace Drone.Builder.ControllerElements
         public float glowIntensity = 1f;
 
         public ColorOption selectedColorOption;
-        private bool isActiv;
-        private bool previousIsActiv;
+        // private bool isActiv;
+        // private bool previousIsActiv;
 
         // Start is called before the first frame update
         void Start()
         {
             objectRenderer = gateObject.GetComponent<Renderer>();
-            //SetColor(GetColorFromOption(selectedColorOption)); 
+            SetColor(GetColorFromOption(selectedColorOption)); 
             mesh = gateObject.GetComponent<MeshRenderer>();
             col = gateObject.GetComponent<Collider>();
             if (!isActive)
@@ -69,47 +69,47 @@ namespace Drone.Builder.ControllerElements
                         
         }
 
-        private bool CheckColorActivChange(ColorOption option)
-        {
-            if (option == ColorOption.Красный)
-            {
-                isActiv = BuilderManager.Instance.isActivRed;
-            }
-            else if (option == ColorOption.Зелёный)
-            {
-                isActiv = BuilderManager.Instance.isActivGreen;
-            }
-            else if (option == ColorOption.Жёлтый)
-            {
-                isActiv = BuilderManager.Instance.isActivYellow;
-            }
-            else if (option == ColorOption.Синий)
-            {
-                isActiv = BuilderManager.Instance.isActivBlue;
-            }
-            if (previousIsActiv != isActiv)
-            {
-                previousIsActiv = isActiv;
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
+        // private bool CheckColorActivChange(ColorOption option)
+        // {
+        //     if (option == ColorOption.Красный)
+        //     {
+        //         isActiv = BuilderManager.Instance.isActivRed;
+        //     }
+        //     else if (option == ColorOption.Зелёный)
+        //     {
+        //         isActiv = BuilderManager.Instance.isActivGreen;
+        //     }
+        //     else if (option == ColorOption.Жёлтый)
+        //     {
+        //         isActiv = BuilderManager.Instance.isActivYellow;
+        //     }
+        //     else if (option == ColorOption.Синий)
+        //     {
+        //         isActiv = BuilderManager.Instance.isActivBlue;
+        //     }
+        //     if (previousIsActiv != isActiv)
+        //     {
+        //         previousIsActiv = isActiv;
+        //         return true;
+        //     }
+        //     else
+        //     {
+        //         return false;
+        //     }
+        // }
 
         public void set_color_index(int value)
         {
             color_index = value;
             selectedColorOption = (ColorOption)value;
-            SetColor(TrackBuilderUtils.GetColorFromOption(selectedColorOption));
+            SetColor(GetColorFromOption(selectedColorOption));
         }
 
         public override void SetColorIndex(int value)
         {
             color_index = value;
             selectedColorOption = (ColorOption)value;
-            SetColor(TrackBuilderUtils.GetColorFromOption(selectedColorOption));
+            SetColor(GetColorFromOption(selectedColorOption));
         }
 
         public override void SetActive(bool active)

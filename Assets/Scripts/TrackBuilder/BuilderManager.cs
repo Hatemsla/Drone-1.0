@@ -32,6 +32,7 @@ namespace Drone.Builder
         public bool isGameMode;
         public bool isLoadLevel;
         public bool isGameLevel;
+        public bool isActivWhite;
         public bool isActivRed;
         public bool isActivBlue;
         public bool isActivYellow;

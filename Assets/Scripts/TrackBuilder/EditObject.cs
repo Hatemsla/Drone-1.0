@@ -164,6 +164,10 @@ namespace Drone.Builder
             {
                 text3D.Text = value;
             }
+            else if (currentObject.interactiveObject is TriggerMassege triggerMassege)
+            {
+                triggerMassege.text3D = value;
+            }
             else
             {
                 currentObject.interactiveObject.hintText.text = value;
@@ -247,6 +251,11 @@ namespace Drone.Builder
                 port.portPassword.Password = password;
                 port.hasPassword = password.Length >= 3;
             }
+            else if (currentObject.interactiveObject is ControllerPanel controllerPanel)
+            {
+                Debug.Log(password);
+                controllerPanel.SetPassword(password, password.Length >= 3);
+            }
         }
 
         public void OnElectroGateColorChanged(int value)
@@ -262,38 +271,6 @@ namespace Drone.Builder
             if (currentObject.interactiveObject is ControllerPanel ControllerPanel)
             {
                 ControllerPanel.set_color_index(value); 
-            }
-        }
-
-        public void OnControllerPanelHackChanged(bool value)
-        {
-            if (currentObject.interactiveObject is ControllerPanel ControllerPanel)
-            {
-                ControllerPanel.set_hacked();
-            }
-        }
-
-        public void OnControllerPanelHackN1Changed(int value)
-        {
-            if (currentObject.interactiveObject is ControllerPanel ControllerPanel)
-            {
-                ControllerPanel.set_code_n1(value); 
-            }
-        }
-
-        public void OnControllerPanelHackN2Changed(int value)
-        {
-            if (currentObject.interactiveObject is ControllerPanel ControllerPanel)
-            {
-                ControllerPanel.set_code_n2(value); 
-            }
-        }
-
-        public void OnControllerPanelHackN3Changed(int value)
-        {
-            if (currentObject.interactiveObject is ControllerPanel ControllerPanel)
-            {
-                ControllerPanel.set_code_n3(value); 
             }
         }
 

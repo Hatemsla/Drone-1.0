@@ -8,6 +8,27 @@ namespace Drone.Builder
     {
         private Rigidbody _rb;
         private bool _movingClockwise;
+        public GameObject colorObject;
+        private Renderer objectRenderer;
+        public float glowIntensity = 1f;
+        public ColorOption selectedColorOption;
+
+
+        private void SetColor(Color newColor)
+        {
+            if (isActive)
+            {
+                objectRenderer.material.SetColor("_Color", newColor);
+                objectRenderer.material.EnableKeyword("_EMISSION");
+                objectRenderer.material.SetColor("_EmissionColor", newColor * glowIntensity);
+            }
+            else
+            {
+                objectRenderer.material.SetColor("_Color", newColor);
+                objectRenderer.material.DisableKeyword("_EMISSION");
+              
+            }
+        }
 
         private void Start()
         {
@@ -17,6 +38,8 @@ namespace Drone.Builder
             leftPendulumAngle = 0.6f;
             rightPendulumAngle = 0.6f;
             pendulumMoveSpeed = 5;
+            objectRenderer = colorObject.GetComponent<Renderer>();
+            SetColor(GetColorFromOption(selectedColorOption)); 
         }
 
         public void Update()
@@ -55,11 +78,13 @@ namespace Drone.Builder
         public override void SetActive(bool active)
         {
             isActive = active;
+            SetColor(GetColorFromOption((ColorOption)color_index));
         }
 
         public override void SetColorIndex(int value)
         {
-
+            color_index = value;
+            SetColor(GetColorFromOption((ColorOption)value));
         }
     }
 }

@@ -1379,16 +1379,15 @@ MonoBehaviour:
   windForce: 0
   batteryEnergy: 0
   boostSpeed: 0
+  TimeDelay: 0
   isLampTurn: 1
   hintText: {fileID: 0}
   text3D: 
   color_index: 0
   ishacked: 0
-  n1: 0
-  n2: 0
-  n3: 0
   buttonDelay: 0
   hasPassword: 0
+  password: 
   rotationSpeed: 100
   magnet: {fileID: 6944265150577643662}
   leftRotor: {fileID: 267328317540184082}
@@ -1397,6 +1396,9 @@ MonoBehaviour:
   rotorSound: {fileID: 9186831660099947236}
   baseDamage: 10
   damageInterval: 1
+  colorObject: {fileID: 8405218883920654559}
+  glowIntensity: 1
+  selectedColorOption: 0
 --- !u!65 &3168879060545844531
 BoxCollider:
   m_ObjectHideFlags: 0

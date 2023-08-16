@@ -10,8 +10,28 @@ namespace Drone.Builder
         [SerializeField] private float maxDronePitch;
         [SerializeField] private Vector3 rotateDirection;
         [SerializeField] private Rigidbody trap;
+        public GameObject colorObject;
+        private Renderer objectRenderer;
+        public float glowIntensity = 1f;
+        public ColorOption selectedColorOption;
+
         [SerializeField] private AudioSource workSound;
 
+        private void SetColor(Color newColor)
+        {
+            if (isActive)
+            {
+                objectRenderer.material.SetColor("_Color", newColor);
+                objectRenderer.material.EnableKeyword("_EMISSION");
+                objectRenderer.material.SetColor("_EmissionColor", newColor * glowIntensity);
+            }
+            else
+            {
+                objectRenderer.material.SetColor("_Color", newColor);
+                objectRenderer.material.DisableKeyword("_EMISSION");
+
+            }
+        }
         private void Start()
         {
             windMillRotateSpeed = 300f;
@@ -29,6 +49,8 @@ namespace Drone.Builder
                 workSound.Play();
             else
                 workSound.Stop();
+            objectRenderer = colorObject.GetComponent<Renderer>();
+            SetColor(GetColorFromOption(selectedColorOption));
         }
 
         private void FixedUpdate()
@@ -55,11 +77,13 @@ namespace Drone.Builder
         public override void SetActive(bool active)
         {
             isActive = active;
+            SetColor(GetColorFromOption((ColorOption)color_index));
         }
 
         public override void SetColorIndex(int value)
         {
-
+            color_index = value;
+            SetColor(GetColorFromOption((ColorOption)value));
         }
     }
 }

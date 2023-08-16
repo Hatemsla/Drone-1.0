@@ -16,11 +16,34 @@ namespace Drone.Builder
         [SerializeField] private float baseDamage = 10.0f;
         [SerializeField] private float damageInterval = 1.0f;
         private float _timer;
+        public GameObject colorObject;
+        private Renderer objectRenderer;
+        public float glowIntensity = 1f;
+        public ColorOption selectedColorOption;
+
+
+        private void SetColor(Color newColor)
+        {
+            if (isActive)
+            {
+                objectRenderer.material.SetColor("_Color", newColor);
+                objectRenderer.material.EnableKeyword("_EMISSION");
+                objectRenderer.material.SetColor("_EmissionColor", newColor * glowIntensity);
+            }
+            else
+            {
+                objectRenderer.material.SetColor("_Color", newColor);
+                objectRenderer.material.DisableKeyword("_EMISSION");
+
+            }
+        }
 
         private void Start()
         {
             rotationSpeed = 100;
             magnetForce = 1;
+            objectRenderer = colorObject.GetComponent<Renderer>();
+            SetColor(GetColorFromOption(selectedColorOption));
             BuilderManager.Instance.TestLevelEvent += TurnSound;
         }
 
@@ -80,11 +103,13 @@ namespace Drone.Builder
         public override void SetActive(bool active)
         {
             isActive = active;
+            SetColor(GetColorFromOption((ColorOption)color_index));
         }
 
         public override void SetColorIndex(int value)
         {
-
+            color_index = value;
+            SetColor(GetColorFromOption((ColorOption)value));
         }
     }
 }
