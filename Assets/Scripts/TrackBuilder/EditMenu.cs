@@ -151,11 +151,9 @@ namespace Drone.Builder
                     color.value = trackObject.interactiveObject.color_index;
                     break;
                 case InteractiveType.Battery:
-                    TurnInteractivePanels(batteryPanel, isActivePanel, colorPanel);
+                    TurnInteractivePanels(batteryPanel);
                     batteryEnergy.value = trackObject.interactiveObject.batteryEnergy;
                     batteryEnergyValue.text = trackObject.interactiveObject.batteryEnergy.ToString(CultureInfo.CurrentCulture);
-                    activeToggle.isOn = trackObject.interactiveObject.isActive;
-                    color.value = trackObject.interactiveObject.color_index;
                     break;
                 case InteractiveType.Freezing:
                     TurnInteractivePanels(isActivePanel, colorPanel);

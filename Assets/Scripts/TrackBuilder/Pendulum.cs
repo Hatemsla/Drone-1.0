@@ -41,9 +41,13 @@ namespace Drone.Builder
             objectRenderer = colorObject.GetComponent<Renderer>();
             SetColor(GetColorFromOption(selectedColorOption)); 
         }
-
-        public void Update()
+        private void Update()
         {
+            if (CheckColorActivChange(selectedColorOption))
+            {
+                isActive = !isActive;
+                SetActive(isActive);
+            } 
             if (isActive) Move();
         }
 

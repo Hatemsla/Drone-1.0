@@ -34,8 +34,25 @@ namespace Drone.Builder
         }
         private void Start()
         {
+            
+            objectRenderer = colorObject.GetComponent<Renderer>();
+            SetColor(GetColorFromOption(selectedColorOption));
             windMillRotateSpeed = 300f;
             BuilderManager.Instance.TestLevelEvent += TurnSound;
+        }
+
+        private void Update()
+        {
+            if (CheckColorActivChange(selectedColorOption))
+            {
+                isActive = !isActive;
+                Debug.Log("CheckColorActivChange");
+                Debug.Log(isActive);
+                Debug.Log(isActivB);
+                Debug.Log(previousIsActiv);
+
+                SetActive(isActive);
+            } 
         }
 
         private void OnDestroy()

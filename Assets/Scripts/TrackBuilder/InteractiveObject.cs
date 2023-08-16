@@ -29,6 +29,7 @@ namespace Drone.Builder
 
 
         private protected bool isActiv;
+        private protected bool isActivB;
         private protected bool previousIsActiv;
 
 
@@ -39,27 +40,27 @@ namespace Drone.Builder
         {
             if (option == ColorOption.Белый)
             {
-                isActiv = BuilderManager.Instance.isActivWhite;
+                isActivB = BuilderManager.Instance.isActivWhite;
             }
             else if (option == ColorOption.Красный)
             {
-                isActiv = BuilderManager.Instance.isActivRed;
+                isActivB = BuilderManager.Instance.isActivRed;
             }
             else if (option == ColorOption.Зелёный)
             {
-                isActiv = BuilderManager.Instance.isActivGreen;
+                isActivB = BuilderManager.Instance.isActivGreen;
             }
             else if (option == ColorOption.Жёлтый)
             {
-                isActiv = BuilderManager.Instance.isActivYellow;
+                isActivB = BuilderManager.Instance.isActivYellow;
             }
             else if (option == ColorOption.Синий)
             {
-                isActiv = BuilderManager.Instance.isActivBlue;
+                isActivB = BuilderManager.Instance.isActivBlue;
             }
-            if (previousIsActiv != isActiv)
+            if (previousIsActiv != isActivB)
             {
-                previousIsActiv = isActiv;
+                previousIsActiv = isActivB;
                 return true;
             }
             else
