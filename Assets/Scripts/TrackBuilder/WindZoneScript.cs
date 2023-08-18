@@ -21,6 +21,7 @@ namespace Drone.Builder
 
         private void Start()
         {
+            windForce = 0f;
             objectRenderer = colorObject.GetComponent<Renderer>();
             SetColor(GetColorFromOption(selectedColorOption)); 
         }

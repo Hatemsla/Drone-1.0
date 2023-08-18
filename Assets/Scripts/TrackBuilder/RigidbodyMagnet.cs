@@ -39,7 +39,14 @@ namespace Drone.Builder
 
             BuilderManager.Instance.TestLevelEvent += TurnSound;
         }
-
+        private void Update()
+        {
+            if (CheckColorActivChange(selectedColorOption))
+            {
+                isActive = !isActive;
+                SetActive(isActive);
+            } 
+        }
         private void OnDestroy()
         {
             BuilderManager.Instance.TestLevelEvent -= TurnSound;
