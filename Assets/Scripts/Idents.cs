@@ -42,6 +42,7 @@ namespace Drone
             {
                 public const string DefaultText = "Для доступа нажмите F";
                 public const string NotEnoughText = "У вас недостаточно монет (не хаватает ";
+                public const string PortalText = "Для телепортации нажимте F";
             }
         }
         

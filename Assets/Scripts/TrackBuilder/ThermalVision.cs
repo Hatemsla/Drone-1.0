@@ -8,15 +8,14 @@ namespace Drone.Builder
     public class ThermalVision : MonoBehaviour
     {
         [SerializeField] private DroneRpgController droneRpgController;
-        public Color thermalColor;
-        public float darkeningAmount = 0.5f;
-        public Shader xRayShader;
-        public Color xRayColor;
-
-        public ThermalObject[] thermalObjects;
-        public List<Camera> cameras;
-        public bool isThermalVision;
-        public bool isXRay;
+        [SerializeField] private Color thermalColor;
+        [SerializeField] private float darkeningAmount = 0.5f;
+        [SerializeField] private Shader xRayShader;
+        [SerializeField] private Color xRayColor;
+        [SerializeField] private ThermalObject[] thermalObjects;
+        [SerializeField] private List<Camera> cameras;
+        [SerializeField] private bool isThermalVision;
+        [SerializeField] private bool isXRay;
 
         private void Start()
         {
@@ -28,6 +27,7 @@ namespace Drone.Builder
 
         private void OnDisable()
         {
+            BuilderManager.Instance.TestLevelEvent -= OnTurnOffThermalVision;
             InputManager.Instance.ThermalVisionEvent -= OnThermalVision;
             InputManager.Instance.XRayEvent -= OnXRay;
         }

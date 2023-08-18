@@ -226,7 +226,6 @@ namespace Drone.Builder
             
             if (other.GetComponentInParent<DroneController>() is DroneBuilderController drone)
             {
-                _inTrigger = true;
                 prompt.PromptText = Idents.Tags.PromptText.DefaultText;
                 prompt.SetActive(true);
             }
@@ -241,7 +240,6 @@ namespace Drone.Builder
             {
                 DeactivateAllCameras();
                 ClosePort();
-                _inTrigger = false;
                 prompt.SetActive(false);
             }
         }

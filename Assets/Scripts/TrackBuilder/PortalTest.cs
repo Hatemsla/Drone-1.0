@@ -5,37 +5,37 @@ using UnityEngine;
 
 namespace Drone.Builder
 {
-    public class Portal : MonoBehaviour
+    public class PortalTest : MonoBehaviour
     {
         public Camera portalView;
-        public Portal otherPortal;
+        public PortalTest otherPortalTest;
 
         private void Start()
         {
-            var otherPortals = FindObjectsOfType<Portal>();
+            var otherPortals = FindObjectsOfType<PortalTest>();
             foreach (var portal in otherPortals)
             {
                 if (portal != this)
-                    otherPortal = portal;
+                    otherPortalTest = portal;
             }
 
-            if (!otherPortal) return;
+            if (!otherPortalTest) return;
 
-            otherPortal.portalView.targetTexture = new RenderTexture(Screen.width, Screen.height, 24);
-            GetComponentInChildren<MeshRenderer>().sharedMaterial.mainTexture = otherPortal.portalView.targetTexture;
+            otherPortalTest.portalView.targetTexture = new RenderTexture(Screen.width, Screen.height, 24);
+            GetComponentInChildren<MeshRenderer>().sharedMaterial.mainTexture = otherPortalTest.portalView.targetTexture;
         }
 
         private void Update()
         {
-            if (!otherPortal) return;
+            if (!otherPortalTest) return;
         
             var lookerPosition =
-                otherPortal.transform.worldToLocalMatrix.MultiplyPoint3x4(Camera.main.transform.position);
+                otherPortalTest.transform.worldToLocalMatrix.MultiplyPoint3x4(Camera.main.transform.position);
             lookerPosition = new Vector3(-lookerPosition.x, lookerPosition.y, -lookerPosition.z);
             portalView.transform.localPosition = lookerPosition;
 
             var difference = transform.rotation *
-                             Quaternion.Inverse(otherPortal.transform.rotation * Quaternion.Euler(0f, 180f, 0f));
+                             Quaternion.Inverse(otherPortalTest.transform.rotation * Quaternion.Euler(0f, 180f, 0f));
             portalView.transform.rotation = difference * Camera.main.transform.rotation;
 
             portalView.nearClipPlane = lookerPosition.magnitude;

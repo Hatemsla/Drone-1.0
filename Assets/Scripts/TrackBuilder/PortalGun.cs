@@ -7,15 +7,15 @@ namespace Drone.Builder
     public class PortalGun : MonoBehaviour
     {
         [SerializeField] private LayerMask layerMask;
-        [SerializeField] private Portal redPortal;
-        [SerializeField] private Portal bluePortal;
+        [SerializeField] private PortalTest redPortalTest;
+        [SerializeField] private PortalTest bluePortalTest;
 
-        private List<Portal> _portals;
+        private List<PortalTest> _portals;
         private int _activePortalIndex;
 
         private void Start()
         {
-            _portals = new List<Portal>();
+            _portals = new List<PortalTest>();
         }
 
         private void Update()
