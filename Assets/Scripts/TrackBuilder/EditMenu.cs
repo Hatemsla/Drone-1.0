@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using TMPro;
@@ -43,12 +44,13 @@ namespace Drone.Builder
         [SerializeField] private Toggle activeToggle;
         [SerializeField] private Toggle hasPasswordToggle;
         [SerializeField] private Toggle is_hacked;
-        [SerializeField] private TMP_Dropdown color; 
-        [SerializeField] private TMP_Dropdown color_panel; 
-        [SerializeField] private TMP_Dropdown color_button; 
-        [SerializeField] private TMP_Dropdown code_n1; 
-        [SerializeField] private TMP_Dropdown code_n2; 
-        [SerializeField] private TMP_Dropdown code_n3; 
+        [SerializeField] private TMP_Dropdown color;
+        [SerializeField] private TMP_Dropdown color_panel;
+        [SerializeField] private TMP_Dropdown color_button;
+        [SerializeField] private TMP_Dropdown code_n1;
+        [SerializeField] private TMP_Dropdown code_n2;
+        [SerializeField] private TMP_Dropdown code_n3;
+        [SerializeField] private TMP_Dropdown mapsDropdown;
         [SerializeField] private GameObject isActivePanel;
         [SerializeField] private GameObject colorPanel;
         [SerializeField] private GameObject windmillPanel;
@@ -64,6 +66,7 @@ namespace Drone.Builder
         [SerializeField] private GameObject controllerButtonPanel;
         [SerializeField] private GameObject portPanel;
         [SerializeField] private GameObject triggerMessagePanel;
+        [SerializeField] private GameObject mapsPanel;
         [SerializeField] private List<GameObject> interactivePanels;
 
         private Dictionary<float, int> _sliderValues = new Dictionary<float, int>()
@@ -85,6 +88,14 @@ namespace Drone.Builder
             { 7.5f, 14 },
             { 8f, 15 },
         };
+
+        private List<string> _maps;
+
+        private void Start()
+        {
+            _maps = LevelManager.LoadMaps().ToList();
+            mapsDropdown.AddOptions(_maps);
+        }
 
         public void SetEditPanelParams(string objName, float xP, float yP, float zP, float xR, float yR, float zR, float xyzS, TrackObject trackObject)
         {
@@ -199,7 +210,6 @@ namespace Drone.Builder
                     TimeDelay.value = trackObject.interactiveObject.TimeDelay;
                     TimeDelayValue.text =
                         trackObject.interactiveObject.TimeDelay.ToString("f1", CultureInfo.CurrentCulture);
-                    
                     break;
                 case InteractiveType.Port:
                     TurnInteractivePanels(portPanel, isActivePanel);
@@ -222,6 +232,10 @@ namespace Drone.Builder
                     TurnInteractivePanels(hintPanel);
                     hintInput.text = trackObject.interactiveObject.text3D;
                     activeToggle.isOn = trackObject.interactiveObject.isActive;
+                    break;
+                case InteractiveType.Portal:
+                    TurnInteractivePanels(mapsPanel);
+                    mapsDropdown.value = _maps.ToList().IndexOf(((PortalObject)trackObject.interactiveObject).GetMap());
                     break;
             }
         }

@@ -26,6 +26,7 @@ namespace Drone
                 public const string ColorIndex = "colorIndex";
                 public const string IsActive = "isActive";
                 public const string Text3DText = "Text";
+                public const string PortalMap = "Text";
 
                 public const string Windmill = "Windmill";
                 public const string Magnet = "Magnet";
@@ -36,6 +37,7 @@ namespace Drone
                 public const string Hint = "Hint";
                 public const string Interactive = "Interactive";
                 public const string Text3D = "Text3D";
+                public const string Portal = "Portal";
             }
             
             public static class PromptText
@@ -43,6 +45,7 @@ namespace Drone
                 public const string DefaultText = "Для доступа нажмите F";
                 public const string NotEnoughText = "У вас недостаточно монет (не хаватает ";
                 public const string PortalText = "Для телепортации нажимте F";
+                public const string NoPortalText = "Портал не работает";
             }
         }
         

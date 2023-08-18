@@ -254,6 +254,8 @@ GameObject:
   - component: {fileID: 6527088577414452158}
   - component: {fileID: 5265657774875426534}
   - component: {fileID: 8144987943256966423}
+  - component: {fileID: -5285162461731627969}
+  - component: {fileID: 8420282506968054132}
   m_Layer: 7
   m_Name: Lamp2
   m_TagString: Untagged
@@ -357,20 +359,47 @@ MonoBehaviour:
   windForce: 0
   batteryEnergy: 0
   boostSpeed: 2
+  TimeDelay: 0
   isLampTurn: 1
   hintText: {fileID: 0}
   text3D: 
   color_index: 0
   ishacked: 0
-  n1: 0
-  n2: 0
-  n3: 0
   buttonDelay: 0
   hasPassword: 0
+  password: 
   lamp: {fileID: 5046423715475618135}
   meshes:
   - {fileID: 2169561187577619329}
   lampObject: {fileID: 1149734270136833596}
+--- !u!114 &-5285162461731627969
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5381102160115108072}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e829c87dc2a2ed2419c5f67848317fe4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  material: {fileID: 11400000, guid: a086f686223eed942816c70be67841b0, type: 2}
+  exportAllChildren: 1
+  terrainSimplificationLevel: 0
+--- !u!114 &8420282506968054132
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5381102160115108072}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fb43d10a308b2f46ad4561774f97e52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  asset: {fileID: 11400000, guid: a2cc1947a6e49764d9fe0e98f03cbfcd, type: 2}
 --- !u!1 &6233523606508167859
 GameObject:
   m_ObjectHideFlags: 0

@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 4252086461782452220}
   - component: {fileID: 1334219001674226523}
   - component: {fileID: 5888738606396112057}
+  - component: {fileID: 861863070026232470}
+  - component: {fileID: -7282534891617752354}
   m_Layer: 7
   m_Name: EnemyWindmill
   m_TagString: Untagged
@@ -88,6 +90,34 @@ MonoBehaviour:
   objectDescription: "\u0412\u0440\u0430\u0433, \u043F\u043E\u043A\u0430 \u0447\u0442\u043E
     \u043D\u0435 \u0443\u043C\u0435\u0435\u0442 \u043D\u0438\u0447\u0435\u0433\u043E"
   interactiveObject: {fileID: 0}
+--- !u!114 &861863070026232470
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3197000555735689660}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e829c87dc2a2ed2419c5f67848317fe4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  material: {fileID: 11400000, guid: a086f686223eed942816c70be67841b0, type: 2}
+  exportAllChildren: 1
+  terrainSimplificationLevel: 0
+--- !u!114 &-7282534891617752354
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3197000555735689660}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fb43d10a308b2f46ad4561774f97e52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  asset: {fileID: 11400000, guid: e602de8adc609be47b20b7819ff2a962, type: 2}
 --- !u!1001 &3583731426728684267
 PrefabInstance:
   m_ObjectHideFlags: 0

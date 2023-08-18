@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 6694145650027749683}
   - component: {fileID: 6694145650027749682}
   - component: {fileID: 6694145650027749693}
+  - component: {fileID: 4626267420544642777}
+  - component: {fileID: 8967472447884116834}
   m_Layer: 7
   m_Name: EntityButton
   m_TagString: Untagged
@@ -88,6 +90,34 @@ MonoBehaviour:
   objectDescription: "\u041D\u0430\u0432\u0435\u0440\u043D\u043E \u0447\u0442\u043E-\u0442\u043E
     \u0434\u0435\u043B\u0430\u0435\u0442..."
   interactiveObject: {fileID: 0}
+--- !u!114 &4626267420544642777
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6694145650027749680}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e829c87dc2a2ed2419c5f67848317fe4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  material: {fileID: 11400000, guid: a086f686223eed942816c70be67841b0, type: 2}
+  exportAllChildren: 1
+  terrainSimplificationLevel: 0
+--- !u!114 &8967472447884116834
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6694145650027749680}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fb43d10a308b2f46ad4561774f97e52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  asset: {fileID: 11400000, guid: 7b7601a5e0232704796b8c615d178d29, type: 2}
 --- !u!1001 &6694145650182905562
 PrefabInstance:
   m_ObjectHideFlags: 0

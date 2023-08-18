@@ -155,6 +155,14 @@ namespace Drone
                         };
                         interactiveData[Idents.Tags.SaveLoadTags.Text3D] = text3dObject;
                         break;
+                    case InteractiveType.Portal:
+                        var portal = (PortalObject)trackObj.interactiveObject;
+                        var portalObject = new JObject
+                        {
+                            [Idents.Tags.SaveLoadTags.PortalMap] = portal.GetMap()
+                        };
+                        interactiveData[Idents.Tags.SaveLoadTags.Portal] = portalObject;
+                        break;
                     case InteractiveType.None:
                         break;
                 }
@@ -204,7 +212,7 @@ namespace Drone
                 float windMillRotationSpeed = 0, magnetForce = 0, pendulumMoveSpeed = 0, 
                     leftPendulumAngle = 0, rightPendulumAngle = 0, windForce = 0, 
                     batteryEnergy = 0, boostSpeed = 0;
-                string hintText = "", text3D = "";
+                string hintText = "", text3D = "", portalMap = "";
 
                 if (jTokenInteractive != null)
                 {
@@ -218,6 +226,7 @@ namespace Drone
                     var jTokenBoost = jTokenInteractive[Idents.Tags.SaveLoadTags.Boost];
                     var jTokenHint = jTokenInteractive[Idents.Tags.SaveLoadTags.Hint];
                     var jTokenText3d = jTokenInteractive[Idents.Tags.SaveLoadTags.Text3D];
+                    var jTokenPortal = jTokenInteractive[Idents.Tags.SaveLoadTags.Portal];
                     
                     windMillRotationSpeed = jTokenWindmill != null
                         ? jTokenWindmill[Idents.Tags.SaveLoadTags.WindMillRotateSpeed]!.Value<float>()
@@ -258,6 +267,10 @@ namespace Drone
                     text3D = jTokenText3d != null
                         ? jTokenText3d[Idents.Tags.SaveLoadTags.Text3DText]!.Value<string>()
                         : "";
+
+                    portalMap = jTokenPortal != null
+                        ? jTokenPortal[Idents.Tags.SaveLoadTags.PortalMap]!.Value<string>()
+                        : "";
                 }
 
                 var objInfo = new GameObjectInfo
@@ -282,6 +295,7 @@ namespace Drone
                     BoostSpeed = boostSpeed,
                     HintText = hintText,
                     Text3d = text3D,
+                    PortalMap = portalMap,
                 };
                 
                 result.Add(objInfo);

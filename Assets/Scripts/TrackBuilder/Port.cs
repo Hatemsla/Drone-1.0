@@ -31,6 +31,7 @@ namespace Drone.Builder
         private int _currentCameraIndex;
         private int _mainCameraIndex;
         private bool _previousIsMove;
+        private bool _isTrigger;
 
         private void OnEnable()
         {
@@ -112,7 +113,7 @@ namespace Drone.Builder
 
         private void OpenPort()
         {
-            if (!_inTrigger || !isActive)
+            if (!_inTrigger || !isActive || !_isTrigger)
                 return;
 
             if (hasPassword)
@@ -146,7 +147,7 @@ namespace Drone.Builder
 
         private void ClosePort()
         {
-            if(isCameraChange || !isOpen)
+            if(isCameraChange || !isOpen || !_isTrigger)
                 return;
             
             PortCloseEvent?.Invoke();
@@ -228,6 +229,7 @@ namespace Drone.Builder
             {
                 prompt.PromptText = Idents.Tags.PromptText.DefaultText;
                 prompt.SetActive(true);
+                _isTrigger = true;
             }
         }
 
@@ -241,6 +243,7 @@ namespace Drone.Builder
                 DeactivateAllCameras();
                 ClosePort();
                 prompt.SetActive(false);
+                _isTrigger = false;
             }
         }
 

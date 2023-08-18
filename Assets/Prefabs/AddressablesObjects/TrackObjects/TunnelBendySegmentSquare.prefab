@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 8966010910185146765}
   - component: {fileID: 7664128087481446707}
+  - component: {fileID: 5165632309806820091}
+  - component: {fileID: -3279603731015813806}
   m_Layer: 7
   m_Name: TunnelBendySegmentSquare
   m_TagString: Untagged
@@ -59,6 +61,34 @@ MonoBehaviour:
   objectName: 
   objectDescription: 
   interactiveObject: {fileID: 0}
+--- !u!114 &5165632309806820091
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7024794102148669397}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e829c87dc2a2ed2419c5f67848317fe4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  material: {fileID: 11400000, guid: a086f686223eed942816c70be67841b0, type: 2}
+  exportAllChildren: 1
+  terrainSimplificationLevel: 0
+--- !u!114 &-3279603731015813806
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7024794102148669397}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fb43d10a308b2f46ad4561774f97e52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  asset: {fileID: 11400000, guid: b860bb11ed74cde48ae8cce083876437, type: 2}
 --- !u!1001 &7455682832106504665
 PrefabInstance:
   m_ObjectHideFlags: 0

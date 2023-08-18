@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 5304759781061469645}
   - component: {fileID: 5304759781061469646}
   - component: {fileID: 5304759781061469644}
+  - component: {fileID: -2380977255879335111}
+  - component: {fileID: 8097392400082708120}
   m_Layer: 7
   m_Name: RopeCreator
   m_TagString: Untagged
@@ -77,3 +79,31 @@ MonoBehaviour:
   objectDescription: "\u041A\u043E\u0440\u043E\u0442\u043A\u0430\u044F \u0432\u0435\u0440\u0435\u0432\u043A\u0430,
     \u043D\u0430 \u0432\u0438\u0434 \u043D\u0435 \u043E\u0447\u0435\u043D\u044C"
   interactiveObject: {fileID: 0}
+--- !u!114 &-2380977255879335111
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5304759781061469647}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e829c87dc2a2ed2419c5f67848317fe4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  material: {fileID: 11400000, guid: a086f686223eed942816c70be67841b0, type: 2}
+  exportAllChildren: 1
+  terrainSimplificationLevel: 0
+--- !u!114 &8097392400082708120
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5304759781061469647}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fb43d10a308b2f46ad4561774f97e52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  asset: {fileID: 11400000, guid: 0e3ae15e71a7fa645ae39407e1a85197, type: 2}

@@ -24,5 +24,6 @@
         MagnetKiller,
         PitStop,
         Text3D,
+        Portal
     }
 }

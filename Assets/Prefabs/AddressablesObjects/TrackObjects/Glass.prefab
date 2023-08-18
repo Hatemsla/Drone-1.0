@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 8795635200362671150}
   - component: {fileID: 8795635200362671148}
   - component: {fileID: 8795635200362671151}
+  - component: {fileID: -2028201752740626534}
+  - component: {fileID: 8984476773830181355}
   m_Layer: 7
   m_Name: Glass
   m_TagString: Untagged
@@ -75,7 +77,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 8
   connection: {fileID: 0}
-  objectType: 512
+  objectType: 0
   hasPortal: 1
   interactiveType: 0
   effectType: 2
@@ -93,6 +95,34 @@ MonoBehaviour:
     \u043A\u0438\u0431\u0435\u0440\u0444\u0438\u0437\u0438\u0447\u0435\u0441\u043A\u043E\u0433\u043E
     \u043F\u0440\u043E\u0441\u0442\u0440\u0430\u043D\u0441\u0442\u0432\u0430"
   interactiveObject: {fileID: 0}
+--- !u!114 &-2028201752740626534
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8795635200362671137}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e829c87dc2a2ed2419c5f67848317fe4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  material: {fileID: 11400000, guid: a086f686223eed942816c70be67841b0, type: 2}
+  exportAllChildren: 1
+  terrainSimplificationLevel: 0
+--- !u!114 &8984476773830181355
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8795635200362671137}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fb43d10a308b2f46ad4561774f97e52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  asset: {fileID: 11400000, guid: c5b64feda5376b8479f1f3db2ed2cd63, type: 2}
 --- !u!1001 &8795635200586926278
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -132,6 +132,8 @@ GameObject:
   - component: {fileID: 2188750885291944440}
   - component: {fileID: 4739066540966755736}
   - component: {fileID: 2685600511125431341}
+  - component: {fileID: -1995957951353883746}
+  - component: {fileID: -2346658241783149001}
   m_Layer: 7
   m_Name: Tree1
   m_TagString: Untagged
@@ -213,3 +215,31 @@ MonoBehaviour:
     \u0434\u0435\u043A\u043E\u0440\u0430\u0442\u0438\u0432\u043D\u044B\u0439 \u043E\u0431\u044A\u0435\u043A\u0442
     \u043D\u0435 \u0438\u043C\u0435\u044E\u0449\u0438\u0439 \u043A\u043E\u043B\u043B\u0438\u0437\u0438\u044E\t"
   interactiveObject: {fileID: 0}
+--- !u!114 &-1995957951353883746
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6393682145882219775}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e829c87dc2a2ed2419c5f67848317fe4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  material: {fileID: 11400000, guid: a086f686223eed942816c70be67841b0, type: 2}
+  exportAllChildren: 1
+  terrainSimplificationLevel: 0
+--- !u!114 &-2346658241783149001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6393682145882219775}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fb43d10a308b2f46ad4561774f97e52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  asset: {fileID: 11400000, guid: d27b43817e9e92045bdce399a5cd9289, type: 2}

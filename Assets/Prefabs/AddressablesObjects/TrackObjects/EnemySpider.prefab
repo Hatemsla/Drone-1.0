@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 5176952981618819443}
   - component: {fileID: 4025317464774806561}
   - component: {fileID: 339629126508492089}
+  - component: {fileID: 296207233722813595}
+  - component: {fileID: 2923124794270010017}
   m_Layer: 7
   m_Name: EnemySpider
   m_TagString: Untagged
@@ -88,6 +90,34 @@ MonoBehaviour:
   objectDescription: "\u0412\u0440\u0430\u0433, \u043F\u043E\u043A\u0430 \u0447\u0442\u043E
     \u043D\u0435 \u0443\u043C\u0435\u0435\u0442 \u043D\u0438\u0447\u0435\u0433\u043E"
   interactiveObject: {fileID: 0}
+--- !u!114 &296207233722813595
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3716063846272008623}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e829c87dc2a2ed2419c5f67848317fe4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  material: {fileID: 11400000, guid: a086f686223eed942816c70be67841b0, type: 2}
+  exportAllChildren: 1
+  terrainSimplificationLevel: 0
+--- !u!114 &2923124794270010017
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3716063846272008623}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fb43d10a308b2f46ad4561774f97e52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  asset: {fileID: 11400000, guid: d82c3bcd84b9ee648931242142bb658d, type: 2}
 --- !u!1001 &4141724017531266296
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -24,6 +24,14 @@ namespace Drone.Builder
             }
         }
         
+        public static float Remap(float value, float fromMin, float fromMax, float toMin, float toMax)
+        {
+            var normalizedValue = (value - fromMin) / (fromMax - fromMin);
+            var remappedValue = (normalizedValue * (toMax - toMin)) + toMin;
+
+            return remappedValue;
+        }
+        
         public static Vector3 ParseVector3(string str)
         {
             var values = str.Split(' ');

@@ -349,6 +349,8 @@ GameObject:
   - component: {fileID: 6725991275489157136}
   - component: {fileID: 456758297531458226}
   - component: {fileID: 7804268936664511904}
+  - component: {fileID: -5832429932368881429}
+  - component: {fileID: -4780963531044356045}
   m_Layer: 7
   m_Name: DoorIris
   m_TagString: Untagged
@@ -429,6 +431,34 @@ MonoBehaviour:
     \u043E\u0431\u044A\u0435\u043A\u0442 \u0434\u043B\u044F \u043E\u0431\u043E\u0437\u043D\u0430\u0447\u0435\u043D\u0438\u044F
     \u043A\u043E\u043D\u0446\u0430 \u0443\u0440\u043E\u0432\u043D\u044F"
   interactiveObject: {fileID: 0}
+--- !u!114 &-5832429932368881429
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3195129832636998125}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e829c87dc2a2ed2419c5f67848317fe4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  material: {fileID: 11400000, guid: a086f686223eed942816c70be67841b0, type: 2}
+  exportAllChildren: 1
+  terrainSimplificationLevel: 0
+--- !u!114 &-4780963531044356045
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3195129832636998125}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fb43d10a308b2f46ad4561774f97e52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  asset: {fileID: 11400000, guid: 03f11ee59e9bf0540bc8079b8d32a8ab, type: 2}
 --- !u!1 &4599637563513093704
 GameObject:
   m_ObjectHideFlags: 0

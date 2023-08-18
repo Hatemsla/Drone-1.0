@@ -16,8 +16,7 @@ namespace Drone.Menu
         public GameData gameData;
         public Resolution[] resolutions;
 
-        public delegate void LevelNameChangedEventHandler(string level);
-        public event LevelNameChangedEventHandler LevelNameChanged; 
+        public event Action<string> LevelNameChanged; 
 
         private readonly List<string> _difficulties = new List<string>
             {"Супер легко", "Легко", "Нормально", "Сложно", "Невозможно"};
@@ -187,7 +186,7 @@ namespace Drone.Menu
             gameData.levelName = menuUIManager.levelInput.text;
             gameData.isLoadLevel = true;
             gameData.isStartBuilder = false;
-            SceneManager.LoadScene(4);
+            GameManager.Instance.asyncLoad.LoadScene(4);
         }
 
         public void CreateLevel()

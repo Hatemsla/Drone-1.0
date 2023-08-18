@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Drone.Builder.Text3D;
 using Drone.Builder.ControllerElements;
 using UnityEngine;
@@ -12,10 +13,13 @@ namespace Drone.Builder
         public TrackObject currentObject;
         [SerializeField] private BuilderUI builderUI;
         [SerializeField] private EditMenu editMenu;
+
+        private List<string> _maps;
         
         private void Start()
         {
             HideEditMenu();
+            _maps = LevelManager.LoadMaps().ToList();
         }
 
         private readonly Dictionary<int, float> _sliderValues = new Dictionary<int, float>()
@@ -51,9 +55,9 @@ namespace Drone.Builder
         public void OnSelectObject(TrackObject obj)
         {
             currentObject = obj;
-            var angleX = currentObject.Rotation.eulerAngles.x;
-            var angleY = currentObject.Rotation.eulerAngles.y;
-            var angleZ = currentObject.Rotation.eulerAngles.z;
+            var angleX = TrackBuilderUtils.Remap(currentObject.Rotation.x, 0, 1, 0, 180);
+            var angleY = TrackBuilderUtils.Remap(currentObject.Rotation.y, 0, 1, 0, 180);
+            var angleZ = TrackBuilderUtils.Remap(currentObject.Rotation.z, 0, 1, 0, 180);
 
             editMenu.SetEditPanelParams(currentObject.objectName,
                 currentObject.Position.x, currentObject.Position.y, currentObject.Position.z, 
@@ -81,18 +85,17 @@ namespace Drone.Builder
         
         public void OnXRotationChanged(float value)
         {
-            currentObject.Rotation = Quaternion.Euler(value, currentObject.Rotation.eulerAngles.y, currentObject.Rotation.eulerAngles.z);
-            Debug.Log(currentObject.Rotation.eulerAngles);
+            currentObject.Rotation = Quaternion.Euler(value, currentObject.Rotation.y, currentObject.Rotation.z);
         }
 
         public void OnYRotationChanged(float value)
         {
-            currentObject.Rotation = Quaternion.Euler(currentObject.Rotation.eulerAngles.x, value, currentObject.Rotation.eulerAngles.z);
+            currentObject.Rotation = Quaternion.Euler(currentObject.Rotation.x, value, currentObject.Rotation.z);
         }
         
         public void OnZRotationChanged(float value)
         {
-            currentObject.Rotation = Quaternion.Euler(currentObject.Rotation.eulerAngles.x, currentObject.Rotation.eulerAngles.y, value);
+            currentObject.Rotation = Quaternion.Euler(currentObject.Rotation.x, currentObject.Rotation.y, value);
         }
 
         public void OnXYZScaleChanged(float value)
@@ -287,6 +290,14 @@ namespace Drone.Builder
             if (currentObject.interactiveObject is ControllerButton ControllerButton)
             {
                 ControllerButton.set_time_value(value); 
+            }
+        }
+
+        public void OnMapChanged(int value)
+        {
+            if (currentObject.interactiveObject is PortalObject portalObject)
+            {
+                portalObject.SetMap(_maps[value]);
             }
         }
     }

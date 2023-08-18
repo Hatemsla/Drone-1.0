@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2217499180705668070}
   - component: {fileID: 2968110793882941485}
+  - component: {fileID: 8290651373796736447}
+  - component: {fileID: -3265557182289048041}
   m_Layer: 7
   m_Name: Portal
   m_TagString: Untagged
@@ -33,7 +35,7 @@ Transform:
   - {fileID: 8031712698391951502}
   - {fileID: 1042499748918964760}
   m_Father: {fileID: 0}
-  m_RootOrder: 22
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2968110793882941485
 MonoBehaviour:
@@ -51,7 +53,7 @@ MonoBehaviour:
   connection: {fileID: 0}
   objectType: 0
   hasPortal: 1
-  interactiveType: 0
+  interactiveType: 22
   effectType: 3
   yOffset: 1.728
   yOffsetIncrease: 0.864
@@ -61,7 +63,35 @@ MonoBehaviour:
   objectName: "\u041F\u043E\u0440\u0442\u0430\u043B"
   objectDescription: "\u0422\u0435\u043B\u0435\u043F\u043E\u0440\u0442\u0438\u0440\u0443\u0435\u0442
     \u043D\u0430 \u0434\u0440\u0443\u0433\u0443\u044E \u043A\u0430\u0440\u0442\u0443"
-  interactiveObject: {fileID: 0}
+  interactiveObject: {fileID: 3116653797986496500}
+--- !u!114 &8290651373796736447
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2220295686692912172}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e829c87dc2a2ed2419c5f67848317fe4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  material: {fileID: 11400000, guid: a086f686223eed942816c70be67841b0, type: 2}
+  exportAllChildren: 1
+  terrainSimplificationLevel: 0
+--- !u!114 &-3265557182289048041
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2220295686692912172}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fb43d10a308b2f46ad4561774f97e52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  asset: {fileID: 11400000, guid: f6bf94ea3d5c87348b6dee0ad9e05180, type: 2}
 --- !u!1 &2837059920995784015
 GameObject:
   m_ObjectHideFlags: 0
@@ -192,6 +222,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1042499748918964760}
   - component: {fileID: 8930624844345911095}
+  - component: {fileID: 3116653797986496500}
   m_Layer: 7
   m_Name: Portal
   m_TagString: Untagged
@@ -235,6 +266,38 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &3116653797986496500
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4961696555627953872}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fad8e94b06ed442aac3feedffceeb71f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isActive: 1
+  windMillRotateSpeed: 0
+  magnetForce: 0
+  pendulumMoveSpeed: 0
+  leftPendulumAngle: 0
+  rightPendulumAngle: 0
+  windForce: 0
+  batteryEnergy: 0
+  boostSpeed: 0
+  TimeDelay: 0
+  isLampTurn: 1
+  hintText: {fileID: 0}
+  text3D: 
+  color_index: 0
+  ishacked: 0
+  buttonDelay: 0
+  hasPassword: 0
+  password: 
+  map: 
+  prompt: {fileID: 0}
 --- !u!1001 &7565160447315812197
 PrefabInstance:
   m_ObjectHideFlags: 0

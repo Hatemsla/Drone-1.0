@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 4157508329223906715}
   - component: {fileID: 5082981503331335399}
   - component: {fileID: 447103457756351036}
+  - component: {fileID: 7394835613071014510}
+  - component: {fileID: -6240027155353560491}
   m_Layer: 7
   m_Name: TunnelBendySegment
   m_TagString: Untagged
@@ -90,6 +92,34 @@ MonoBehaviour:
     \u0438\u0437\u043C\u0435\u043D\u0435\u043D\u0438\u044F \u0433\u0430\u0431\u0430\u0440\u0438\u0442\u043E\u0432,
     \u0432\u0438\u0434 \u043F\u0440\u0435\u043F\u044F\u0442\u0441\u0442\u0432\u0438\u044F"
   interactiveObject: {fileID: 0}
+--- !u!114 &7394835613071014510
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8083069072727031933}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e829c87dc2a2ed2419c5f67848317fe4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  material: {fileID: 11400000, guid: a086f686223eed942816c70be67841b0, type: 2}
+  exportAllChildren: 1
+  terrainSimplificationLevel: 0
+--- !u!114 &-6240027155353560491
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8083069072727031933}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fb43d10a308b2f46ad4561774f97e52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  asset: {fileID: 11400000, guid: 6396f9a13af99dc40b26f25a94ca4d39, type: 2}
 --- !u!1001 &3973040797802792777
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 4911112552131941725}
   - component: {fileID: 860946456973437751}
   - component: {fileID: 8062710957545284160}
+  - component: {fileID: 1620601875405320414}
+  - component: {fileID: 8817427381211417008}
   m_Layer: 7
   m_Name: EnemyRoller
   m_TagString: Untagged
@@ -88,6 +90,34 @@ MonoBehaviour:
   objectDescription: "\u0412\u0440\u0430\u0433, \u043F\u043E\u043A\u0430 \u0447\u0442\u043E
     \u043D\u0435 \u0443\u043C\u0435\u0435\u0442 \u043D\u0438\u0447\u0435\u0433\u043E"
   interactiveObject: {fileID: 0}
+--- !u!114 &1620601875405320414
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2796461680823236543}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e829c87dc2a2ed2419c5f67848317fe4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  material: {fileID: 11400000, guid: a086f686223eed942816c70be67841b0, type: 2}
+  exportAllChildren: 1
+  terrainSimplificationLevel: 0
+--- !u!114 &8817427381211417008
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2796461680823236543}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fb43d10a308b2f46ad4561774f97e52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  asset: {fileID: 11400000, guid: 6fd7ce45348426f4eb5185a70a18372c, type: 2}
 --- !u!1001 &499889812004627798
 PrefabInstance:
   m_ObjectHideFlags: 0

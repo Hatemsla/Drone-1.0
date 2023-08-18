@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 6849124075356179697}
   - component: {fileID: 6849124075356179711}
   - component: {fileID: 6849124075356179710}
+  - component: {fileID: 7671342390169186701}
+  - component: {fileID: 2960081657519461720}
   m_Layer: 7
   m_Name: LaserPlatform
   m_TagString: Untagged
@@ -91,6 +93,34 @@ MonoBehaviour:
     \u0435\u0433\u043E \u0432\u043E\u0437\u0434\u0435\u0439\u0441\u0442\u0432\u0438\u044F,
     \u0437\u043E\u043D\u0430 \u043F\u043E\u0440\u0430\u0436\u0435\u043D\u0438\u044F"
   interactiveObject: {fileID: 0}
+--- !u!114 &7671342390169186701
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6849124075356179696}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e829c87dc2a2ed2419c5f67848317fe4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  material: {fileID: 11400000, guid: a086f686223eed942816c70be67841b0, type: 2}
+  exportAllChildren: 1
+  terrainSimplificationLevel: 0
+--- !u!114 &2960081657519461720
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6849124075356179696}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fb43d10a308b2f46ad4561774f97e52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  asset: {fileID: 11400000, guid: 6da7f75b32e38a14e9bdeaa1ae829c18, type: 2}
 --- !u!1001 &6849124074350674210
 PrefabInstance:
   m_ObjectHideFlags: 0

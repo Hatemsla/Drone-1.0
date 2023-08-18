@@ -94,16 +94,15 @@ MonoBehaviour:
   windForce: 0
   batteryEnergy: 0
   boostSpeed: 2
+  TimeDelay: 0
   isLampTurn: 1
   hintText: {fileID: 0}
   text3D: 
   color_index: 0
   ishacked: 0
-  n1: 0
-  n2: 0
-  n3: 0
   buttonDelay: 0
   hasPassword: 0
+  password: 
 --- !u!1 &6249434620579676873
 GameObject:
   m_ObjectHideFlags: 0
@@ -114,6 +113,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3198679921024563665}
   - component: {fileID: 7813912360660370106}
+  - component: {fileID: -7157150120780683756}
+  - component: {fileID: 4142811823913596637}
   m_Layer: 7
   m_Name: SecurityCamera
   m_TagString: Untagged
@@ -167,6 +168,34 @@ MonoBehaviour:
     \u0440\u0430\u0431\u043E\u0442\u044B, \u0432\u043E\u0437\u043C\u043E\u0436\u043D\u043E\u0441\u0442\u044C
     \u0432\u043A\u043B\u044E\u0447\u0435\u043D\u0438\u044F/\u0432\u044B\u043A\u043B\u044E\u0447\u0435\u043D\u0438\u044F"
   interactiveObject: {fileID: 5966844996699744000}
+--- !u!114 &-7157150120780683756
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6249434620579676873}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e829c87dc2a2ed2419c5f67848317fe4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  material: {fileID: 11400000, guid: a086f686223eed942816c70be67841b0, type: 2}
+  exportAllChildren: 1
+  terrainSimplificationLevel: 0
+--- !u!114 &4142811823913596637
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6249434620579676873}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fb43d10a308b2f46ad4561774f97e52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  asset: {fileID: 11400000, guid: 37f51465cc3ae8e4aa3390468140b1fc, type: 2}
 --- !u!1 &9052404909329410260
 GameObject:
   m_ObjectHideFlags: 0

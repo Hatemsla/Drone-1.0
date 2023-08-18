@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 7405831217289480540}
   - component: {fileID: 7165428358447648495}
   - component: {fileID: 1499960700919844849}
+  - component: {fileID: 419553308744850512}
+  - component: {fileID: 8328368297300434944}
   m_Layer: 0
   m_Name: ControlButton
   m_TagString: Untagged
@@ -77,16 +79,15 @@ MonoBehaviour:
   windForce: 0
   batteryEnergy: 0
   boostSpeed: 2
+  TimeDelay: 0
   isLampTurn: 1
   hintText: {fileID: 0}
   text3D: 
   color_index: 0
   ishacked: 0
-  n1: 0
-  n2: 0
-  n3: 0
   buttonDelay: 0
   hasPassword: 0
+  password: 
   controllerButtonObject: {fileID: 939535164022205951}
   controllerButtonObject2: {fileID: 2432039698207243909}
   selectedColorOption: 0
@@ -119,6 +120,34 @@ MonoBehaviour:
   objectDescription: "\u0410\u043A\u0442\u0438\u0432\u0438\u0440\u0443\u0435\u0442
     \u043C\u0435\u0445\u0430\u043D\u0438\u0437\u043C\u044B"
   interactiveObject: {fileID: 7165428358447648495}
+--- !u!114 &419553308744850512
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1597851690018258453}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e829c87dc2a2ed2419c5f67848317fe4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  material: {fileID: 11400000, guid: a086f686223eed942816c70be67841b0, type: 2}
+  exportAllChildren: 1
+  terrainSimplificationLevel: 0
+--- !u!114 &8328368297300434944
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1597851690018258453}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fb43d10a308b2f46ad4561774f97e52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  asset: {fileID: 11400000, guid: bbc55623f09bbbb4caaf89d8a58b8d0c, type: 2}
 --- !u!1001 &4589394354522760191
 PrefabInstance:
   m_ObjectHideFlags: 0

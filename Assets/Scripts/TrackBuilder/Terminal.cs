@@ -27,7 +27,7 @@ namespace Drone
 
         private void FindPrompt()
         {
-            prompt = FindObjectOfType<BuilderUI>().prompt;
+            prompt = BuilderManager.Instance.builderUI.prompt;
         }
 
         private void OpenTerminal()

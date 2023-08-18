@@ -1,13 +1,16 @@
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Drone.Builder
 {
     public sealed class PortalObject : InteractiveObject
     {
+        [SerializeField] private string map;
         [SerializeField] private Prompt prompt;
 
         private GameObject _drone;
+        private bool _isTrigger;
         
         private void OnEnable()
         {
@@ -23,12 +26,21 @@ namespace Drone.Builder
         
         private void Teleport()
         {
-             
+            if(!_isTrigger)
+                return;
+            
+            GameManager.Instance.gameData.levelName = map;
+            GameManager.Instance.gameData.isLoadLevel = false;
+            GameManager.Instance.gameData.isStartBuilder = true;
+            SceneManager.LoadScene(4);
         }
+
+        public void SetMap(string newMap) => map = newMap;
+        public string GetMap() => map;
 
         private void FindPrompt()
         {
-            prompt = FindObjectOfType<Prompt>();
+            prompt = BuilderManager.Instance.builderUI.prompt;
         }
 
         private void OnTriggerEnter(Collider other)
@@ -36,11 +48,21 @@ namespace Drone.Builder
             if(!BuilderManager.Instance.isMove || !isActive)
                 return;
             
+            
             if (other.GetComponentInParent<DroneController>() is DroneBuilderController drone)
             {
-                _drone = drone.gameObject;
-                prompt.PromptText = Idents.Tags.PromptText.PortalText;
-                prompt.SetActive(true);
+                if (!LevelManager.IsLevelExist(map))
+                {
+                    prompt.PromptText = Idents.Tags.PromptText.NoPortalText;
+                    prompt.SetActive(true);
+                }
+                else
+                {
+                    _drone = drone.gameObject;
+                    prompt.PromptText = Idents.Tags.PromptText.PortalText;
+                    prompt.SetActive(true);
+                    _isTrigger = true;   
+                }
             }
         }
         
@@ -53,6 +75,7 @@ namespace Drone.Builder
             {
                 _drone = null;
                 prompt.SetActive(false);
+                _isTrigger = false;
             }
         }
 

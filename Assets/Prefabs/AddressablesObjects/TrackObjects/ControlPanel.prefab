@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 3578899418536834324}
   - component: {fileID: 1022306929717423799}
   - component: {fileID: 5224804204487116759}
+  - component: {fileID: -4749743344219323057}
+  - component: {fileID: 617334035625888846}
   m_Layer: 0
   m_Name: ControlPanel
   m_TagString: Untagged
@@ -99,16 +101,15 @@ MonoBehaviour:
   windForce: 0
   batteryEnergy: 0
   boostSpeed: 2
+  TimeDelay: 0
   isLampTurn: 1
   hintText: {fileID: 0}
   text3D: 
   color_index: 0
   ishacked: 0
-  n1: 0
-  n2: 0
-  n3: 0
   buttonDelay: 0
   hasPassword: 0
+  password: 
   controllerPanelObject: {fileID: 6796181291777224070}
   selectedColorOption: 0
   glowIntensity: 1
@@ -141,6 +142,34 @@ MonoBehaviour:
   objectDescription: "\u0410\u043A\u0442\u0438\u0432\u0438\u0440\u0443\u0435\u0442
     \u0440\u0430\u0437\u043B\u0438\u0447\u043D\u044B\u0435 \u043C\u0435\u0445\u0430\u043D\u0438\u0437\u043C\u044B"
   interactiveObject: {fileID: 1022306929717423799}
+--- !u!114 &-4749743344219323057
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6978445031559364819}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e829c87dc2a2ed2419c5f67848317fe4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  material: {fileID: 11400000, guid: a086f686223eed942816c70be67841b0, type: 2}
+  exportAllChildren: 1
+  terrainSimplificationLevel: 0
+--- !u!114 &617334035625888846
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6978445031559364819}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fb43d10a308b2f46ad4561774f97e52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  asset: {fileID: 11400000, guid: ea2cec3486c1ff848868c3ae618414dd, type: 2}
 --- !u!1001 &2776066089641979286
 PrefabInstance:
   m_ObjectHideFlags: 0

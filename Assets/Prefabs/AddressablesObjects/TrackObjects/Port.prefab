@@ -55,16 +55,15 @@ MonoBehaviour:
   windForce: 0
   batteryEnergy: 0
   boostSpeed: 0
+  TimeDelay: 0
   isLampTurn: 1
   hintText: {fileID: 0}
   text3D: 
   color_index: 0
   ishacked: 0
-  n1: 0
-  n2: 0
-  n3: 0
   buttonDelay: 0
   hasPassword: 1
+  password: 
   prompt: {fileID: 0}
   portPassword: {fileID: 5998606865835184768}
   isOpen: 0
@@ -125,6 +124,8 @@ GameObject:
   m_Component:
   - component: {fileID: 5348934363354990468}
   - component: {fileID: 6197069896312759325}
+  - component: {fileID: 8094563538939518432}
+  - component: {fileID: 4182065736932886540}
   m_Layer: 7
   m_Name: Port
   m_TagString: Untagged
@@ -176,6 +177,34 @@ MonoBehaviour:
     \u043C\u043E\u0436\u043D\u043E \u0432\u0437\u043B\u043E\u043C\u0430\u0442\u044C
     \u0438 \u043E\u0442\u043A\u043B\u044E\u0447\u0438\u0442\u044C \u0447\u0442\u043E-\u043D\u0438\u0431\u0443\u0434\u044C"
   interactiveObject: {fileID: 5383892187783732469}
+--- !u!114 &8094563538939518432
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6702480033504301075}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e829c87dc2a2ed2419c5f67848317fe4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  material: {fileID: 11400000, guid: a086f686223eed942816c70be67841b0, type: 2}
+  exportAllChildren: 1
+  terrainSimplificationLevel: 0
+--- !u!114 &4182065736932886540
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6702480033504301075}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fb43d10a308b2f46ad4561774f97e52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  asset: {fileID: 11400000, guid: c67b5758c42bd344395f75b139ed2fd9, type: 2}
 --- !u!1001 &5750542492653562948
 PrefabInstance:
   m_ObjectHideFlags: 0

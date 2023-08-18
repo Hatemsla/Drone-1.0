@@ -1,14 +1,10 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using Cinemachine;
-using Drone;
 using Drone.Builder.ControllerElements;
 using Drone.Builder.Text3D;
-using Drone.DroneFootball;
-using Newtonsoft.Json;
 using Drone.Sockets;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -177,10 +173,15 @@ namespace Drone.Builder
             if (IsNoEditObject())
                 return;
 
-            if (value > 0)
-                RotateObject(pendingObject.transform.right, 10f, Space.World);
-            else if (value < 0)
-                RotateObject(pendingObject.transform.right, -10f, Space.World);
+            switch (value)
+            {
+                case > 0:
+                    RotateObject(pendingObject.transform.right, 10f, Space.World);
+                    break;
+                case < 0:
+                    RotateObject(pendingObject.transform.right, -10f, Space.World);
+                    break;
+            }
         }
 
         private void ChangeObjectScale(float value)
@@ -202,10 +203,15 @@ namespace Drone.Builder
             if (IsNoEditObject())
                 return;
 
-            if (value > 0)
-                RotateObject(pendingObject.transform.up, 10, Space.World);
-            else if (value < 0)
-                RotateObject(pendingObject.transform.up, -10, Space.World);
+            switch (value)
+            {
+                case > 0:
+                    RotateObject(pendingObject.transform.up, 10, Space.World);
+                    break;
+                case < 0:
+                    RotateObject(pendingObject.transform.up, -10, Space.World);
+                    break;
+            }
         }
 
         private bool IsNoEditObject()
@@ -487,7 +493,7 @@ namespace Drone.Builder
 
             foreach (var objInfo in loadedData)
             {
-                var loadOp = Addressables.LoadAssetAsync<GameObject>("TrackObjects/" + objInfo.ObjectName);
+                var loadOp = Addressables.LoadAssetAsync<GameObject>(objInfo.ObjectName);
                 yield return loadOp;
                 
                 if (loadOp.Status != AsyncOperationStatus.Succeeded || loadOp.Result == null)
@@ -572,6 +578,10 @@ namespace Drone.Builder
                         break;
                     case InteractiveType.PitStop:
                         break;
+                    case InteractiveType.Portal:
+                        trackObj.interactiveObject = trackObj.GetComponentInChildren<PortalObject>();
+                        ((PortalObject)trackObj.interactiveObject).SetMap(objInfo.PortalMap);
+                        break;
                     case InteractiveType.None:
                         break;
                 }
@@ -645,7 +655,7 @@ namespace Drone.Builder
 
         private void RotateObject(Vector3 axis, float rotateAmount, Space space)
         {
-            pendingObject.transform.Rotate(axis, rotateAmount, space);
+            pendingObject.transform.Rotate(axis * rotateAmount, space);
         }
 
         public void SelectObject(int index)

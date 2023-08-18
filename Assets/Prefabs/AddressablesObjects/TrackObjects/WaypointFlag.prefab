@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 2792702803960015015}
   - component: {fileID: 7395701624161422628}
   - component: {fileID: 6639343696696239994}
+  - component: {fileID: -148699737923782153}
+  - component: {fileID: 1182759833841145162}
   m_Layer: 7
   m_Name: WaypointFlag
   m_TagString: Untagged
@@ -90,6 +92,34 @@ MonoBehaviour:
     \u0438\u0437\u043C\u0435\u043D\u0435\u043D\u0438\u044F \u0433\u0430\u0431\u0430\u0440\u0438\u0442\u043E\u0432,
     \u0443\u043A\u0430\u0437\u0430\u0442\u0435\u043B\u044C"
   interactiveObject: {fileID: 0}
+--- !u!114 &-148699737923782153
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 521073896739783778}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e829c87dc2a2ed2419c5f67848317fe4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  material: {fileID: 11400000, guid: a086f686223eed942816c70be67841b0, type: 2}
+  exportAllChildren: 1
+  terrainSimplificationLevel: 0
+--- !u!114 &1182759833841145162
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 521073896739783778}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fb43d10a308b2f46ad4561774f97e52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  asset: {fileID: 11400000, guid: fd1bff4910ce34246a89abe7d41cede1, type: 2}
 --- !u!1001 &6670530965225996424
 PrefabInstance:
   m_ObjectHideFlags: 0

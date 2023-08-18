@@ -75,16 +75,15 @@ MonoBehaviour:
   windForce: 0
   batteryEnergy: 0
   boostSpeed: 0
+  TimeDelay: 0
   isLampTurn: 1
   hintText: {fileID: 0}
   text3D: 
   color_index: 0
   ishacked: 0
-  n1: 0
-  n2: 0
-  n3: 0
   buttonDelay: 0
   hasPassword: 0
+  password: 
   prompt: {fileID: 0}
   droneRpgController: {fileID: 0}
 --- !u!1 &7290232381492777968
@@ -98,6 +97,8 @@ GameObject:
   - component: {fileID: 8833342061771308529}
   - component: {fileID: 7478876192147623903}
   - component: {fileID: 8155631648412944066}
+  - component: {fileID: 4298298393209376685}
+  - component: {fileID: -1633704083220938485}
   m_Layer: 7
   m_Name: Terminal
   m_TagString: Untagged
@@ -176,6 +177,34 @@ MonoBehaviour:
     \u043F\u043E\u043B\u0435\u0437\u043D\u044B\u0435 \u0438 \u043D\u0435 \u043E\u0447\u0435\u043D\u044C
     \u0441\u043F\u043E\u0441\u043E\u0431\u043D\u043E\u0441\u0442\u0438"
   interactiveObject: {fileID: 1146265822010473182}
+--- !u!114 &4298298393209376685
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7290232381492777968}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e829c87dc2a2ed2419c5f67848317fe4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  material: {fileID: 11400000, guid: a086f686223eed942816c70be67841b0, type: 2}
+  exportAllChildren: 1
+  terrainSimplificationLevel: 0
+--- !u!114 &-1633704083220938485
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7290232381492777968}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fb43d10a308b2f46ad4561774f97e52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  asset: {fileID: 11400000, guid: ff37a0d0cf2864f4abc7f057485b9b10, type: 2}
 --- !u!1001 &8581622670998540397
 PrefabInstance:
   m_ObjectHideFlags: 0

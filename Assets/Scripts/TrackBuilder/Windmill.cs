@@ -6,8 +6,8 @@ namespace Drone.Builder
 {
     public class Windmill : InteractiveObject
     {
-        [SerializeField] private float minDronePitch;
-        [SerializeField] private float maxDronePitch;
+        [SerializeField] private float minWindmillPitch;
+        [SerializeField] private float maxWindmillPitch;
         [SerializeField] private Vector3 rotateDirection;
         [SerializeField] private Rigidbody trap;
         public GameObject colorObject;
@@ -75,7 +75,7 @@ namespace Drone.Builder
             if (isActive)
             {
                 trap.MoveRotation(trap.rotation * Quaternion.Euler(rotateDirection * (windMillRotateSpeed * Time.deltaTime)));
-                workSound.pitch = windMillRotateSpeed / 500 * (maxDronePitch - minDronePitch) + minDronePitch; // Конвертация [0, 500] -> [1, 3]
+                workSound.pitch = windMillRotateSpeed / 500 * (maxWindmillPitch - minWindmillPitch) + minWindmillPitch; // Конвертация [0, 500] -> [1, 3]
             }
         }
         

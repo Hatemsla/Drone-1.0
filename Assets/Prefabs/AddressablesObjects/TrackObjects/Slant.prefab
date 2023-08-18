@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 3378809230299125425}
   - component: {fileID: 3378809230299125427}
   - component: {fileID: 3378809230299125424}
+  - component: {fileID: -1408942035045301878}
+  - component: {fileID: -4079444456795384890}
   m_Layer: 7
   m_Name: Slant
   m_TagString: Untagged
@@ -93,6 +95,34 @@ MonoBehaviour:
     \u043A\u0438\u0431\u0435\u0440\u0444\u0438\u0437\u0438\u0447\u0435\u0441\u043A\u043E\u0433\u043E
     \u043F\u0440\u043E\u0441\u0442\u0440\u0430\u043D\u0441\u0442\u0432\u0430"
   interactiveObject: {fileID: 0}
+--- !u!114 &-1408942035045301878
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3378809230299125430}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e829c87dc2a2ed2419c5f67848317fe4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  material: {fileID: 11400000, guid: a086f686223eed942816c70be67841b0, type: 2}
+  exportAllChildren: 1
+  terrainSimplificationLevel: 0
+--- !u!114 &-4079444456795384890
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3378809230299125430}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fb43d10a308b2f46ad4561774f97e52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  asset: {fileID: 11400000, guid: 18c03b9dbe6707246a7560fae3c96916, type: 2}
 --- !u!1001 &3378809228694947779
 PrefabInstance:
   m_ObjectHideFlags: 0

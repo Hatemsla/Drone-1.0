@@ -330,6 +330,8 @@ GameObject:
   - component: {fileID: 7427616939803223419}
   - component: {fileID: 1678529879}
   - component: {fileID: 1678529880}
+  - component: {fileID: -8386926145953105431}
+  - component: {fileID: 5642337619343916365}
   m_Layer: 7
   m_Name: Cargo1
   m_TagString: Untagged
@@ -412,3 +414,31 @@ MonoBehaviour:
     \u0418\u0441\u043F\u043E\u043B\u044C\u0437\u043E\u0432\u0430\u043D\u0438\u0435
     \u0432 \u043A\u0430\u0447\u0435\u0441\u0442\u0432\u0435 \u0433\u0440\u0443\u0437\u0430"
   interactiveObject: {fileID: 0}
+--- !u!114 &-8386926145953105431
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7809209784037900225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e829c87dc2a2ed2419c5f67848317fe4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  material: {fileID: 11400000, guid: a086f686223eed942816c70be67841b0, type: 2}
+  exportAllChildren: 1
+  terrainSimplificationLevel: 0
+--- !u!114 &5642337619343916365
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7809209784037900225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fb43d10a308b2f46ad4561774f97e52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  asset: {fileID: 11400000, guid: 18a84256cad29a342916e5277cae3e24, type: 2}
