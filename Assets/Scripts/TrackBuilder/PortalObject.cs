@@ -9,7 +9,7 @@ namespace Drone.Builder
         [SerializeField] private string map;
         [SerializeField] private Prompt prompt;
 
-        private GameObject _drone;
+        private DroneRpgController _droneRpgController;
         private bool _isTrigger;
         
         private void OnEnable()
@@ -29,9 +29,17 @@ namespace Drone.Builder
             if(!_isTrigger)
                 return;
             
+            _droneRpgController.IsReset = false;
+            _droneRpgController.TimeForEndGame = BuilderManager.Instance.timer.waitForEndGame;
+            
             GameManager.Instance.gameData.levelName = map;
+            BuilderManager.Instance.levelName = map;
+            
+            // BuilderManager.Instance.StartLoadNewLevel();
+            
             GameManager.Instance.gameData.isLoadLevel = false;
             GameManager.Instance.gameData.isStartBuilder = true;
+            GameManager.Instance.gameData.isTeleportLevel = true;
             SceneManager.LoadScene(4);
         }
 
@@ -51,6 +59,7 @@ namespace Drone.Builder
             
             if (other.GetComponentInParent<DroneController>() is DroneBuilderController drone)
             {
+                _droneRpgController = drone.GetComponent<DroneRpgController>();
                 if (!LevelManager.IsLevelExist(map))
                 {
                     prompt.PromptText = Idents.Tags.PromptText.NoPortalText;
@@ -58,7 +67,6 @@ namespace Drone.Builder
                 }
                 else
                 {
-                    _drone = drone.gameObject;
                     prompt.PromptText = Idents.Tags.PromptText.PortalText;
                     prompt.SetActive(true);
                     _isTrigger = true;   
@@ -73,7 +81,7 @@ namespace Drone.Builder
 
             if (other.GetComponentInParent<DroneController>() is DroneBuilderController drone)
             {
-                _drone = null;
+                _droneRpgController = null;
                 prompt.SetActive(false);
                 _isTrigger = false;
             }

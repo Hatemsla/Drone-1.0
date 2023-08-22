@@ -15,7 +15,6 @@ namespace Drone.Builder
         [SerializeField] private Sprite backDefault;
         [SerializeField] private Sprite backBought;
 
-        public List<MoneyType> buyingTypes = new();
         public Skills skill;
         public int skillCount;
         
@@ -30,10 +29,10 @@ namespace Drone.Builder
             }
         }
 
-        public void GetSkillType(Skills skills, Sprite currentSkillSkillSprite)
+        public void SetSkillType(Skills skills, Sprite currentSkillSprite)
         {
             skill = skills;
-            skillImage.sprite = currentSkillSkillSprite;
+            skillImage.sprite = currentSkillSprite;
             skillCount++;
             countText.enabled = true;
             skillImage.enabled = true;
@@ -48,14 +47,10 @@ namespace Drone.Builder
             skill = Skills.None;
             backImage.sprite = backDefault;
             skillCount = 0;
-            buyingTypes.Clear();
         }
 
         public void UpdateSkillCount(int newCount)
         {
-            if(skillCount > newCount)
-                buyingTypes.RemoveAt(buyingTypes.Count - 1);
-
             skillCount = newCount;
             countText.text = skillCount.ToString();
             

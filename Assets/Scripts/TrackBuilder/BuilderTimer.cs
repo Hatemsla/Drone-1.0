@@ -30,7 +30,11 @@ namespace Drone.Builder
         private void ResetGameTime()
         {
             currentTime = 0;
-            waitForEndGame = timeForEndGame;
+            if (GameManager.Instance.gameData.isTeleportLevel)
+                waitForEndGame = BuilderManager.Instance.droneBuilderController.GetComponent<DroneRpgController>()
+                    .TimeForEndGame;
+            else
+                waitForEndGame = timeForEndGame;
         }
 
         private void Update()
@@ -44,7 +48,7 @@ namespace Drone.Builder
 
         private void WaitForEndGame()
         {
-            if (waitForEndGame >= 0 && waitForStartGame <= 0 && !RewindManager.Instance.IsBeingRewinded)
+            if (waitForEndGame >= 0 && !RewindManager.Instance.IsBeingRewinded)
             {
                 waitForEndGame -= Time.deltaTime;
             }

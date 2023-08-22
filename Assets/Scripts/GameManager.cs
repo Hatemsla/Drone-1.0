@@ -119,14 +119,12 @@ namespace Drone
 
                     if (gameData.isLoadLevel)
                     {
-                        // builderManager.LoadScene();
                         builderManager.isGameMode = false;
                         builderManager.isLoadLevel = gameData.isLoadLevel;
                     }
 
                     if (gameData.isStartBuilder)
                     {
-                        // builderManager.StartLevel();
                         builderManager.isGameMode = true;
                         builderManager.isGameLevel = true;
                         InputManager.Instance.TurnCustomActionMap(Idents.ActionMaps.Player);

@@ -35,6 +35,7 @@ namespace Drone.Builder
             BuilderManager.Instance.droneBuilderController = this;
             BuilderManager.Instance.droneBuilderCheckNode = droneBuilderCheckNode;
             BuilderManager.Instance.droneBuilderSoundController = droneBuilderSoundController;
+            BuilderManager.Instance.droneRpgController = droneRpgController;
             rb = GetComponent<Rigidbody>();
             _engines = GetComponentsInChildren<DroneEngine>().ToList();
         }

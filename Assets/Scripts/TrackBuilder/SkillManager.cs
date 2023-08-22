@@ -22,23 +22,10 @@ namespace Drone
         [SerializeField] private Sprite enoughMoneySprite;
         [SerializeField] private Sprite noEnoughMoneySprite;
         [SerializeField] private Timer timer;
+        [SerializeField] private DroneData droneData;
         [SerializeField] private List<Skill> skills = new();
         [SerializeField] private BoughtSkill[] boughtSkills;
         [SerializeField] private SkillDroneView[] skillDroneViews;
-
-        public Dictionary<Skills, int[]> skillsCosts = new()
-        {
-            { Skills.None,         new[] { 0, 0, 0 } },
-            { Skills.Shield,       new[] { 30, 15, 2 } },
-            { Skills.HpRestore,    new[] { 15, 7, 1 } },
-            { Skills.ArmorRestore, new[] { 15, 7, 1 } },
-            { Skills.Jerk,         new[] { 20, 10, 1 } },
-            { Skills.XRay,         new[] { 60, 25, 4 } },
-            { Skills.Thermal,      new[] { 50, 20, 3 } },
-            { Skills.TimeRewind,   new[] { 120, 50, 10 } },
-            { Skills.Flashlight,   new[] { 40, 17, 2 } },
-            { Skills.FlashlightUV, new[] { 60, 25, 3 } },
-        };
 
         public event Action BuySkillEvent;
         public event Action SellSkillEvent;
@@ -52,15 +39,17 @@ namespace Drone
             foreach (var skill in skills)
             {
                 skill.SelectSkillEvent += OnSelectSkill;
-                skill.timeCost = skillsCosts[skill.skill][0];
-                skill.coinCost = skillsCosts[skill.skill][1];
-                skill.crystalCost = skillsCosts[skill.skill][2];
+                skill.timeCost = droneData.skillsCosts[skill.skill][0];
+                skill.coinCost = droneData.skillsCosts[skill.skill][1];
+                skill.crystalCost = droneData.skillsCosts[skill.skill][2];
             }
 
             foreach (var boughtSkill in boughtSkills)
                 boughtSkill.SellSkillEvent += OnSellSkill;    
 
             BuilderManager.Instance.TestLevelEvent += FindDroneRpg;
+
+            SetupSkills();
         }
 
         private void OnSellSkill(BoughtSkill boughtSkill)
@@ -68,22 +57,22 @@ namespace Drone
             if(boughtSkill.skillCount < 1)
                 return;
             
-            var lastBuyingType = boughtSkill.buyingTypes[^1];
+            var lastBuyingType = droneData.buyingTypes[boughtSkill.skill][^1];
 
             switch (lastBuyingType)
             {
                 case MoneyType.Time:
-                    BuilderManager.Instance.timer.waitForEndGame += skillsCosts[boughtSkill.skill][0];
+                    BuilderManager.Instance.timer.waitForEndGame += droneData.skillsCosts[boughtSkill.skill][0];
                     break;
                 case MoneyType.Coins:
-                    _droneRpgController.Coins += skillsCosts[boughtSkill.skill][1];
+                    _droneRpgController.Coins += droneData.skillsCosts[boughtSkill.skill][1];
                     break;
                 case MoneyType.Crystals:
-                    _droneRpgController.Crystals += skillsCosts[boughtSkill.skill][2];
+                    _droneRpgController.Crystals += droneData.skillsCosts[boughtSkill.skill][2];
                     break;
             }
             
-            _droneRpgController.SkillsCount[boughtSkill.skill]--;
+            _droneRpgController.UpdateSkillValue(boughtSkill.skill, _droneRpgController.SkillsCount[boughtSkill.skill] - 1);
             boughtSkill.UpdateSkillCount(_droneRpgController.SkillsCount[boughtSkill.skill]);
             SellSkillEvent?.Invoke();
         }
@@ -165,25 +154,22 @@ namespace Drone
 
         private void AddBoughtSkill(Skills skill, Sprite currentSkillSkillSprite, MoneyType moneyType)
         {
-            foreach (var boughtSkill in boughtSkills)
-            {
-                if (boughtSkill.skill == skill)
-                {
-                    _droneRpgController.UpdateSkillValue(skill, _droneRpgController.SkillsCount[skill] + 1);
-                    boughtSkill.buyingTypes.Add(moneyType);
-                    return;
-                }
-            }
-
             var i = 0;
+
             foreach (var boughtSkill in boughtSkills)
             {
                 if (boughtSkill.skill == Skills.None)
                 {
-                    boughtSkill.GetSkillType(skill, currentSkillSkillSprite);
-                    boughtSkill.buyingTypes.Add(moneyType);
+                    boughtSkill.SetSkillType(skill, currentSkillSkillSprite);
+                    droneData.buyingTypes[skill].Add(moneyType);
                     skillDroneViews[i].GetSkill(currentSkillSkillSprite);
-                    _droneRpgController.SkillsCount[skill] = boughtSkill.skillCount;
+                    _droneRpgController.UpdateSkillValue(skill, boughtSkill.skillCount);
+                    return;
+                }
+                else if(boughtSkill.skill == skill)
+                {
+                    _droneRpgController.UpdateSkillValue(skill, _droneRpgController.SkillsCount[skill] + 1);
+                    droneData.buyingTypes[skill].Add(moneyType);
                     return;
                 }
 
@@ -191,8 +177,44 @@ namespace Drone
             }
         }
 
-        private void UpdateBoughtSkillsUI()
+        private void SetupSkills()
         {
+            foreach (var buyingType in droneData.buyingTypes)
+            {
+                var i = 0;
+                
+                foreach (var boughtSkill in boughtSkills)
+                {
+                    if (buyingType.Value.Count > 0)
+                    {
+                        var currentSkillSprite = skills.Where(s => s.skill == buyingType.Key)
+                            .Select(p => p.skillSprite)
+                            .FirstOrDefault();
+                        
+                        if (boughtSkill.skill == Skills.None)
+                        {
+                            boughtSkill.SetSkillType(buyingType.Key, currentSkillSprite);
+                            boughtSkill.UpdateSkillCount(buyingType.Value.Count);
+                            skillDroneViews[i].GetSkill(currentSkillSprite);
+                            break;
+                        }
+                        else if (boughtSkill.skill == buyingType.Key)
+                        {
+                            boughtSkill.UpdateSkillCount(buyingType.Value.Count);
+                            skillDroneViews[i].GetSkill(currentSkillSprite);
+                        }
+                    }
+                    
+                    i++;
+                }
+            }
+        }
+
+        private void UpdateBoughtSkillsUI(Skills skill)
+        {
+            if(!_currentSkill)
+                _currentSkill = skills.FirstOrDefault(sk => sk.skill == skill);
+            
             UpdateBuyButtonsUI();
 
             var i = 0;
@@ -203,11 +225,17 @@ namespace Drone
                 
                 if (_droneRpgController.SkillsCount[boughtSkill.skill] == 0)
                 {
+                    droneData.buyingTypes[boughtSkill.skill].Clear();
+                    
                     boughtSkill.ResetBoughtSkill();
                     skillDroneViews[i].ResetSkill();
+                    
                 }
                 else
                 {
+                    if(boughtSkill.skillCount > _droneRpgController.SkillsCount[boughtSkill.skill])
+                        droneData.buyingTypes[boughtSkill.skill].RemoveAt(droneData.buyingTypes[boughtSkill.skill].Count - 1);
+                    
                     boughtSkill.UpdateSkillCount(_droneRpgController.SkillsCount[boughtSkill.skill]);
                 }
 

@@ -20,5 +20,6 @@ namespace Drone
         public float currentGateScale;
         public bool isLoadLevel;
         public bool isStartBuilder;
+        public bool isTeleportLevel;
     }
 }

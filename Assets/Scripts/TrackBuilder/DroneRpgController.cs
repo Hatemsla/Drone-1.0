@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Drone.Builder;
 using UnityEngine;
 
@@ -19,7 +20,7 @@ namespace Drone
         [SerializeField] private float armorPercentage = 0.9f;
         [SerializeField] private float respawnTime = 3f;
 
-        public event Action SkillsCountChangedEvent;
+        public event Action<Skills> SkillsCountChangedEvent;
 
         private bool _isRespawning;
         private readonly float[] _thresholds = { 0, 20f, 40f, 60f, 80f, 100f };
@@ -27,11 +28,19 @@ namespace Drone
         public Dictionary<Skills, int> SkillsCount
         {
             get => droneData.skillsCount;
-            set
-            {
-                droneData.skillsCount = value;
-                SkillsCountChangedEvent?.Invoke();
-            }
+            set => droneData.skillsCount = value;
+        }
+
+        public bool IsReset
+        {
+            get => droneData.IsReset;
+            set => droneData.IsReset = value;
+        }
+        
+        public float TimeForEndGame
+        {
+            get => droneData.TimeForEndGame;
+            set => droneData.TimeForEndGame = value;
         }
 
         public float Battery
@@ -134,7 +143,7 @@ namespace Drone
         public void UpdateSkillValue(Skills skill, int newValue)
         {
             SkillsCount[skill] = newValue;
-            SkillsCountChangedEvent?.Invoke();
+            SkillsCountChangedEvent?.Invoke(skill);
         }
 
         private void Update()
@@ -145,11 +154,25 @@ namespace Drone
 
         private void ResetDroneData()
         {
-            Battery = 100;
-            Health = 100;
-            Armor = 100;
-            Coins = 0;
-            Crystals = 0;
+            if (IsReset)
+            {
+                Battery = 100;
+                Health = 100;
+                Armor = 100;
+                Coins = 0;
+                Crystals = 0;
+                TimeForEndGame = BuilderManager.Instance.timer.timeForEndGame;
+                foreach (var skills in SkillsCount.Keys.ToArray())
+                    SkillsCount[skills] = 0;
+                foreach (var buyingType in droneData.buyingTypes)
+                    buyingType.Value.Clear();    
+                IsReset = false;
+            }
+            else
+            {
+                BuilderManager.Instance.timer.waitForEndGame = TimeForEndGame;
+                IsReset = true;
+            }
         }
 
         public void ApplyEnergyUsage(float energyUsage)

@@ -186,7 +186,8 @@ namespace Drone.Menu
             gameData.levelName = menuUIManager.levelInput.text;
             gameData.isLoadLevel = true;
             gameData.isStartBuilder = false;
-            GameManager.Instance.asyncLoad.LoadScene(4);
+            gameData.isTeleportLevel = false;
+            SceneManager.LoadScene(4);
         }
 
         public void CreateLevel()
@@ -198,6 +199,7 @@ namespace Drone.Menu
             gameData.levelName = menuUIManager.levelInput.text;
             gameData.isLoadLevel = false;
             gameData.isStartBuilder = false;
+            gameData.isTeleportLevel = false;
             SceneManager.LoadScene(4);
         }
 
@@ -209,6 +211,7 @@ namespace Drone.Menu
             gameData.levelName = menuUIManager.levelInput.text;
             gameData.isLoadLevel = false;
             gameData.isStartBuilder = true;
+            gameData.isTeleportLevel = false;
             SceneManager.LoadScene(4);
         }
 

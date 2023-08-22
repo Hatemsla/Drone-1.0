@@ -22,7 +22,7 @@ namespace Drone.Builder
             _maps = LevelManager.LoadMaps().ToList();
         }
 
-        private readonly Dictionary<int, float> _sliderValues = new Dictionary<int, float>()
+        private readonly Dictionary<int, float> _sliderValues = new()
         {
             { 0, 0.5f },
             { 1, 1f },

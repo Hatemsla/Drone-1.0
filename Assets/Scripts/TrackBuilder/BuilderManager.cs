@@ -39,6 +39,7 @@ namespace Drone.Builder
         public DroneBuilderController droneBuilderController;
         public DroneBuilderCheckNode droneBuilderCheckNode;
         public DroneBuilderSoundController droneBuilderSoundController;
+        public DroneRpgController droneRpgController;
         public UndoRedoManager undoRedoManager;
         public AsyncLoad asyncLoad;
         public Timer timer;
@@ -76,6 +77,7 @@ namespace Drone.Builder
         private Vector3 _dronePrevPosition;
         private Vector3 _prevMousePos;
         private float _objectHeightValue;
+        private Camera _main;
 
         private void Awake()
         {
@@ -115,6 +117,8 @@ namespace Drone.Builder
             {
                 CreateObjectsPoolScene();
             }
+            
+            _main = Camera.main;
         }
 
         private void OnEnable()
@@ -244,7 +248,7 @@ namespace Drone.Builder
                 SetDroneParameters();
             }
 
-            var ray = Camera.main!.ScreenPointToRay(Mouse.current.position.ReadValue());
+            var ray = _main!.ScreenPointToRay(Mouse.current.position.ReadValue());
 
             if (Physics.Raycast(ray, out _hit, 10000, layerMask, QueryTriggerInteraction.Ignore) &&
                 !EventSystem.current.IsPointerOverGameObject())
@@ -601,6 +605,139 @@ namespace Drone.Builder
             LoadingCompleteEvent?.Invoke();
         }
 
+        // public void StartLoadNewLevel()
+        // {
+        //     StartCoroutine(LoadNewLevel());
+        // }
+
+        private IEnumerator LoadNewLevel()
+        {
+            ClearObject(objectsPool[0]);
+            
+            var loadedData = LevelManager.LoadLevel(levelName);
+            
+            foreach (var objInfo in loadedData)
+            {
+                var loadOp = Addressables.LoadAssetAsync<GameObject>(objInfo.ObjectName);
+                yield return loadOp;
+                
+                if (loadOp.Status != AsyncOperationStatus.Succeeded || loadOp.Result == null)
+                {
+                    Debug.LogError("Failed to load asset: " + objInfo.ObjectName);
+                    continue;
+                }
+
+                if (loadOp.Result.name == objectsPool[0].name)
+                {
+                    var drone = objectsPool[0];
+                    var droneTrack = drone.GetComponent<TrackObject>();
+                    
+                    TrackBuilderUtils.ChangeLayerRecursively(drone.transform, objInfo.Layer);
+                    TrackBuilderUtils.OffOutlineRecursively(drone.transform);
+                    drone.transform.position = objInfo.Position;
+                    drone.transform.rotation = Quaternion.Euler(objInfo.Rotation);
+                    droneTrack.yOffset = objInfo.YOffset;
+                    continue;
+                }    
+                    
+                var newObj = Instantiate(loadOp.Result, objInfo.Position, Quaternion.Euler(objInfo.Rotation));
+
+                yield return new WaitForSeconds(0.01f);
+                TrackBuilderUtils.ChangeLayerRecursively(newObj.transform, objInfo.Layer);
+                TrackBuilderUtils.OffOutlineRecursively(newObj.transform);
+                newObj.transform.localScale = objInfo.Scale;
+                var trackObj = newObj.GetComponent<TrackObject>();
+                trackObj.yOffset = objInfo.YOffset;
+                trackObj.maxMouseDistance = objInfo.MaxMouseDistance;
+                trackObj.damage = objInfo.Damage;
+
+                switch (trackObj.interactiveType)
+                {
+                    case InteractiveType.Windmill:
+                        trackObj.interactiveObject = trackObj.GetComponentInChildren<Windmill>();
+                        trackObj.interactiveObject.windMillRotateSpeed = objInfo.WindMillRotateSpeed;
+                        break;
+                    case InteractiveType.Magnet:
+                        trackObj.interactiveObject = trackObj.GetComponentInChildren<RigidbodyMagnet>();
+                        trackObj.interactiveObject.magnetForce = objInfo.MagnetForce;
+                        break;
+                    case InteractiveType.Pendulum:
+                        trackObj.interactiveObject = trackObj.GetComponentInChildren<Pendulum>();
+                        trackObj.interactiveObject.pendulumMoveSpeed = objInfo.PendulumMoveSpeed;
+                        trackObj.interactiveObject.leftPendulumAngle = objInfo.LeftPendulumAngle;
+                        trackObj.interactiveObject.rightPendulumAngle = objInfo.RightPendulumAngle;
+                        break;
+                    case InteractiveType.Wind:
+                        trackObj.interactiveObject = trackObj.GetComponentInChildren<WindZoneScript>();
+                        trackObj.interactiveObject.windForce = objInfo.WindForce;
+                        break;
+                    case InteractiveType.Battery:
+                        trackObj.interactiveObject = trackObj.GetComponentInChildren<Battery>();
+                        trackObj.interactiveObject.batteryEnergy = objInfo.BatteryEnergy;
+                        break;
+                    case InteractiveType.Freezing:
+                        trackObj.interactiveObject = trackObj.GetComponentInChildren<FreezingBall>();
+                        break;
+                    case InteractiveType.Boost:
+                        trackObj.interactiveObject = trackObj.GetComponentInChildren<BoostTrigger>();
+                        trackObj.interactiveObject.boostSpeed = objInfo.BoostSpeed;
+                        break;
+                    case InteractiveType.Hint:
+                        trackObj.interactiveObject = trackObj.GetComponentInChildren<Hint>();
+                        trackObj.interactiveObject.hintText.text = objInfo.HintText;
+                        break;
+                    case InteractiveType.Lamp:
+                        trackObj.interactiveObject = trackObj.GetComponentInChildren<Lamp>();
+                        break;
+                    case InteractiveType.ElectroGate:
+                        trackObj.interactiveObject = trackObj.GetComponentInChildren<ControledGate>();
+                        break;
+                    case InteractiveType.Draw:
+                        break;
+                    case InteractiveType.Text3D:
+                        trackObj.interactiveObject = trackObj.GetComponentInChildren<TextWriter3D>();
+                        trackObj.interactiveObject.text3D = objInfo.Text3d;
+                        break;
+                    case InteractiveType.Door:
+                        break;
+                    case InteractiveType.Port:
+                        break;
+                    case InteractiveType.SecureCamera:
+                        break;
+                    case InteractiveType.Panel:
+                        break;
+                    case InteractiveType.Button:
+                        break;
+                    case InteractiveType.Terminal:
+                        break;
+                    case InteractiveType.TrMessage:
+                        break;
+                    case InteractiveType.MagnetKiller:
+                        break;
+                    case InteractiveType.PitStop:
+                        break;
+                    case InteractiveType.Portal:
+                        trackObj.interactiveObject = trackObj.GetComponentInChildren<PortalObject>();
+                        ((PortalObject)trackObj.interactiveObject).SetMap(objInfo.PortalMap);
+                        break;
+                    case InteractiveType.None:
+                        break;
+                }
+                
+                if (trackObj.interactiveType != InteractiveType.None)
+                {
+                    trackObj.interactiveObject.SetColorIndex(objInfo.ColorIndex);
+                    trackObj.interactiveObject.SetActive(objInfo.IsActive);
+                }
+
+                objectsPool.Add(newObj);
+            }
+
+            yield return null;
+
+            StartGame?.Invoke();
+        }
+
         private void PlaceObjects()
         {
             try
@@ -734,16 +871,17 @@ namespace Drone.Builder
             ObjectChangeSceneEvent?.Invoke();
         }
 
-        private void ClearObject()
+        private void ClearObject(GameObject drone = null)
         {
+            RewindManager.Instance.rewindedObjects.Clear();
+            pendingObjects.Clear();
+            
             foreach (var obj in objectsPool)
             {
                 Destroy(obj);
             }
-
-            RewindManager.Instance.rewindedObjects.Clear();
+            
             objectsPool.Clear();
-            pendingObjects.Clear();
         }
 
         public void TurnUI()
