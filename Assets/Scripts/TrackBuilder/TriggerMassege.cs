@@ -14,8 +14,10 @@ namespace Drone.Builder
         private MeshRenderer mesh;
         private bool FirstEnter;
 
-
+        public AudioSource audioSource;
+        private string filePath;
         float openTime;
+
 
         void Start()
         {
@@ -52,10 +54,6 @@ namespace Drone.Builder
 
         }
 
-        private void FindMassege()
-        {
-
-        }
 
         private void OnTriggerEnter(Collider other)
         {
@@ -65,13 +63,25 @@ namespace Drone.Builder
             }
             if (other.GetComponentInParent<DroneController>() is DroneBuilderController drone)
             {
+                if (text3D.Length > 11)
+                {
+                    if (text3D.Substring(0, 11) == "AudioPlay: ")
+                    { 
+                        LoadAudio(text3D.Substring(11));
+                        return;
+                    }
+                }
                 message.SetActive(true);
                 message.ChangeMessageText(text3D);
                 FirstEnter = false;
                 StartCoroutine(closeMessage());
-
-
             }
+        }
+
+        private void IfGameStoped()
+        {
+            audioSource.Stop();
+            FirstEnter = true;        
         }
 
         IEnumerator closeMessage()
@@ -89,21 +99,23 @@ namespace Drone.Builder
 
         }
 
-        private void FindMassge()
+        private void FindMessage()
         {
             message = FindObjectOfType<BuilderUI>().helpMessage;
         }
 
         private void OnEnable()
         {
-            Debug.Log("OnEnable");
-            BuilderManager.Instance.ObjectChangeSceneEvent += FindMassge;
+            BuilderManager.Instance.ObjectChangeSceneEvent += FindMessage;
+            BuilderManager.Instance.StopGame += IfGameStoped;
         }
+
+        
 
         private void OnDisable()
         {
-            Debug.Log("OnDisable");
-            BuilderManager.Instance.ObjectChangeSceneEvent -= FindMassge;
+            BuilderManager.Instance.ObjectChangeSceneEvent -= FindMessage;
+            BuilderManager.Instance.StopGame -= IfGameStoped;
         }
 
         private void SetMessageText(string value)
@@ -121,6 +133,34 @@ namespace Drone.Builder
             color_index = value;
             selectedColorOption = (ColorOption)value;
             SetColor(GetColorFromOption(selectedColorOption));
+        }
+
+        private void LoadAudio(string filePath)
+        {
+            StartCoroutine(LoadAudioCoroutine(filePath));
+        }
+
+        private IEnumerator LoadAudioCoroutine(string filePath)
+        {
+            using (var www = new WWW("file://" + filePath)) // Загрузка аудиофайла
+            {
+                yield return www;
+
+                if (string.IsNullOrEmpty(www.error))
+                {
+                    Debug.Log("clip setted");
+                    AudioClip clip = www.GetAudioClip();
+                    audioSource.clip = clip;
+                }
+                else
+                {
+                    Debug.LogError("Error loading audio: " + www.error);
+                }
+            }
+            if (audioSource.clip != null)
+            {
+                audioSource.Play();
+            }
         }
     }
 }

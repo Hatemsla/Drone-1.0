@@ -16,7 +16,6 @@ namespace Drone.Builder
         {   
             Color newColor = new Color(scolor.r, scolor.g, scolor.b, 0.07843138f);
             objectRenderer.material.SetColor("_Color", newColor);
-
         }
 
         private void Start()
