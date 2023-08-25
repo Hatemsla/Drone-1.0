@@ -113,7 +113,7 @@ namespace Drone.Builder
 
         private void OpenPort()
         {
-            if (!_inTrigger || !isActive || !_isTrigger)
+            if (!_inTrigger || !isActive)
                 return;
 
             if (hasPassword)

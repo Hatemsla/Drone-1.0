@@ -7,7 +7,7 @@ namespace Drone
     {
         [SerializeField] private RectTransform point;
         [SerializeField] private RectTransform lockator;
-        [SerializeField] DroneController droneController;
+        [SerializeField] private DroneController droneController;
 
         private void Start()
         {

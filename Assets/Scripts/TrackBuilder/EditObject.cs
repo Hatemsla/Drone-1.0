@@ -85,17 +85,23 @@ namespace Drone.Builder
         
         public void OnXRotationChanged(float value)
         {
-            currentObject.Rotation = Quaternion.Euler(value, currentObject.Rotation.y, currentObject.Rotation.z);
+            var currentRotation = currentObject.Rotation.eulerAngles;
+            currentRotation.x = value;
+            currentObject.Rotation = Quaternion.Euler(currentRotation);
         }
 
         public void OnYRotationChanged(float value)
         {
-            currentObject.Rotation = Quaternion.Euler(currentObject.Rotation.x, value, currentObject.Rotation.z);
+            var currentRotation = currentObject.Rotation.eulerAngles;
+            currentRotation.y = value;
+            currentObject.Rotation = Quaternion.Euler(currentRotation);
         }
-        
+
         public void OnZRotationChanged(float value)
         {
-            currentObject.Rotation = Quaternion.Euler(currentObject.Rotation.x, currentObject.Rotation.y, value);
+            var currentRotation = currentObject.Rotation.eulerAngles;
+            currentRotation.z = value;
+            currentObject.Rotation = Quaternion.Euler(currentRotation);
         }
 
         public void OnXYZScaleChanged(float value)

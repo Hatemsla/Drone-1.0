@@ -50,13 +50,11 @@ public class FreeFlyCamera : MonoBehaviour
 
     private void DeactivateFreeFlyCamera()
     {
-        enabled = false;
         _cinemachineVirtualCamera.Priority = 0;
     }
 
     private void ActivateFreeFlyCamera()
     {
-        enabled = true;
         _cinemachineVirtualCamera.Priority = 10;
     }
     
@@ -71,6 +69,7 @@ public class FreeFlyCamera : MonoBehaviour
 
     private void LockCursor()
     {
+        Debug.Log(_wantedMode.ToString());
         _wantedMode = _wantedMode == CursorLockMode.Locked ? CursorLockMode.None : CursorLockMode.Locked;
         InputManager.Instance.TurnCustomActionMap(_wantedMode == CursorLockMode.Locked
             ? Idents.ActionMaps.Camera

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Drone;
+using UnityEngine.Networking;
 
 namespace Drone.Builder
 {
@@ -142,14 +143,14 @@ namespace Drone.Builder
 
         private IEnumerator LoadAudioCoroutine(string filePath)
         {
-            using (var www = new WWW("file://" + filePath)) // Загрузка аудиофайла
+            using (var www = UnityWebRequestMultimedia.GetAudioClip("file://" + filePath, AudioType.OGGVORBIS)) // Загрузка аудиофайла
             {
                 yield return www;
 
-                if (string.IsNullOrEmpty(www.error))
+                if (www.result == UnityWebRequest.Result.ConnectionError)
                 {
                     Debug.Log("clip setted");
-                    AudioClip clip = www.GetAudioClip();
+                    AudioClip clip = DownloadHandlerAudioClip.GetContent(www);
                     audioSource.clip = clip;
                 }
                 else

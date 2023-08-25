@@ -7,8 +7,8 @@ namespace Drone
 {
     public class Compass : MonoBehaviour
     {
-        public RawImage compassImage;
-        public Transform player;
+        [SerializeField] private RawImage compassImage;
+        [SerializeField] private Transform player;
 
         private void Start()
         {

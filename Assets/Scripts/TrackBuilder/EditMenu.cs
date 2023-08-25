@@ -95,6 +95,7 @@ namespace Drone.Builder
         {
             _maps = LevelManager.LoadMaps().ToList();
             mapsDropdown.AddOptions(_maps);
+            
         }
 
         public void SetEditPanelParams(string objName, float xP, float yP, float zP, float xR, float yR, float zR, float xyzS, TrackObject trackObject)

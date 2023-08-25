@@ -7,7 +7,7 @@ namespace Drone
 {
     public class Map : MonoBehaviour, IPointerClickHandler
     {
-        public TMP_Text mapNameText;
+        [SerializeField] private TMP_Text mapNameText;
         public string mapName;
 
         private void Start()

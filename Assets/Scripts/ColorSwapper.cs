@@ -7,9 +7,9 @@ namespace Drone
 {
     public class ColorSwapper : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
-        public TMP_Text text;
-        public Color defaultColor;
-        public Color hoverColor;
+        [SerializeField] private TMP_Text text;
+        [SerializeField] private Color defaultColor;
+        [SerializeField] private Color hoverColor;
 
         private void Start()
         {
