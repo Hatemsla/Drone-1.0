@@ -61,7 +61,6 @@ namespace Drone.Builder
             {
                 _movingClockwise = true;
             }
-
         }
 
         private void Move()

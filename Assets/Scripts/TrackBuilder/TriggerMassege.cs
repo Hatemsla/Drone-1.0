@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Drone;
 using UnityEngine.Networking;
+using System.IO;
 
 namespace Drone.Builder
 {
@@ -18,6 +19,7 @@ namespace Drone.Builder
         public AudioSource audioSource;
         private string filePath;
         float openTime;
+        bool firsTrigger = true;
 
 
         void Start()
@@ -25,12 +27,14 @@ namespace Drone.Builder
             FirstEnter = true;
             objectRenderer = TriggerObject.GetComponent<Renderer>();
             mesh = TriggerObject.GetComponent<MeshRenderer>();
-            SetColor(GetColorFromOption(selectedColorOption));  
+            SetColor(GetColorFromOption(selectedColorOption));
+          
 
         }
 
         void Update()
         {
+
             if (BuilderManager.Instance.isMove)
             {
                 mesh.enabled = false;
@@ -64,18 +68,19 @@ namespace Drone.Builder
             }
             if (other.GetComponentInParent<DroneController>() is DroneBuilderController drone)
             {
-                if (text3D.Length > 11)
+                if (audioSource.clip != null)
                 {
-                    if (text3D.Substring(0, 11) == "AudioPlay: ")
-                    { 
-                        LoadAudio(text3D.Substring(11));
-                        return;
-                    }
+                    audioSource.Play();
                 }
-                message.SetActive(true);
-                message.ChangeMessageText(text3D);
+                if (text3D.Length > 1)
+                {
+                    message.ChangeMessageText(text3D);
+                    message.SetActive(true);
+
+                }                
                 FirstEnter = false;
                 StartCoroutine(closeMessage());
+                
             }
         }
 
@@ -88,7 +93,7 @@ namespace Drone.Builder
         IEnumerator closeMessage()
         {
 
-            yield return new WaitForSeconds(5);
+            yield return new WaitForSeconds(10);
 
             message.SetActive(false);
 
@@ -138,11 +143,12 @@ namespace Drone.Builder
 
         private void LoadAudio(string filePath)
         {
-            StartCoroutine(LoadAudioCoroutine(filePath));
+            // StartCoroutine(LoadAudioCoroutine(filePath));
         }
 
         private IEnumerator LoadAudioCoroutine(string filePath)
         {
+            Debug.Log(filePath);
             using (var www = UnityWebRequestMultimedia.GetAudioClip("file://" + filePath, AudioType.OGGVORBIS)) // Загрузка аудиофайла
             {
                 yield return www;
@@ -158,10 +164,17 @@ namespace Drone.Builder
                     Debug.LogError("Error loading audio: " + www.error);
                 }
             }
-            if (audioSource.clip != null)
-            {
-                audioSource.Play();
-            }
         }
+
+        public void SetSoundFile(int soundIndex)
+        {
+            sound_index = soundIndex;
+            string[] files = Directory.GetFiles(Application.dataPath + "/SoundsSource/");
+            filePath = files[soundIndex];
+            Debug.Log(filePath);
+            StartCoroutine(LoadAudioCoroutine(filePath));
+        }
+
+        
     }
 }

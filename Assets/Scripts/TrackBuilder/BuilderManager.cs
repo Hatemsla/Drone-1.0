@@ -577,6 +577,10 @@ namespace Drone.Builder
                     case InteractiveType.Terminal:
                         break;
                     case InteractiveType.TrMessage:
+                        trackObj.interactiveObject = trackObj.GetComponentInChildren<TriggerMassege>();
+                        trackObj.interactiveObject.sound_index = objInfo.SoundIndex;
+                        trackObj.interactiveObject.text3D = objInfo.HintText;
+
                         break;
                     case InteractiveType.MagnetKiller:
                         break;

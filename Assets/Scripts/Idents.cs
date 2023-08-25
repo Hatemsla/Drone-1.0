@@ -27,6 +27,8 @@ namespace Drone
                 public const string IsActive = "isActive";
                 public const string Text3DText = "Text";
                 public const string PortalMap = "Text";
+                public const string TriggerMessage = "TriggerMessage";
+
 
                 public const string Windmill = "Windmill";
                 public const string Magnet = "Magnet";
@@ -38,6 +40,10 @@ namespace Drone
                 public const string Interactive = "Interactive";
                 public const string Text3D = "Text3D";
                 public const string Portal = "Portal";
+                public const string TriggerMessageHint = "TriggerMessageHint";
+                public const string TriggerMessageSound = "TriggerMessageSound";
+                
+
             }
             
             public static class PromptText

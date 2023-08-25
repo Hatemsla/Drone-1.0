@@ -137,6 +137,12 @@ namespace Drone
                     case InteractiveType.Terminal:
                         break;
                     case InteractiveType.TrMessage:
+                        var soundObject = new JObject
+                        {                            
+                            [Idents.Tags.SaveLoadTags.TriggerMessageHint] = trackObj.interactiveObject.text3D,
+                            [Idents.Tags.SaveLoadTags.TriggerMessageSound] = trackObj.interactiveObject.sound_index,
+                        };
+                        interactiveData[Idents.Tags.SaveLoadTags.TriggerMessage] = soundObject;
                         break;
                     case InteractiveType.MagnetKiller:
                         var magnetKillerObject = new JObject
@@ -213,6 +219,7 @@ namespace Drone
                     leftPendulumAngle = 0, rightPendulumAngle = 0, windForce = 0, 
                     batteryEnergy = 0, boostSpeed = 0;
                 string hintText = "", text3D = "", portalMap = "";
+                int sound_index = 0;
 
                 if (jTokenInteractive != null)
                 {
@@ -227,6 +234,7 @@ namespace Drone
                     var jTokenHint = jTokenInteractive[Idents.Tags.SaveLoadTags.Hint];
                     var jTokenText3d = jTokenInteractive[Idents.Tags.SaveLoadTags.Text3D];
                     var jTokenPortal = jTokenInteractive[Idents.Tags.SaveLoadTags.Portal];
+                    var jTokenTriggerMessage = jTokenInteractive[Idents.Tags.SaveLoadTags.TriggerMessage];
                     
                     windMillRotationSpeed = jTokenWindmill != null
                         ? jTokenWindmill[Idents.Tags.SaveLoadTags.WindMillRotateSpeed]!.Value<float>()
@@ -271,6 +279,14 @@ namespace Drone
                     portalMap = jTokenPortal != null
                         ? jTokenPortal[Idents.Tags.SaveLoadTags.PortalMap]!.Value<string>()
                         : "";
+                    
+                    hintText = jTokenTriggerMessage != null
+                        ? jTokenTriggerMessage[Idents.Tags.SaveLoadTags.TriggerMessageHint]!.Value<string>()
+                        : "";
+
+                    sound_index = jTokenTriggerMessage != null
+                        ? jTokenTriggerMessage[Idents.Tags.SaveLoadTags.TriggerMessageSound]!.Value<int>()
+                        : 0;
                 }
 
                 var objInfo = new GameObjectInfo
@@ -296,6 +312,7 @@ namespace Drone
                     HintText = hintText,
                     Text3d = text3D,
                     PortalMap = portalMap,
+                    SoundIndex = sound_index,
                 };
                 
                 result.Add(objInfo);

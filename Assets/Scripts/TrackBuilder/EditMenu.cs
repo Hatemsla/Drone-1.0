@@ -5,6 +5,7 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using System.IO;
 
 namespace Drone.Builder
 {
@@ -51,6 +52,7 @@ namespace Drone.Builder
         [SerializeField] private TMP_Dropdown code_n2;
         [SerializeField] private TMP_Dropdown code_n3;
         [SerializeField] private TMP_Dropdown mapsDropdown;
+        [SerializeField] private TMP_Dropdown soundsDropdown;
         [SerializeField] private GameObject isActivePanel;
         [SerializeField] private GameObject colorPanel;
         [SerializeField] private GameObject windmillPanel;
@@ -90,11 +92,13 @@ namespace Drone.Builder
         };
 
         private List<string> _maps;
+        private List<string> fileList = new List<string>();
 
         private void Start()
         {
             _maps = LevelManager.LoadMaps().ToList();
             mapsDropdown.AddOptions(_maps);
+            FillDropdownWithOptions();
             
         }
 
@@ -219,9 +223,12 @@ namespace Drone.Builder
                     passwordInput.text = portPassword;
                     break;
                 case InteractiveType.TrMessage:
-                    TurnInteractivePanels(colorPanel, hintPanel);
+                    TurnInteractivePanels(colorPanel, hintPanel, triggerMessagePanel);
                     hintInput.text = trackObject.interactiveObject.text3D;
                     color.value = trackObject.interactiveObject.color_index;
+                    soundsDropdown.value = trackObject.interactiveObject.sound_index;
+
+                    // soundsDropdown.value = trackObject.interactiveObject.sound_index;
                     break;
                 case InteractiveType.Terminal:
                     TurnInteractivePanels(isActivePanel);
@@ -259,5 +266,23 @@ namespace Drone.Builder
         {
             passwordHint.enabled = active;
         }
+
+        public void FillDropdownWithOptions()
+        {
+            fileList.AddRange(Directory.GetFiles(Application.dataPath + "/SoundsSource/"));
+            soundsDropdown.ClearOptions();
+            List<TMP_Dropdown.OptionData> dropdownOptions = new List<TMP_Dropdown.OptionData>();
+            foreach (string fileName in fileList)
+            {
+                if (fileName.EndsWith("mp3"))
+                {
+                    TMP_Dropdown.OptionData option = new TMP_Dropdown.OptionData(fileName.Substring((Application.dataPath + "/SoundsSource/").Length));
+
+                    dropdownOptions.Add(option);
+                }
+            }
+            soundsDropdown.AddOptions(dropdownOptions);
+        }
+
     }
 }

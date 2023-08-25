@@ -46,11 +46,6 @@ namespace Drone.Builder
             if (CheckColorActivChange(selectedColorOption))
             {
                 isActive = !isActive;
-                Debug.Log("CheckColorActivChange");
-                Debug.Log(isActive);
-                Debug.Log(isActivB);
-                Debug.Log(previousIsActiv);
-
                 SetActive(isActive);
             } 
         }
