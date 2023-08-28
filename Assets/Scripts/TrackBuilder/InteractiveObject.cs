@@ -26,6 +26,8 @@ namespace Drone.Builder
         [HideInInspector] public bool hasPassword;
 
         [HideInInspector] public string password;
+        [HideInInspector] public int sound_index;
+
 
 
         private protected bool isActiv;

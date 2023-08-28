@@ -306,5 +306,16 @@ namespace Drone.Builder
                 portalObject.SetMap(_maps[value]);
             }
         }
+
+        public void OnSetSoundObject(int value)
+        {
+            Debug.Log("SetSound");
+            if (currentObject.interactiveObject is TriggerMassege TrMessage)
+            {
+                Debug.Log(value);
+
+                TrMessage.SetSoundFile(value); 
+            }
+        }
     }
 }

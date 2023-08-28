@@ -25,5 +25,7 @@ namespace Drone
         public int ColorIndex { get; set; }
         public string Text3d { get; set; }
         public string PortalMap { get; set; }
+
+        public int SoundIndex {get; set; }
     }
 }
