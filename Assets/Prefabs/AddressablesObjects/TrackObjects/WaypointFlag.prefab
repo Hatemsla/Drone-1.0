@@ -34,7 +34,7 @@ Transform:
   m_Children:
   - {fileID: 6564214088710711139}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &7395701624161422628
 Rigidbody:
@@ -172,10 +172,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7918335002988649766, guid: c95b95cb55f8a564d9d87e2edd687b62, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 508f4f1f0a41de841bd478035122d06f, type: 2}
     - target: {fileID: -7029948723529949830, guid: c95b95cb55f8a564d9d87e2edd687b62, type: 3}
       propertyPath: m_Layer
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 882129737928793925, guid: c95b95cb55f8a564d9d87e2edd687b62, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 6838ff4f711bf344d95bba63e3ff3236, type: 2}
     - target: {fileID: 919132149155446097, guid: c95b95cb55f8a564d9d87e2edd687b62, type: 3}
       propertyPath: m_Name
       value: waypoint_flag

@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Drone;
 using UnityEngine;
 
@@ -24,7 +26,7 @@ namespace Drone.Builder
         public event Action<Vector3> ScaleChanged;
         public event Action<Vector3> PositionChanged;
         public event Action<Quaternion> RotationChanged;
-
+        
         public Vector3 Scale
         {
             get => transform.localScale;

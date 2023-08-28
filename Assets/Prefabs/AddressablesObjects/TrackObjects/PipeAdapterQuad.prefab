@@ -34,7 +34,7 @@ Transform:
   m_Children:
   - {fileID: 4660602949945669467}
   m_Father: {fileID: 0}
-  m_RootOrder: 17
+  m_RootOrder: 87
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &3676571544268965073
 Rigidbody:
@@ -175,6 +175,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: a66200cd1cbd8a341b1ecd568ea1012c, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: e1d82710b5dc3bb4bab090b69602de11, type: 2}
     - target: {fileID: 919132149155446097, guid: a66200cd1cbd8a341b1ecd568ea1012c, type: 3}
       propertyPath: m_Name
       value: pipe_to-small-adapter-quad

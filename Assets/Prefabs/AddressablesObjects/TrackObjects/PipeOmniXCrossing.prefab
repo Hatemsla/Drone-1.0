@@ -34,7 +34,7 @@ Transform:
   m_Children:
   - {fileID: 6574011630787318036}
   m_Father: {fileID: 0}
-  m_RootOrder: 16
+  m_RootOrder: 91
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &9121370967175136069
 Rigidbody:
@@ -175,6 +175,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: c809c1fda7308804685aca39bf306d95, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: e1d82710b5dc3bb4bab090b69602de11, type: 2}
     - target: {fileID: 919132149155446097, guid: c809c1fda7308804685aca39bf306d95, type: 3}
       propertyPath: m_Name
       value: pipe_small_omni-x-crossing

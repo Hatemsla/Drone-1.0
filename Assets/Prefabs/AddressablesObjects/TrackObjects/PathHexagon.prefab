@@ -34,7 +34,7 @@ Transform:
   m_Children:
   - {fileID: 2936947224257222910}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3057145284673457896
 MonoBehaviour:
@@ -170,9 +170,17 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -7511558181221131132, guid: de934534293a67d4bab7209796d86eca, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: de934534293a67d4bab7209796d86eca, type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: de934534293a67d4bab7209796d86eca, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: c0b64492b0d36e547955098e66f3b6f3, type: 2}
+      objectReference: {fileID: 2100000, guid: 58acd115fa531df4f9916e60949f5c81, type: 2}
     - target: {fileID: 919132149155446097, guid: de934534293a67d4bab7209796d86eca, type: 3}
       propertyPath: m_Name
       value: path_hexagon

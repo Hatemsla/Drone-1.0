@@ -34,7 +34,7 @@ Transform:
   m_Children:
   - {fileID: 9050800252618714925}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &8795635200362671148
 Rigidbody:
@@ -175,6 +175,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 5e009109d92a98e4795ea57dbc518e25, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 6838ff4f711bf344d95bba63e3ff3236, type: 2}
+    - target: {fileID: -7511558181221131132, guid: 5e009109d92a98e4795ea57dbc518e25, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: a287ab009b3825a4691d8f2789d30533, type: 2}
+    - target: {fileID: -7511558181221131132, guid: 5e009109d92a98e4795ea57dbc518e25, type: 3}
+      propertyPath: m_Materials.Array.data[2]
+      value: 
+      objectReference: {fileID: 2100000, guid: b8c799579b78fc44da599a44a4ca6b2b, type: 2}
     - target: {fileID: 919132149155446097, guid: 5e009109d92a98e4795ea57dbc518e25, type: 3}
       propertyPath: m_Name
       value: glass
