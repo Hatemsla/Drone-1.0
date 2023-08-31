@@ -9,6 +9,7 @@ namespace Drone.Builder
 {
     public class TriggerMassege : InteractiveObject
     {
+        public string triggerText;
         [SerializeField] private HelpMessage message;
         public GameObject TriggerObject;
         private Renderer objectRenderer;
@@ -59,7 +60,6 @@ namespace Drone.Builder
 
         }
 
-
         private void OnTriggerEnter(Collider other)
         {
             if (!FirstEnter || !BuilderManager.Instance.isMove)
@@ -72,9 +72,9 @@ namespace Drone.Builder
                 {
                     audioSource.Play();
                 }
-                if (text3D.Length > 1)
+                if (triggerText.Length > 1)
                 {
-                    message.ChangeMessageText(text3D);
+                    message.ChangeMessageText(triggerText);
                     message.SetActive(true);
 
                 }                
@@ -107,7 +107,7 @@ namespace Drone.Builder
 
         private void FindMessage()
         {
-            message = FindObjectOfType<BuilderUI>().helpMessage;
+            message = BuilderManager.Instance.builderUI.helpMessage;
         }
 
         private void OnEnable()
@@ -115,9 +115,7 @@ namespace Drone.Builder
             BuilderManager.Instance.ObjectChangeSceneEvent += FindMessage;
             BuilderManager.Instance.StopGame += IfGameStoped;
         }
-
         
-
         private void OnDisable()
         {
             BuilderManager.Instance.ObjectChangeSceneEvent -= FindMessage;
@@ -126,7 +124,7 @@ namespace Drone.Builder
 
         private void SetMessageText(string value)
         {
-            text3D = value;
+            triggerText = value;
         }
 
         public override void SetActive(bool active)
@@ -149,20 +147,19 @@ namespace Drone.Builder
         private IEnumerator LoadAudioCoroutine(string filePath)
         {
             Debug.Log(filePath);
-            using (var www = UnityWebRequestMultimedia.GetAudioClip("file://" + filePath, AudioType.OGGVORBIS)) // Загрузка аудиофайла
-            {
-                yield return www;
+            using var www = UnityWebRequestMultimedia.GetAudioClip("file://" + filePath, AudioType.OGGVORBIS);
+            
+            yield return www;
 
-                if (www.result == UnityWebRequest.Result.ConnectionError)
-                {
-                    Debug.Log("clip setted");
-                    AudioClip clip = DownloadHandlerAudioClip.GetContent(www);
-                    audioSource.clip = clip;
-                }
-                else
-                {
-                    Debug.LogError("Error loading audio: " + www.error);
-                }
+            if (www.result == UnityWebRequest.Result.ConnectionError)
+            {
+                Debug.Log("clip setted");
+                AudioClip clip = DownloadHandlerAudioClip.GetContent(www);
+                audioSource.clip = clip;
+            }
+            else
+            {
+                Debug.LogError("Error loading audio: " + www.error);
             }
         }
 

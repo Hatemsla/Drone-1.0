@@ -1,10 +1,10 @@
-﻿using System;
+using System;
 using UnityEngine;
 using UnityEngine.Audio;
 
-namespace Drone.DroneFootball
+namespace Drone.DroneRace
 {
-    public class FootballAudioManager : MonoBehaviour
+    public class RaceAudioManager : MonoBehaviour
     {
         [SerializeField] private GameData gameData;
         [SerializeField] private AudioMixer audioMixer;

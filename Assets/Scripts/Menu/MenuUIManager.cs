@@ -50,7 +50,9 @@ namespace Drone.Menu
         public GameObject controlSettings;
         public GameObject difficultSettings;
         public GameObject customizationSettings;
-        public TMP_InputField gameTimeInput;
+        public TMP_InputField builderTimeInput;
+        public TMP_InputField footballTimeInput;
+        public TMP_InputField raceTimeInput;
         public TMP_Text effectsVolumeValue;
         public TMP_Text musicsVolumeValue;
         public TMP_Text yawValue;

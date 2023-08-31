@@ -27,9 +27,6 @@ namespace Drone.DroneFootball
 
         private void OnTriggerExit(Collider other)
         {
-            if(RewindManager.Instance.IsBeingRewinded)
-                return;
-            
             var player = other.transform.root.GetComponent<DroneController>();
             if (player)
             {

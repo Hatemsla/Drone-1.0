@@ -13,8 +13,6 @@ namespace Drone.DroneRace
 
         private void Start()
         {
-            audioMixer.SetFloat("Music", 0);
-            audioMixer.SetFloat("Effects", 0);
             _droneRaceController = GetComponent<DroneRaceController>();
             _droneRaceController.raceController.droneRaceAudioController = this;
         }

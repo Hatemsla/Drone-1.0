@@ -74,7 +74,9 @@ namespace Drone.Menu
             menuUIManager.regBackBtn.onClick.AddListener(ClearRegInputs);
             menuUIManager.startExitAccBtn.onClick.AddListener(delegate { OpenMenu("Auth"); });
             menuUIManager.statBackBtn.onClick.AddListener(delegate { OpenMenu("Start"); });
-            menuUIManager.gameTimeInput.text = gameData.builderTimeInSeconds > 0 ? gameData.builderTimeInSeconds.ToString() : "300";
+            menuUIManager.builderTimeInput.text = gameData.builderTimeInSeconds > 0 ? gameData.builderTimeInSeconds.ToString() : "600";
+            menuUIManager.footballTimeInput.text = gameData.footballTimeInSeconds > 0 ? gameData.footballTimeInSeconds.ToString() : "300";
+            menuUIManager.raceTimeInput.text = gameData.raceTimeInSeconds > 0 ? gameData.raceTimeInSeconds.ToString() : "300";
 
             SetDropdownResolutions();
             menuUIManager.resolutionDropdown.onValueChanged.AddListener(SetResolution);
@@ -276,7 +278,9 @@ namespace Drone.Menu
 
         private void GameTimeHandler()
         {
-            gameData.builderTimeInSeconds = !string.IsNullOrEmpty(menuUIManager.gameTimeInput.text) ? Convert.ToInt32(menuUIManager.gameTimeInput.text) : 300;
+            gameData.builderTimeInSeconds = !string.IsNullOrEmpty(menuUIManager.builderTimeInput.text) ? Convert.ToInt32(menuUIManager.builderTimeInput.text) : 600;
+            gameData.footballTimeInSeconds = !string.IsNullOrEmpty(menuUIManager.footballTimeInput.text) ? Convert.ToInt32(menuUIManager.footballTimeInput.text) : 300;
+            gameData.raceTimeInSeconds = !string.IsNullOrEmpty(menuUIManager.raceTimeInput.text) ? Convert.ToInt32(menuUIManager.raceTimeInput.text) : 300;
         }
     }
 }
