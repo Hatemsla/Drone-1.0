@@ -371,7 +371,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2fbbb94b56a910642aeaf26ba57e6db9, type: 2}
+  - {fileID: 2100000, guid: e1d82710b5dc3bb4bab090b69602de11, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -492,7 +492,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2fbbb94b56a910642aeaf26ba57e6db9, type: 2}
+  - {fileID: 2100000, guid: e1d82710b5dc3bb4bab090b69602de11, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -705,7 +705,7 @@ Transform:
   m_Children:
   - {fileID: 3800439166101686651}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &4104340659178850723
 Rigidbody:
@@ -746,10 +746,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ab4a5091580a3b41a4a106fe026bc9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: 25
-  connection: {fileID: 0}
-  objectType: 0
-  hasPortal: 1
+  objectType: 2048
   interactiveType: 19
   effectType: 1
   yOffset: 0.429
@@ -1567,24 +1564,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isActive: 1
-  windMillRotateSpeed: 0
-  magnetForce: 0
-  pendulumMoveSpeed: 0
-  leftPendulumAngle: 0
-  rightPendulumAngle: 0
-  windForce: 0
-  batteryEnergy: 0
-  boostSpeed: 0
-  TimeDelay: 0
-  isLampTurn: 1
-  hintText: {fileID: 0}
-  text3D: 
-  color_index: 0
-  ishacked: 0
-  buttonDelay: 0
-  hasPassword: 0
-  password: 
+  colorIndex: 0
   rotationSpeed: 100
+  magnetForce: 0
   magnet: {fileID: 6944265150577643662}
   leftRotor: {fileID: 267328317540184082}
   rightRotor: {fileID: 8668330452525964994}
