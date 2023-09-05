@@ -32,21 +32,16 @@ namespace Drone.Builder
             return remappedValue;
         }
         
-        public static Vector3 ParseVector3(string str)
-        {
-            var values = str.Split(' ');
-            var x = float.Parse(values[0]);
-            var y = float.Parse(values[1]);
-            var z = float.Parse(values[2]);
-            return new Vector3(x, y, z);
-        }
-        
         public static void ChangeLayerRecursively(Transform obj, int layer)
         {
-            if (LayerMask.LayerToName(obj.gameObject.layer) != "FloorConnection" && LayerMask.LayerToName(obj.gameObject.layer) != "WallConnection" 
-                && LayerMask.LayerToName(obj.gameObject.layer) != "SlantConnection" && LayerMask.LayerToName(obj.gameObject.layer) != "Ignore Raycast"
-                && LayerMask.LayerToName(obj.gameObject.layer) != "Hint" && LayerMask.LayerToName(obj.gameObject.layer) != "Draw"
-                && LayerMask.LayerToName(obj.gameObject.layer) != "Intangible" && LayerMask.LayerToName(obj.gameObject.layer) != "Text3D")
+            if (LayerMask.LayerToName(obj.gameObject.layer) != Idents.Layers.FloorConnection &&
+                LayerMask.LayerToName(obj.gameObject.layer) != Idents.Layers.WallConnection 
+                && LayerMask.LayerToName(obj.gameObject.layer) != Idents.Layers.SlantConnection &&
+                LayerMask.LayerToName(obj.gameObject.layer) != Idents.Layers.IgnoreRaycast
+                && LayerMask.LayerToName(obj.gameObject.layer) != Idents.Layers.Hint &&
+                LayerMask.LayerToName(obj.gameObject.layer) != Idents.Layers.Draw
+                && LayerMask.LayerToName(obj.gameObject.layer) != Idents.Layers.Intangible &&
+                LayerMask.LayerToName(obj.gameObject.layer) != Idents.Layers.Text3D)
             {
                 obj.gameObject.layer = layer;
             }
@@ -83,11 +78,11 @@ namespace Drone.Builder
         
         public static LayerMask SetLayerMask(string activeLayer)
         {
-            var trackGroundLayer = LayerMask.NameToLayer("TrackGround");
-            var trackHintLayer = LayerMask.NameToLayer("Hint");
-            var trackDrawLayer = LayerMask.NameToLayer("Draw");
-            var trackIntangibleLayer = LayerMask.NameToLayer("Intangible");
-            var trackText3DLayer = LayerMask.NameToLayer("Text3D");
+            var trackGroundLayer = LayerMask.NameToLayer(Idents.Layers.TrackGround);
+            var trackHintLayer = LayerMask.NameToLayer(Idents.Layers.Hint);
+            var trackDrawLayer = LayerMask.NameToLayer(Idents.Layers.Draw);
+            var trackIntangibleLayer = LayerMask.NameToLayer(Idents.Layers.Intangible);
+            var trackText3DLayer = LayerMask.NameToLayer(Idents.Layers.Text3D);
             var activeLayerIndex = LayerMask.NameToLayer(activeLayer);
 
             var layerMask = (1 << trackGroundLayer) | (1 << trackHintLayer) | (1 << trackDrawLayer) |
@@ -111,25 +106,6 @@ namespace Drone.Builder
             objectTransform.position = endPos;
         }
         
-        // public static Color GetColorFromOption(ColorOption option)
-        // {
-        //     switch (option)
-        //     {
-        //         case ColorOption.Белый:
-        //             return Color.white;
-        //         case ColorOption.Красный:
-        //             return Color.red;
-        //         case ColorOption.Зелёный:
-        //             return Color.green;
-        //         case ColorOption.Жёлтый:
-        //             return Color.yellow;
-        //         case ColorOption.Синий:
-        //             return Color.blue;
-        //         default:
-        //             return Color.white;
-        //     }
-        // }
-        
         public static Color HexToColor(string hex)
         {
             hex = hex.TrimStart('#');
@@ -142,7 +118,5 @@ namespace Drone.Builder
 
             return new Color32(r, g, b, a);
         }
-
-        
     }
 }

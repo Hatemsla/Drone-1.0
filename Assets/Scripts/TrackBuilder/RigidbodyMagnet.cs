@@ -8,6 +8,7 @@ namespace Drone.Builder
     {
         [SerializeField] private AudioSource workSound;
 
+        public float magnetForce; 
         private List<Rigidbody> _caughtRigidbodies = new();
         public GameObject colorObject;
         private Renderer objectRenderer;
@@ -41,7 +42,7 @@ namespace Drone.Builder
         }
         private void Update()
         {
-            if (CheckColorActivChange(selectedColorOption))
+            if (CheckColorActiveChange(selectedColorOption))
             {
                 isActive = !isActive;
                 SetActive(isActive);
@@ -103,12 +104,12 @@ namespace Drone.Builder
         public override void SetActive(bool active)
         {
             isActive = active;
-            SetColor(GetColorFromOption((ColorOption)color_index));
+            SetColor(GetColorFromOption((ColorOption)colorIndex));
         }
 
         public override void SetColorIndex(int value)
         {
-            color_index = value;
+            colorIndex = value;
             SetColor(GetColorFromOption((ColorOption)value));
         }
     }

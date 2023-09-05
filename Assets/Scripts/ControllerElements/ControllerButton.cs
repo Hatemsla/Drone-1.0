@@ -7,6 +7,8 @@ namespace Drone.Builder.ControllerElements
 {
     public class ControllerButton : InteractiveObject
     {
+        public float timeDelay;
+        public float buttonDelay;
         public GameObject controllerButtonObject;
         public GameObject controllerButtonObject2;
 
@@ -26,7 +28,7 @@ namespace Drone.Builder.ControllerElements
 
         void Start()
         {
-            TimeDelay = 0;
+            timeDelay = 0;
             objectRenderer = controllerButtonObject.GetComponent<Renderer>();
             objectRenderer2 = controllerButtonObject2.GetComponent<Renderer>();
             SetColor(GetColorFromOption(selectedColorOption), false);       
@@ -121,21 +123,21 @@ namespace Drone.Builder.ControllerElements
 
         public void set_color_index(int value)
         {
-            color_index = value;
+            colorIndex = value;
             selectedColorOption = (ColorOption)value;
             SetColor(GetColorFromOption(selectedColorOption), false);        
         }
 
         public override void SetColorIndex(int value)
         {
-            color_index = value;
+            colorIndex = value;
             selectedColorOption = (ColorOption)value;
             SetColor(GetColorFromOption(selectedColorOption), false);
         }
 
         public void set_time_value(float value)
         {
-            TimeDelay = value;
+            timeDelay = value;
             buttonDelay = value;
             TriggerExitDelay = value;
 

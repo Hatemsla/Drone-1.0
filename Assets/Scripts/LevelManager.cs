@@ -4,6 +4,7 @@ using System.Globalization;
 using System.IO;
 using System.Text.RegularExpressions;
 using Drone.Builder;
+using Drone.Builder.Text3D;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using UnityEngine;
@@ -51,15 +52,15 @@ namespace Drone
                 objectData[Idents.Tags.SaveLoadTags.Rotation] = FormatVector3(obj.transform.rotation.eulerAngles);
                 objectData[Idents.Tags.SaveLoadTags.Scale] = FormatVector3(obj.transform.localScale);
                 objectData[Idents.Tags.SaveLoadTags.Layer] = obj.layer.ToString();
-                objectData[Idents.Tags.SaveLoadTags.YOffset] = trackObj.yOffset.ToString(CultureInfo.CurrentCulture);
+                objectData[Idents.Tags.SaveLoadTags.YOffset] = trackObj.yOffset.ToString(CultureInfo.InvariantCulture);
                 objectData[Idents.Tags.SaveLoadTags.MaxMouseDistance] =
-                    trackObj.maxMouseDistance.ToString(CultureInfo.CurrentCulture);
-                objectData[Idents.Tags.SaveLoadTags.Damage] = trackObj.damage.ToString(CultureInfo.CurrentCulture);
+                    trackObj.maxMouseDistance.ToString(CultureInfo.InvariantCulture);
+                objectData[Idents.Tags.SaveLoadTags.Damage] = trackObj.damage.ToString(CultureInfo.InvariantCulture);
 
                 if (trackObj.interactiveType != InteractiveType.None)
                 {
                     interactiveData[Idents.Tags.SaveLoadTags.ColorIndex] =
-                        trackObj.interactiveObject.color_index.ToString(CultureInfo.CurrentCulture);
+                        trackObj.interactiveObject.colorIndex.ToString(CultureInfo.InvariantCulture);
                     interactiveData[Idents.Tags.SaveLoadTags.IsActive] = trackObj.interactiveObject.isActive;
                 }
                 
@@ -68,96 +69,87 @@ namespace Drone
                     case InteractiveType.Windmill:
                         var windmillObject = new JObject
                         {
-                            [Idents.Tags.SaveLoadTags.WindMillRotateSpeed] = trackObj.interactiveObject.windMillRotateSpeed.ToString(CultureInfo.CurrentCulture),
+                            [Idents.Tags.SaveLoadTags.WindMillRotateSpeed] = ((Windmill)trackObj.interactiveObject).windMillRotateSpeed.ToString(CultureInfo.InvariantCulture),
                         };
                         interactiveData[Idents.Tags.SaveLoadTags.Windmill] = windmillObject;
                         break;
                     case InteractiveType.Magnet:
                         var magnetObject = new JObject
                         {
-                            [Idents.Tags.SaveLoadTags.MagnetForce] = trackObj.interactiveObject.magnetForce.ToString(CultureInfo.CurrentCulture)
+                            [Idents.Tags.SaveLoadTags.Magnet] = ((RigidbodyMagnet)trackObj.interactiveObject).magnetForce
                         };
                         interactiveData[Idents.Tags.SaveLoadTags.Magnet] = magnetObject;
                         break;
                     case InteractiveType.Pendulum:
+                        var pendulum = (Pendulum)trackObj.interactiveObject;
                         var pendulumObject = new JObject
                         {
-                            [Idents.Tags.SaveLoadTags.PendulumMoveSpeed] = trackObj.interactiveObject.pendulumMoveSpeed.ToString(CultureInfo.CurrentCulture),
-                            [Idents.Tags.SaveLoadTags.LeftPendulumAngle] = trackObj.interactiveObject.leftPendulumAngle.ToString(CultureInfo.CurrentCulture),
-                            [Idents.Tags.SaveLoadTags.RightPendulumAngle] = trackObj.interactiveObject.rightPendulumAngle.ToString(CultureInfo.CurrentCulture),
+                            [Idents.Tags.SaveLoadTags.PendulumMoveSpeed] = pendulum.pendulumMoveSpeed.ToString(CultureInfo.InvariantCulture),
+                            [Idents.Tags.SaveLoadTags.LeftPendulumAngle] = pendulum.leftPendulumAngle.ToString(CultureInfo.InvariantCulture),
+                            [Idents.Tags.SaveLoadTags.RightPendulumAngle] = pendulum.rightPendulumAngle.ToString(CultureInfo.InvariantCulture),
                         };
                         interactiveData[Idents.Tags.SaveLoadTags.Pendulum] = pendulumObject;
                         break;
                     case InteractiveType.Wind:
                         var windObject = new JObject
                         {
-                            [Idents.Tags.SaveLoadTags.WindForce] = trackObj.interactiveObject.windForce.ToString(CultureInfo.CurrentCulture),
+                            [Idents.Tags.SaveLoadTags.WindForce] = ((WindZoneScript)trackObj.interactiveObject).windForce.ToString(CultureInfo.InvariantCulture),
                         };
                         interactiveData[Idents.Tags.SaveLoadTags.Wind] = windObject;
                         break;
                     case InteractiveType.Battery:
                         var batteryObject = new JObject
                         {
-                            [Idents.Tags.SaveLoadTags.BatteryEnergy] = trackObj.interactiveObject.batteryEnergy.ToString(CultureInfo.CurrentCulture),
+                            [Idents.Tags.SaveLoadTags.BatteryEnergy] = ((Battery)trackObj.interactiveObject).batteryEnergy.ToString(CultureInfo.InvariantCulture),
                         };
                         interactiveData[Idents.Tags.SaveLoadTags.Battery] = batteryObject;
-                        break;
-                    case InteractiveType.Freezing:
                         break;
                     case InteractiveType.Boost:
                         var boostObject = new JObject
                         {
-                            [Idents.Tags.SaveLoadTags.BoostSpeed] = trackObj.interactiveObject.boostSpeed.ToString(CultureInfo.CurrentCulture),
+                            [Idents.Tags.SaveLoadTags.BoostSpeed] = ((BoostTrigger)trackObj.interactiveObject).boostSpeed.ToString(CultureInfo.InvariantCulture),
                         };
                         interactiveData[Idents.Tags.SaveLoadTags.Boost] = boostObject;
                         break;
                     case InteractiveType.Hint:
                         var hintObject = new JObject
                         {
-                            [Idents.Tags.SaveLoadTags.HintText] = trackObj.interactiveObject.hintText.text.ToString(CultureInfo.CurrentCulture),
+                            [Idents.Tags.SaveLoadTags.HintText] = ((Hint)trackObj.interactiveObject).hintText.text.ToString(CultureInfo.InvariantCulture),
                         };
                         interactiveData[Idents.Tags.SaveLoadTags.Hint] = hintObject;
                         break;
-                    case InteractiveType.Lamp:
-                        break;
-                    case InteractiveType.Draw:
-                        break;
-                    case InteractiveType.Door:
-                        break;
                     case InteractiveType.Port:
-                        break;
-                    case InteractiveType.SecureCamera:
-                        break;
-                    case InteractiveType.ElectroGate:
-                        break;
-                    case InteractiveType.Panel:
-                        break;
-                    case InteractiveType.Button:
-                        break;
-                    case InteractiveType.Terminal:
+                        var portObject = new JObject
+                        {
+                            [Idents.Tags.SaveLoadTags.HasPassword] = ((Port)trackObj.interactiveObject).hasPassword,
+                            [Idents.Tags.SaveLoadTags.PortPassword] =
+                                ((Port)trackObj.interactiveObject).portPassword.Password.ToString(CultureInfo
+                                    .InvariantCulture)
+                        };
+                        interactiveData[Idents.Tags.SaveLoadTags.Port] = portObject;
                         break;
                     case InteractiveType.TrMessage:
+                        var triggerMessage = (TriggerMessage)trackObj.interactiveObject;
                         var soundObject = new JObject
                         {                            
-                            [Idents.Tags.SaveLoadTags.TriggerMessageHint] = trackObj.interactiveObject.text3D,
-                            [Idents.Tags.SaveLoadTags.TriggerMessageSound] = trackObj.interactiveObject.sound_index,
+                            [Idents.Tags.SaveLoadTags.TriggerMessageHint] = triggerMessage.triggerText,
+                            [Idents.Tags.SaveLoadTags.TriggerMessageSound] = triggerMessage.soundIndex,
                         };
                         interactiveData[Idents.Tags.SaveLoadTags.TriggerMessage] = soundObject;
                         break;
                     case InteractiveType.MagnetKiller:
                         var magnetKillerObject = new JObject
                         {
-                            [Idents.Tags.SaveLoadTags.MagnetForce] = trackObj.interactiveObject.magnetForce.ToString(CultureInfo.CurrentCulture)
+                            [Idents.Tags.SaveLoadTags.MagnetForce] = ((MagnetKiller)trackObj.interactiveObject).magnetForce.ToString(CultureInfo.InvariantCulture),
+                            [Idents.Tags.SaveLoadTags.MagnetRotateSpeed] = ((MagnetKiller)trackObj.interactiveObject).rotationSpeed.ToString(CultureInfo.InvariantCulture)
                         };
-                        interactiveData[Idents.Tags.SaveLoadTags.Magnet] = magnetKillerObject;
-                        break;
-                    case InteractiveType.PitStop:
+                        interactiveData[Idents.Tags.SaveLoadTags.MagnetKiller] = magnetKillerObject;
                         break;
                     case InteractiveType.Text3D:
                         var text3dObject = new JObject
                         {
                             [Idents.Tags.SaveLoadTags.Text3DText] =
-                                trackObj.interactiveObject.text3D.ToString(CultureInfo.CurrentCulture)
+                                ((TextWriter3D)trackObj.interactiveObject).text3D.ToString(CultureInfo.InvariantCulture)
                         };
                         interactiveData[Idents.Tags.SaveLoadTags.Text3D] = text3dObject;
                         break;
@@ -168,8 +160,6 @@ namespace Drone
                             [Idents.Tags.SaveLoadTags.PortalMap] = portal.GetMap()
                         };
                         interactiveData[Idents.Tags.SaveLoadTags.Portal] = portalObject;
-                        break;
-                    case InteractiveType.None:
                         break;
                 }
 
@@ -203,23 +193,24 @@ namespace Drone
                 var jTokenDamage = property.Value[Idents.Tags.SaveLoadTags.Damage]!.Value<string>();
 
                 var objectName = jTokenObjectName.Substring(0, jTokenObjectName.IndexOf('('));
-                var position = TrackBuilderUtils.ParseVector3(jTokenPosition);
-                var rotation = TrackBuilderUtils.ParseVector3(jTokenRotation);
-                var scale = TrackBuilderUtils.ParseVector3(jTokenScale);
+                var position = ParseVector3(jTokenPosition);
+                var rotation = ParseVector3(jTokenRotation);
+                var scale =    ParseVector3(jTokenScale);
                 var layer = int.Parse(jTokenLayer);
-                var yOffset = float.Parse(jTokenYOffset);
-                var maxMouseDistance = float.Parse(jTokenMaxMouseDistance);
-                var damage = float.Parse(jTokenDamage);
+                var yOffset = float.Parse(jTokenYOffset, CultureInfo.InvariantCulture);
+                var maxMouseDistance = float.Parse(jTokenMaxMouseDistance, CultureInfo.InvariantCulture);
+                var damage = float.Parse(jTokenDamage, CultureInfo.InvariantCulture);
                 
                 var jTokenInteractive = property.Value[Idents.Tags.SaveLoadTags.Interactive];
 
-                var isActive = false;
+                bool isActive = false, hasPassword = false;
                 var colorIndex = 0;
                 float windMillRotationSpeed = 0, magnetForce = 0, pendulumMoveSpeed = 0, 
                     leftPendulumAngle = 0, rightPendulumAngle = 0, windForce = 0, 
-                    batteryEnergy = 0, boostSpeed = 0;
-                string hintText = "", text3D = "", portalMap = "";
-                int sound_index = 0;
+                    batteryEnergy = 0, boostSpeed = 0, magnetKillerRotateSpeed = 0;
+                string hintText = "", text3D = "", portalMap = "", triggerMessageText = "",
+                    portPassword = "";
+                var soundIndex = 0;
 
                 if (jTokenInteractive != null)
                 {
@@ -235,13 +226,25 @@ namespace Drone
                     var jTokenText3d = jTokenInteractive[Idents.Tags.SaveLoadTags.Text3D];
                     var jTokenPortal = jTokenInteractive[Idents.Tags.SaveLoadTags.Portal];
                     var jTokenTriggerMessage = jTokenInteractive[Idents.Tags.SaveLoadTags.TriggerMessage];
+                    var jTokenPort = jTokenInteractive[Idents.Tags.SaveLoadTags.Port];
+                    var jTokenMagnetKiller = jTokenInteractive[Idents.Tags.SaveLoadTags.MagnetKiller];
                     
                     windMillRotationSpeed = jTokenWindmill != null
                         ? jTokenWindmill[Idents.Tags.SaveLoadTags.WindMillRotateSpeed]!.Value<float>()
                         : 0f;
 
+                    
                     magnetForce = jTokenMagnet != null
                         ? jTokenMagnet[Idents.Tags.SaveLoadTags.MagnetForce]!.Value<float>()
+                        : 0f;
+
+                    if (jTokenMagnet == null)
+                        magnetForce = jTokenMagnetKiller != null
+                            ? jTokenMagnetKiller[Idents.Tags.SaveLoadTags.MagnetForce]!.Value<float>()
+                            : 0f;
+
+                    magnetKillerRotateSpeed = jTokenMagnetKiller != null
+                        ? jTokenMagnetKiller[Idents.Tags.SaveLoadTags.MagnetRotateSpeed]!.Value<float>()
                         : 0f;
 
                     pendulumMoveSpeed = jTokenPendulum != null
@@ -280,13 +283,19 @@ namespace Drone
                         ? jTokenPortal[Idents.Tags.SaveLoadTags.PortalMap]!.Value<string>()
                         : "";
                     
-                    hintText = jTokenTriggerMessage != null
+                    triggerMessageText = jTokenTriggerMessage != null
                         ? jTokenTriggerMessage[Idents.Tags.SaveLoadTags.TriggerMessageHint]!.Value<string>()
                         : "";
 
-                    sound_index = jTokenTriggerMessage != null
+                    soundIndex = jTokenTriggerMessage != null
                         ? jTokenTriggerMessage[Idents.Tags.SaveLoadTags.TriggerMessageSound]!.Value<int>()
                         : 0;
+
+                    hasPassword = jTokenPort != null && jTokenPort[Idents.Tags.SaveLoadTags.HasPassword]!.Value<bool>();
+
+                    portPassword = jTokenPort != null
+                        ? jTokenPort[Idents.Tags.SaveLoadTags.PortPassword]!.Value<string>()
+                        : "777";
                 }
 
                 var objInfo = new GameObjectInfo
@@ -312,7 +321,11 @@ namespace Drone
                     HintText = hintText,
                     Text3d = text3D,
                     PortalMap = portalMap,
-                    SoundIndex = sound_index,
+                    SoundIndex = soundIndex,
+                    TriggerMessageText = triggerMessageText,
+                    HasPassword = hasPassword,
+                    PortPassword = portPassword,
+                    MagnetKillerRotateSpeed = magnetKillerRotateSpeed,
                 };
                 
                 result.Add(objInfo);
@@ -325,7 +338,18 @@ namespace Drone
 
         private static string FormatVector3(Vector3 vector)
         {
-            return vector.x + " " + vector.y + " " + vector.z;
+            return vector.x.ToString(CultureInfo.InvariantCulture) + " " +
+                   vector.y.ToString(CultureInfo.InvariantCulture) + " " +
+                   vector.z.ToString(CultureInfo.InvariantCulture);
+        }
+        
+        public static Vector3 ParseVector3(string str)
+        {
+            var values = str.Split(' ');
+            var x = float.Parse(values[0], CultureInfo.InvariantCulture);
+            var y = float.Parse(values[1], CultureInfo.InvariantCulture);
+            var z = float.Parse(values[2], CultureInfo.InvariantCulture);
+            return new Vector3(x, y, z);
         }
     }
 }

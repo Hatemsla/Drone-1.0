@@ -8,6 +8,7 @@ namespace Drone.Builder
     public class MagnetKiller : InteractiveObject
     {
         public float rotationSpeed;
+        public float magnetForce;
         [SerializeField] private Magnet magnet;
         [SerializeField] private Transform leftRotor;
         [SerializeField] private Transform rightRotor;
@@ -49,13 +50,12 @@ namespace Drone.Builder
 
         private void Update()
         {
-            if (CheckColorActivChange(selectedColorOption))
+            if (CheckColorActiveChange(selectedColorOption))
             {
                 isActive = !isActive;
                 SetActive(isActive);
             } 
         }
-
 
         private void OnDestroy()
         {
@@ -113,12 +113,12 @@ namespace Drone.Builder
         public override void SetActive(bool active)
         {
             isActive = active;
-            SetColor(GetColorFromOption((ColorOption)color_index));
+            SetColor(GetColorFromOption((ColorOption)colorIndex));
         }
 
         public override void SetColorIndex(int value)
         {
-            color_index = value;
+            colorIndex = value;
             SetColor(GetColorFromOption((ColorOption)value));
         }
     }

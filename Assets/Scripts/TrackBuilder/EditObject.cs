@@ -133,38 +133,42 @@ namespace Drone.Builder
 
         public void OnWindmillRotationSpeedChanged(float value)
         {
-            currentObject.interactiveObject.windMillRotateSpeed = value;
+            ((Windmill)currentObject.interactiveObject).windMillRotateSpeed = value;
         }
         
         public void OnMagnetForceChanged(float value)
         {
-            currentObject.interactiveObject.magnetForce = value;
+            if(currentObject.interactiveObject is MagnetKiller magnetKiller)
+                magnetKiller.magnetForce = value;
+            else if (currentObject.interactiveObject is RigidbodyMagnet rigidbodyMagnet)
+                rigidbodyMagnet.magnetForce = value;
         }
 
         public void OnPendulumSpeedChanged(float value)
         {
-            currentObject.interactiveObject.pendulumMoveSpeed = value;
+            ((Pendulum)currentObject.interactiveObject).pendulumMoveSpeed = value;
         }
 
         public void OnPendulumAngleChanged(float value)
         {
-            currentObject.interactiveObject.rightPendulumAngle = value;
-            currentObject.interactiveObject.leftPendulumAngle = -value;
+            var pendulum = (Pendulum)currentObject.interactiveObject;
+            pendulum.rightPendulumAngle = value;
+            pendulum.leftPendulumAngle = -value;
         }
 
         public void OnWindZoneForceChanged(float value)
         {
-            currentObject.interactiveObject.windForce = value;
+            ((WindZoneScript)currentObject.interactiveObject).windForce = value;
         }
 
         public void OnBatteryEnergyChanged(float value)
         {
-            currentObject.interactiveObject.batteryEnergy = value;
+            ((Battery)currentObject.interactiveObject).batteryEnergy = value;
         }
 
         public void OnBoostChanged(float value)
         {
-            currentObject.interactiveObject.boostSpeed = value;
+            ((BoostTrigger)currentObject.interactiveObject).boostSpeed = value;
         }
 
         public void OnHintTextChanged(string value)
@@ -173,13 +177,13 @@ namespace Drone.Builder
             {
                 text3D.Text = value;
             }
-            else if (currentObject.interactiveObject is TriggerMassege triggerMassege)
+            else if (currentObject.interactiveObject is TriggerMessage triggerMassege)
             {
-                triggerMassege.text3D = value;
+                triggerMassege.triggerText = value;
             }
             else
             {
-                currentObject.interactiveObject.hintText.text = value;
+                ((Hint)currentObject.interactiveObject).hintText.text = value;
             }
         }
 
@@ -310,7 +314,7 @@ namespace Drone.Builder
         public void OnSetSoundObject(int value)
         {
             Debug.Log("SetSound");
-            if (currentObject.interactiveObject is TriggerMassege TrMessage)
+            if (currentObject.interactiveObject is TriggerMessage TrMessage)
             {
                 Debug.Log(value);
 

@@ -6,6 +6,7 @@ namespace Drone
         {
             public static class SaveLoadTags
             {
+                // Save data names
                 public const string ObjectName = "name";
                 public const string Position = "position";
                 public const string Rotation = "rotation";
@@ -25,11 +26,15 @@ namespace Drone
                 public const string HintText = "hintText";
                 public const string ColorIndex = "colorIndex";
                 public const string IsActive = "isActive";
-                public const string Text3DText = "Text";
-                public const string PortalMap = "Text";
-                public const string TriggerMessage = "TriggerMessage";
-
-
+                public const string Text3DText = "text3d";
+                public const string PortalMap = "portalMapName";
+                public const string TriggerMessageHint = "triggerMessageHint";
+                public const string TriggerMessageSound = "triggerMessageSound";
+                public const string HasPassword = "hasPassword";
+                public const string PortPassword = "portPassword";
+                public const string MagnetRotateSpeed = "magnetRotateSpeed";
+                
+                // Interactive objects names
                 public const string Windmill = "Windmill";
                 public const string Magnet = "Magnet";
                 public const string Pendulum = "Pendulum";
@@ -40,10 +45,9 @@ namespace Drone
                 public const string Interactive = "Interactive";
                 public const string Text3D = "Text3D";
                 public const string Portal = "Portal";
-                public const string TriggerMessageHint = "TriggerMessageHint";
-                public const string TriggerMessageSound = "TriggerMessageSound";
-                
-
+                public const string TriggerMessage = "TriggerMessage";
+                public const string Port = "Port";
+                public const string MagnetKiller = "MagnetKiller";
             }
             
             public static class PromptText
@@ -85,6 +89,20 @@ namespace Drone
             public const string Blue1A5Fc1 = "1A5FC1";
             public const string Green52Ff39 = "52FF39";
             public const string Turquoise00Ebff = "00EBFF";
+        }
+        
+        public static class Layers
+        {
+            public const string FloorConnection = "FloorConnection";
+            public const string WallConnection = "WallConnection";
+            public const string SlantConnection = "SlantConnection";
+            public const string IgnoreRaycast = "Ignore Raycast";
+            public const string Hint = "Hint";
+            public const string Draw = "Draw";
+            public const string Intangible = "Intangible";
+            public const string Text3D = "Text3D";
+            public const string TrackGround = "TrackGround";
+            public const string Track = "Track";
         }
     }
 }

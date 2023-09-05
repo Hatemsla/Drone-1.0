@@ -5,23 +5,23 @@ namespace Drone.Builder
 {
     public class HelpMessage : MonoBehaviour
     {
-        private string _massgeText;
+        private string _messageText;
 
         [SerializeField] private TMP_Text message;
 
-        public string MassgeText
+        public string MessageText
         {
-            get => _massgeText;
+            get => _messageText;
             set
             {
-                _massgeText = value;
+                _messageText = value;
                 OnPromptTextChanged();
             }
         }
 
         private void OnPromptTextChanged()
         {
-            message.text = MassgeText;
+            message.text = MessageText;
         }
 
         public void SetActive(bool active)
@@ -31,7 +31,7 @@ namespace Drone.Builder
 
         public void ChangeMessageText(string newText)
         {
-            MassgeText = newText;
+            MessageText = newText;
         }
     }
 }

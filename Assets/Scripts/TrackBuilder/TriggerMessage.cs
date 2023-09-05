@@ -1,15 +1,14 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using Drone;
 using UnityEngine.Networking;
 using System.IO;
 
 namespace Drone.Builder
 {
-    public class TriggerMassege : InteractiveObject
+    public class TriggerMessage : InteractiveObject
     {
         public string triggerText;
+        public int soundIndex;
         [SerializeField] private HelpMessage message;
         public GameObject TriggerObject;
         private Renderer objectRenderer;
@@ -134,7 +133,7 @@ namespace Drone.Builder
 
         public override void SetColorIndex(int value)
         {
-            color_index = value;
+            colorIndex = value;
             selectedColorOption = (ColorOption)value;
             SetColor(GetColorFromOption(selectedColorOption));
         }
@@ -165,7 +164,7 @@ namespace Drone.Builder
 
         public void SetSoundFile(int soundIndex)
         {
-            sound_index = soundIndex;
+            this.soundIndex = soundIndex;
             string[] files = Directory.GetFiles(Application.dataPath + "/SoundsSource/");
             filePath = files[soundIndex];
             Debug.Log(filePath);

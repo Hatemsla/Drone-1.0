@@ -7,87 +7,46 @@ namespace Drone.Builder
     public abstract class InteractiveObject : MonoBehaviour
     {
         public bool isActive = true;
-        [HideInInspector] public float windMillRotateSpeed;
-        [HideInInspector] public float magnetForce;
-        [HideInInspector] public float pendulumMoveSpeed;
-        [HideInInspector] public float leftPendulumAngle;
-        [HideInInspector] public float rightPendulumAngle;
-        [HideInInspector] public float windForce;
-        [HideInInspector] public float batteryEnergy;
-        [HideInInspector] public float boostSpeed;
-        [HideInInspector] public float TimeDelay;
+        public int colorIndex;
 
-        [HideInInspector] public bool isLampTurn = true;
-        [HideInInspector] public TMP_Text hintText;
-        [HideInInspector] public string text3D;
-        [HideInInspector] public int color_index;
-        [HideInInspector] public bool ishacked;
-        [HideInInspector] public float buttonDelay;
-        [HideInInspector] public bool hasPassword;
-
-        [HideInInspector] public string password;
-        [HideInInspector] public int sound_index;
-
-
-
-        private protected bool isActiv;
-        private protected bool isActivB;
-        private protected bool previousIsActiv;
-
+        private bool _isActiveB;
+        private bool _previousIsActive;
 
         public abstract void SetActive(bool active);
         public abstract void SetColorIndex(int color);
 
-        private protected bool CheckColorActivChange(ColorOption option)
+        private protected bool CheckColorActiveChange(ColorOption option)
         {
-            if (option == ColorOption.Белый)
+            _isActiveB = option switch
             {
-                isActivB = BuilderManager.Instance.isActivWhite;
-            }
-            else if (option == ColorOption.Красный)
+                ColorOption.Белый => BuilderManager.Instance.isActivWhite,
+                ColorOption.Красный => BuilderManager.Instance.isActivRed,
+                ColorOption.Зелёный => BuilderManager.Instance.isActivGreen,
+                ColorOption.Жёлтый => BuilderManager.Instance.isActivYellow,
+                ColorOption.Синий => BuilderManager.Instance.isActivBlue,
+                _ => _isActiveB
+            };
+
+            if (_previousIsActive != _isActiveB)
             {
-                isActivB = BuilderManager.Instance.isActivRed;
-            }
-            else if (option == ColorOption.Зелёный)
-            {
-                isActivB = BuilderManager.Instance.isActivGreen;
-            }
-            else if (option == ColorOption.Жёлтый)
-            {
-                isActivB = BuilderManager.Instance.isActivYellow;
-            }
-            else if (option == ColorOption.Синий)
-            {
-                isActivB = BuilderManager.Instance.isActivBlue;
-            }
-            if (previousIsActiv != isActivB)
-            {
-                previousIsActiv = isActivB;
+                _previousIsActive = _isActiveB;
                 return true;
             }
-            else
-            {
-                return false;
-            }
+
+            return false;
         }
 
         private protected static Color GetColorFromOption(ColorOption option)
         {
-            switch (option)
+            return option switch
             {
-                case ColorOption.Белый:
-                    return Color.white;
-                case ColorOption.Красный:
-                    return Color.red;
-                case ColorOption.Зелёный:
-                    return Color.green;
-                case ColorOption.Жёлтый:
-                    return Color.yellow;
-                case ColorOption.Синий:
-                    return Color.blue;
-                default:
-                    return Color.white;
-            }
+                ColorOption.Белый => Color.white,
+                ColorOption.Красный => Color.red,
+                ColorOption.Зелёный => Color.green,
+                ColorOption.Жёлтый => Color.yellow,
+                ColorOption.Синий => Color.blue,
+                _ => Color.white
+            };
         }
     }
 }

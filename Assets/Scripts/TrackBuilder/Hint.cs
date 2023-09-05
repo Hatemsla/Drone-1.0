@@ -1,10 +1,11 @@
 ﻿using TMPro;
-using UnityEngine;
 
 namespace Drone.Builder
 {
     public class Hint : InteractiveObject
     {
+        public TMP_Text hintText;
+        
         public override void SetActive(bool active)
         {
             

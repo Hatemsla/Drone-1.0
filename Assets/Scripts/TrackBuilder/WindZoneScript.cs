@@ -6,7 +6,7 @@ namespace Drone.Builder
 {
     public class WindZoneScript : InteractiveObject
     {
-
+        public float windForce;
         public GameObject colorObject;
         private Renderer objectRenderer;
         public ColorOption selectedColorOption;
@@ -39,12 +39,12 @@ namespace Drone.Builder
         public override void SetActive(bool active)
         {
             isActive = active;
-            SetColor(GetColorFromOption((ColorOption)color_index));
+            SetColor(GetColorFromOption((ColorOption)colorIndex));
         }
 
         public override void SetColorIndex(int value)
         {
-            color_index = value;
+            colorIndex = value;
             SetColor(GetColorFromOption((ColorOption)value));
         }
     }

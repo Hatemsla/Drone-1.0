@@ -76,7 +76,7 @@ namespace Drone.Builder
                     }
                 }
                     
-                if (hit.collider.transform.root.gameObject.layer == LayerMask.NameToLayer("TrackGround"))
+                if (hit.collider.transform.root.gameObject.layer == LayerMask.NameToLayer(Idents.Layers.TrackGround))
                     AddSelection(hit.collider.transform.root.gameObject);
             }
         }
@@ -100,21 +100,23 @@ namespace Drone.Builder
                             {
                                 var sizeMultiplier = (selectedTrackObject.Scale.x - 1f) * 2.5f;
                                 var offset = _selectedConnection.GetObjectOffset(otherConnection, sizeMultiplier);
-                                selectedObject.transform.position = otherConnection.transform.position + offset;
-                                selectedObject.transform.rotation = otherConnection.transform.rotation;
+                                var otherConnectionTransform = otherConnection.transform;
+                                selectedObject.transform.position = otherConnectionTransform.position + offset;
+                                selectedObject.transform.rotation = otherConnectionTransform.rotation;
                                 return;
                             }
                             case ConnectionType.Wall:
                             case ConnectionType.Slant:
-                                selectedObject.transform.position = new Vector3(otherConnection.transform.position.x,
-                                    otherConnection.transform.position.y + selectedTrackObject.yOffset,
-                                    otherConnection.transform.position.z);
+                                var otherConnectionPosition = otherConnection.transform.position; 
+                                selectedObject.transform.position = new Vector3(otherConnectionPosition.x,
+                                    otherConnectionPosition.y + selectedTrackObject.yOffset,
+                                    otherConnectionPosition.z);
                                 return;
                         }
                     }
                 }
                     
-                if (hit.collider.transform.root.gameObject.layer == LayerMask.NameToLayer("TrackGround"))
+                if (hit.collider.transform.root.gameObject.layer == LayerMask.NameToLayer(Idents.Layers.TrackGround))
                     Select(hit.collider.transform.root.gameObject);
             }
         }
@@ -122,15 +124,12 @@ namespace Drone.Builder
         public void Move()
         {
             if (selectedObject == null) return;
-            TrackBuilderUtils.ChangeLayerRecursively(selectedObject.transform.root.transform, LayerMask.NameToLayer("Track"));
+            TrackBuilderUtils.ChangeLayerRecursively(selectedObject.transform.root.transform, LayerMask.NameToLayer(Idents.Layers.Track));
             TrackBuilderUtils.TurnTrackObjects(selectedObjects, true);
-            BuilderManager.Instance.pendingObject = selectedObject.gameObject;
-            BuilderManager.Instance.pendingObjects = new List<GameObject>(selectedObjects);
-            BuilderManager.Instance.currentObjectType = selectedObject.GetComponentInParent<TrackObject>();
-            BuilderManager.Instance.currentObjectType.isActive = true;
+            BuilderManager.Instance.MoveObject(selectedObject, selectedObjects);
         }
 
-        public void Delete()
+        private void Delete()
         {
             if (selectedObject == null) return;
             if (selectedTrackObject.objectType == ObjectsType.Drone) return;
@@ -142,9 +141,8 @@ namespace Drone.Builder
                 Destroy(selectedObj);
             }
 
-            BuilderManager.Instance.pendingObjects.Clear();
+            BuilderManager.Instance.DeleteObject();
             selectedObjects.Clear();
-            BuilderManager.Instance.pendingObject = null;
             editObject.HideEditMenu();
         }
 
@@ -191,13 +189,13 @@ namespace Drone.Builder
             switch (selectedTrackObject.objectType)
             {
                 case ObjectsType.Floor:
-                    layerMask = TrackBuilderUtils.SetLayerMask("FloorConnection");
+                    layerMask = TrackBuilderUtils.SetLayerMask(Idents.Layers.FloorConnection);
                     break;
                 case ObjectsType.Wall:
-                    layerMask = TrackBuilderUtils.SetLayerMask("WallConnection");
+                    layerMask = TrackBuilderUtils.SetLayerMask(Idents.Layers.WallConnection);
                     break;
                 case ObjectsType.Slant:
-                    layerMask = TrackBuilderUtils.SetLayerMask("SlantConnection");
+                    layerMask = TrackBuilderUtils.SetLayerMask(Idents.Layers.SlantConnection);
                     break;
             }
             _selectedConnection = selectedObject.GetComponentInChildren<Connection>();

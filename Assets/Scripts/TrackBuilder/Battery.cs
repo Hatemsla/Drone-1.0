@@ -6,6 +6,7 @@ namespace Drone.Builder
 {
     public class Battery : InteractiveObject
     {
+        public float batteryEnergy;
         [SerializeField] private AudioClip pickupSound;
         
         private void Start()
