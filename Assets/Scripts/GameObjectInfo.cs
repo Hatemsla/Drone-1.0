@@ -31,5 +31,7 @@ namespace Drone
         public bool HasPassword { get; set; }
         public string PortPassword { get; set; }
         public float MagnetKillerRotateSpeed { get; set; }
+        public float MagnetKillerDamage { get; set; }
+        public float MagnetKillerDamageInterval { get; set; }
     }
 }

@@ -1,5 +1,5 @@
 {
-  "-68230": {
+  "-275422": {
     "name": "BuilderDrone(Clone)",
     "position": "0 0.2 0.65",
     "rotation": "0 0 0",
@@ -9,7 +9,7 @@
     "maxMouseDistance": "0",
     "damage": "1"
   },
-  "-68668": {
+  "-275856": {
     "name": "TrapWindmill(Clone)",
     "position": "-3 1.2 16.9",
     "rotation": "0 0 0",
@@ -26,7 +26,7 @@
       }
     }
   },
-  "-68790": {
+  "-275978": {
     "name": "Floor1(Clone)",
     "position": "0.7 -7.500278E-19 6.8",
     "rotation": "0 0 0",
@@ -36,7 +36,7 @@
     "maxMouseDistance": "4",
     "damage": "1"
   },
-  "-68962": {
+  "-276150": {
     "name": "Floor1(Clone)",
     "position": "-4.3 -7.500278E-19 6.8",
     "rotation": "0 0 0",
@@ -46,7 +46,7 @@
     "maxMouseDistance": "4",
     "damage": "1"
   },
-  "-69712": {
+  "-276322": {
     "name": "Terminal(Clone)",
     "position": "8.157085 2.25 2.500796",
     "rotation": "0 50 0",
@@ -60,7 +60,7 @@
       "isActive": true
     }
   },
-  "-69924": {
+  "-276442": {
     "name": "Port(Clone)",
     "position": "-11.47068 1.074 6.207229",
     "rotation": "0 310 0",
@@ -75,6 +75,59 @@
       "Port": {
         "hasPassword": true,
         "portPassword": "662"
+      }
+    }
+  },
+  "-276574": {
+    "name": "TriggerMessage(Clone)",
+    "position": "-4.8 1.8 5.6",
+    "rotation": "0 0 0",
+    "scale": "3.5 3.5 3.5",
+    "layer": "8",
+    "yOffset": "1.75",
+    "maxMouseDistance": "5.5",
+    "damage": "1",
+    "Interactive": {
+      "colorIndex": "0",
+      "isActive": true,
+      "TriggerMessage": {
+        "triggerMessageHint": "",
+        "triggerMessageSound": 0
+      }
+    }
+  },
+  "-276598": {
+    "name": "TriggerMessage(Clone)",
+    "position": "0.2 2.1 5",
+    "rotation": "0 0 0",
+    "scale": "4 4 4",
+    "layer": "8",
+    "yOffset": "2",
+    "maxMouseDistance": "6",
+    "damage": "1",
+    "Interactive": {
+      "colorIndex": "0",
+      "isActive": true,
+      "TriggerMessage": {
+        "triggerMessageHint": "",
+        "triggerMessageSound": 1
+      }
+    }
+  },
+  "-277066": {
+    "name": "Portal(Clone)",
+    "position": "5.401253 1.728 -1.429546",
+    "rotation": "0 5.952901E-07 0",
+    "scale": "1 1 1",
+    "layer": "8",
+    "yOffset": "1.728",
+    "maxMouseDistance": "3",
+    "damage": "1",
+    "Interactive": {
+      "colorIndex": "0",
+      "isActive": true,
+      "Portal": {
+        "portalMapName": "portalTest"
       }
     }
   }

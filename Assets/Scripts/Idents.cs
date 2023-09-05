@@ -32,7 +32,9 @@ namespace Drone
                 public const string TriggerMessageSound = "triggerMessageSound";
                 public const string HasPassword = "hasPassword";
                 public const string PortPassword = "portPassword";
-                public const string MagnetRotateSpeed = "magnetRotateSpeed";
+                public const string MagnetKillerRotateSpeed = "magnetRotateSpeed";
+                public const string MagnetKillerDamage = "magnetKillerDamage";
+                public const string MagnetKillerDamageInterval = "magnetKillerDamageInterval";
                 
                 // Interactive objects names
                 public const string Windmill = "Windmill";

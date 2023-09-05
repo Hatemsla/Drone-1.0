@@ -37,6 +37,9 @@ namespace Drone.Builder
         [SerializeField] private TMP_Text xyzScaleValue;
         [SerializeField] private TMP_Text windmillRotSpeedValue;
         [SerializeField] private TMP_Text magnetForceValue;
+        [SerializeField] private TMP_Text magnetKillerRotateSpeedValue;
+        [SerializeField] private TMP_Text magnetKillerDamageValue;
+        [SerializeField] private TMP_Text magnetKillerDamageIntervalValue;
         [SerializeField] private TMP_Text pendulumSpeedValue;
         [SerializeField] private TMP_Text pendulumAngleValue;
         [SerializeField] private TMP_Text windForceValue;
@@ -59,6 +62,7 @@ namespace Drone.Builder
         [SerializeField] private GameObject colorPanel;
         [SerializeField] private GameObject windmillPanel;
         [SerializeField] private GameObject magnetPanel;
+        [SerializeField] private GameObject magnetKillerPanel;
         [SerializeField] private GameObject pendulumPanel;
         [SerializeField] private GameObject windPanel;
         [SerializeField] private GameObject batteryPanel;
@@ -94,14 +98,14 @@ namespace Drone.Builder
         };
 
         private List<string> _maps;
-        private List<string> fileList = new List<string>();
+        private List<string> _sounds;
 
         private void Start()
         {
             _maps = LevelManager.LoadMaps().ToList();
             mapsDropdown.AddOptions(_maps);
-            FillDropdownWithOptions();
-            
+            _sounds = LoadSounds().ToList();
+            soundsDropdown.AddOptions(_sounds);
         }
 
         public void SetEditPanelParams(string objName, float xP, float yP, float zP, float xR, float yR, float zR, float xyzS, TrackObject trackObject)
@@ -144,11 +148,14 @@ namespace Drone.Builder
                     color.value = trackObject.interactiveObject.colorIndex;
                     break;
                 case InteractiveType.MagnetKiller:
-                    TurnInteractivePanels(magnetPanel, isActivePanel, colorPanel);
+                    TurnInteractivePanels(magnetPanel, magnetKillerPanel, isActivePanel, colorPanel);
                     var magnetKiller = (MagnetKiller)trackObject.interactiveObject;
                     magnetForce.value = magnetKiller.magnetForce;
                     magnetForceValue.text =
                         magnetKiller.magnetForce.ToString("f1", CultureInfo.CurrentCulture);
+                    magnetKillerRotateSpeedValue.text = magnetKiller.rotationSpeed.ToString("f1", CultureInfo.CurrentCulture);
+                    magnetKillerDamageValue.text = magnetKiller.baseDamage.ToString("f1", CultureInfo.CurrentCulture);
+                    magnetKillerDamageIntervalValue.text = magnetKiller.damageInterval.ToString("f1", CultureInfo.CurrentCulture);
                     activeToggle.isOn = trackObject.interactiveObject.isActive;
                     color.value = trackObject.interactiveObject.colorIndex;
                     break;
@@ -237,8 +244,6 @@ namespace Drone.Builder
                     hintInput.text = ((TriggerMessage)trackObject.interactiveObject).triggerText;
                     color.value = trackObject.interactiveObject.colorIndex;
                     soundsDropdown.value = ((TriggerMessage)trackObject.interactiveObject).soundIndex;
-
-                    // soundsDropdown.value = trackObject.interactiveObject.sound_index;
                     break;
                 case InteractiveType.Terminal:
                     TurnInteractivePanels(isActivePanel);
@@ -253,7 +258,7 @@ namespace Drone.Builder
                     break;
                 case InteractiveType.Portal:
                     TurnInteractivePanels(mapsPanel);
-                    mapsDropdown.value = _maps.ToList().IndexOf(((PortalObject)trackObject.interactiveObject).GetMap());
+                    mapsDropdown.value = _maps.IndexOf(((PortalObject)trackObject.interactiveObject).GetMap());
                     break;
             }
         }
@@ -277,22 +282,14 @@ namespace Drone.Builder
             passwordHint.enabled = active;
         }
 
-        public void FillDropdownWithOptions()
+        private string[] LoadSounds()
         {
-            fileList.AddRange(Directory.GetFiles(Application.dataPath + "/SoundsSource/"));
-            soundsDropdown.ClearOptions();
-            List<TMP_Dropdown.OptionData> dropdownOptions = new List<TMP_Dropdown.OptionData>();
-            foreach (string fileName in fileList)
-            {
-                if (fileName.EndsWith("mp3"))
-                {
-                    TMP_Dropdown.OptionData option = new TMP_Dropdown.OptionData(fileName.Substring((Application.dataPath + "/SoundsSource/").Length));
+            var soundFiles = Directory.GetFiles(Path.Combine(Application.dataPath, "SoundsSource"), "*.mp3");
 
-                    dropdownOptions.Add(option);
-                }
-            }
-            soundsDropdown.AddOptions(dropdownOptions);
+            for (var i = 0; i < soundFiles.Length; i++)
+                soundFiles[i] = Path.GetFileNameWithoutExtension(soundFiles[i]);
+
+            return soundFiles;
         }
-
     }
 }

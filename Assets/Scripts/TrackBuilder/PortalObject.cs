@@ -35,8 +35,6 @@ namespace Drone.Builder
             GameManager.Instance.gameData.levelName = map;
             BuilderManager.Instance.levelName = map;
             
-            // BuilderManager.Instance.StartLoadNewLevel();
-            
             GameManager.Instance.gameData.isLoadLevel = false;
             GameManager.Instance.gameData.isStartBuilder = true;
             GameManager.Instance.gameData.isTeleportLevel = true;

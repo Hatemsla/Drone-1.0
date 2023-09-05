@@ -46,7 +46,6 @@ namespace Drone.Builder
         public GameObject copyObject;
         public TrackObject currentObjectType;
         public Vector3 mousePos;
-        public Transform targetCheckpoint;
         public List<GameObject> pendingObjects = new();
         public List<GameObject> objects;
         public List<GameObject> objectsPool;
@@ -313,15 +312,8 @@ namespace Drone.Builder
             currentObjectType.yOffset += _objectHeightValue * 2 * Time.deltaTime;
         }
 
-        private void UndoCommand()
-        {
-            undoRedoManager.UndoCommand();
-        }
-
-        private void RedoCommand()
-        {
-            undoRedoManager.RedoCommand();
-        }
+        private void UndoCommand() => undoRedoManager.UndoCommand();
+        private void RedoCommand() => undoRedoManager.RedoCommand();
 
         private void PasteObject()
         {
@@ -405,58 +397,7 @@ namespace Drone.Builder
                 return;
             }
 
-            targetCheckpoint = droneBuilderCheckNode.nodes[droneBuilderCheckNode.currentNode].transform;
-            var realPos = cameraBrain.OutputCamera.WorldToScreenPoint(targetCheckpoint.position);
-            var rect = new Rect(0, 0, Screen.width, Screen.height);
-
-            var outPos = realPos;
-            float direction = 1;
-
-            builderUI.pathArrow.GetComponent<Image>().sprite = builderUI.outOfScreenIcon;
-
-            if (!IsBehind(targetCheckpoint.position)) // если цель спереди
-            {
-                if (rect.Contains(realPos)) // и если цель в окне экрана
-                {
-                    builderUI.pathArrow.GetComponent<Image>().sprite = builderUI.pointerIcon;
-                }
-            }
-            else // если цель cзади
-            {
-                realPos = -realPos;
-                outPos = new Vector3(realPos.x, 0, 0); // позиция иконки - снизу
-                if (cameraBrain.transform.position.y < targetCheckpoint.position.y)
-                {
-                    direction = -1;
-                    outPos.y = Screen.height; // позиция иконки - сверху				
-                }
-            }
-
-            // ограничиваем позицию областью экрана
-            var offset = builderUI.pathArrow.sizeDelta.x / 2;
-            outPos.x = Mathf.Clamp(outPos.x, offset, Screen.width - offset);
-            outPos.y = Mathf.Clamp(outPos.y, offset, Screen.height - offset);
-
-            var pos = realPos - outPos; // направление к цели из PointerUI 
-
-            RotatePointer(direction * pos);
-
-            builderUI.pathArrow.sizeDelta = new Vector2(_startPointerSize.x / 100 * interfaceScale,
-                _startPointerSize.y / 100 * interfaceScale);
-            builderUI.pathArrow.position = outPos;
-        }
-
-        private bool IsBehind(Vector3 point) // true если point сзади камеры
-        {
-            var forward = cameraBrain.transform.TransformDirection(Vector3.forward);
-            var toOther = point - cameraBrain.transform.position;
-            return Vector3.Dot(forward, toOther) < 0;
-        }
-
-        private void RotatePointer(Vector2 direction) // поворачивает PointerUI в направление direction
-        {
-            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-            builderUI.pathArrow.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+            Pointer.PointerPosition(builderUI, droneBuilderCheckNode, cameraBrain, _startPointerSize, interfaceScale);
         }
 
         private IEnumerator EndLevel()

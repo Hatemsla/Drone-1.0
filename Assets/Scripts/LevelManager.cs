@@ -141,7 +141,9 @@ namespace Drone
                         var magnetKillerObject = new JObject
                         {
                             [Idents.Tags.SaveLoadTags.MagnetForce] = ((MagnetKiller)trackObj.interactiveObject).magnetForce.ToString(CultureInfo.InvariantCulture),
-                            [Idents.Tags.SaveLoadTags.MagnetRotateSpeed] = ((MagnetKiller)trackObj.interactiveObject).rotationSpeed.ToString(CultureInfo.InvariantCulture)
+                            [Idents.Tags.SaveLoadTags.MagnetKillerRotateSpeed] = ((MagnetKiller)trackObj.interactiveObject).rotationSpeed.ToString(CultureInfo.InvariantCulture),
+                            [Idents.Tags.SaveLoadTags.MagnetKillerDamage] = ((MagnetKiller)trackObj.interactiveObject).rotationSpeed.ToString(CultureInfo.InvariantCulture),
+                            [Idents.Tags.SaveLoadTags.MagnetKillerDamageInterval] = ((MagnetKiller)trackObj.interactiveObject).rotationSpeed.ToString(CultureInfo.InvariantCulture),
                         };
                         interactiveData[Idents.Tags.SaveLoadTags.MagnetKiller] = magnetKillerObject;
                         break;
@@ -205,9 +207,17 @@ namespace Drone
 
                 bool isActive = false, hasPassword = false;
                 var colorIndex = 0;
-                float windMillRotationSpeed = 0, magnetForce = 0, pendulumMoveSpeed = 0, 
-                    leftPendulumAngle = 0, rightPendulumAngle = 0, windForce = 0, 
-                    batteryEnergy = 0, boostSpeed = 0, magnetKillerRotateSpeed = 0;
+                float windMillRotationSpeed = 0,
+                    magnetForce = 0,
+                    pendulumMoveSpeed = 0,
+                    leftPendulumAngle = 0,
+                    rightPendulumAngle = 0,
+                    windForce = 0,
+                    batteryEnergy = 0,
+                    boostSpeed = 0,
+                    magnetKillerRotateSpeed = 0,
+                    magnetKillerDamage = 0,
+                    magnetKillerDamageInterval = 0;
                 string hintText = "", text3D = "", portalMap = "", triggerMessageText = "",
                     portPassword = "";
                 var soundIndex = 0;
@@ -232,7 +242,6 @@ namespace Drone
                     windMillRotationSpeed = jTokenWindmill != null
                         ? jTokenWindmill[Idents.Tags.SaveLoadTags.WindMillRotateSpeed]!.Value<float>()
                         : 0f;
-
                     
                     magnetForce = jTokenMagnet != null
                         ? jTokenMagnet[Idents.Tags.SaveLoadTags.MagnetForce]!.Value<float>()
@@ -243,21 +252,34 @@ namespace Drone
                             ? jTokenMagnetKiller[Idents.Tags.SaveLoadTags.MagnetForce]!.Value<float>()
                             : 0f;
 
-                    magnetKillerRotateSpeed = jTokenMagnetKiller != null
-                        ? jTokenMagnetKiller[Idents.Tags.SaveLoadTags.MagnetRotateSpeed]!.Value<float>()
-                        : 0f;
+                    if (jTokenMagnetKiller != null)
+                    {
+                        magnetKillerRotateSpeed = jTokenMagnetKiller[Idents.Tags.SaveLoadTags.MagnetKillerRotateSpeed]!
+                            .Value<float>();
+                        magnetKillerDamage =
+                            jTokenMagnetKiller[Idents.Tags.SaveLoadTags.MagnetKillerDamage]!.Value<float>();
+                        magnetKillerDamageInterval =
+                            jTokenMagnetKiller[Idents.Tags.SaveLoadTags.MagnetKillerDamageInterval]!.Value<float>();
+                    }
+                    else
+                    {
+                        magnetKillerRotateSpeed = 0;
+                        magnetKillerDamage = 0;
+                        magnetKillerDamageInterval = 0;
+                    }
 
-                    pendulumMoveSpeed = jTokenPendulum != null
-                        ? jTokenPendulum[Idents.Tags.SaveLoadTags.PendulumMoveSpeed]!.Value<float>()
-                        : 0f;
-
-                    leftPendulumAngle = jTokenPendulum != null
-                        ? jTokenPendulum[Idents.Tags.SaveLoadTags.LeftPendulumAngle]!.Value<float>()
-                        : 0f;
-
-                    rightPendulumAngle = jTokenPendulum != null
-                        ? jTokenPendulum[Idents.Tags.SaveLoadTags.RightPendulumAngle]!.Value<float>()
-                        : 0f;
+                    if (jTokenPendulum != null)
+                    {
+                        pendulumMoveSpeed = jTokenPendulum[Idents.Tags.SaveLoadTags.PendulumMoveSpeed]!.Value<float>();
+                        leftPendulumAngle = jTokenPendulum[Idents.Tags.SaveLoadTags.LeftPendulumAngle]!.Value<float>();
+                        rightPendulumAngle = jTokenPendulum[Idents.Tags.SaveLoadTags.RightPendulumAngle]!.Value<float>();
+                    }
+                    else
+                    {
+                        pendulumMoveSpeed = 0;
+                        leftPendulumAngle = 0;
+                        rightPendulumAngle = 0;
+                    }
 
                     windForce = jTokenWind != null
                         ? jTokenWind[Idents.Tags.SaveLoadTags.WindForce]!.Value<float>()
@@ -326,6 +348,8 @@ namespace Drone
                     HasPassword = hasPassword,
                     PortPassword = portPassword,
                     MagnetKillerRotateSpeed = magnetKillerRotateSpeed,
+                    MagnetKillerDamage = magnetKillerDamage,
+                    MagnetKillerDamageInterval = magnetKillerDamageInterval,
                 };
                 
                 result.Add(objInfo);

@@ -247,7 +247,7 @@ Transform:
   - {fileID: 6079284774324474964}
   - {fileID: 8496168521154868573}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &7169982299922433394
 Rigidbody:
@@ -482,9 +482,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isActive: 1
   colorIndex: 0
+  magnetForce: 1
   workSound: {fileID: 7878424432897257830}
-  magnetForce: 0.7
-  colorObject: {fileID: 6409495473910244158}
+  objectRenderer: {fileID: 6236844062673520725}
   glowIntensity: 1
   selectedColorOption: 0
 --- !u!1001 &6878861315770909614

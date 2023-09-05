@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6319815564689414100}
   - component: {fileID: 4581709652053068826}
   m_Layer: 0
-  m_Name: TriggerMassege
+  m_Name: TriggerMessage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -50,12 +50,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isActive: 1
   colorIndex: 0
-  triggerText: 
   soundIndex: 0
+  triggerText: 
   message: {fileID: 0}
-  TriggerObject: {fileID: 5592653586703615960}
   selectedColorOption: 0
-  audioSource: {fileID: 4581709652053068826}
+  mesh: {fileID: 1704998393363731879}
+  voiceover: {fileID: 4581709652053068826}
 --- !u!114 &6997068174297144503
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -76,8 +76,10 @@ MonoBehaviour:
   isActive: 0
   maxMouseDistance: 3
   damage: 1
-  objectName: 
-  objectDescription: 
+  objectName: "\u0422\u0440\u0438\u0433\u0433\u0435\u0440\u043E\u043D\u043E\u0435
+    \u0441\u043E\u043E\u0431\u0449\u0435\u043D\u0438\u0435"
+  objectDescription: "\u041C\u043E\u0436\u0435\u0442 \u0431\u044B\u0442\u044C \u0442\u0435\u043A\u0441\u0442\u043E\u043C
+    \u0438\u043B\u0438 \u0437\u0432\u0443\u043A\u043E\u043C"
   interactiveObject: {fileID: 4374906098569134990}
 --- !u!65 &6319815564689414100
 BoxCollider:
@@ -109,7 +111,7 @@ AudioSource:
   m_GameObject: {fileID: 775600014079409400}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 6187882772404905622, guid: fe0c30d9137227e4a960b65f2de2cdfa, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1

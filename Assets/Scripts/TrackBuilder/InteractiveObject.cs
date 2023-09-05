@@ -1,6 +1,4 @@
-﻿using System;
-using TMPro;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Drone.Builder
 {
@@ -34,6 +32,21 @@ namespace Drone.Builder
             }
 
             return false;
+        }
+        
+        private protected void SetColor(Color newColor, Renderer renderer, float glowIntensity)
+        {
+            if (isActive)
+            {
+                renderer.material.SetColor("_Color", newColor);
+                renderer.material.EnableKeyword("_EMISSION");
+                renderer.material.SetColor("_EmissionColor", newColor * glowIntensity);
+            }
+            else
+            {
+                renderer.material.SetColor("_Color", newColor);
+                renderer.material.DisableKeyword("_EMISSION");
+            }
         }
 
         private protected static Color GetColorFromOption(ColorOption option)

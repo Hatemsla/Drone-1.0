@@ -144,6 +144,21 @@ namespace Drone.Builder
                 rigidbodyMagnet.magnetForce = value;
         }
 
+        public void OnMagnetKillerRotateSpeedChanged(float value)
+        {
+            ((MagnetKiller)currentObject.interactiveObject).rotationSpeed = value;
+        }
+        
+        public void OnMagnetKillerDamageChanged(float value)
+        {
+            ((MagnetKiller)currentObject.interactiveObject).baseDamage = value;
+        }
+        
+        public void OnMagnetKillerDamageIntervalChanged(float value)
+        {
+            ((MagnetKiller)currentObject.interactiveObject).damageInterval = value;
+        }
+
         public void OnPendulumSpeedChanged(float value)
         {
             ((Pendulum)currentObject.interactiveObject).pendulumMoveSpeed = value;
@@ -266,7 +281,6 @@ namespace Drone.Builder
             }
             else if (currentObject.interactiveObject is ControllerPanel controllerPanel)
             {
-                Debug.Log(password);
                 controllerPanel.SetPassword(password, password.Length >= 3);
             }
         }
@@ -281,25 +295,25 @@ namespace Drone.Builder
 
         public void OnControllerPanelColorChanged(int value)
         {
-            if (currentObject.interactiveObject is ControllerPanel ControllerPanel)
+            if (currentObject.interactiveObject is ControllerPanel controllerPanel)
             {
-                ControllerPanel.set_color_index(value); 
+                controllerPanel.set_color_index(value); 
             }
         }
 
         public void OnControllerButtonColorChanged(int value)
         {
-            if (currentObject.interactiveObject is ControllerButton ControllerButton)
+            if (currentObject.interactiveObject is ControllerButton controllerButton)
             {
-                ControllerButton.set_color_index(value); 
+                controllerButton.set_color_index(value); 
             }
         }
 
         public void OnControllerButtonDelayChanged(float value)
         {
-            if (currentObject.interactiveObject is ControllerButton ControllerButton)
+            if (currentObject.interactiveObject is ControllerButton controllerButton)
             {
-                ControllerButton.set_time_value(value); 
+                controllerButton.set_time_value(value); 
             }
         }
 
@@ -313,12 +327,9 @@ namespace Drone.Builder
 
         public void OnSetSoundObject(int value)
         {
-            Debug.Log("SetSound");
-            if (currentObject.interactiveObject is TriggerMessage TrMessage)
+            if (currentObject.interactiveObject is TriggerMessage trMessage)
             {
-                Debug.Log(value);
-
-                TrMessage.SetSoundFile(value); 
+                trMessage.SetSoundFile(value); 
             }
         }
     }

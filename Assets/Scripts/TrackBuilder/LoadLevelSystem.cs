@@ -84,6 +84,8 @@ namespace Drone.Builder
                     case InteractiveType.MagnetKiller:
                         ((MagnetKiller)trackObj.interactiveObject).magnetForce = objInfo.MagnetForce;
                         ((MagnetKiller)trackObj.interactiveObject).rotationSpeed = objInfo.MagnetKillerRotateSpeed;
+                        ((MagnetKiller)trackObj.interactiveObject).baseDamage = objInfo.MagnetKillerDamage;
+                        ((MagnetKiller)trackObj.interactiveObject).damageInterval = objInfo.MagnetKillerDamageInterval;
                         break;
                     case InteractiveType.Portal:
                         ((PortalObject)trackObj.interactiveObject).SetMap(objInfo.PortalMap);

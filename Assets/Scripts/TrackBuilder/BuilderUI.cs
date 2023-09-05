@@ -42,6 +42,7 @@ namespace Drone.Builder
         public Button returnToLevelBtn;
         
         public RectTransform pathArrow;
+        public Image pathArrowImage;
         public Sprite pointerIcon;
         public Sprite outOfScreenIcon;
 
@@ -68,11 +69,8 @@ namespace Drone.Builder
         [Header("Animations")]
         public Animator savePanelAnimator;
 
-
-
         private void Awake()
         {
-            // createButtons = createButtonsParent.GetComponentsInChildren<Button>().ToList();
             foreach (var createButton in createButtons)
             {
                 objectPreInfos.Add(createButton.GetComponent<ObjectPreInfo>());

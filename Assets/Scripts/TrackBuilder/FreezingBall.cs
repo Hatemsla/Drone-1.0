@@ -6,32 +6,14 @@ namespace Drone.Builder
     public class FreezingBall : InteractiveObject
     {
         [SerializeField] private AudioSource workSound;
-        public GameObject colorObject;
-        private Renderer objectRenderer;
-        public float glowIntensity = 1f;
-        public ColorOption selectedColorOption;
-
-        private void SetColor(Color newColor)
-        {
-            if (isActive)
-            {
-                objectRenderer.material.SetColor("_Color", newColor);
-                objectRenderer.material.EnableKeyword("_EMISSION");
-                objectRenderer.material.SetColor("_EmissionColor", newColor * glowIntensity);
-            }
-            else
-            {
-                objectRenderer.material.SetColor("_Color", newColor);
-                objectRenderer.material.DisableKeyword("_EMISSION");
-
-            }
-        }
+        [SerializeField] private Renderer objectRenderer;
+        [SerializeField] private float glowIntensity = 1f;
+        [SerializeField] private ColorOption selectedColorOption;
         
         private void Start()
         {
             BuilderManager.Instance.TestLevelEvent += TurnSound;
-            objectRenderer = colorObject.GetComponent<Renderer>();
-            SetColor(GetColorFromOption(selectedColorOption));
+            SetColor(GetColorFromOption(selectedColorOption), objectRenderer, glowIntensity);
         }
         
         private void Update()
@@ -71,13 +53,13 @@ namespace Drone.Builder
         public override void SetActive(bool active)
         {
             isActive = active;
-            SetColor(GetColorFromOption((ColorOption)colorIndex));
+            SetColor(GetColorFromOption((ColorOption)colorIndex), objectRenderer, glowIntensity);
         }
 
         public override void SetColorIndex(int value)
         {
             colorIndex = value;
-            SetColor(GetColorFromOption((ColorOption)value));
+            SetColor(GetColorFromOption((ColorOption)value), objectRenderer, glowIntensity);
         }
     }
 }

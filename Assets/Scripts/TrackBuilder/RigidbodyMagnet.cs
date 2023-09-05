@@ -6,37 +6,17 @@ namespace Drone.Builder
 {
     public class RigidbodyMagnet : InteractiveObject
     {
-        [SerializeField] private AudioSource workSound;
-
         public float magnetForce; 
+        [SerializeField] private AudioSource workSound;
+        [SerializeField] private Renderer objectRenderer;
+        [SerializeField] private float glowIntensity = 1f;
+        [SerializeField] private ColorOption selectedColorOption;
+        
         private List<Rigidbody> _caughtRigidbodies = new();
-        public GameObject colorObject;
-        private Renderer objectRenderer;
-        public float glowIntensity = 1f;
-        public ColorOption selectedColorOption;
-
-
-        private void SetColor(Color newColor)
-        {
-            if (isActive)
-            {
-                objectRenderer.materials[0].SetColor("_Color", newColor);
-                objectRenderer.materials[0].EnableKeyword("_EMISSION");
-                objectRenderer.materials[0].SetColor("_EmissionColor", newColor * glowIntensity);
-            }
-            else
-            {
-                objectRenderer.materials[0].SetColor("_Color", newColor);
-                objectRenderer.materials[0].DisableKeyword("_EMISSION");
-
-            }
-        }
 
         private void Start()
         {
-            magnetForce = 1;
-            objectRenderer = colorObject.GetComponent<Renderer>();
-            SetColor(GetColorFromOption(selectedColorOption));
+            SetColor(GetColorFromOption(selectedColorOption), objectRenderer, glowIntensity);
 
             BuilderManager.Instance.TestLevelEvent += TurnSound;
         }
@@ -48,6 +28,7 @@ namespace Drone.Builder
                 SetActive(isActive);
             } 
         }
+        
         private void OnDestroy()
         {
             BuilderManager.Instance.TestLevelEvent -= TurnSound;
@@ -104,13 +85,13 @@ namespace Drone.Builder
         public override void SetActive(bool active)
         {
             isActive = active;
-            SetColor(GetColorFromOption((ColorOption)colorIndex));
+            SetColor(GetColorFromOption((ColorOption)colorIndex), objectRenderer, glowIntensity);
         }
 
         public override void SetColorIndex(int value)
         {
             colorIndex = value;
-            SetColor(GetColorFromOption((ColorOption)value));
+            SetColor(GetColorFromOption((ColorOption)value), objectRenderer, glowIntensity);
         }
     }
 }
