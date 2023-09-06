@@ -7,8 +7,8 @@ namespace Drone.Builder
 {
     public class TriggerMessage : InteractiveObject
     {
-        public int soundIndex;
         public string triggerText;
+        [SerializeField] private string soundName;
         [SerializeField] private HelpMessage message;
         [SerializeField] private ColorOption selectedColorOption;
         [SerializeField] private MeshRenderer mesh;
@@ -105,20 +105,31 @@ namespace Drone.Builder
             }
         }
 
-        public void SetSoundFile(int soundInx)
+        public string GetSound() => soundName;
+        
+        public void SetSound(string newSound)
         {
-            soundIndex = soundInx;
-            var soundSourcePath = Application.dataPath + "/SoundsSource/";
-            var files = Directory.GetFiles(soundSourcePath, "*.mp3");
-            if (soundIndex >= 0 && soundIndex < files.Length)
+            soundName = newSound;
+            var soundPath = Application.dataPath + "/SoundsSource/" + soundName + ".mp3";
+            if (File.Exists(soundPath))
             {
-                var filePath = files[soundIndex];
-                StartCoroutine(LoadAudioCoroutine(filePath));
+                StartCoroutine(LoadAudioCoroutine(soundPath));
             }
             else
             {
-                Debug.LogError("Некорректный индекс звукового файла.");
+                Debug.LogWarning("Файл не найден");
             }
+            // var soundSourcePath = Application.dataPath + "/SoundsSource/";
+            // var files = Directory.GetFiles(soundSourcePath, "*.mp3");
+            // if (soundIndex >= 0 && soundIndex < files.Length)
+            // {
+            //     var filePath = files[soundIndex];
+            //     StartCoroutine(LoadAudioCoroutine(filePath));
+            // }
+            // else
+            // {
+            //     Debug.LogError("Некорректный индекс звукового файла.");
+            // }
         }
         
         public override void SetActive(bool active)

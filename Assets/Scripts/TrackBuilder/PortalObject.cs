@@ -54,7 +54,6 @@ namespace Drone.Builder
             if(!BuilderManager.Instance.isMove || !isActive)
                 return;
             
-            
             if (other.GetComponentInParent<DroneController>() is DroneBuilderController drone)
             {
                 _droneRpgController = drone.GetComponent<DroneRpgController>();

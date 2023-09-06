@@ -100,11 +100,23 @@ namespace Drone.Builder
         private List<string> _maps;
         private List<string> _sounds;
 
-        private void Start()
+        private void Awake()
+        {
+            GetMaps();
+            GetSounds();
+        }
+        
+        private void GetMaps()
         {
             _maps = LevelManager.LoadMaps().ToList();
+            _maps.Insert(0, "No map");
             mapsDropdown.AddOptions(_maps);
-            _sounds = LoadSounds().ToList();
+        }
+
+        private void GetSounds()
+        {
+            _sounds = TrackBuilderUtils.LoadSounds().ToList();
+            _sounds.Insert(0, "No sound");
             soundsDropdown.AddOptions(_sounds);
         }
 
@@ -243,7 +255,7 @@ namespace Drone.Builder
                     TurnInteractivePanels(colorPanel, hintPanel, triggerMessagePanel);
                     hintInput.text = ((TriggerMessage)trackObject.interactiveObject).triggerText;
                     color.value = trackObject.interactiveObject.colorIndex;
-                    soundsDropdown.value = ((TriggerMessage)trackObject.interactiveObject).soundIndex;
+                    soundsDropdown.value = _sounds.IndexOf(((TriggerMessage)trackObject.interactiveObject).GetSound());
                     break;
                 case InteractiveType.Terminal:
                     TurnInteractivePanels(isActivePanel);
@@ -280,16 +292,6 @@ namespace Drone.Builder
         public void PasswordHintActive(bool active)
         {
             passwordHint.enabled = active;
-        }
-
-        private string[] LoadSounds()
-        {
-            var soundFiles = Directory.GetFiles(Path.Combine(Application.dataPath, "SoundsSource"), "*.mp3");
-
-            for (var i = 0; i < soundFiles.Length; i++)
-                soundFiles[i] = Path.GetFileNameWithoutExtension(soundFiles[i]);
-
-            return soundFiles;
         }
     }
 }

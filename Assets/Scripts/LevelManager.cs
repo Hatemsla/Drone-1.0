@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Text.RegularExpressions;
 using Drone.Builder;
 using Drone.Builder.Text3D;
@@ -133,7 +134,7 @@ namespace Drone
                         var soundObject = new JObject
                         {                            
                             [Idents.Tags.SaveLoadTags.TriggerMessageHint] = triggerMessage.triggerText,
-                            [Idents.Tags.SaveLoadTags.TriggerMessageSound] = triggerMessage.soundIndex,
+                            [Idents.Tags.SaveLoadTags.TriggerMessageSound] = triggerMessage.GetSound()
                         };
                         interactiveData[Idents.Tags.SaveLoadTags.TriggerMessage] = soundObject;
                         break;
@@ -219,8 +220,7 @@ namespace Drone
                     magnetKillerDamage = 0,
                     magnetKillerDamageInterval = 0;
                 string hintText = "", text3D = "", portalMap = "", triggerMessageText = "",
-                    portPassword = "";
-                var soundIndex = 0;
+                    portPassword = "", soundName = "";
 
                 if (jTokenInteractive != null)
                 {
@@ -309,9 +309,9 @@ namespace Drone
                         ? jTokenTriggerMessage[Idents.Tags.SaveLoadTags.TriggerMessageHint]!.Value<string>()
                         : "";
 
-                    soundIndex = jTokenTriggerMessage != null
-                        ? jTokenTriggerMessage[Idents.Tags.SaveLoadTags.TriggerMessageSound]!.Value<int>()
-                        : 0;
+                    soundName = jTokenTriggerMessage != null
+                        ? jTokenTriggerMessage[Idents.Tags.SaveLoadTags.TriggerMessageSound]!.Value<string>()
+                        : "";
 
                     hasPassword = jTokenPort != null && jTokenPort[Idents.Tags.SaveLoadTags.HasPassword]!.Value<bool>();
 
@@ -343,7 +343,7 @@ namespace Drone
                     HintText = hintText,
                     Text3d = text3D,
                     PortalMap = portalMap,
-                    SoundIndex = soundIndex,
+                    SoundName = soundName,
                     TriggerMessageText = triggerMessageText,
                     HasPassword = hasPassword,
                     PortPassword = portPassword,

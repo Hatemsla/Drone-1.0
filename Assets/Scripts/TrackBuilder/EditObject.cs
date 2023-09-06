@@ -15,13 +15,8 @@ namespace Drone.Builder
         [SerializeField] private EditMenu editMenu;
 
         private List<string> _maps;
+        private List<string> _sounds;
         
-        private void Start()
-        {
-            HideEditMenu();
-            _maps = LevelManager.LoadMaps().ToList();
-        }
-
         private readonly Dictionary<int, float> _sliderValues = new()
         {
             { 0, 0.5f },
@@ -41,7 +36,26 @@ namespace Drone.Builder
             { 14, 7.5f },
             { 15, 8f },
         };
+        
+        private void Start()
+        {
+            HideEditMenu();
+            GetMaps();
+            GetSounds();
+        }
 
+        private void GetMaps()
+        {
+            _maps = LevelManager.LoadMaps().ToList();
+            _maps.Insert(0, "No map");
+        }
+
+        private void GetSounds()
+        {
+            _sounds = TrackBuilderUtils.LoadSounds().ToList();
+            _sounds.Insert(0, "No sound");
+        }
+        
         public void ShowEditMenu()
         {
             editMenu.gameObject.SetActive(true);
@@ -327,9 +341,10 @@ namespace Drone.Builder
 
         public void OnSetSoundObject(int value)
         {
+            GetSounds();
             if (currentObject.interactiveObject is TriggerMessage trMessage)
             {
-                trMessage.SetSoundFile(value); 
+                trMessage.SetSound(_sounds[value]); 
             }
         }
     }

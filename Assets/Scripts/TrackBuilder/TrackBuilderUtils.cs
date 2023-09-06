@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using cakeslice;
 using UnityEngine;
@@ -117,6 +118,16 @@ namespace Drone.Builder
             byte a = 255;
 
             return new Color32(r, g, b, a);
+        }
+        
+        public static string[] LoadSounds()
+        {
+            var soundFiles = Directory.GetFiles(Path.Combine(Application.dataPath, "SoundsSource"), "*.mp3");
+
+            for (var i = 0; i < soundFiles.Length; i++)
+                soundFiles[i] = Path.GetFileNameWithoutExtension(soundFiles[i]);
+
+            return soundFiles;
         }
     }
 }

@@ -26,7 +26,7 @@ namespace Drone
         public string Text3d { get; set; }
         public string PortalMap { get; set; }
 
-        public int SoundIndex { get; set; }
+        public string SoundName { get; set; }
         public string TriggerMessageText { get; set; }
         public bool HasPassword { get; set; }
         public string PortPassword { get; set; }

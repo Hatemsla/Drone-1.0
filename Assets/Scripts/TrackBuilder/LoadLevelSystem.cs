@@ -78,7 +78,7 @@ namespace Drone.Builder
                         ((Port)trackObj.interactiveObject).hasPassword = objInfo.HasPassword;
                         break;
                     case InteractiveType.TrMessage:
-                        ((TriggerMessage)trackObj.interactiveObject).soundIndex = objInfo.SoundIndex;
+                        ((TriggerMessage)trackObj.interactiveObject).SetSound(objInfo.SoundName);
                         ((TriggerMessage)trackObj.interactiveObject).triggerText = objInfo.TriggerMessageText;
                         break;
                     case InteractiveType.MagnetKiller:
