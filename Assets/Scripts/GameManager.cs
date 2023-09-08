@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 
 namespace Drone
 {
-    public class GameManager : MonoBehaviour
+    public sealed class GameManager : MonoBehaviour
     {
         public static GameManager Instance;
         public GameData gameData;

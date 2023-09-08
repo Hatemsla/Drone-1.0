@@ -2031,7 +2031,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: S
+  m_text: "\u042B"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2f27c8275bb4a1049864beadc00d0572, type: 2}
   m_sharedMaterial: {fileID: 7865162747365159581, guid: 2f27c8275bb4a1049864beadc00d0572, type: 2}
@@ -9772,6 +9772,7 @@ GameObject:
   - component: {fileID: 734989337}
   - component: {fileID: 734989341}
   - component: {fileID: 734989342}
+  - component: {fileID: 734989343}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -9865,6 +9866,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce2533d410df4396bb7d79d324f53761, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &734989343
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 734989336}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ecfd188735aa49cb8b8efff3faa87eba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultCursor: {fileID: 2800000, guid: abb67b0575eafb14aab52e55a3696cee, type: 3}
+  builderCursor: {fileID: 2800000, guid: 3451dd1536ae34e4188943f31417f40c, type: 3}
+  defaultCursorHotspot: {x: 67, y: 67}
+  builderCursorHotspot: {x: 109, y: 102}
 --- !u!1 &768210733
 GameObject:
   m_ObjectHideFlags: 0
@@ -20022,7 +20039,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: D
+  m_text: "\u0412"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2f27c8275bb4a1049864beadc00d0572, type: 2}
   m_sharedMaterial: {fileID: 7865162747365159581, guid: 2f27c8275bb4a1049864beadc00d0572, type: 2}
@@ -25773,7 +25790,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: W
+  m_text: "\u0426"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2f27c8275bb4a1049864beadc00d0572, type: 2}
   m_sharedMaterial: {fileID: 7865162747365159581, guid: 2f27c8275bb4a1049864beadc00d0572, type: 2}
@@ -26165,7 +26182,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: A
+  m_text: "\u0424"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2f27c8275bb4a1049864beadc00d0572, type: 2}
   m_sharedMaterial: {fileID: 7865162747365159581, guid: 2f27c8275bb4a1049864beadc00d0572, type: 2}
