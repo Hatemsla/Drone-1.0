@@ -35,7 +35,7 @@ namespace Drone.Builder.ControllerElements
         // Update is called once per frame
         void Update()
         {
-            if (CheckColorActivChange(selectedColorOption))
+            if (CheckColorActiveChange(selectedColorOption))
             {
                 Debug.Log("CheckColorActivChange");
                 if (col.enabled)
@@ -100,14 +100,14 @@ namespace Drone.Builder.ControllerElements
 
         public void set_color_index(int value)
         {
-            color_index = value;
+            colorIndex = value;
             selectedColorOption = (ColorOption)value;
             SetColor(GetColorFromOption(selectedColorOption));
         }
 
         public override void SetColorIndex(int value)
         {
-            color_index = value;
+            colorIndex = value;
             selectedColorOption = (ColorOption)value;
             SetColor(GetColorFromOption(selectedColorOption));
         }

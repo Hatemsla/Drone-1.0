@@ -7,6 +7,7 @@ namespace Drone.Builder
 {
     public class Lamp : InteractiveObject
     {
+        public bool isLampTurn = true;
         [SerializeField] private Light lamp;
         [SerializeField] private MeshRenderer[] meshes;
         public GameObject lampObject;
@@ -113,7 +114,7 @@ namespace Drone.Builder
 
         public override void SetColorIndex(int value)
         {
-            color_index = value;
+            colorIndex = value;
             SetColor(GetColorFromOption((ColorOption)value));
         }
     }

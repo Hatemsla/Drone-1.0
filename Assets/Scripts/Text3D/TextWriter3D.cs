@@ -5,6 +5,7 @@ namespace Drone.Builder.Text3D
 {
     public class TextWriter3D : InteractiveObject
     {
+        public string text3D;
         [SerializeField] private float spacing;
         [SerializeField] private float spaceSize = 1;
         [SerializeField] private float charactersSize = 1;

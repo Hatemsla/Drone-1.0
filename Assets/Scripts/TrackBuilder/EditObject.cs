@@ -15,13 +15,8 @@ namespace Drone.Builder
         [SerializeField] private EditMenu editMenu;
 
         private List<string> _maps;
+        private List<string> _sounds;
         
-        private void Start()
-        {
-            HideEditMenu();
-            _maps = LevelManager.LoadMaps().ToList();
-        }
-
         private readonly Dictionary<int, float> _sliderValues = new()
         {
             { 0, 0.5f },
@@ -41,7 +36,26 @@ namespace Drone.Builder
             { 14, 7.5f },
             { 15, 8f },
         };
+        
+        private void Start()
+        {
+            HideEditMenu();
+            GetMaps();
+            GetSounds();
+        }
 
+        private void GetMaps()
+        {
+            _maps = LevelManager.LoadMaps().ToList();
+            _maps.Insert(0, "No map");
+        }
+
+        private void GetSounds()
+        {
+            _sounds = TrackBuilderUtils.LoadSounds().ToList();
+            _sounds.Insert(0, "No sound");
+        }
+        
         public void ShowEditMenu()
         {
             editMenu.gameObject.SetActive(true);
@@ -133,38 +147,57 @@ namespace Drone.Builder
 
         public void OnWindmillRotationSpeedChanged(float value)
         {
-            currentObject.interactiveObject.windMillRotateSpeed = value;
+            ((Windmill)currentObject.interactiveObject).windMillRotateSpeed = value;
         }
         
         public void OnMagnetForceChanged(float value)
         {
-            currentObject.interactiveObject.magnetForce = value;
+            if(currentObject.interactiveObject is MagnetKiller magnetKiller)
+                magnetKiller.magnetForce = value;
+            else if (currentObject.interactiveObject is RigidbodyMagnet rigidbodyMagnet)
+                rigidbodyMagnet.magnetForce = value;
+        }
+
+        public void OnMagnetKillerRotateSpeedChanged(float value)
+        {
+            ((MagnetKiller)currentObject.interactiveObject).rotationSpeed = value;
+        }
+        
+        public void OnMagnetKillerDamageChanged(float value)
+        {
+            ((MagnetKiller)currentObject.interactiveObject).baseDamage = value;
+        }
+        
+        public void OnMagnetKillerDamageIntervalChanged(float value)
+        {
+            ((MagnetKiller)currentObject.interactiveObject).damageInterval = value;
         }
 
         public void OnPendulumSpeedChanged(float value)
         {
-            currentObject.interactiveObject.pendulumMoveSpeed = value;
+            ((Pendulum)currentObject.interactiveObject).pendulumMoveSpeed = value;
         }
 
         public void OnPendulumAngleChanged(float value)
         {
-            currentObject.interactiveObject.rightPendulumAngle = value;
-            currentObject.interactiveObject.leftPendulumAngle = -value;
+            var pendulum = (Pendulum)currentObject.interactiveObject;
+            pendulum.rightPendulumAngle = value;
+            pendulum.leftPendulumAngle = -value;
         }
 
         public void OnWindZoneForceChanged(float value)
         {
-            currentObject.interactiveObject.windForce = value;
+            ((WindZoneScript)currentObject.interactiveObject).windForce = value;
         }
 
         public void OnBatteryEnergyChanged(float value)
         {
-            currentObject.interactiveObject.batteryEnergy = value;
+            ((Battery)currentObject.interactiveObject).batteryEnergy = value;
         }
 
         public void OnBoostChanged(float value)
         {
-            currentObject.interactiveObject.boostSpeed = value;
+            ((BoostTrigger)currentObject.interactiveObject).boostSpeed = value;
         }
 
         public void OnHintTextChanged(string value)
@@ -173,13 +206,13 @@ namespace Drone.Builder
             {
                 text3D.Text = value;
             }
-            else if (currentObject.interactiveObject is TriggerMassege triggerMassege)
+            else if (currentObject.interactiveObject is TriggerMessage triggerMassege)
             {
-                triggerMassege.text3D = value;
+                triggerMassege.triggerText = value;
             }
             else
             {
-                currentObject.interactiveObject.hintText.text = value;
+                ((Hint)currentObject.interactiveObject).hintText.text = value;
             }
         }
 
@@ -262,7 +295,6 @@ namespace Drone.Builder
             }
             else if (currentObject.interactiveObject is ControllerPanel controllerPanel)
             {
-                Debug.Log(password);
                 controllerPanel.SetPassword(password, password.Length >= 3);
             }
         }
@@ -277,25 +309,25 @@ namespace Drone.Builder
 
         public void OnControllerPanelColorChanged(int value)
         {
-            if (currentObject.interactiveObject is ControllerPanel ControllerPanel)
+            if (currentObject.interactiveObject is ControllerPanel controllerPanel)
             {
-                ControllerPanel.set_color_index(value); 
+                controllerPanel.set_color_index(value); 
             }
         }
 
         public void OnControllerButtonColorChanged(int value)
         {
-            if (currentObject.interactiveObject is ControllerButton ControllerButton)
+            if (currentObject.interactiveObject is ControllerButton controllerButton)
             {
-                ControllerButton.set_color_index(value); 
+                controllerButton.set_color_index(value); 
             }
         }
 
         public void OnControllerButtonDelayChanged(float value)
         {
-            if (currentObject.interactiveObject is ControllerButton ControllerButton)
+            if (currentObject.interactiveObject is ControllerButton controllerButton)
             {
-                ControllerButton.set_time_value(value); 
+                controllerButton.set_time_value(value); 
             }
         }
 
@@ -309,12 +341,10 @@ namespace Drone.Builder
 
         public void OnSetSoundObject(int value)
         {
-            Debug.Log("SetSound");
-            if (currentObject.interactiveObject is TriggerMassege TrMessage)
+            GetSounds();
+            if (currentObject.interactiveObject is TriggerMessage trMessage)
             {
-                Debug.Log(value);
-
-                TrMessage.SetSoundFile(value); 
+                trMessage.SetSound(_sounds[value]); 
             }
         }
     }

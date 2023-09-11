@@ -8,8 +8,8 @@ namespace Drone.Builder.ControllerElements
     public class ControllerPanel : InteractiveObject
     {
         public GameObject controllerPanelObject;
-        // public GameObject promptTextObject;
-        // private Text promptText;
+        public string password;
+        public bool hasPassword;
         public ColorOption selectedColorOption;
 
         private Renderer objectRenderer;
@@ -19,7 +19,7 @@ namespace Drone.Builder.ControllerElements
         public float glowIntensity = 1f;
 
         private bool isGlowing = false;
-        private bool isHacked = false;
+        public bool isHacked;
         private bool isConected = false;
         private bool isActiv = false;
 
@@ -31,7 +31,7 @@ namespace Drone.Builder.ControllerElements
         {
             objectRenderer = controllerPanelObject.GetComponent<Renderer>();
             SetColor(GetColorFromOption(selectedColorOption), false);  
-            ishacked = true;
+            isHacked = true;
         }
 
         // Update is called once per frame
@@ -134,7 +134,7 @@ namespace Drone.Builder.ControllerElements
 
         public void set_hacked()
         {            
-            ishacked = !ishacked;
+            isHacked = !isHacked;
 
            
         }
@@ -149,14 +149,14 @@ namespace Drone.Builder.ControllerElements
 
         public void set_color_index(int value)
         {
-            color_index = value;
+            colorIndex = value;
             selectedColorOption = (ColorOption)value;
             SetColor(GetColorFromOption(selectedColorOption), false);
         }
 
         public override void SetColorIndex(int value)
         {
-            color_index = value;
+            colorIndex = value;
             selectedColorOption = (ColorOption)value;
             SetColor(GetColorFromOption(selectedColorOption), false);
         }

@@ -11,6 +11,7 @@ namespace Drone.Builder
         public PortPassword portPassword;
         public bool isOpen;
         public bool isCameraChange;
+        public bool hasPassword;
         
         public List<SecurityCamera> securityCameras;
         public List<Lamp> lamps;

@@ -69,7 +69,6 @@ public class FreeFlyCamera : MonoBehaviour
 
     private void LockCursor()
     {
-        Debug.Log(_wantedMode.ToString());
         _wantedMode = _wantedMode == CursorLockMode.Locked ? CursorLockMode.None : CursorLockMode.Locked;
         InputManager.Instance.TurnCustomActionMap(_wantedMode == CursorLockMode.Locked
             ? Idents.ActionMaps.Camera

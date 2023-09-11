@@ -14,12 +14,6 @@ namespace Drone.Builder
         private float _previousMusicValue;
         private float _previousEffectsValue;
 
-        private void Start()
-        {
-            // audioMixer.SetFloat(Idents.AudioMixer.Music, 0);
-            // audioMixer.SetFloat(Idents.AudioMixer.Effects, 0);
-        }
-
         private void OnEnable()
         {
             LevelManager.StartLevelLoading += StartPlay;

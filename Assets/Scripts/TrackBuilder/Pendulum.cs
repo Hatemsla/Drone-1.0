@@ -6,44 +6,24 @@ namespace Drone.Builder
 {
     public class Pendulum : InteractiveObject
     {
-        private Rigidbody _rb;
+        public float pendulumMoveSpeed;
+        public float leftPendulumAngle;
+        public float rightPendulumAngle;
+        [SerializeField] private Rigidbody rb;
+        [SerializeField] private Renderer objectRenderer;
+        [SerializeField] private float glowIntensity = 1f;
+        [SerializeField] private ColorOption selectedColorOption;
         private bool _movingClockwise;
-        public GameObject colorObject;
-        private Renderer objectRenderer;
-        public float glowIntensity = 1f;
-        public ColorOption selectedColorOption;
-
-
-        private void SetColor(Color newColor)
-        {
-            if (isActive)
-            {
-                objectRenderer.material.SetColor("_Color", newColor);
-                objectRenderer.material.EnableKeyword("_EMISSION");
-                objectRenderer.material.SetColor("_EmissionColor", newColor * glowIntensity);
-            }
-            else
-            {
-                objectRenderer.material.SetColor("_Color", newColor);
-                objectRenderer.material.DisableKeyword("_EMISSION");
-              
-            }
-        }
 
         private void Start()
         {
-            _rb = GetComponent<Rigidbody>();
             _movingClockwise = true;
 
-            leftPendulumAngle = 0.6f;
-            rightPendulumAngle = 0.6f;
-            pendulumMoveSpeed = 5;
-            objectRenderer = colorObject.GetComponent<Renderer>();
-            SetColor(GetColorFromOption(selectedColorOption)); 
+            SetColor(GetColorFromOption(selectedColorOption), objectRenderer, glowIntensity); 
         }
         private void Update()
         {
-            if (CheckColorActivChange(selectedColorOption))
+            if (CheckColorActiveChange(selectedColorOption))
             {
                 isActive = !isActive;
                 SetActive(isActive);
@@ -70,10 +50,10 @@ namespace Drone.Builder
             switch (_movingClockwise)
             {
                 case true:
-                    _rb.angularVelocity = new Vector3(0f, 0f, pendulumMoveSpeed) * pendulumMoveSpeed;
+                    rb.angularVelocity = new Vector3(0f, 0f, pendulumMoveSpeed) * pendulumMoveSpeed;
                     break;
                 case false:
-                    _rb.angularVelocity = new Vector3(0f, 0f, -pendulumMoveSpeed) * pendulumMoveSpeed;
+                    rb.angularVelocity = new Vector3(0f, 0f, -pendulumMoveSpeed) * pendulumMoveSpeed;
                     break;
             }
         }
@@ -81,13 +61,13 @@ namespace Drone.Builder
         public override void SetActive(bool active)
         {
             isActive = active;
-            SetColor(GetColorFromOption((ColorOption)color_index));
+            SetColor(GetColorFromOption((ColorOption)colorIndex), objectRenderer, glowIntensity);
         }
 
         public override void SetColorIndex(int value)
         {
-            color_index = value;
-            SetColor(GetColorFromOption((ColorOption)value));
+            colorIndex = value;
+            SetColor(GetColorFromOption((ColorOption)value), objectRenderer, glowIntensity);
         }
     }
 }

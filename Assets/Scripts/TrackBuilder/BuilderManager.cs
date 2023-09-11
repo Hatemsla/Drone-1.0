@@ -3,21 +3,17 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Cinemachine;
-using Drone.Builder.ControllerElements;
-using Drone.Builder.Text3D;
 using Drone.Sockets;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
-using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Outline = cakeslice.Outline;
 
 namespace Drone.Builder
 {
-    public class BuilderManager : MonoBehaviour
+    public sealed class BuilderManager : MonoBehaviour
     {
         public static BuilderManager Instance;
         public string levelName;
@@ -47,19 +43,21 @@ namespace Drone.Builder
         public LayerMask layerMask;
         public GameObject pendingObject;
         public ObjectsType noScaleEditableObjects;
-        public List<GameObject> pendingObjects = new();
         public GameObject copyObject;
         public TrackObject currentObjectType;
         public Vector3 mousePos;
-        public Transform targetCheckpoint;
-        public GameObject[] objects;
+        public List<GameObject> pendingObjects = new();
+        public List<GameObject> objects;
         public List<GameObject> objectsPool;
 
+        // Systems
+        private LoadLevelSystem _loadLevelSystem;
+        
         [HideInInspector] public Scene levelScene;
+        public event Action LoadingCompleteEvent;
         public event Action TestLevelEvent;
         public event Action StartGame;
         public event Action StopGame;
-        public event Action LoadingCompleteEvent;
         public event Action ObjectChangeSceneEvent;
 
         private List<Lamp> _lamps;
@@ -90,6 +88,7 @@ namespace Drone.Builder
 
         private void Start()
         {
+            _loadLevelSystem = new LoadLevelSystem();
             for (var i = 0; i < builderUI.createButtons.Count; i++)
             {
                 var i1 = i;
@@ -101,16 +100,18 @@ namespace Drone.Builder
 
             builderUI.pathArrow.gameObject.SetActive(false);
 
-            LoadingCompleteEvent += RewindManager.Instance.FindRewindObjects;
-            LoadingCompleteEvent += RewindManager.Instance.RestartTracking;
+            _loadLevelSystem.LoadingCompleteEvent += RewindManager.Instance.FindRewindObjects;
+            _loadLevelSystem.LoadingCompleteEvent += RewindManager.Instance.RestartTracking;
+            _loadLevelSystem.LoadingCompleteEvent += OnLoadingComplete;
+            _loadLevelSystem.ObjectsCreatedEvent += GetCreatedObjects;
 
             if (isLoadLevel)
             {
-                StartCoroutine(LoadScene());
+                LoadLevel();
             }
             else if (isGameLevel)
             {
-                LoadingCompleteEvent += TestLevel;
+                _loadLevelSystem.LoadingCompleteEvent += TestLevel;
                 StartLevel();
             }
             else
@@ -119,6 +120,31 @@ namespace Drone.Builder
             }
             
             _main = Camera.main;
+        }
+
+        private void OnLoadingComplete() => LoadingCompleteEvent?.Invoke();
+
+        private void GetCreatedObjects(List<GameObject> obj)
+        {
+            objectsPool = new List<GameObject>(obj);
+            
+            CreateObjectsPoolScene();
+        }
+
+        private void StartLevel()
+        {
+            if (objectsPool.Count > 0)
+                ClearObject();
+            
+            StartCoroutine(_loadLevelSystem.LoadScene(levelName));
+        }
+
+        private void LoadLevel()
+        {
+            if (objectsPool.Count > 0)
+                ClearObject();
+            
+            StartCoroutine(_loadLevelSystem.LoadScene(levelName));
         }
 
         private void OnEnable()
@@ -141,9 +167,10 @@ namespace Drone.Builder
 
         private void OnDisable()
         {
-            LoadingCompleteEvent -= RewindManager.Instance.FindRewindObjects;
-            LoadingCompleteEvent -= RewindManager.Instance.RestartTracking;
-            LoadingCompleteEvent -= TestLevel;
+            _loadLevelSystem.LoadingCompleteEvent -= RewindManager.Instance.FindRewindObjects;
+            _loadLevelSystem.LoadingCompleteEvent -= RewindManager.Instance.RestartTracking;
+            _loadLevelSystem.LoadingCompleteEvent -= OnLoadingComplete;
+            _loadLevelSystem.LoadingCompleteEvent -= TestLevel;
             StartGame -= TurnPlayerActionMap;
             StopGame -= TurnBuilderActionMap;
             InputManager.Instance.CopyObjectEvent -= CopyObject;
@@ -218,10 +245,7 @@ namespace Drone.Builder
             }
         }
 
-        private bool IsNoEditObject()
-        {
-            return currentObjectType == null || pendingObject == null || pendingObjects.Count > 1;
-        }
+        private bool IsNoEditObject() => currentObjectType == null || pendingObject == null || pendingObjects.Count > 1;
 
         private void PlaceAndPickupObject()
         {
@@ -288,15 +312,8 @@ namespace Drone.Builder
             currentObjectType.yOffset += _objectHeightValue * 2 * Time.deltaTime;
         }
 
-        private void UndoCommand()
-        {
-            undoRedoManager.UndoCommand();
-        }
-
-        private void RedoCommand()
-        {
-            undoRedoManager.RedoCommand();
-        }
+        private void UndoCommand() => undoRedoManager.UndoCommand();
+        private void RedoCommand() => undoRedoManager.RedoCommand();
 
         private void PasteObject()
         {
@@ -380,58 +397,7 @@ namespace Drone.Builder
                 return;
             }
 
-            targetCheckpoint = droneBuilderCheckNode.nodes[droneBuilderCheckNode.currentNode].transform;
-            var realPos = cameraBrain.OutputCamera.WorldToScreenPoint(targetCheckpoint.position);
-            var rect = new Rect(0, 0, Screen.width, Screen.height);
-
-            var outPos = realPos;
-            float direction = 1;
-
-            builderUI.pathArrow.GetComponent<Image>().sprite = builderUI.outOfScreenIcon;
-
-            if (!IsBehind(targetCheckpoint.position)) // если цель спереди
-            {
-                if (rect.Contains(realPos)) // и если цель в окне экрана
-                {
-                    builderUI.pathArrow.GetComponent<Image>().sprite = builderUI.pointerIcon;
-                }
-            }
-            else // если цель cзади
-            {
-                realPos = -realPos;
-                outPos = new Vector3(realPos.x, 0, 0); // позиция иконки - снизу
-                if (cameraBrain.transform.position.y < targetCheckpoint.position.y)
-                {
-                    direction = -1;
-                    outPos.y = Screen.height; // позиция иконки - сверху				
-                }
-            }
-
-            // ограничиваем позицию областью экрана
-            var offset = builderUI.pathArrow.sizeDelta.x / 2;
-            outPos.x = Mathf.Clamp(outPos.x, offset, Screen.width - offset);
-            outPos.y = Mathf.Clamp(outPos.y, offset, Screen.height - offset);
-
-            var pos = realPos - outPos; // направление к цели из PointerUI 
-
-            RotatePointer(direction * pos);
-
-            builderUI.pathArrow.sizeDelta = new Vector2(_startPointerSize.x / 100 * interfaceScale,
-                _startPointerSize.y / 100 * interfaceScale);
-            builderUI.pathArrow.position = outPos;
-        }
-
-        private bool IsBehind(Vector3 point) // true если point сзади камеры
-        {
-            var forward = cameraBrain.transform.TransformDirection(Vector3.forward);
-            var toOther = point - cameraBrain.transform.position;
-            return Vector3.Dot(forward, toOther) < 0;
-        }
-
-        private void RotatePointer(Vector2 direction) // поворачивает PointerUI в направление direction
-        {
-            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-            builderUI.pathArrow.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+            Pointer.PointerPosition(builderUI, droneBuilderCheckNode, cameraBrain, _startPointerSize, interfaceScale);
         }
 
         private IEnumerator EndLevel()
@@ -482,133 +448,7 @@ namespace Drone.Builder
             foreach (var obj in objectsPool)
                 obj.SetActive(true);
         }
-
-        private void StartLevel()
-        {
-            StartCoroutine(LoadScene());
-        }
-
-        private IEnumerator LoadScene()
-        {
-            var loadedData = LevelManager.LoadLevel(levelName);
-            
-            if (objectsPool.Count > 0)
-                ClearObject();
-
-            foreach (var objInfo in loadedData)
-            {
-                var loadOp = Addressables.LoadAssetAsync<GameObject>(objInfo.ObjectName);
-                yield return loadOp;
-                
-                if (loadOp.Status != AsyncOperationStatus.Succeeded || loadOp.Result == null)
-                {
-                    Debug.LogError("Failed to load asset: " + objInfo.ObjectName);
-                    continue;
-                }
-                
-                var newObj = Instantiate(loadOp.Result, objInfo.Position, Quaternion.Euler(objInfo.Rotation));
-
-                yield return new WaitForSeconds(0.01f);
-                TrackBuilderUtils.ChangeLayerRecursively(newObj.transform, objInfo.Layer);
-                TrackBuilderUtils.OffOutlineRecursively(newObj.transform);
-                newObj.transform.localScale = objInfo.Scale;
-                var trackObj = newObj.GetComponent<TrackObject>();
-                trackObj.yOffset = objInfo.YOffset;
-                trackObj.maxMouseDistance = objInfo.MaxMouseDistance;
-                trackObj.damage = objInfo.Damage;
-
-                switch (trackObj.interactiveType)
-                {
-                    case InteractiveType.Windmill:
-                        trackObj.interactiveObject = trackObj.GetComponentInChildren<Windmill>();
-                        trackObj.interactiveObject.windMillRotateSpeed = objInfo.WindMillRotateSpeed;
-                        break;
-                    case InteractiveType.Magnet:
-                        trackObj.interactiveObject = trackObj.GetComponentInChildren<RigidbodyMagnet>();
-                        trackObj.interactiveObject.magnetForce = objInfo.MagnetForce;
-                        break;
-                    case InteractiveType.Pendulum:
-                        trackObj.interactiveObject = trackObj.GetComponentInChildren<Pendulum>();
-                        trackObj.interactiveObject.pendulumMoveSpeed = objInfo.PendulumMoveSpeed;
-                        trackObj.interactiveObject.leftPendulumAngle = objInfo.LeftPendulumAngle;
-                        trackObj.interactiveObject.rightPendulumAngle = objInfo.RightPendulumAngle;
-                        break;
-                    case InteractiveType.Wind:
-                        trackObj.interactiveObject = trackObj.GetComponentInChildren<WindZoneScript>();
-                        trackObj.interactiveObject.windForce = objInfo.WindForce;
-                        break;
-                    case InteractiveType.Battery:
-                        trackObj.interactiveObject = trackObj.GetComponentInChildren<Battery>();
-                        trackObj.interactiveObject.batteryEnergy = objInfo.BatteryEnergy;
-                        break;
-                    case InteractiveType.Freezing:
-                        trackObj.interactiveObject = trackObj.GetComponentInChildren<FreezingBall>();
-                        break;
-                    case InteractiveType.Boost:
-                        trackObj.interactiveObject = trackObj.GetComponentInChildren<BoostTrigger>();
-                        trackObj.interactiveObject.boostSpeed = objInfo.BoostSpeed;
-                        break;
-                    case InteractiveType.Hint:
-                        trackObj.interactiveObject = trackObj.GetComponentInChildren<Hint>();
-                        trackObj.interactiveObject.hintText.text = objInfo.HintText;
-                        break;
-                    case InteractiveType.Lamp:
-                        trackObj.interactiveObject = trackObj.GetComponentInChildren<Lamp>();
-                        break;
-                    case InteractiveType.ElectroGate:
-                        trackObj.interactiveObject = trackObj.GetComponentInChildren<ControledGate>();
-                        break;
-                    case InteractiveType.Draw:
-                        break;
-                    case InteractiveType.Text3D:
-                        trackObj.interactiveObject = trackObj.GetComponentInChildren<TextWriter3D>();
-                        trackObj.interactiveObject.text3D = objInfo.Text3d;
-                        break;
-                    case InteractiveType.Door:
-                        break;
-                    case InteractiveType.Port:
-                        break;
-                    case InteractiveType.SecureCamera:
-                        break;
-                    case InteractiveType.Panel:
-                        break;
-                    case InteractiveType.Button:
-                        break;
-                    case InteractiveType.Terminal:
-                        break;
-                    case InteractiveType.TrMessage:
-                        trackObj.interactiveObject = trackObj.GetComponentInChildren<TriggerMassege>();
-                        trackObj.interactiveObject.sound_index = objInfo.SoundIndex;
-                        trackObj.interactiveObject.text3D = objInfo.HintText;
-
-                        break;
-                    case InteractiveType.MagnetKiller:
-                        break;
-                    case InteractiveType.PitStop:
-                        break;
-                    case InteractiveType.Portal:
-                        trackObj.interactiveObject = trackObj.GetComponentInChildren<PortalObject>();
-                        ((PortalObject)trackObj.interactiveObject).SetMap(objInfo.PortalMap);
-                        break;
-                    case InteractiveType.None:
-                        break;
-                }
-                
-                if (trackObj.interactiveType != InteractiveType.None)
-                {
-                    trackObj.interactiveObject.SetColorIndex(objInfo.ColorIndex);
-                    trackObj.interactiveObject.SetActive(objInfo.IsActive);
-                }
-
-                objectsPool.Add(newObj);
-            }
-            
-            yield return null;
-            
-            CreateObjectsPoolScene();
-            LoadingCompleteEvent?.Invoke();
-        }
-
+        
         private void PlaceObjects()
         {
             try
@@ -619,7 +459,7 @@ namespace Drone.Builder
                     foreach (var pendingObj in pendingObjects)
                     {
                         TrackBuilderUtils.ChangeLayerRecursively(pendingObj.transform,
-                            LayerMask.NameToLayer("TrackGround"));
+                            LayerMask.NameToLayer(Idents.Layers.TrackGround));
                     }
                 }
                 else
@@ -627,7 +467,7 @@ namespace Drone.Builder
                     pendingObject = _selection.selectedObject;
                     currentObjectType = _selection.selectedObject.GetComponent<TrackObject>();
                     TrackBuilderUtils.ChangeLayerRecursively(pendingObject.transform,
-                        LayerMask.NameToLayer("TrackGround"));
+                        LayerMask.NameToLayer(Idents.Layers.TrackGround));
                     undoRedoManager.ExecuteCommand(new PlaceCommand(objects[currentSelectObjectIndex],
                         currentObjectType.Position, currentObjectType.Scale, currentObjectType.Rotation, pendingObject,
                         currentObjectType.yOffset));
@@ -661,10 +501,7 @@ namespace Drone.Builder
 
         private void ChangeObjectHeight(float value) => _objectHeightValue = value;
 
-        private void RotateObject(Vector3 axis, float rotateAmount, Space space)
-        {
-            pendingObject.transform.Rotate(axis * rotateAmount, space);
-        }
+        private void RotateObject(Vector3 axis, float rotateAmount, Space space) =>pendingObject.transform.Rotate(axis * rotateAmount, space);
 
         public void SelectObject(int index)
         {
@@ -719,7 +556,7 @@ namespace Drone.Builder
             MoveObjectsToPoolScene();
         }
 
-        public void MoveObjectsToPoolScene()
+        private void MoveObjectsToPoolScene()
         {
             foreach (var obj in objectsPool)
             {
@@ -759,6 +596,20 @@ namespace Drone.Builder
         {
             builderUI.uiPanel.SetActive(false);
             builderUI.droneView.SetActive(false);
+        }
+
+        public void MoveObject(GameObject selectedObject, List<GameObject> selectedObjects)
+        {
+            pendingObject = selectedObject;
+            pendingObjects = new List<GameObject>(selectedObjects);
+            currentObjectType = selectedObject.GetComponentInParent<TrackObject>();
+            currentObjectType.isActive = true;
+        }
+
+        public void DeleteObject()
+        {
+            pendingObjects.Clear();
+            pendingObject = null;
         }
     }
 }
