@@ -75,7 +75,6 @@ namespace Drone.Builder
         private Vector3 _dronePrevPosition;
         private Vector3 _prevMousePos;
         private float _objectHeightValue;
-        private Camera _main;
 
         private void Awake()
         {
@@ -118,8 +117,6 @@ namespace Drone.Builder
             {
                 CreateObjectsPoolScene();
             }
-            
-            _main = Camera.main;
         }
 
         private void OnLoadingComplete() => LoadingCompleteEvent?.Invoke();
@@ -272,7 +269,7 @@ namespace Drone.Builder
                 SetDroneParameters();
             }
 
-            var ray = _main!.ScreenPointToRay(Mouse.current.position.ReadValue());
+            var ray = cameraBrain.OutputCamera!.ScreenPointToRay(Mouse.current.position.ReadValue());
 
             if (Physics.Raycast(ray, out _hit, 10000, layerMask, QueryTriggerInteraction.Ignore) &&
                 !EventSystem.current.IsPointerOverGameObject())
@@ -429,7 +426,6 @@ namespace Drone.Builder
                 _dronePrevRotationY = droneBuilderController.transform.localRotation.eulerAngles.y;
                 droneBuilderController.yaw = _dronePrevRotationY;
                 _dronePrevPosition = droneBuilderController.transform.position;
-                cameraBrain.transform.SetParent(droneBuilderController.transform);
                 if (droneBuilderCheckNode.nodes.Count > 0)
                     builderUI.pathArrow.gameObject.SetActive(true);
                 droneBuilderCheckNode.currentNode = 0;

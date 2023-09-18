@@ -90,10 +90,9 @@ namespace Drone.Builder
             {
                 if (selectedTrackObject && selectedObjects.Count == 1)
                 {
-                    if (hit.collider.GetComponent<Connection>() && _selectedConnection)
+                    var otherConnection = hit.collider.GetComponent<Connection>();
+                    if (otherConnection && _selectedConnection)
                     {
-                        var otherConnection = hit.collider.GetComponent<Connection>();
-                            
                         switch (otherConnection.connectionType)
                         {
                             case ConnectionType.Floor:
