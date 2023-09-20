@@ -320,10 +320,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ab4a5091580a3b41a4a106fe026bc9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: 10
-  connection: {fileID: 0}
   objectType: 32
-  hasPortal: 1
   interactiveType: 8
   effectType: 2
   yOffset: 0
@@ -337,6 +334,7 @@ MonoBehaviour:
     \u043F\u0435\u0440\u0438\u043E\u0434\u0438\u0447\u043D\u043E\u0441\u0442\u044C
     \u0440\u0430\u0431\u043E\u0442\u044B, \u0432\u043E\u0437\u043C\u043E\u0436\u043D\u043E\u0441\u0442\u044C
     \u0432\u043A\u043B\u044E\u0447\u0435\u043D\u0438\u044F/\u0432\u044B\u043A\u043B\u044E\u0447\u0435\u043D\u0438\u044F"
+  objectSprite: {fileID: 21300000, guid: 67b0b0e1bb2468f41965047683bc32f4, type: 3}
   interactiveObject: {fileID: 8144987943256966423}
 --- !u!114 &8144987943256966423
 MonoBehaviour:
@@ -351,23 +349,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isActive: 1
-  windMillRotateSpeed: 0
-  magnetForce: 0
-  pendulumMoveSpeed: 0
-  leftPendulumAngle: 0
-  rightPendulumAngle: 0
-  windForce: 0
-  batteryEnergy: 0
-  boostSpeed: 2
-  TimeDelay: 0
+  colorIndex: 0
   isLampTurn: 1
-  hintText: {fileID: 0}
-  text3D: 
-  color_index: 0
-  ishacked: 0
-  buttonDelay: 0
-  hasPassword: 0
-  password: 
   lamp: {fileID: 5046423715475618135}
   meshes:
   - {fileID: 2169561187577619329}

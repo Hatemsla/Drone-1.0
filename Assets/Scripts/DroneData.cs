@@ -113,5 +113,38 @@ namespace Drone
                     battery = value;
             }
         }
+
+        public void Reset()
+        {
+            TimeForEndGame = 0;
+            Battery = 100;
+            Health = 100;
+            Armor = 100;
+            Coins = 0;
+            Crystals = 0;
+            skillsCount = new Dictionary<Skills, int>
+            {
+                { Skills.Shield, 0 },
+                { Skills.HpRestore, 0 },
+                { Skills.ArmorRestore, 0 },
+                { Skills.Jerk, 0 },
+                { Skills.XRay, 0 },
+                { Skills.Thermal, 0 },
+                { Skills.TimeRewind, 0 },
+                { Skills.Flashlight, 0 },
+            };
+            buyingTypes = new Dictionary<Skills, List<MoneyType>>
+            {
+                { Skills.Shield,       new List<MoneyType>() },
+                { Skills.HpRestore,    new List<MoneyType>() },
+                { Skills.ArmorRestore, new List<MoneyType>() },
+                { Skills.Jerk,         new List<MoneyType>() },
+                { Skills.XRay,         new List<MoneyType>() },
+                { Skills.Thermal,      new List<MoneyType>() },
+                { Skills.TimeRewind,   new List<MoneyType>() },
+                { Skills.Flashlight,   new List<MoneyType>() },
+                { Skills.FlashlightUV, new List<MoneyType>() },
+            };
+        }
     }
 }

@@ -18,6 +18,7 @@ namespace Drone.Builder
         public float damage = 1f;
         public string objectName;
         public string objectDescription;
+        public Sprite objectSprite;
         public InteractiveObject interactiveObject;
         
         public event Action<Vector3> ScaleChanged;
@@ -36,20 +37,20 @@ namespace Drone.Builder
 
         public Vector3 Position
         {
-            get => transform.position;
+            get => transform.localPosition;
             set
             {
-                transform.position = value;
+                transform.localPosition = value;
                 PositionChanged?.Invoke(value);
             }
         }
 
         public Quaternion Rotation
         {
-            get => transform.rotation;
+            get => transform.localRotation;
             set
             {
-                transform.rotation = value;
+                transform.localRotation = value;
                 RotationChanged?.Invoke(value);
             }
         }

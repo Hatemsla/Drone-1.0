@@ -14,15 +14,16 @@ namespace Drone.Builder
     public class EditMenu : MonoBehaviour
     {
         [SerializeField] private TMP_Text objectName;
+        [SerializeField] private Image objectImage;
         [SerializeField] private TMP_InputField xPos;
         [SerializeField] private TMP_InputField yPos;
         [SerializeField] private TMP_InputField zPos;
         [SerializeField] private Slider xRot;
         [SerializeField] private Slider yRot;
         [SerializeField] private Slider zRot;
-        [SerializeField] private TMP_Text xRotValue;
-        [SerializeField] private TMP_Text yRotValue;
-        [SerializeField] private TMP_Text zRotValue;
+        [SerializeField] private TMP_InputField xRotValue;
+        [SerializeField] private TMP_InputField yRotValue;
+        [SerializeField] private TMP_InputField zRotValue;
         [SerializeField] private TMP_InputField hintInput;
         [SerializeField] private TMP_InputField passwordInput;
         [SerializeField] private Slider xyzScale;
@@ -120,21 +121,23 @@ namespace Drone.Builder
             soundsDropdown.AddOptions(_sounds);
         }
 
-        public void SetEditPanelParams(string objName, float xP, float yP, float zP, float xR, float yR, float zR, float xyzS, TrackObject trackObject)
+        public void SetEditPanelParams(TrackObject trackObject, float xR, float yR, float zR)
         {
-            objectName.text = objName;
-            xPos.text = xP.ToString("f1", CultureInfo.CurrentCulture);
-            yPos.text = yP.ToString("f1", CultureInfo.CurrentCulture);
-            zPos.text = zP.ToString("f1", CultureInfo.CurrentCulture);
+            objectName.text = trackObject.objectName;
+            if(trackObject.objectSprite)
+                objectImage.sprite = trackObject.objectSprite;
+            xPos.text = trackObject.Position.x.ToString("f1", CultureInfo.CurrentCulture);
+            yPos.text = trackObject.Position.y.ToString("f1", CultureInfo.CurrentCulture);
+            zPos.text = trackObject.Position.z.ToString("f1", CultureInfo.CurrentCulture);
             xRotValue.text = xR.ToString("f1", CultureInfo.CurrentCulture);
             yRotValue.text = yR.ToString("f1", CultureInfo.CurrentCulture);
             zRotValue.text = zR.ToString("f1", CultureInfo.CurrentCulture);
-            xyzScaleValue.text = xyzS.ToString("f1", CultureInfo.CurrentCulture);
+            xyzScaleValue.text = trackObject.Scale.x.ToString("f1", CultureInfo.CurrentCulture);
             
             if(trackObject.objectType is ObjectsType.Gate or ObjectsType.Drone)
                 return;
 
-            xyzScale.value = ConvertScaleToSliderValue(xyzS);
+            xyzScale.value = ConvertScaleToSliderValue(trackObject.Scale.x);
 
             switch (trackObject.interactiveType)
             {

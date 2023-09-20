@@ -217,13 +217,11 @@ namespace Drone.Builder
             if (IsNoEditObject() || noScaleEditableObjects.HasFlag(currentObjectType.objectType))
                 return;
 
-            var angleX = currentObjectType.Rotation.eulerAngles.x;
-            var angleY = currentObjectType.Rotation.eulerAngles.y;
-            var angleZ = currentObjectType.Rotation.eulerAngles.z;
-            editMenu.SetEditPanelParams(currentObjectType.objectName,
-                currentObjectType.Position.x, currentObjectType.Position.y, currentObjectType.Position.z,
-                angleX, angleY, angleZ,
-                currentObjectType.Scale.x + value * 0.5f, currentObjectType);
+            var angleX = TrackBuilderUtils.Remap(currentObjectType.Rotation.x, 0, 1, 0, 180);
+            var angleY = TrackBuilderUtils.Remap(currentObjectType.Rotation.y, 0, 1, 0, 180);
+            var angleZ = TrackBuilderUtils.Remap(currentObjectType.Rotation.z, 0, 1, 0, 180);
+            
+            editMenu.SetEditPanelParams(currentObjectType, angleX, angleY, angleZ);
         }
 
         private void RotateYObject(float value)

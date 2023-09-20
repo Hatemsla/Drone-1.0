@@ -12,6 +12,7 @@ namespace Drone
     {
         public static GameManager Instance;
         public GameData gameData;
+        public DroneData droneData;
         public DBManager dbManager;
         public Server server;
         public ScratchClient scratchClient;
@@ -49,6 +50,8 @@ namespace Drone
 
                     asyncLoad = FindObjectOfType<AsyncLoad>();
                     InputManager.Instance.TurnCustomActionMap(Idents.ActionMaps.Ui);
+                    
+                    droneData.Reset();
                     break;
                 }
                 case 2:
