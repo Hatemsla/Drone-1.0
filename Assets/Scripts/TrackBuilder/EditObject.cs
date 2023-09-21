@@ -73,10 +73,7 @@ namespace Drone.Builder
             var angleY = TrackBuilderUtils.Remap(currentObject.Rotation.y, 0, 1, 0, 180);
             var angleZ = TrackBuilderUtils.Remap(currentObject.Rotation.z, 0, 1, 0, 180);
 
-            editMenu.SetEditPanelParams(currentObject.objectName,
-                currentObject.Position.x, currentObject.Position.y, currentObject.Position.z, 
-                angleX, angleY, angleZ,
-                currentObject.Scale.x, currentObject);
+            editMenu.SetEditPanelParams(currentObject, angleX, angleY, angleZ);
         }
 
         public void OnXPositionChanged(string value)
@@ -101,6 +98,20 @@ namespace Drone.Builder
         {
             var currentRotation = currentObject.Rotation.eulerAngles;
             currentRotation.x = value;
+            currentObject.Rotation = Quaternion.Euler(currentRotation);
+        }
+
+        public void OnXRotationTextChanged(string text)
+        {
+            var currentRotation = currentObject.Rotation.eulerAngles;
+            var xRot = float.Parse(text);
+            xRot = xRot switch
+            {
+                > 180f => 180f,
+                < 0f => 0f,
+                _ => xRot
+            };
+            currentRotation.x = xRot;
             currentObject.Rotation = Quaternion.Euler(currentRotation);
         }
 

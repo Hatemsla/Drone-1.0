@@ -24,7 +24,6 @@ namespace Drone.Builder
         public HelpMessage helpMessage;
         public DroneBars healthBar;
         public DroneBars armorBar;
-
         
         [Header("UI")]
         public Button floorBtn;
@@ -65,7 +64,7 @@ namespace Drone.Builder
 
         public List<Button> createButtons;
         public List<ObjectPreInfo> objectPreInfos;
-
+        
         [Header("Animations")]
         public Animator savePanelAnimator;
 

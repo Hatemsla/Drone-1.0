@@ -234,23 +234,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isActive: 1
-  windMillRotateSpeed: 0
-  magnetForce: 0
-  pendulumMoveSpeed: 0
-  leftPendulumAngle: 0
-  rightPendulumAngle: 0
-  windForce: 0
-  batteryEnergy: 0
-  boostSpeed: 2
-  TimeDelay: 0
-  isLampTurn: 1
+  colorIndex: 0
   hintText: {fileID: 5757330906488331096}
-  text3D: 
-  color_index: 0
-  ishacked: 0
-  buttonDelay: 0
-  hasPassword: 0
-  password: 
 --- !u!1 &4396172083413437205
 GameObject:
   m_ObjectHideFlags: 0
@@ -417,10 +402,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ab4a5091580a3b41a4a106fe026bc9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: 34
-  connection: {fileID: 0}
   objectType: 64
-  hasPortal: 1
   interactiveType: 9
   effectType: 3
   yOffset: 0.5
@@ -432,4 +414,5 @@ MonoBehaviour:
   objectDescription: "\u041C\u043E\u0436\u043D\u043E \u043D\u0430\u043F\u0438\u0441\u0430\u0442\u044C
     \u0442\u0435\u043A\u0441\u0442 \u0441 \u043D\u0435\u043A\u0438\u043C \u043B\u043E\u0440\u043E\u043C
     \u043A\u0430\u0440\u0442\u044B"
+  objectSprite: {fileID: 21300000, guid: 171adcf7242a8644dbe613c29d76847b, type: 3}
   interactiveObject: {fileID: 7192440014114176671}
