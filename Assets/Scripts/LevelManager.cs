@@ -57,6 +57,8 @@ namespace Drone
                 objectData[Idents.Tags.SaveLoadTags.MaxMouseDistance] =
                     trackObj.maxMouseDistance.ToString(CultureInfo.InvariantCulture);
                 objectData[Idents.Tags.SaveLoadTags.Damage] = trackObj.damage.ToString(CultureInfo.InvariantCulture);
+                objectData[Idents.Tags.SaveLoadTags.PreviousXRotation] =
+                    trackObj.previousRotationXValue.ToString(CultureInfo.InvariantCulture);
 
                 if (trackObj.interactiveType != InteractiveType.None)
                 {
@@ -194,6 +196,8 @@ namespace Drone
                 var jTokenYOffset = property.Value[Idents.Tags.SaveLoadTags.YOffset]!.Value<string>();
                 var jTokenMaxMouseDistance = property.Value[Idents.Tags.SaveLoadTags.MaxMouseDistance]!.Value<string>();
                 var jTokenDamage = property.Value[Idents.Tags.SaveLoadTags.Damage]!.Value<string>();
+                var jTokenPreviousXRotation =
+                    property.Value[Idents.Tags.SaveLoadTags.PreviousXRotation]!.Value<string>();
 
                 var objectName = jTokenObjectName.Substring(0, jTokenObjectName.IndexOf('('));
                 var position = ParseVector3(jTokenPosition);
@@ -203,6 +207,7 @@ namespace Drone
                 var yOffset = float.Parse(jTokenYOffset, CultureInfo.InvariantCulture);
                 var maxMouseDistance = float.Parse(jTokenMaxMouseDistance, CultureInfo.InvariantCulture);
                 var damage = float.Parse(jTokenDamage, CultureInfo.InvariantCulture);
+                var previousXRotation = float.Parse(jTokenPreviousXRotation, CultureInfo.InvariantCulture);
                 
                 var jTokenInteractive = property.Value[Idents.Tags.SaveLoadTags.Interactive];
 
@@ -330,6 +335,7 @@ namespace Drone
                     IsActive = isActive,
                     YOffset = yOffset,
                     Damage = damage,
+                    PreviousXRotation = previousXRotation,
                     ColorIndex = colorIndex,
                     MaxMouseDistance = maxMouseDistance,
                     WindMillRotateSpeed = windMillRotationSpeed,

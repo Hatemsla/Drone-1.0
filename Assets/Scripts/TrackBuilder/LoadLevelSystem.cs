@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Drone.Builder.ControllerElements;
 using Drone.Builder.Text3D;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -42,6 +41,7 @@ namespace Drone.Builder
                 trackObj.yOffset = objInfo.YOffset;
                 trackObj.maxMouseDistance = objInfo.MaxMouseDistance;
                 trackObj.damage = objInfo.Damage;
+                trackObj.previousRotationXValue = objInfo.PreviousXRotation;
 
                 switch (trackObj.interactiveType)
                 {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Drone;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Drone.Builder
 {
@@ -16,6 +17,7 @@ namespace Drone.Builder
         public bool isActive;
         public float maxMouseDistance = 3f;
         public float damage = 1f;
+        public float previousRotationXValue;
         public string objectName;
         public string objectDescription;
         public Sprite objectSprite;

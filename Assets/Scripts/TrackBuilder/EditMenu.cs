@@ -121,7 +121,7 @@ namespace Drone.Builder
             soundsDropdown.AddOptions(_sounds);
         }
 
-        public void SetEditPanelParams(TrackObject trackObject, float xR, float yR, float zR)
+        public void SetEditPanelParams(TrackObject trackObject)
         {
             objectName.text = trackObject.objectName;
             if(trackObject.objectSprite)
@@ -129,9 +129,9 @@ namespace Drone.Builder
             xPos.text = trackObject.Position.x.ToString("f1", CultureInfo.CurrentCulture);
             yPos.text = trackObject.Position.y.ToString("f1", CultureInfo.CurrentCulture);
             zPos.text = trackObject.Position.z.ToString("f1", CultureInfo.CurrentCulture);
-            xRotValue.text = xR.ToString("f1", CultureInfo.CurrentCulture);
-            yRotValue.text = yR.ToString("f1", CultureInfo.CurrentCulture);
-            zRotValue.text = zR.ToString("f1", CultureInfo.CurrentCulture);
+            xRotValue.text = TrackBuilderUtils.Remap(trackObject.Rotation.x, 0, 1, 0, 180).ToString("f1", CultureInfo.CurrentCulture);
+            yRotValue.text = TrackBuilderUtils.Remap(trackObject.Rotation.y, 0, 1, 0, 180).ToString("f1", CultureInfo.CurrentCulture);
+            zRotValue.text = TrackBuilderUtils.Remap(trackObject.Rotation.z, 0, 1, 0, 180).ToString("f1", CultureInfo.CurrentCulture);
             xyzScaleValue.text = trackObject.Scale.x.ToString("f1", CultureInfo.CurrentCulture);
             
             if(trackObject.objectType is ObjectsType.Gate or ObjectsType.Drone)

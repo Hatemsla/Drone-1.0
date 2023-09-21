@@ -35,6 +35,7 @@ namespace Drone
                 public const string MagnetKillerRotateSpeed = "magnetRotateSpeed";
                 public const string MagnetKillerDamage = "magnetKillerDamage";
                 public const string MagnetKillerDamageInterval = "magnetKillerDamageInterval";
+                public const string PreviousXRotation = "previouseXRotation";
                 
                 // Interactive objects names
                 public const string Windmill = "Windmill";
