@@ -50,15 +50,15 @@ namespace Drone
                 var trackObj = obj.GetComponent<TrackObject>();
                 objectData[Idents.Tags.SaveLoadTags.ObjectName] = obj.name;
                 objectData[Idents.Tags.SaveLoadTags.Position] = FormatVector3(obj.transform.position);
-                objectData[Idents.Tags.SaveLoadTags.Rotation] = FormatVector3(obj.transform.rotation.eulerAngles);
+                objectData[Idents.Tags.SaveLoadTags.Rotation] = FormatVector3(obj.transform.localEulerAngles);
                 objectData[Idents.Tags.SaveLoadTags.Scale] = FormatVector3(obj.transform.localScale);
                 objectData[Idents.Tags.SaveLoadTags.Layer] = obj.layer.ToString();
                 objectData[Idents.Tags.SaveLoadTags.YOffset] = trackObj.yOffset.ToString(CultureInfo.InvariantCulture);
                 objectData[Idents.Tags.SaveLoadTags.MaxMouseDistance] =
                     trackObj.maxMouseDistance.ToString(CultureInfo.InvariantCulture);
                 objectData[Idents.Tags.SaveLoadTags.Damage] = trackObj.damage.ToString(CultureInfo.InvariantCulture);
-                objectData[Idents.Tags.SaveLoadTags.PreviousXRotation] =
-                    trackObj.previousRotationXValue.ToString(CultureInfo.InvariantCulture);
+                objectData[Idents.Tags.SaveLoadTags.PreviousRotation] =
+                    FormatVector3(trackObj.previousRotation);
 
                 if (trackObj.interactiveType != InteractiveType.None)
                 {
@@ -196,18 +196,18 @@ namespace Drone
                 var jTokenYOffset = property.Value[Idents.Tags.SaveLoadTags.YOffset]!.Value<string>();
                 var jTokenMaxMouseDistance = property.Value[Idents.Tags.SaveLoadTags.MaxMouseDistance]!.Value<string>();
                 var jTokenDamage = property.Value[Idents.Tags.SaveLoadTags.Damage]!.Value<string>();
-                var jTokenPreviousXRotation =
-                    property.Value[Idents.Tags.SaveLoadTags.PreviousXRotation]!.Value<string>();
+                var jTokenPreviousRotation =
+                    property.Value[Idents.Tags.SaveLoadTags.PreviousRotation]!.Value<string>();
 
                 var objectName = jTokenObjectName.Substring(0, jTokenObjectName.IndexOf('('));
                 var position = ParseVector3(jTokenPosition);
                 var rotation = ParseVector3(jTokenRotation);
-                var scale =    ParseVector3(jTokenScale);
+                var scale = ParseVector3(jTokenScale);
+                var previousRotation = ParseVector3(jTokenPreviousRotation);
                 var layer = int.Parse(jTokenLayer);
                 var yOffset = float.Parse(jTokenYOffset, CultureInfo.InvariantCulture);
                 var maxMouseDistance = float.Parse(jTokenMaxMouseDistance, CultureInfo.InvariantCulture);
                 var damage = float.Parse(jTokenDamage, CultureInfo.InvariantCulture);
-                var previousXRotation = float.Parse(jTokenPreviousXRotation, CultureInfo.InvariantCulture);
                 
                 var jTokenInteractive = property.Value[Idents.Tags.SaveLoadTags.Interactive];
 
@@ -335,7 +335,7 @@ namespace Drone
                     IsActive = isActive,
                     YOffset = yOffset,
                     Damage = damage,
-                    PreviousXRotation = previousXRotation,
+                    PreviousRotation = previousRotation,
                     ColorIndex = colorIndex,
                     MaxMouseDistance = maxMouseDistance,
                     WindMillRotateSpeed = windMillRotationSpeed,
@@ -372,8 +372,8 @@ namespace Drone
                    vector.y.ToString(CultureInfo.InvariantCulture) + " " +
                    vector.z.ToString(CultureInfo.InvariantCulture);
         }
-        
-        public static Vector3 ParseVector3(string str)
+
+        private static Vector3 ParseVector3(string str)
         {
             var values = str.Split(' ');
             var x = float.Parse(values[0], CultureInfo.InvariantCulture);

@@ -92,8 +92,10 @@ namespace Drone.Builder
         
         public void OnXRotationChanged(float value)
         {
-            currentObject.transform.Rotate(value - currentObject.previousRotationXValue, 0, 0, Space.World);
-            currentObject.previousRotationXValue = value;
+            var delta = value - currentObject.previousRotation.x;
+            currentObject.transform.eulerAngles += new Vector3(delta, 0, 0);
+
+            currentObject.previousRotation.x = value;
         }
 
         public void OnXRotationTextChanged(string text)
@@ -112,16 +114,18 @@ namespace Drone.Builder
 
         public void OnYRotationChanged(float value)
         {
-            var currentRotation = currentObject.Rotation.eulerAngles;
-            currentRotation.y = value;
-            currentObject.Rotation = Quaternion.Euler(currentRotation);
+            var delta = value - currentObject.previousRotation.y;
+            currentObject.transform.eulerAngles += new Vector3(0, delta, 0);
+
+            currentObject.previousRotation.y = value;
         }
 
         public void OnZRotationChanged(float value)
         {
-            var currentRotation = currentObject.Rotation.eulerAngles;
-            currentRotation.z = value;
-            currentObject.Rotation = Quaternion.Euler(currentRotation);
+            var delta = value - currentObject.previousRotation.z;
+            currentObject.transform.eulerAngles += new Vector3(0, 0, delta);
+
+            currentObject.previousRotation.z = value;
         }
 
         public void OnXYZScaleChanged(float value)

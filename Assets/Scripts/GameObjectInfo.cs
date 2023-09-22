@@ -33,6 +33,6 @@ namespace Drone
         public float MagnetKillerRotateSpeed { get; set; }
         public float MagnetKillerDamage { get; set; }
         public float MagnetKillerDamageInterval { get; set; }
-        public float PreviousXRotation { get; set; }
+        public Vector3 PreviousRotation { get; set; }
     }
 }

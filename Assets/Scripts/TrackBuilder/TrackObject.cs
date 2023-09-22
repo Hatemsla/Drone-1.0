@@ -17,7 +17,7 @@ namespace Drone.Builder
         public bool isActive;
         public float maxMouseDistance = 3f;
         public float damage = 1f;
-        public float previousRotationXValue;
+        public Vector3 previousRotation;
         public string objectName;
         public string objectDescription;
         public Sprite objectSprite;

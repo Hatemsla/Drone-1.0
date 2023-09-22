@@ -41,7 +41,7 @@ namespace Drone.Builder
                 trackObj.yOffset = objInfo.YOffset;
                 trackObj.maxMouseDistance = objInfo.MaxMouseDistance;
                 trackObj.damage = objInfo.Damage;
-                trackObj.previousRotationXValue = objInfo.PreviousXRotation;
+                trackObj.previousRotation = objInfo.PreviousRotation;
 
                 switch (trackObj.interactiveType)
                 {
