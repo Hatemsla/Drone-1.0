@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1066027339776208192}
   - component: {fileID: 7269541203389143003}
   m_Layer: 11
-  m_Name: TopSlantConnection
+  m_Name: ZSlantConnection
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -67,7 +67,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   connectionType: 2
-  connectionDirection: 0
+  connectionDirection: 4
 --- !u!1 &978683251861272391
 GameObject:
   m_ObjectHideFlags: 0
@@ -80,7 +80,7 @@ GameObject:
   - component: {fileID: 6933250267463627831}
   - component: {fileID: 7348352492364170038}
   m_Layer: 11
-  m_Name: LeftSlantConnection
+  m_Name: MXSlantConnection
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -135,7 +135,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   connectionType: 2
-  connectionDirection: 3
+  connectionDirection: 1
 --- !u!1 &997040288042798370
 GameObject:
   m_ObjectHideFlags: 0
@@ -148,7 +148,7 @@ GameObject:
   - component: {fileID: 6883502885668109939}
   - component: {fileID: 7128801878598965069}
   m_Layer: 11
-  m_Name: RightSlantConnection
+  m_Name: XSlantConnection
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -203,7 +203,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   connectionType: 2
-  connectionDirection: 1
+  connectionDirection: 0
 --- !u!1 &1029882706891957436
 GameObject:
   m_ObjectHideFlags: 0
@@ -339,7 +339,7 @@ GameObject:
   - component: {fileID: 4073030655473002883}
   - component: {fileID: 1917674450250684288}
   m_Layer: 10
-  m_Name: CenterWallConnection
+  m_Name: YWallConnection
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -395,7 +395,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   connectionType: 1
-  connectionDirection: 0
+  connectionDirection: 2
 --- !u!1 &2778789117319840085
 GameObject:
   m_ObjectHideFlags: 0
@@ -408,7 +408,7 @@ GameObject:
   - component: {fileID: 719864647264853581}
   - component: {fileID: 5335566328242382139}
   m_Layer: 10
-  m_Name: RightWallConnection
+  m_Name: XWallConnection
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -463,7 +463,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   connectionType: 1
-  connectionDirection: 1
+  connectionDirection: 0
 --- !u!1 &3055207961744737674
 GameObject:
   m_ObjectHideFlags: 0
@@ -476,7 +476,7 @@ GameObject:
   - component: {fileID: 5564640017262692607}
   - component: {fileID: 5217550592523643053}
   m_Layer: 10
-  m_Name: TopWallConnection
+  m_Name: ZWallConnection
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -531,7 +531,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   connectionType: 1
-  connectionDirection: 0
+  connectionDirection: 4
 --- !u!1 &3833103450425460966
 GameObject:
   m_ObjectHideFlags: 0
@@ -544,7 +544,7 @@ GameObject:
   - component: {fileID: 3833103450425460888}
   - component: {fileID: 7761936790792500814}
   m_Layer: 9
-  m_Name: RightFloorConnection
+  m_Name: XFloorConnection
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -600,7 +600,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   connectionType: 0
-  connectionDirection: 1
+  connectionDirection: 0
 --- !u!1 &3833103451056561006
 GameObject:
   m_ObjectHideFlags: 0
@@ -613,7 +613,7 @@ GameObject:
   - component: {fileID: 3833103451056560992}
   - component: {fileID: 3203584903026074491}
   m_Layer: 9
-  m_Name: TopFloorConnection
+  m_Name: ZFloorConnection
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -669,7 +669,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   connectionType: 0
-  connectionDirection: 0
+  connectionDirection: 4
 --- !u!1 &3833103451088583166
 GameObject:
   m_ObjectHideFlags: 0
@@ -682,7 +682,7 @@ GameObject:
   - component: {fileID: 3833103451088583152}
   - component: {fileID: 3029481786981134434}
   m_Layer: 9
-  m_Name: BottomFloorConnection
+  m_Name: MZFloorConnection
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -738,7 +738,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   connectionType: 0
-  connectionDirection: 2
+  connectionDirection: 5
 --- !u!1 &3833103451152496054
 GameObject:
   m_ObjectHideFlags: 0
@@ -822,6 +822,7 @@ MonoBehaviour:
   isActive: 0
   maxMouseDistance: 4
   damage: 1
+  previousRotation: {x: 0, y: 0, z: 0}
   objectName: "\u041F\u041E\u041B \u041A\u0412\u0410\u0414\u0420\u0410\u0422\u041D\u042B\u0419"
   objectDescription: "\u0421\u0442\u0430\u0442\u0438\u0447\u043D\u044B\u0439 \u043E\u0431\u044A\u0435\u043A\u0442
     \u0441 \u0432\u043E\u0437\u043C\u043E\u0436\u043D\u043E\u0441\u0442\u044C\u044E
@@ -872,7 +873,7 @@ GameObject:
   - component: {fileID: 3833103451651394513}
   - component: {fileID: 8636489212812543372}
   m_Layer: 9
-  m_Name: LeftFloorConnection
+  m_Name: MXFloorConnection
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -928,7 +929,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   connectionType: 0
-  connectionDirection: 3
+  connectionDirection: 1
 --- !u!1 &4456975471795421262
 GameObject:
   m_ObjectHideFlags: 0
@@ -941,7 +942,7 @@ GameObject:
   - component: {fileID: 6960703519572108686}
   - component: {fileID: 8226412050890870789}
   m_Layer: 10
-  m_Name: BottomWallConnection
+  m_Name: MZWallConnection
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -996,7 +997,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   connectionType: 1
-  connectionDirection: 0
+  connectionDirection: 5
 --- !u!1 &4871705527779780878
 GameObject:
   m_ObjectHideFlags: 0
@@ -1009,7 +1010,7 @@ GameObject:
   - component: {fileID: 4215625179809429400}
   - component: {fileID: 643489638395228921}
   m_Layer: 11
-  m_Name: BottomSlantConnection
+  m_Name: MZSlantConnection
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1064,7 +1065,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   connectionType: 2
-  connectionDirection: 2
+  connectionDirection: 5
 --- !u!1 &6402780917232708328
 GameObject:
   m_ObjectHideFlags: 0
@@ -1122,7 +1123,7 @@ GameObject:
   - component: {fileID: 4240798115014717883}
   - component: {fileID: 7605846036420209095}
   m_Layer: 10
-  m_Name: LeftWallConnection
+  m_Name: MXWallConnection
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1177,7 +1178,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   connectionType: 1
-  connectionDirection: 3
+  connectionDirection: 1
 --- !u!1001 &5360612302586506186
 PrefabInstance:
   m_ObjectHideFlags: 0

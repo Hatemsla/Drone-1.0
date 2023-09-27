@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using Cinemachine;
 using Drone.DB;
@@ -201,6 +202,22 @@ namespace Drone.DroneRace
         {
             yield return new WaitForSeconds(3);
             raceUIManager.backBtn.onClick.Invoke();
+        }
+
+        public void OnSetTargetSpeed(float value)
+        {
+            droneRaceController.targetSpeed = value;
+            raceUIManager.targetSpeedValue.text = value.ToString("f1", CultureInfo.InvariantCulture);
+        }
+
+        public void OpenExitTabPanel()
+        {
+            raceUIManager.exitTabPanel.SetActive(true);
+        }
+
+        public void CloseExitTabPanel()
+        {
+            raceUIManager.exitTabPanel.SetActive(false);
         }
     }
 }

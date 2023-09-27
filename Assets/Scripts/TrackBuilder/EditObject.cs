@@ -69,7 +69,7 @@ namespace Drone.Builder
         public void OnSelectObject(TrackObject obj)
         {
             currentObject = obj;
-            editMenu.SetEditPanelParams(currentObject);
+            editMenu.SetEditPanelParams(currentObject, obj.Scale.x);
         }
 
         public void OnXPositionChanged(string value)

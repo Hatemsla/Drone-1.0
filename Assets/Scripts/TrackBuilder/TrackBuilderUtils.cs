@@ -42,7 +42,8 @@ namespace Drone.Builder
                 && LayerMask.LayerToName(obj.gameObject.layer) != Idents.Layers.Hint &&
                 LayerMask.LayerToName(obj.gameObject.layer) != Idents.Layers.Draw
                 && LayerMask.LayerToName(obj.gameObject.layer) != Idents.Layers.Intangible &&
-                LayerMask.LayerToName(obj.gameObject.layer) != Idents.Layers.Text3D)
+                LayerMask.LayerToName(obj.gameObject.layer) != Idents.Layers.Text3D &&
+                LayerMask.LayerToName(obj.gameObject.layer) != Idents.Layers.PipeConnection)
             {
                 obj.gameObject.layer = layer;
             }

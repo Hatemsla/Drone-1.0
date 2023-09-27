@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3609849198940739424}
   - component: {fileID: 3874107339474697432}
   m_Layer: 9
-  m_Name: TopFloorConnection
+  m_Name: YFloorConnection
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -67,7 +67,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   connectionType: 0
-  connectionDirection: 0
+  connectionDirection: 2
 --- !u!1 &1427667999063443309
 GameObject:
   m_ObjectHideFlags: 0
@@ -324,7 +324,7 @@ GameObject:
   - component: {fileID: 1722348176274886235}
   - component: {fileID: 8768763694409201569}
   m_Layer: 10
-  m_Name: TopWallConnection
+  m_Name: YWallConnection
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -379,8 +379,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b7e5a1cfbd14bf2b40cfa9f72939948, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  connectionType: 0
-  connectionDirection: 0
+  connectionType: 1
+  connectionDirection: 2
 --- !u!1 &6753942714669011639
 GameObject:
   m_ObjectHideFlags: 0
@@ -636,6 +636,7 @@ MonoBehaviour:
   isActive: 0
   maxMouseDistance: 3
   damage: 1
+  previousRotation: {x: 0, y: 0, z: 0}
   objectName: "\u0421\u0422\u0415\u041D\u0410 \u0421 \u0420\u0415\u041B\u042C\u0415\u0424\u041E\u041C"
   objectDescription: "\u0421\u0442\u0430\u0442\u0438\u0447\u043D\u044B\u0439 \u043E\u0431\u044A\u0435\u043A\u0442
     \u0441 \u0432\u043E\u0437\u043C\u043E\u0436\u043D\u043E\u0441\u0442\u044C\u044E
@@ -808,7 +809,7 @@ GameObject:
   - component: {fileID: 6122323235450619001}
   - component: {fileID: 2282817703541688678}
   m_Layer: 9
-  m_Name: BottomFloorConnection
+  m_Name: MYFloorConnection
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -863,7 +864,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   connectionType: 0
-  connectionDirection: 0
+  connectionDirection: 3
 --- !u!1 &8588435637197195589
 GameObject:
   m_ObjectHideFlags: 0
@@ -876,7 +877,7 @@ GameObject:
   - component: {fileID: 1463834872102936097}
   - component: {fileID: 7215117011113133670}
   m_Layer: 10
-  m_Name: BottomWallConnection
+  m_Name: MYWallConnection
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -931,5 +932,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b7e5a1cfbd14bf2b40cfa9f72939948, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  connectionType: 0
-  connectionDirection: 0
+  connectionType: 1
+  connectionDirection: 3

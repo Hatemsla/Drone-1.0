@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using Cinemachine;
 using Drone.Sockets;
@@ -216,8 +217,8 @@ namespace Drone.Builder
         {
             if (IsNoEditObject() || noScaleEditableObjects.HasFlag(currentObjectType.objectType))
                 return;
-            
-            editMenu.SetEditPanelParams(currentObjectType);
+
+            editMenu.SetEditPanelParams(currentObjectType, currentObjectType.Scale.x + value * 0.5f);
         }
 
         private void RotateYObject(float value)
@@ -600,6 +601,29 @@ namespace Drone.Builder
         {
             pendingObjects.Clear();
             pendingObject = null;
+        }
+
+        public void OnSetTargetSpeed(float value)
+        {
+            droneBuilderController.targetSpeed = value;
+
+            builderUI.targetSpeedSlider1.value = value;
+            builderUI.targetSpeedSlider2.value = value;
+            builderUI.targetSpeedSlider3.value = value;
+            
+            builderUI.targetText1Value.text = value.ToString("f1", CultureInfo.InvariantCulture);
+            builderUI.targetText2Value.text = value.ToString("f1", CultureInfo.InvariantCulture);
+            builderUI.targetText3Value.text = value.ToString("f1", CultureInfo.InvariantCulture);
+        }
+        
+        public void OpenExitTabPanel()
+        {
+            builderUI.exitTabPanel.SetActive(true);
+        }
+
+        public void CloseExitTabPanel()
+        {
+            builderUI.exitTabPanel.SetActive(false);
         }
     }
 }

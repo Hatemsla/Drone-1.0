@@ -106,6 +106,7 @@ namespace Drone
             public const string Text3D = "Text3D";
             public const string TrackGround = "TrackGround";
             public const string Track = "Track";
+            public const string PipeConnection = "PipeConnection";
         }
     }
 }

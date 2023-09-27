@@ -121,7 +121,7 @@ namespace Drone.Builder
             soundsDropdown.AddOptions(_sounds);
         }
 
-        public void SetEditPanelParams(TrackObject trackObject)
+        public void SetEditPanelParams(TrackObject trackObject, float newScale)
         {
             objectName.text = trackObject.objectName;
             if(trackObject.objectSprite)
@@ -137,7 +137,7 @@ namespace Drone.Builder
             if(trackObject.objectType is ObjectsType.Gate or ObjectsType.Drone)
                 return;
 
-            xyzScale.value = ConvertScaleToSliderValue(trackObject.Scale.x);
+            xyzScale.value = ConvertScaleToSliderValue(newScale);
 
             switch (trackObject.interactiveType)
             {

@@ -47,7 +47,7 @@ namespace Drone.Menu
             menuUIManager.volumeMusicsSlider.value = gameData.currentMusicsVolume;
             menuUIManager.yawSensitivitySlider.value = gameData.currentYawSensitivity - 1;
             menuUIManager.yawSensitivitySlider.onValueChanged.AddListener(delegate { ChangeYawSensitivity(); });
-            menuUIManager.startExitBtn.onClick.AddListener(GameManagerUtils.Exit);
+            menuUIManager.confirmExitBtn.onClick.AddListener(GameManagerUtils.Exit);
             menuUIManager.isFullscreenToggle.onValueChanged.AddListener(Fullscreen);
             menuUIManager.difficultDropdown.onValueChanged.AddListener(SetDifficult);
             menuUIManager.difficultDropdown.value = gameData.currentDifficultIndex;
@@ -94,6 +94,16 @@ namespace Drone.Menu
             //     dbManager.UserStatisticFootball.SecondsInGame += Time.deltaTime;
 
             // SetStatistics();
+        }
+
+        public void OpenExitTabPanel()
+        {
+            menuUIManager.exitTabPanel.SetActive(true);
+        }
+
+        public void CloseExitTabPanel()
+        {
+            menuUIManager.exitTabPanel.SetActive(false);
         }
 
         private void SetDropdownResolutions()

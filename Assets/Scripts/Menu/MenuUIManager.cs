@@ -30,6 +30,9 @@ namespace Drone.Menu
         public Button statBtn;
         public Button startExitBtn;
         public Button startExitAccBtn;
+        public GameObject exitTabPanel;
+        public Button confirmExitBtn;
+        public Button cancelExitBtn;
 
         [Header("Options menu")]
         public Toggle isFullscreenToggle;

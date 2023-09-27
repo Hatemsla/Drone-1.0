@@ -261,7 +261,7 @@ GameObject:
   - component: {fileID: 760696049379846627}
   - component: {fileID: 6968934854502207556}
   m_Layer: 9
-  m_Name: BottomFloorConnection
+  m_Name: MYWallConnection
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -317,7 +317,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   connectionType: 1
-  connectionDirection: 2
+  connectionDirection: 3
 --- !u!1 &4310056188354422970
 GameObject:
   m_ObjectHideFlags: 0
@@ -398,7 +398,7 @@ GameObject:
   - component: {fileID: 1735833409433295002}
   - component: {fileID: 5035753389154211685}
   m_Layer: 9
-  m_Name: TopFloorConnection
+  m_Name: YWallConnection
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -454,7 +454,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   connectionType: 1
-  connectionDirection: 0
+  connectionDirection: 2
 --- !u!1 &5968964807619163793
 GameObject:
   m_ObjectHideFlags: 0
@@ -612,6 +612,7 @@ MonoBehaviour:
   isActive: 0
   maxMouseDistance: 4
   damage: 1
+  previousRotation: {x: 0, y: 0, z: 0}
   objectName: "\u0421\u0422\u0415\u041D\u0410 \u041F\u041B\u041E\u0421\u041A\u0410\u042F"
   objectDescription: "\u0421\u0442\u0430\u0442\u0438\u0447\u043D\u044B\u0439 \u043E\u0431\u044A\u0435\u043A\u0442
     \u0441 \u0432\u043E\u0437\u043C\u043E\u0436\u043D\u043E\u0441\u0442\u044C\u044E

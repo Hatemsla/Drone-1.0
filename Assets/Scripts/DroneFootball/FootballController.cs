@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Globalization;
 using Cinemachine;
 using Drone.DB;
 using Drone;
@@ -200,6 +201,22 @@ namespace Drone.DroneFootball
         {
             yield return new WaitForSeconds(3);
             footballUIManager.backBtn.onClick.Invoke();
+        }
+        
+        public void OnSetTargetSpeed(float value)
+        {
+            droneFootballController.targetSpeed = value;
+            footballUIManager.targetSpeedValue.text = value.ToString("f1", CultureInfo.InvariantCulture);
+        }
+        
+        public void OpenExitTabPanel()
+        {
+            footballUIManager.exitTabPanel.SetActive(true);
+        }
+
+        public void CloseExitTabPanel()
+        {
+            footballUIManager.exitTabPanel.SetActive(false);
         }
     }
 }

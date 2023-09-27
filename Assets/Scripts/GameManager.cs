@@ -61,7 +61,7 @@ namespace Drone
                         GameManagerUtils.BackToMenu(asyncLoad, raceController.raceUIManager.uiPanel,
                             raceController.raceUIManager.loadPanel);
                     });
-                    raceController.raceUIManager.exitBtn.onClick.AddListener(GameManagerUtils.Exit);
+                    raceController.raceUIManager.confirmExitBtn.onClick.AddListener(GameManagerUtils.Exit);
                     raceController.isSimpleMode = gameData.isSimpleMode;
                     raceController.droneRaceController.yawPower = gameData.currentYawSensitivity;
                     server.player = raceController.droneRaceController;
@@ -79,7 +79,7 @@ namespace Drone
                         GameManagerUtils.BackToMenu(asyncLoad, footballController.footballUIManager.uiPanel,
                             footballController.footballUIManager.loadPanel);
                     });
-                    footballController.footballUIManager.exitBtn.onClick.AddListener(GameManagerUtils.Exit);
+                    footballController.footballUIManager.confirmExitBtn.onClick.AddListener(GameManagerUtils.Exit);
                     footballController.isSimpleMode = gameData.isSimpleMode;
                     footballController.droneFootballController.yawPower = gameData.currentYawSensitivity;
                     server.player = footballController.droneFootballController;
@@ -95,9 +95,9 @@ namespace Drone
                 {
                     builderManager = FindObjectOfType<BuilderManager>();
                     builderManager.currentYawSensitivity = gameData.currentYawSensitivity;
-                    builderManager.builderUI.editorGameExitBtn.onClick.AddListener(GameManagerUtils.Exit);
-                    builderManager.builderUI.editorExitBtn.onClick.AddListener(GameManagerUtils.Exit);
-                    builderManager.builderUI.gameExitBtn.onClick.AddListener(GameManagerUtils.Exit);
+                    builderManager.builderUI.confirmExitBtn.onClick.AddListener(GameManagerUtils.Exit);
+                    builderManager.builderUI.confirmExitBtn.onClick.AddListener(GameManagerUtils.Exit);
+                    builderManager.builderUI.confirmExitBtn.onClick.AddListener(GameManagerUtils.Exit);
                     builderManager.builderUI.backEditorTabBtn.onClick.AddListener(delegate
                     {
                         GameManagerUtils.BackToMenu(asyncLoad, builderManager.builderUI.uiPanel,

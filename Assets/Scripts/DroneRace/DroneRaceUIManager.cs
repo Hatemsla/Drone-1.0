@@ -26,5 +26,11 @@ namespace Drone.DroneRace
         public GameObject tabPanel;
         public GameObject uiPanel;
         public GameObject loadPanel;
+        
+        [Header("ExitTabPanel")]
+        public GameObject exitTabPanel;
+        public Button confirmExitBtn;
+        public Button cancelExitBtn;
+        public TMP_Text targetSpeedValue;
     }
 }

@@ -15,5 +15,6 @@
         PitStop    = 1 << 9,
         Text3D     = 1 << 10,
         Enviroment = 1 << 11,
+        Pipe       = 1 << 12,
     }
 }

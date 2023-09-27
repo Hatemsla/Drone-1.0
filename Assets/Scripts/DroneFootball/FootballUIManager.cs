@@ -26,5 +26,11 @@ namespace Drone.DroneFootball
         public GameObject tabPanel;
         public GameObject uiPanel;
         public GameObject loadPanel;
+        
+        [Header("TabExitPanel")]
+        public GameObject exitTabPanel;
+        public Button confirmExitBtn;
+        public Button cancelExitBtn;
+        public TMP_Text targetSpeedValue;
     }
 }

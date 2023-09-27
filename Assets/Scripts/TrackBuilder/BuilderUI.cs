@@ -65,6 +65,17 @@ namespace Drone.Builder
         public List<Button> createButtons;
         public List<ObjectPreInfo> objectPreInfos;
         
+        [Header("ExitTabPanel")]
+        public GameObject exitTabPanel;
+        public Button confirmExitBtn;
+        public Button cancelExitBtn;
+        public Slider targetSpeedSlider1;
+        public Slider targetSpeedSlider2;
+        public Slider targetSpeedSlider3;
+        public TMP_Text targetText1Value;
+        public TMP_Text targetText2Value;
+        public TMP_Text targetText3Value;
+        
         [Header("Animations")]
         public Animator savePanelAnimator;
 

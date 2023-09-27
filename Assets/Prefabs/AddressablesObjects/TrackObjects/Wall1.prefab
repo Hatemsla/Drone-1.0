@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 2056860431653691888}
   - component: {fileID: 8792855703761076220}
   m_Layer: 9
-  m_Name: TopFloorConnection
+  m_Name: YFloorConnection
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -190,7 +190,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   connectionType: 0
-  connectionDirection: 0
+  connectionDirection: 2
 --- !u!1 &3104259034968657487
 GameObject:
   m_ObjectHideFlags: 0
@@ -274,6 +274,7 @@ MonoBehaviour:
   isActive: 0
   maxMouseDistance: 3
   damage: 1
+  previousRotation: {x: 0, y: 0, z: 0}
   objectName: "\u0421\u0422\u0415\u041D\u0410 \u0422\u041E\u041B\u0421\u0422\u0410\u042F"
   objectDescription: "\u0421\u0442\u0430\u0442\u0438\u0447\u043D\u044B\u0439 \u043E\u0431\u044A\u0435\u043A\u0442
     \u0441 \u0432\u043E\u0437\u043C\u043E\u0436\u043D\u043E\u0441\u0442\u044C\u044E
@@ -443,7 +444,7 @@ GameObject:
   - component: {fileID: 3120550439392313003}
   - component: {fileID: 6515760487820880337}
   m_Layer: 10
-  m_Name: BottomWallConnecton
+  m_Name: MYWallConnecton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -499,7 +500,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   connectionType: 1
-  connectionDirection: 2
+  connectionDirection: 3
 --- !u!1 &6109540563210345659
 GameObject:
   m_ObjectHideFlags: 0
@@ -512,7 +513,7 @@ GameObject:
   - component: {fileID: 2292007704781741715}
   - component: {fileID: 4233104867810143166}
   m_Layer: 10
-  m_Name: TopWallConnection
+  m_Name: YWallConnection
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -568,7 +569,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   connectionType: 1
-  connectionDirection: 0
+  connectionDirection: 2
 --- !u!1 &6489700030119265515
 GameObject:
   m_ObjectHideFlags: 0

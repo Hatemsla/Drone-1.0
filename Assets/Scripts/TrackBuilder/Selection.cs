@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Drone;
 using Drone.Builder.ControllerElements;
+using Drone.TrackBuilder;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -93,13 +94,16 @@ namespace Drone.Builder
                     var otherConnection = hit.collider.GetComponent<Connection>();
                     if (otherConnection && _selectedConnection)
                     {
+                        float sizeMultiplier;
+                        Vector3 offset;
+                        Transform otherConnectionTransform;
                         switch (otherConnection.connectionType)
                         {
                             case ConnectionType.Floor:
                             {
-                                var sizeMultiplier = (selectedTrackObject.Scale.x - 1f) * 2.5f;
-                                var offset = _selectedConnection.GetObjectOffset(otherConnection, sizeMultiplier);
-                                var otherConnectionTransform = otherConnection.transform;
+                                sizeMultiplier = (selectedTrackObject.Scale.x - 1f) * 2.5f;
+                                offset = _selectedConnection.GetObjectOffset(otherConnection, sizeMultiplier);
+                                otherConnectionTransform = otherConnection.transform;
                                 selectedObject.transform.position = otherConnectionTransform.position + offset;
                                 selectedObject.transform.rotation = otherConnectionTransform.rotation;
                                 return;
@@ -111,6 +115,31 @@ namespace Drone.Builder
                                     otherConnectionPosition.y + selectedTrackObject.yOffset,
                                     otherConnectionPosition.z);
                                 return;
+                            // case ConnectionType.Pipe:
+                            //     var currentPipe = selectedObject.GetComponentInParent<Pipe>();
+                            //     var otherPipe = otherConnection.GetComponentInParent<Pipe>();
+                            //     var currentPipeDictionary = selectedObject.GetComponent<PipeDictionary>();
+                            //     var matchingOffset = currentPipeDictionary.dictionary
+                            //         .Where(kv => kv.Key == currentPipe)
+                            //         .Select(kv => kv.Value.connectionPosition
+                            //                 .Where(cp => cp.thisConnectionDirection == cp.otherConnectionDirection)
+                            //                 .Select(cp => cp.offset)
+                            //         )
+                            //         .FirstOrDefault()!.FirstOrDefault();
+                            //     var matchingRotation = currentPipeDictionary.dictionary
+                            //         .Where(kv => kv.Key == currentPipe)
+                            //         .Select(kv => kv.Value.connectionPosition
+                            //             .Where(cp => cp.thisConnectionDirection == cp.otherConnectionDirection)
+                            //             .Select(cp => cp.offset)
+                            //         )
+                            //         .FirstOrDefault()!.FirstOrDefault();
+                            //     otherConnectionTransform = otherConnection.transform;
+                            //     selectedObject.transform.position = otherConnectionTransform.position + matchingOffset;
+                            //     selectedObject.transform.rotation = Quaternion.Euler(
+                            //         new Vector3(otherPipe.transform.eulerAngles.x + matchingRotation.x,
+                            //             otherPipe.transform.eulerAngles.y + matchingRotation.y,
+                            //             otherPipe.transform.eulerAngles.z + matchingRotation.z));
+                            //     return;
                         }
                     }
                 }
@@ -195,6 +224,9 @@ namespace Drone.Builder
                     break;
                 case ObjectsType.Slant:
                     layerMask = TrackBuilderUtils.SetLayerMask(Idents.Layers.SlantConnection);
+                    break;
+                case ObjectsType.Pipe:
+                    layerMask = TrackBuilderUtils.SetLayerMask(Idents.Layers.PipeConnection);
                     break;
             }
             _selectedConnection = selectedObject.GetComponentInChildren<Connection>();

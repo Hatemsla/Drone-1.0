@@ -176,15 +176,15 @@ namespace Drone.Builder
             {
                 foreach (var engine in _engines)
                 {
-                    engine.UpdateEngine(rb, throttle);
+                    engine.UpdateEngine(rb, throttle * targetSpeed);
                 }
             }
             
             CheckDroneHover();
 
-            var pitch = cyclic.y * minMaxPitch;
-            var roll = -cyclic.x * minMaxRoll;
-            yaw += pedals * yawPower;
+            var pitch = cyclic.y * minMaxPitch * targetSpeed;
+            var roll = -cyclic.x * minMaxRoll * targetSpeed;
+            yaw += pedals * yawPower * targetSpeed;
 
             _finalPitch = Mathf.Lerp(_finalPitch, pitch, Time.deltaTime * lerpSpeed);
             _finalRoll = Mathf.Lerp(_finalRoll, roll, Time.deltaTime * lerpSpeed);

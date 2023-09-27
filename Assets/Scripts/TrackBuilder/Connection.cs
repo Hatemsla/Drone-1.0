@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Drone.Builder
 {
@@ -36,13 +37,15 @@ namespace Drone.Builder
 
         private void SetObjectPosition(Collider other, Connection otherConnection)
         {
+            float sizeMultiplier;
+            Vector3 offset;
             switch (_trackObject.objectType)
             {
                 case ObjectsType.Floor when otherConnection.connectionType == ConnectionType.Floor:
                     BuilderManager.Instance.PutObject();
 
-                    var sizeMultiplier = (_trackObject.Scale.x - 1f) * 2.5f;
-                    var offset = GetObjectOffset(otherConnection, sizeMultiplier);
+                    sizeMultiplier = (_trackObject.Scale.x - 1f) * 2.5f;
+                    offset = GetObjectOffset(otherConnection, sizeMultiplier);
 
                     _trackObject.transform.position = other.transform.position + offset;
                     _trackObject.transform.rotation = other.transform.rotation;
@@ -57,28 +60,42 @@ namespace Drone.Builder
                     BuilderManager.Instance.PutObject();
                     _trackObject.transform.position = other.transform.position;
                     break;
+                case ObjectsType.Pipe when otherConnection.connectionType == ConnectionType.Pipe:
+                    // BuilderManager.Instance.PutObject();
+                    //
+                    // sizeMultiplier = (_trackObject.Scale.x - 1f) * 2.5f;
+                    // offset = GetObjectOffset(otherConnection, sizeMultiplier);
+                    //
+                    // _trackObject.transform.position = other.transform.position + offset;
+                    // _trackObject.transform.rotation = other.transform.rotation;
+                    break;
             }
         }
 
         public Vector3 GetObjectOffset(Connection otherConnection, float sizeMultiplier)
         {
             Vector3 offset = default;
-            switch (otherConnection.connectionDirection)
+            switch (otherConnection.connectionType)
             {
-                case ConnectionDirection.Up:
-                    offset = new Vector3(0f, 0f, 2.5f + sizeMultiplier);
-                    break;
-                case ConnectionDirection.Right:
-                    offset = new Vector3(2.5f + sizeMultiplier, 0f, 0f);
-                    break;
-                case ConnectionDirection.Down:
-                    offset = new Vector3(0f, 0f, -2.5f - sizeMultiplier);
-                    break;
-                case ConnectionDirection.Left:
-                    offset = new Vector3(-2.5f - sizeMultiplier, 0f, 0f);
+                case ConnectionType.Floor:
+                    switch (otherConnection.connectionDirection)
+                    {
+                        case ConnectionDirection.Z:
+                            offset = new Vector3(0f, 0f, 2.5f + sizeMultiplier);
+                            break;
+                        case ConnectionDirection.X:
+                            offset = new Vector3(2.5f + sizeMultiplier, 0f, 0f);
+                            break;
+                        case ConnectionDirection.MZ:
+                            offset = new Vector3(0f, 0f, -2.5f - sizeMultiplier);
+                            break;
+                        case ConnectionDirection.MX:
+                            offset = new Vector3(-2.5f - sizeMultiplier, 0f, 0f);
+                            break;
+                    }
                     break;
             }
-            
+
             offset = otherConnection.transform.TransformDirection(offset);
             
             return offset;
