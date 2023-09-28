@@ -46,7 +46,10 @@ namespace Drone.Builder
 
         private void FindPrompt()
         {
-            prompt = BuilderManager.Instance.builderUI.prompt;
+            if(BuilderManager.Instance.isMove)
+                prompt = BuilderManager.Instance.builderUI.prompt;
+            else
+                prompt.SetActive(false);
         }
 
         private void OnTriggerEnter(Collider other)
