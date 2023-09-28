@@ -4,6 +4,8 @@ using System.Linq;
 using Drone.Builder.Text3D;
 using Drone.Builder.ControllerElements;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 using UnityEngine.InputSystem;
 
 namespace Drone.Builder
@@ -13,6 +15,14 @@ namespace Drone.Builder
         public TrackObject currentObject;
         [SerializeField] private BuilderUI builderUI;
         [SerializeField] private EditMenu editMenu;
+        [SerializeField] private Slider rotationXSlider;
+        [SerializeField] private Slider rotationYSlider;
+        [SerializeField] private Slider rotationZSlider;
+        [SerializeField] private TMP_InputField rotationXInput;
+        [SerializeField] private TMP_InputField rotationYInput;
+        [SerializeField] private TMP_InputField rotationZInput;
+
+
 
         private List<string> _maps;
         private List<string> _sounds;
@@ -92,10 +102,11 @@ namespace Drone.Builder
         
         public void OnXRotationChanged(float value)
         {
+            rotationXInput.text = Mathf.RoundToInt(value).ToString();
             var delta = value - currentObject.previousRotation.x;
             currentObject.transform.eulerAngles += new Vector3(delta, 0, 0);
-
             currentObject.previousRotation.x = value;
+
         }
 
         public void OnXRotationTextChanged(string text)
@@ -104,16 +115,49 @@ namespace Drone.Builder
             var xRot = float.Parse(text);
             xRot = xRot switch
             {
-                > 180f => 180f,
-                < 0f => 0f,
+                > 90f => 90f,
+                < -90f => -90f,
                 _ => xRot
             };
+            rotationXSlider.value = xRot;
             currentRotation.x = xRot;
+            currentObject.Rotation = Quaternion.Euler(currentRotation);
+        }
+
+        public void OnYRotationTextChanged(string text)
+        {
+            var currentRotation = currentObject.Rotation.eulerAngles;
+            var xRot = float.Parse(text);
+            xRot = xRot switch
+            {
+                > 90f => 90f,
+                < -90f => -90f,
+                _ => xRot
+            };
+            rotationYSlider.value = xRot;
+            currentRotation.y = xRot;
+            currentObject.Rotation = Quaternion.Euler(currentRotation);
+        }
+
+        public void OnZRotationTextChanged(string text)
+        {
+            var currentRotation = currentObject.Rotation.eulerAngles;
+            var xRot = float.Parse(text);
+            xRot = xRot switch
+            {
+                > 90f => 90f,
+                < -90f => -90f,
+                _ => xRot
+            };
+            rotationZSlider.value = xRot;
+            currentRotation.z = xRot;
             currentObject.Rotation = Quaternion.Euler(currentRotation);
         }
 
         public void OnYRotationChanged(float value)
         {
+            rotationYInput.text = Mathf.RoundToInt(value).ToString();
+
             var delta = value - currentObject.previousRotation.y;
             currentObject.transform.eulerAngles += new Vector3(0, delta, 0);
 
@@ -122,6 +166,8 @@ namespace Drone.Builder
 
         public void OnZRotationChanged(float value)
         {
+            rotationZInput.text = Mathf.RoundToInt(value).ToString();
+
             var delta = value - currentObject.previousRotation.z;
             currentObject.transform.eulerAngles += new Vector3(0, 0, delta);
 

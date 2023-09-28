@@ -129,9 +129,19 @@ namespace Drone.Builder
             xPos.text = trackObject.Position.x.ToString("f1", CultureInfo.CurrentCulture);
             yPos.text = trackObject.Position.y.ToString("f1", CultureInfo.CurrentCulture);
             zPos.text = trackObject.Position.z.ToString("f1", CultureInfo.CurrentCulture);
-            xRotValue.text = trackObject.Rotation.eulerAngles.x.ToString("f1", CultureInfo.CurrentCulture);
-            yRotValue.text = trackObject.Rotation.eulerAngles.y.ToString("f1", CultureInfo.CurrentCulture);
-            zRotValue.text = trackObject.Rotation.eulerAngles.z.ToString("f1", CultureInfo.CurrentCulture);
+            if (trackObject.Rotation.eulerAngles.x < 180)
+                xRotValue.text = trackObject.Rotation.eulerAngles.x.ToString("f1", CultureInfo.CurrentCulture);
+            else
+                xRotValue.text = (trackObject.Rotation.eulerAngles.x - 360f).ToString("f1", CultureInfo.CurrentCulture);
+            if (trackObject.Rotation.eulerAngles.y < 180)
+                yRotValue.text = trackObject.Rotation.eulerAngles.y.ToString("f1", CultureInfo.CurrentCulture);
+            else
+                yRotValue.text = (trackObject.Rotation.eulerAngles.y - 360f).ToString("f1", CultureInfo.CurrentCulture);
+            if (trackObject.Rotation.eulerAngles.z < 180)
+                zRotValue.text = trackObject.Rotation.eulerAngles.z.ToString("f1", CultureInfo.CurrentCulture);
+            else
+                zRotValue.text = (trackObject.Rotation.eulerAngles.z - 360f).ToString("f1", CultureInfo.CurrentCulture);
+            Debug.Log(zRotValue.text);
             xyzScaleValue.text = trackObject.Scale.x.ToString("f1", CultureInfo.CurrentCulture);
             
             if(trackObject.objectType is ObjectsType.Gate or ObjectsType.Drone)
