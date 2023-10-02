@@ -133,6 +133,8 @@ namespace Drone.DroneRace
             else if(isGameStart)
                 droneRaceAudioController.droneFly.Play();
             raceUIManager.tabPanel.SetActive(_isTabPanel);
+            raceUIManager.droneView.SetActive(!_isTabPanel);
+            raceUIManager.exitTabPanel.SetActive(false);
             Time.timeScale = _isTabPanel ? 0f : 1f;
         }
         
@@ -144,13 +146,15 @@ namespace Drone.DroneRace
             }
             else
             {
-                raceUIManager.droneView.SetActive(true);
                 raceUIManager.timeToStartGameText.gameObject.SetActive(false);
                 raceUIManager.descriptionPanel.SetActive(false);
                 raceUIManager.backgroundImage.SetActive(false);
                 isGameStart = true;
                 if(!droneRaceAudioController.droneFly.isPlaying && !_isTabPanel)
+                {
                     droneRaceAudioController.droneFly.Play();
+                    raceUIManager.droneView.SetActive(true);
+                }
             }
         }
 
@@ -213,11 +217,13 @@ namespace Drone.DroneRace
         public void OpenExitTabPanel()
         {
             raceUIManager.exitTabPanel.SetActive(true);
+            raceUIManager.tabPanel.SetActive(false);
         }
 
         public void CloseExitTabPanel()
         {
             raceUIManager.exitTabPanel.SetActive(false);
+            raceUIManager.tabPanel.SetActive(true);
         }
     }
 }

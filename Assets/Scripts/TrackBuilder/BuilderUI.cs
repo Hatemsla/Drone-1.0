@@ -113,10 +113,8 @@ namespace Drone.Builder
         
         private void ActivateBuilderUI()
         {
-            editButtons.SetActive(true);
             createPanel.SetActive(true);
             createPanel.SetActive(true);
-            editButtons.SetActive(true);
             droneView.SetActive(false);
             pathArrow.gameObject.SetActive(false);
             editorTabPanel.SetActive(false);

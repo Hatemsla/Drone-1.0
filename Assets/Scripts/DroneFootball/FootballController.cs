@@ -130,6 +130,8 @@ namespace Drone.DroneFootball
             else if(isGameStart)
                 droneFootballSoundController.droneFly.Play();
             footballUIManager.tabPanel.SetActive(_isTabPanel);
+            footballUIManager.droneView.SetActive(!_isTabPanel && !footballUIManager.loadPanel.activeSelf);
+            footballUIManager.exitTabPanel.SetActive(false);
             Time.timeScale = _isTabPanel ? 0f : 1f;
         }
 
@@ -144,10 +146,12 @@ namespace Drone.DroneFootball
                 footballUIManager.timeToStartGameText.gameObject.SetActive(false);
                 footballUIManager.descriptionPanel.SetActive(false);
                 footballUIManager.backgroundImage.SetActive(false);
-                footballUIManager.droneView.SetActive(true);
                 isGameStart = true;
-                if(!droneFootballSoundController.droneFly.isPlaying && !_isTabPanel)
+                if (!droneFootballSoundController.droneFly.isPlaying && !_isTabPanel)
+                {
                     droneFootballSoundController.droneFly.Play();
+                    footballUIManager.droneView.SetActive(true);
+                }
             }
         }
 
@@ -212,11 +216,13 @@ namespace Drone.DroneFootball
         public void OpenExitTabPanel()
         {
             footballUIManager.exitTabPanel.SetActive(true);
+            footballUIManager.tabPanel.SetActive(false);
         }
 
         public void CloseExitTabPanel()
         {
             footballUIManager.exitTabPanel.SetActive(false);
+            footballUIManager.tabPanel.SetActive(true);
         }
     }
 }

@@ -40,6 +40,7 @@ namespace Drone
             InputManager.Instance.TurnCustomActionMap("Terminal");
             BuilderManager.Instance.builderUI.droneView.SetActive(false);
             BuilderManager.Instance.builderUI.objectEditPanel.SetActive(false);
+            BuilderManager.Instance.builderUI.editButtons.SetActive(false);
             BuilderManager.Instance.builderUI.terminalUI.SetActive(true);
             prompt.SetActive(false);
         }

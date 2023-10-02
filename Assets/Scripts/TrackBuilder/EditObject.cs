@@ -22,8 +22,6 @@ namespace Drone.Builder
         [SerializeField] private TMP_InputField rotationYInput;
         [SerializeField] private TMP_InputField rotationZInput;
 
-
-
         private List<string> _maps;
         private List<string> _sounds;
         
@@ -69,11 +67,13 @@ namespace Drone.Builder
         public void ShowEditMenu()
         {
             editMenu.gameObject.SetActive(true);
+            builderUI.editButtons.SetActive(true);
         }
 
         public void HideEditMenu()
         {
             editMenu.gameObject.SetActive(false);
+            builderUI.editButtons.SetActive(false);
         }
         
         public void OnSelectObject(TrackObject obj)

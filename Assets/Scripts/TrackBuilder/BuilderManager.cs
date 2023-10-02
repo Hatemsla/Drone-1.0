@@ -77,6 +77,10 @@ namespace Drone.Builder
         private Vector3 _prevMousePos;
         private float _objectHeightValue;
 
+        private bool _isBuilderExitTab;
+        private bool _isGameExitTab;
+        private bool _isEditorExitTab;
+
         private void Awake()
         {
             Instance = this;
@@ -195,6 +199,9 @@ namespace Drone.Builder
             builderUI.createPanel.SetActive(!_isExitPanel);
             builderUI.editButtons.SetActive(!_isExitPanel);
             builderUI.objectEditPanel.SetActive(!_isExitPanel);
+            builderUI.editButtons.SetActive(!_isExitPanel);
+            if(builderUI.exitTabPanel.activeSelf && !_isExitPanel)
+                builderUI.exitTabPanel.SetActive(false);
         }
 
         private void RotateXObject(float value)
@@ -307,7 +314,7 @@ namespace Drone.Builder
         private void UndoCommand() => undoRedoManager.UndoCommand();
         private void RedoCommand() => undoRedoManager.RedoCommand();
 
-        private void PasteObject()
+        public void PasteObject()
         {
             if (pendingObject != null || pendingObjects.Count > 0)
                 PlaceObjects();
@@ -318,7 +325,7 @@ namespace Drone.Builder
             }
         }
 
-        private void CopyObject()
+        public void CopyObject()
         {
             if (_selection.selectedObject != null)
             {
@@ -371,6 +378,9 @@ namespace Drone.Builder
                     droneBuilderSoundController.droneFlySound.Play();
                 builderUI.editorTabPanel.SetActive(_isTabPanel && !isGameMode);
                 builderUI.gameTabPanel.SetActive(_isTabPanel && isGameMode);
+                builderUI.droneView.SetActive(!_isTabPanel);
+                if(builderUI.exitTabPanel.activeSelf && !_isTabPanel)
+                    builderUI.exitTabPanel.SetActive(false);
                 builderUI.levelResultPanel.SetActive(false);
                 Time.timeScale = _isTabPanel ? 0f : 1f;
             }
@@ -492,7 +502,7 @@ namespace Drone.Builder
 
         private void ChangeObjectHeight(float value) => _objectHeightValue = value;
 
-        private void RotateObject(Vector3 axis, float rotateAmount, Space space) =>pendingObject.transform.Rotate(axis * rotateAmount, space);
+        private void RotateObject(Vector3 axis, float rotateAmount, Space space) => pendingObject.transform.Rotate(axis * rotateAmount, space);
 
         public void SelectObject(int index)
         {
@@ -619,11 +629,32 @@ namespace Drone.Builder
         public void OpenExitTabPanel()
         {
             builderUI.exitTabPanel.SetActive(true);
+            _isBuilderExitTab = builderUI.exitBuilderPanel.activeSelf;
+            _isGameExitTab = builderUI.gameTabPanel.activeSelf;
+            _isEditorExitTab = builderUI.editorTabPanel.activeSelf;
+            builderUI.editorTabPanel.SetActive(false);
+            builderUI.gameTabPanel.SetActive(false);
+            builderUI.exitBuilderPanel.SetActive(false);
         }
 
         public void CloseExitTabPanel()
         {
             builderUI.exitTabPanel.SetActive(false);
+            if (_isBuilderExitTab)
+            {
+                builderUI.exitBuilderPanel.SetActive(true);
+                _isBuilderExitTab = false;
+            }
+            else if (_isGameExitTab)
+            {
+                builderUI.gameTabPanel.SetActive(true);
+                _isGameExitTab = false;
+            }
+            else if (_isEditorExitTab)
+            {
+                builderUI.editorTabPanel.SetActive(true);
+                _isEditorExitTab = false;
+            }
         }
     }
 }

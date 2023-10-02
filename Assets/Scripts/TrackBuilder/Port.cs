@@ -128,6 +128,7 @@ namespace Drone.Builder
             InputManager.Instance.TurnCustomActionMap("Port");
             BuilderManager.Instance.builderUI.droneView.SetActive(false);
             BuilderManager.Instance.builderUI.objectEditPanel.SetActive(false);
+            BuilderManager.Instance.builderUI.editButtons.SetActive(false);
             BuilderManager.Instance.builderUI.portUI.SetActive(true);
             BuilderManager.Instance.builderUI.passwordUI.SetActive(false);
             prompt.SetActive(false);
@@ -141,6 +142,7 @@ namespace Drone.Builder
             InputManager.Instance.TurnCustomActionMap("Port");
             BuilderManager.Instance.builderUI.droneView.SetActive(false);
             BuilderManager.Instance.builderUI.objectEditPanel.SetActive(false);
+            BuilderManager.Instance.builderUI.editButtons.SetActive(false);
             BuilderManager.Instance.builderUI.portUI.SetActive(true);
             BuilderManager.Instance.builderUI.passwordUI.SetActive(false);
             prompt.SetActive(false);
