@@ -7,32 +7,43 @@ namespace Drone.Builder
 {
     public sealed class EffectsManager : MonoBehaviour
     {
-        public static EffectsManager Intsance;
+        public static EffectsManager Instance;
 
         [SerializeField] private ParticleEffect getEffect;
-        [SerializeField] private ParticleEffect sparksEffect;
+        [SerializeField] private ParticleEffect collisionEffect;
         [SerializeField] private ParticleEffect explosionEffect;
+        [SerializeField] private ParticleEffect brokenLampEffect;
         [SerializeField] private int getEffectsCount;
-        [SerializeField] private int sparksEffectsCount;
+        [SerializeField] private int collisionEffectsCount;
         [SerializeField] private int explosionEffectsCount;
+        [SerializeField] private int brokenLampEffectsCount;
         
         private PoolBase<ParticleEffect> _particleGetEffectsPool;
-        private PoolBase<ParticleEffect> _particleSparksEffectsPool;
+        private PoolBase<ParticleEffect> _particleCollisionEffectsPool;
         private PoolBase<ParticleEffect> _particleExplosionEffectsPool;
+        private PoolBase<ParticleEffect> _particleBrokenLampEffectsPool;
 
         private void Awake()
         {
-            Intsance = this;
+            Instance = this;
         }
 
         private void Start()
         {
             _particleGetEffectsPool = new PoolBase<ParticleEffect>(PreloadParticleGetEffect, GetParticleGetEffectAction,
                 ReturnParticleGetEffectAction, getEffectsCount);
-            _particleSparksEffectsPool = new PoolBase<ParticleEffect>(PreloadParticleSparksEffect, GetParticleSparksEffectAction,
-                ReturnParticleSparksEffectAction, sparksEffectsCount);
+            _particleCollisionEffectsPool = new PoolBase<ParticleEffect>(PreloadParticleCollisionEffect, GetParticleCollisionEffectAction,
+                ReturnParticleCollisionEffectAction, collisionEffectsCount);
             _particleExplosionEffectsPool = new PoolBase<ParticleEffect>(PreloadParticleExplosionEffect, GetParticleExplosionEffectAction,
                 ReturnParticleExplosionEffectAction, explosionEffectsCount);
+            _particleBrokenLampEffectsPool = new PoolBase<ParticleEffect>(PreloadParticleBrokenLampEffect, GetParticleBrokenLampEffectAction,
+                ReturnParticleBrokenLampEffectAction, brokenLampEffectsCount);
+        }
+
+        private ParticleEffect PreloadParticleBrokenLampEffect()
+        {
+            var newEffect = Instantiate(brokenLampEffect, Vector3.zero, brokenLampEffect.transform.rotation, transform);
+            return newEffect;
         }
 
         private ParticleEffect PreloadParticleGetEffect()
@@ -41,9 +52,9 @@ namespace Drone.Builder
             return newEffect;
         }
         
-        private ParticleEffect PreloadParticleSparksEffect()
+        private ParticleEffect PreloadParticleCollisionEffect()
         {
-            var newEffect = Instantiate(sparksEffect, Vector3.zero, sparksEffect.transform.rotation, transform);
+            var newEffect = Instantiate(collisionEffect, Vector3.zero, collisionEffect.transform.rotation, transform);
             return newEffect;
         }
         
@@ -59,13 +70,19 @@ namespace Drone.Builder
             obj.Play();
         }
         
-        private void GetParticleSparksEffectAction(ParticleEffect obj)
+        private void GetParticleCollisionEffectAction(ParticleEffect obj)
         {
             obj.gameObject.SetActive(true);
             obj.Play();
         }
         
         private void GetParticleExplosionEffectAction(ParticleEffect obj)
+        {
+            obj.gameObject.SetActive(true);
+            obj.Play();
+        }
+        
+        private void GetParticleBrokenLampEffectAction(ParticleEffect obj)
         {
             obj.gameObject.SetActive(true);
             obj.Play();
@@ -77,7 +94,7 @@ namespace Drone.Builder
             obj.Stop();
         }
         
-        private void ReturnParticleSparksEffectAction(ParticleEffect obj)
+        private void ReturnParticleCollisionEffectAction(ParticleEffect obj)
         {
             obj.gameObject.SetActive(false);
             obj.Stop();
@@ -89,14 +106,22 @@ namespace Drone.Builder
             obj.Stop();
         }
         
+        private void ReturnParticleBrokenLampEffectAction(ParticleEffect obj)
+        {
+            obj.gameObject.SetActive(false);
+            obj.Stop();
+        }
+        
         public void Return(ParticleEffect particleEffect)
         {
             if(_particleGetEffectsPool.HasItem(particleEffect))
                 _particleGetEffectsPool.Return(particleEffect);
-            if(_particleSparksEffectsPool.HasItem(particleEffect))
-                _particleSparksEffectsPool.Return(particleEffect);
+            if(_particleCollisionEffectsPool.HasItem(particleEffect))
+                _particleCollisionEffectsPool.Return(particleEffect);
             if(_particleExplosionEffectsPool.HasItem(particleEffect))
                 _particleExplosionEffectsPool.Return(particleEffect);
+            if(_particleBrokenLampEffectsPool.HasItem(particleEffect))
+                _particleBrokenLampEffectsPool.Return(particleEffect);
         }
         
         public void GetGetEffect(Vector3 position)
@@ -112,13 +137,22 @@ namespace Drone.Builder
             newEffect.transform.localScale = scale;
         }
         
-        public void GetSparksEffect(Vector3 position, float currentPercentSpeed)
+        public void GetCollisionEffect(Vector3 position, float currentPercentSpeed)
         {
-            var newEffect = _particleSparksEffectsPool.Get();
+            var newEffect = _particleCollisionEffectsPool.Get();
             var burst = newEffect.Effect.emission.GetBurst(0);
             burst.count = new ParticleSystem.MinMaxCurve(currentPercentSpeed);
             newEffect.Effect.emission.SetBurst(0, burst);
             newEffect.transform.position = position;
+        }
+        
+        public void GetBrokenLampEffect(Vector3 position, Vector3 scale)
+        {
+            var newEffect = _particleBrokenLampEffectsPool.Get();
+            newEffect.transform.position = position;
+            var localScale = newEffect.transform.localScale;
+            newEffect.transform.localScale =
+                new Vector3(localScale.x + scale.x, localScale.y = scale.y, localScale.z + scale.z);
         }
     }
 }

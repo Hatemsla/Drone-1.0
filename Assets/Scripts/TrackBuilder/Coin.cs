@@ -18,7 +18,7 @@ namespace Drone.Builder
             var player = other.GetComponentInParent<DroneRpgController>();
             if (player)
             {
-                EffectsManager.Intsance.GetGetEffect(transform.position);
+                EffectsManager.Instance.GetGetEffect(transform.position);
                 SoundManager.Instance.GetSound(transform.position, pickupSound);
                 player.Coins += coin;
                 if(BuilderManager.Instance.isGameMode)

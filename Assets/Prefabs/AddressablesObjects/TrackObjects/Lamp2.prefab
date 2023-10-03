@@ -279,7 +279,7 @@ Transform:
   - {fileID: 7263957317349094422}
   - {fileID: 7795508532274268681}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &6527088577414452158
 Rigidbody:
@@ -328,6 +328,7 @@ MonoBehaviour:
   isActive: 0
   maxMouseDistance: 0
   damage: 1
+  previousRotation: {x: 0, y: 0, z: 0}
   objectName: "\u041B\u0410\u041C\u041F\u0410 \u0412\u042B\u0422\u042F\u041D\u0423\u0422\u0410\u042F
     \u0421\u0422\u0415\u041A\u041B\u042F\u041D\u041D\u0410\u042F"
   objectDescription: "\u041D\u0430\u0441\u0442\u0440\u0430\u0438\u0432\u0430\u0435\u0442\u0441\u044F
@@ -461,7 +462,7 @@ Light:
   m_Cookie: {fileID: 0}
   m_DrawHalo: 0
   m_Flare: {fileID: 0}
-  m_RenderMode: 0
+  m_RenderMode: 1
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295

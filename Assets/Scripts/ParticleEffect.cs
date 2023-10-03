@@ -16,7 +16,7 @@ namespace Drone
 
         private void OnParticleSystemStopped()
         {
-            EffectsManager.Intsance.Return(this);
+            EffectsManager.Instance.Return(this);
         }
 
         public void Play()

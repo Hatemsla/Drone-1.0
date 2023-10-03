@@ -220,7 +220,7 @@ namespace Drone
         {
             var trackObject = other.transform.GetComponentInParent<TrackObject>();
             
-            EffectsManager.Intsance.GetSparksEffect(other.contacts[0].point, droneBuilderController.currentPercentSpeed);
+            EffectsManager.Instance.GetCollisionEffect(other.contacts[0].point, droneBuilderController.currentPercentSpeed);
             SoundManager.Instance.GetSound(other.contacts[0].point, SoundManager.Instance.collisionClip, droneBuilderController.currentPercentSpeed / 100);
 
             if (trackObject && droneBuilderController.currentPercentSpeed >= 50f)
@@ -241,6 +241,7 @@ namespace Drone
                             if (lamp && lamp.isLampTurn)
                             {
                                 SoundManager.Instance.GetSound(trackObject.transform.position, SoundManager.Instance.lampOffClip);
+                                CreateLampBrokenEffect(trackObject, other);
                                 lamp.TurnLamp();
                             }
                             else
@@ -260,9 +261,21 @@ namespace Drone
             }
         }
 
+        private void CreateLampBrokenEffect(TrackObject trackObject, Collision other)
+        {
+            var childRenderersWithCollider = other.gameObject.GetComponentsInChildren<Renderer>()
+                .Where(rend => rend.GetComponent<Collider>() != null);
+            
+            foreach (var renderer in childRenderersWithCollider)
+            {
+                Vector3 center = renderer.bounds.center;
+                EffectsManager.Instance.GetBrokenLampEffect(center, trackObject.Scale);
+            }
+        }
+
         private void CreateExplosion(TrackObject trackObject, Collision other)
         {
-            EffectsManager.Intsance.GetExplosionEffect(other.transform.position, trackObject.Scale);
+            EffectsManager.Instance.GetExplosionEffect(other.transform.position, trackObject.Scale);
             if (BuilderManager.Instance.isGameMode)
                 Destroy(trackObject.gameObject);
             else

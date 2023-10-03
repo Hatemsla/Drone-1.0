@@ -13,7 +13,7 @@ namespace Drone.Builder
             var player = other.GetComponentInParent<DroneRpgController>();
             if (player)
             {
-                EffectsManager.Intsance.GetGetEffect(transform.position);
+                EffectsManager.Instance.GetGetEffect(transform.position);
                 player.Crystals += crystal;
                 if(BuilderManager.Instance.isGameMode)
                     Destroy(transform.root);

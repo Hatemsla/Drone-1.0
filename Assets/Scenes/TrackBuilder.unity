@@ -46691,12 +46691,12 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1494043446}
+  m_Father: {fileID: 1079854593}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 232}
+  m_AnchoredPosition: {x: 0.0025024414, y: 231.98001}
   m_SizeDelta: {x: 1920, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1008510539
@@ -49573,6 +49573,7 @@ RectTransform:
   - {fileID: 657708203}
   - {fileID: 1117170378}
   - {fileID: 2013609158}
+  - {fileID: 1008510538}
   m_Father: {fileID: 1749697424}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -59675,11 +59676,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   getEffect: {fileID: 7163160953344578462, guid: b856d99f51146f14e9ce1c90fa88d862, type: 3}
-  sparksEffect: {fileID: 7444521385018050336, guid: 97d2b6170d9840648bbfd52d3d2f07ee, type: 3}
+  collisionEffect: {fileID: 7444521385018050336, guid: 97d2b6170d9840648bbfd52d3d2f07ee, type: 3}
   explosionEffect: {fileID: 6569725859112005881, guid: 511e690e94a28b5438cbd6ec189b24e5, type: 3}
+  brokenLampEffect: {fileID: 7686913749853374554, guid: 8f1065bf7b6d5ad4e89fdb504b78584e, type: 3}
   getEffectsCount: 10
-  sparksEffectsCount: 10
+  collisionEffectsCount: 10
   explosionEffectsCount: 3
+  brokenLampEffectsCount: 15
 --- !u!4 &1291788430
 Transform:
   m_ObjectHideFlags: 0
@@ -69231,7 +69234,6 @@ RectTransform:
   m_Children:
   - {fileID: 1070605406}
   - {fileID: 1749697424}
-  - {fileID: 1008510538}
   - {fileID: 682534350}
   - {fileID: 283528198}
   m_Father: {fileID: 0}
