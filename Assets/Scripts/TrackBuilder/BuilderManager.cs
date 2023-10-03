@@ -41,6 +41,7 @@ namespace Drone.Builder
         public Timer timer;
         public GameData gameData;
         public CinemachineBrain cameraBrain;
+        public CinemachineVirtualCamera thirdPersonCamera;
         public LayerMask layerMask;
         public GameObject pendingObject;
         public ObjectsType noScaleEditableObjects;

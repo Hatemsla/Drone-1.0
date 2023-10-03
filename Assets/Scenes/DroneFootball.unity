@@ -724,7 +724,7 @@ GameObject:
   - component: {fileID: 264529801}
   - component: {fileID: 264529800}
   m_Layer: 0
-  m_Name: CamPos1
+  m_Name: ThirdView
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -777,7 +777,7 @@ MonoBehaviour:
   m_LockStageInInspector: 
   m_StreamingVersion: 20170927
   m_Priority: 10
-  m_StandbyUpdate: 2
+  m_StandbyUpdate: 1
   m_LookAt: {fileID: 7563009362714903498}
   m_Follow: {fileID: 7563009362714903498}
   m_Lens:
@@ -813,7 +813,7 @@ Transform:
   m_Children:
   - {fileID: 1065092455}
   m_Father: {fileID: 0}
-  m_RootOrder: 14
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &299676753
 GameObject:
@@ -4064,7 +4064,7 @@ GameObject:
   - component: {fileID: 1253869380}
   - component: {fileID: 1253869379}
   m_Layer: 3
-  m_Name: CamPos2
+  m_Name: FirstView
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4117,13 +4117,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1253869378}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.2836, z: -34.9148}
+  m_LocalPosition: {x: 0, y: 0.2836, z: 0.08520126}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1392998359}
-  m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_Father: {fileID: 7563009362714903498}
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 9.826, y: 0, z: 0}
 --- !u!1 &1308054985
 GameObject:
@@ -8533,14 +8533,17 @@ PrefabInstance:
     - target: {fileID: 7332079272930706102, guid: 9b62a2da63726e142884aa9e05b4f99f, type: 3}
       propertyPath: firstView
       value: 
-      objectReference: {fileID: 264529801}
+      objectReference: {fileID: 1253869379}
     - target: {fileID: 7332079272930706102, guid: 9b62a2da63726e142884aa9e05b4f99f, type: 3}
       propertyPath: thirdView
       value: 
-      objectReference: {fileID: 1253869379}
+      objectReference: {fileID: 264529801}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 951934840236228985, guid: 9b62a2da63726e142884aa9e05b4f99f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1253869380}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9b62a2da63726e142884aa9e05b4f99f, type: 3}
 --- !u!114 &7332079272930706100 stripped
@@ -8747,8 +8750,8 @@ MonoBehaviour:
   m_ShowCameraFrustum: 1
   m_IgnoreTimeScale: 0
   m_WorldUpOverride: {fileID: 0}
-  m_UpdateMethod: 2
-  m_BlendUpdateMethod: 1
+  m_UpdateMethod: 0
+  m_BlendUpdateMethod: 0
   m_DefaultBlend:
     m_Style: 1
     m_Time: 1

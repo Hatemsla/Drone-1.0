@@ -24,6 +24,7 @@ namespace Drone
         public event Action<float> ThrottleEvent;
         public event Action<Vector2> CyclicEvent;
         public event Action<bool> RewindTimeEvent;
+        public event Action<bool> ReturnToCheckpointEvent;
         public event Action ThermalVisionEvent;
         public event Action XRayEvent;
         public event Action<float> ChangeObjectHeightEvent;
@@ -75,6 +76,8 @@ namespace Drone
             _playerInput.Player.Cyclic.canceled += _ => CyclicEvent?.Invoke(Vector2.zero);
             _playerInput.Player.RewindTime.performed += _ => RewindTimeEvent?.Invoke(true);
             _playerInput.Player.RewindTime.canceled += _ => RewindTimeEvent?.Invoke(false);
+            _playerInput.Player.ReturnToCheckpoint.performed += _ => ReturnToCheckpointEvent?.Invoke(true);
+            _playerInput.Player.ReturnToCheckpoint.canceled += _ => ReturnToCheckpointEvent?.Invoke(false);
             _playerInput.Player.ThermalVision.performed += _ => ThermalVisionEvent?.Invoke();
             _playerInput.Player.XRay.performed += _ => XRayEvent?.Invoke();
             _playerInput.Player.Exit.performed += _ => ExitGameEvent?.Invoke();

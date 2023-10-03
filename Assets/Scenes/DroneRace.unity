@@ -6163,8 +6163,8 @@ MonoBehaviour:
   m_ShowCameraFrustum: 1
   m_IgnoreTimeScale: 0
   m_WorldUpOverride: {fileID: 0}
-  m_UpdateMethod: 2
-  m_BlendUpdateMethod: 1
+  m_UpdateMethod: 0
+  m_BlendUpdateMethod: 0
   m_DefaultBlend:
     m_Style: 1
     m_Time: 1
@@ -7799,7 +7799,7 @@ MonoBehaviour:
   m_Lens:
     FieldOfView: 60
     OrthographicSize: 10
-    NearClipPlane: 0.1
+    NearClipPlane: 0.36
     FarClipPlane: 2000
     Dutch: 0
     ModeOverride: 0
@@ -7823,13 +7823,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2114365599}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1, y: 0.2, z: -316.27}
+  m_LocalPosition: {x: 0, y: 0.2907, z: 0.08401489}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 646257172}
-  m_Father: {fileID: 0}
-  m_RootOrder: 14
+  m_Father: {fileID: 4632446991171399024}
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2143235887
 GameObject:
@@ -8554,7 +8554,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 4632446992205922066, guid: a4b8c742255f2d34aaeee1ce81817b8d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2114365601}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a4b8c742255f2d34aaeee1ce81817b8d, type: 3}
 --- !u!4 &4632446991171399024 stripped

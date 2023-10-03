@@ -30,6 +30,7 @@ namespace Drone
 
         private void Start()
         {
+            droneData.Reset();
             dbManager = GetComponent<DBManager>();
             server = GetComponent<Server>();
 

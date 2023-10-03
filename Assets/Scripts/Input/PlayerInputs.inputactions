@@ -175,6 +175,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "ReturnToCheckpoint",
+                    "type": "Button",
+                    "id": "60af6807-6be0-4d4a-9095-c8b291ed1840",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Hold",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -472,6 +481,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "SwitchView",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "fc03130d-d4bf-485b-b19a-d12f287304c1",
+                    "path": "<Keyboard>/r",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ReturnToCheckpoint",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

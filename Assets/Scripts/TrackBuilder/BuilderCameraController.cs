@@ -29,6 +29,10 @@ namespace Drone.Builder
 
         private void Start()
         {
+            thirdView = BuilderManager.Instance.thirdPersonCamera;
+            thirdView.LookAt = transform;
+            thirdView.Follow = transform;
+            
             BuilderManager.Instance.StartGame += ActivateCamera;
             BuilderManager.Instance.StopGame += DeactivateCamera;
         }
@@ -56,13 +60,13 @@ namespace Drone.Builder
             }
         }
 
-        public void SetUpCamerasDefaultPriority()
+        private void SetUpCamerasDefaultPriority()
         {
             thirdView.Priority = 10;
             firstView.Priority = 0;
         }
 
-        public void SetUpCamerasZeroPriority()
+        private void SetUpCamerasZeroPriority()
         {
             thirdView.Priority = 0;
             firstView.Priority = 0;

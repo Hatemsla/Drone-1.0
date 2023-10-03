@@ -23,6 +23,10 @@ namespace Drone
         public event Action<Skills> SkillsCountChangedEvent;
 
         private bool _isRespawning;
+        private bool _isReturnToCheckpoint;
+
+        private float _currentRespawnTime;
+        
         private readonly float[] _thresholds = { 0, 20f, 40f, 60f, 80f, 100f };
 
         public Dictionary<Skills, int> SkillsCount
@@ -104,11 +108,50 @@ namespace Drone
         private void OnEnable()
         {
             BuilderManager.Instance.StartGame += ResetDroneData;
+            InputManager.Instance.ReturnToCheckpointEvent += ReturnToCheckpoint;
         }
 
         private void OnDestroy()
         {
             BuilderManager.Instance.StartGame -= ResetDroneData;
+            InputManager.Instance.ReturnToCheckpointEvent -= ReturnToCheckpoint;
+        }
+        
+        private void Update()
+        {
+            if (BuilderManager.Instance.isMove && !RewindManager.Instance.IsBeingRewinded)
+                ApplyEnergyUsage(powerUsageRate * Time.deltaTime);
+
+            ReturnToCheckpoint();
+        }
+
+        private void ReturnToCheckpoint()
+        {
+            if (_isReturnToCheckpoint && !_isRespawning)
+            {
+                if (!BuilderManager.Instance.builderUI.restoreHealthText.enabled)
+                    BuilderManager.Instance.builderUI.restoreHealthText.enabled = true;
+                _currentRespawnTime += Time.deltaTime;
+                var waitTime = respawnTime - _currentRespawnTime;
+                BuilderManager.Instance.builderUI.restoreHealthText.text = $"Респавн через: {waitTime:f1}";
+
+                if (_currentRespawnTime >= respawnTime)
+                {
+                    transform.position = droneBuilderCheckNode.GetRespawnPosition();
+                    droneBuilderController.yaw = droneBuilderCheckNode.GetRespawnRotation().eulerAngles.y;
+                    BuilderManager.Instance.builderUI.restoreHealthText.enabled = false;
+                }
+            }
+            else
+            {
+                _currentRespawnTime = 0f;
+                BuilderManager.Instance.builderUI.restoreHealthText.enabled = false;
+            }
+        }
+
+        private void ReturnToCheckpoint(bool value)
+        {
+            _isReturnToCheckpoint = value;
         }
 
         private IEnumerator Respawn()
@@ -144,12 +187,6 @@ namespace Drone
         {
             SkillsCount[skill] = newValue;
             SkillsCountChangedEvent?.Invoke(skill);
-        }
-
-        private void Update()
-        {
-            if (BuilderManager.Instance.isMove && !RewindManager.Instance.IsBeingRewinded)
-                ApplyEnergyUsage(powerUsageRate * Time.deltaTime);
         }
 
         private void ResetDroneData()

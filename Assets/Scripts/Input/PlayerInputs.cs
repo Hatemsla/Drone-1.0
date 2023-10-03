@@ -197,6 +197,15 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ReturnToCheckpoint"",
+                    ""type"": ""Button"",
+                    ""id"": ""60af6807-6be0-4d4a-9095-c8b291ed1840"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Hold"",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -494,6 +503,17 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""SwitchView"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""fc03130d-d4bf-485b-b19a-d12f287304c1"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ReturnToCheckpoint"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -2084,6 +2104,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         m_Player_Attack = m_Player.FindAction("Attack", throwIfNotFound: true);
         m_Player_Exit = m_Player.FindAction("Exit", throwIfNotFound: true);
         m_Player_SwitchView = m_Player.FindAction("SwitchView", throwIfNotFound: true);
+        m_Player_ReturnToCheckpoint = m_Player.FindAction("ReturnToCheckpoint", throwIfNotFound: true);
         // Builder
         m_Builder = asset.FindActionMap("Builder", throwIfNotFound: true);
         m_Builder_RotateYObject = m_Builder.FindAction("RotateYObject", throwIfNotFound: true);
@@ -2217,6 +2238,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Attack;
     private readonly InputAction m_Player_Exit;
     private readonly InputAction m_Player_SwitchView;
+    private readonly InputAction m_Player_ReturnToCheckpoint;
     public struct PlayerActions
     {
         private @PlayerInputs m_Wrapper;
@@ -2240,6 +2262,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         public InputAction @Attack => m_Wrapper.m_Player_Attack;
         public InputAction @Exit => m_Wrapper.m_Player_Exit;
         public InputAction @SwitchView => m_Wrapper.m_Player_SwitchView;
+        public InputAction @ReturnToCheckpoint => m_Wrapper.m_Player_ReturnToCheckpoint;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -2306,6 +2329,9 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @SwitchView.started += instance.OnSwitchView;
             @SwitchView.performed += instance.OnSwitchView;
             @SwitchView.canceled += instance.OnSwitchView;
+            @ReturnToCheckpoint.started += instance.OnReturnToCheckpoint;
+            @ReturnToCheckpoint.performed += instance.OnReturnToCheckpoint;
+            @ReturnToCheckpoint.canceled += instance.OnReturnToCheckpoint;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -2367,6 +2393,9 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @SwitchView.started -= instance.OnSwitchView;
             @SwitchView.performed -= instance.OnSwitchView;
             @SwitchView.canceled -= instance.OnSwitchView;
+            @ReturnToCheckpoint.started -= instance.OnReturnToCheckpoint;
+            @ReturnToCheckpoint.performed -= instance.OnReturnToCheckpoint;
+            @ReturnToCheckpoint.canceled -= instance.OnReturnToCheckpoint;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -2961,6 +2990,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         void OnAttack(InputAction.CallbackContext context);
         void OnExit(InputAction.CallbackContext context);
         void OnSwitchView(InputAction.CallbackContext context);
+        void OnReturnToCheckpoint(InputAction.CallbackContext context);
     }
     public interface IBuilderActions
     {
