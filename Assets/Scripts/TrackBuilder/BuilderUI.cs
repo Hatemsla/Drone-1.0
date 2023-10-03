@@ -67,6 +67,7 @@ namespace Drone.Builder
         
         [Header("ExitTabPanel")]
         public GameObject exitTabPanel;
+        public GameObject restartTabPanel;
         public Button confirmExitBtn;
         public Button cancelExitBtn;
         public Slider targetSpeedSlider1;

@@ -5,7 +5,8 @@ namespace Drone
     [CreateAssetMenu]
     public class GameData : ScriptableObject
     {
-        public string levelName;
+        public string originLevel;
+        public string currentLevel;
         public bool isSimpleMode;
         public int currentDifficultIndex;
         public int currentControlDifficultIndex;

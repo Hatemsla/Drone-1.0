@@ -96,8 +96,6 @@ namespace Drone
                     builderManager = FindObjectOfType<BuilderManager>();
                     builderManager.currentYawSensitivity = gameData.currentYawSensitivity;
                     builderManager.builderUI.confirmExitBtn.onClick.AddListener(GameManagerUtils.Exit);
-                    builderManager.builderUI.confirmExitBtn.onClick.AddListener(GameManagerUtils.Exit);
-                    builderManager.builderUI.confirmExitBtn.onClick.AddListener(GameManagerUtils.Exit);
                     builderManager.builderUI.backEditorTabBtn.onClick.AddListener(delegate
                     {
                         GameManagerUtils.BackToMenu(asyncLoad, builderManager.builderUI.uiPanel,
@@ -114,11 +112,13 @@ namespace Drone
                             builderManager.builderUI.loadPanel);
                     });
                     builderManager.builderUI.saveBtn.onClick.AddListener(SaveLevel);
-                    builderManager.levelName = gameData.levelName;
                     builderManager.droneBuilderController.isSimpleMode = gameData.isSimpleMode;
                     server.player = builderManager.droneBuilderController;
                     asyncLoad = builderManager.asyncLoad;
                     builderManager.timer.timeForEndGame = gameData.builderTimeInSeconds;
+                    
+                    if(!gameData.isTeleportLevel)
+                        builderManager.gameData.currentLevel = gameData.originLevel;
 
                     if (gameData.isLoadLevel)
                     {
@@ -142,7 +142,7 @@ namespace Drone
 
         private void SaveLevel()
         {
-            LevelManager.SaveLevel(builderManager, gameData.levelName);
+            LevelManager.SaveLevel(builderManager, gameData.originLevel);
             builderManager.builderUI.savePanelAnimator.SetTrigger(ShowPanel);
         }
 

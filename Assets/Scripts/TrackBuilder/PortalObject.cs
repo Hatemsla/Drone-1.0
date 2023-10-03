@@ -32,8 +32,7 @@ namespace Drone.Builder
             _droneRpgController.IsReset = false;
             _droneRpgController.TimeForEndGame = BuilderManager.Instance.timer.waitForEndGame;
             
-            GameManager.Instance.gameData.levelName = map;
-            BuilderManager.Instance.levelName = map;
+            BuilderManager.Instance.gameData.currentLevel = map;
             
             GameManager.Instance.gameData.isLoadLevel = false;
             GameManager.Instance.gameData.isStartBuilder = true;

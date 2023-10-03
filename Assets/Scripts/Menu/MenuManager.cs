@@ -195,7 +195,7 @@ namespace Drone.Menu
             if(!LevelManager.IsLevelExist(menuUIManager.levelInput.text))
                 return;
 
-            gameData.levelName = menuUIManager.levelInput.text;
+            gameData.originLevel = menuUIManager.levelInput.text;
             gameData.isLoadLevel = true;
             gameData.isStartBuilder = false;
             gameData.isTeleportLevel = false;
@@ -208,7 +208,7 @@ namespace Drone.Menu
                 return;
             
             Directory.CreateDirectory(Application.dataPath + "/Levels");
-            gameData.levelName = menuUIManager.levelInput.text;
+            gameData.originLevel = menuUIManager.levelInput.text;
             gameData.isLoadLevel = false;
             gameData.isStartBuilder = false;
             gameData.isTeleportLevel = false;
@@ -220,7 +220,7 @@ namespace Drone.Menu
             if(!LevelManager.IsLevelExist(menuUIManager.levelInput.text))
                 return;
             
-            gameData.levelName = menuUIManager.levelInput.text;
+            gameData.originLevel = menuUIManager.levelInput.text;
             gameData.isLoadLevel = false;
             gameData.isStartBuilder = true;
             gameData.isTeleportLevel = false;

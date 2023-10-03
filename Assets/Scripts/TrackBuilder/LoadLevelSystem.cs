@@ -32,8 +32,7 @@ namespace Drone.Builder
                 }
                 
                 var newObj = Object.Instantiate(loadOp.Result, objInfo.Position, Quaternion.Euler(objInfo.Rotation));
-
-                yield return new WaitForSeconds(0.01f);
+                
                 TrackBuilderUtils.ChangeLayerRecursively(newObj.transform, objInfo.Layer);
                 TrackBuilderUtils.OffOutlineRecursively(newObj.transform);
                 newObj.transform.localScale = objInfo.Scale;
