@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -24,6 +25,8 @@ namespace Drone.Menu
         private readonly List<float> _droneSpeed = new List<float> {0.5f, 0.75f, 1f, 1.5f, 2f};
 
         private readonly List<float> _gatesSize = new List<float> {3f, 2f, 1.5f, 1.25f, 1f};
+        
+        private Coroutine _fadeCoroutine;
 
         private void Awake()
         {
@@ -53,6 +56,8 @@ namespace Drone.Menu
             menuUIManager.difficultDropdown.value = gameData.currentDifficultIndex;
             menuUIManager.difficultControlDropdown.onValueChanged.AddListener(SetGameMode);
             menuUIManager.difficultControlDropdown.value = gameData.currentControlDifficultIndex;
+            menuUIManager.downSpeedRateDropdown.onValueChanged.AddListener(SetDownSpeedRate);
+            menuUIManager.downSpeedRateDropdown.value = gameData.currentSpeedDownRateIndex;
             menuUIManager.authExitBtn.onClick.AddListener(GameManagerUtils.Exit);
             menuUIManager.gameBtn.onClick.AddListener(delegate { OpenMenu("Game"); });
             menuUIManager.statBtn.onClick.AddListener(delegate { OpenMenu("Statistics"); });
@@ -80,6 +85,29 @@ namespace Drone.Menu
 
             SetDropdownResolutions();
             menuUIManager.resolutionDropdown.onValueChanged.AddListener(SetResolution);
+
+            if (gameData.isErrorLoad)
+            {
+                gameData.isErrorLoad = false;
+                _fadeCoroutine = StartCoroutine(FadeInAndOutErrorMessage());
+            }
+        }
+        
+        private IEnumerator FadeInAndOutErrorMessage()
+        {
+            while (menuUIManager.errorMessage.alpha < 1)
+            {
+                menuUIManager.errorMessage.alpha += Time.deltaTime;
+                yield return null;
+            }
+
+            yield return new WaitForSeconds(2f);
+
+            while (menuUIManager.errorMessage.alpha > 0)
+            {
+                menuUIManager.errorMessage.alpha -= Time.deltaTime;
+                yield return null;
+            }
         }
 
         private void Update()
@@ -250,6 +278,13 @@ namespace Drone.Menu
 
         public void OpenMenu(string menuName)
         {
+            if (_fadeCoroutine != null)
+            {
+                StopCoroutine(_fadeCoroutine);
+                menuUIManager.errorMessage.alpha = 0;
+                _fadeCoroutine = null;
+            }
+            
             foreach (var menu in menuUIManager.menus)
                 if (menu.menuName == menuName)
                     menu.Open();
@@ -266,6 +301,12 @@ namespace Drone.Menu
         {
             gameData.isSimpleMode = value == 0;
             gameData.currentControlDifficultIndex = value;
+            menuUIManager.downSpeedRatePanel.SetActive(value == 1);
+        }
+
+        public void SetDownSpeedRate(int value)
+        {
+            gameData.currentSpeedDownRateIndex = value;
         }
 
         public void ChangeYawSensitivity()

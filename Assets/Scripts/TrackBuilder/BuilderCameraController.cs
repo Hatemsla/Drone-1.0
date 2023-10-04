@@ -29,10 +29,6 @@ namespace Drone.Builder
 
         private void Start()
         {
-            thirdView = BuilderManager.Instance.thirdPersonCamera;
-            thirdView.LookAt = transform;
-            thirdView.Follow = transform;
-            
             BuilderManager.Instance.StartGame += ActivateCamera;
             BuilderManager.Instance.StopGame += DeactivateCamera;
         }

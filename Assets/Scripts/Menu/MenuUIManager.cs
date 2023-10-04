@@ -33,12 +33,14 @@ namespace Drone.Menu
         public GameObject exitTabPanel;
         public Button confirmExitBtn;
         public Button cancelExitBtn;
+        public CanvasGroup errorMessage;
 
         [Header("Options menu")]
         public Toggle isFullscreenToggle;
         public TMP_Dropdown resolutionDropdown;
         public TMP_Dropdown difficultDropdown;
         public TMP_Dropdown difficultControlDropdown;
+        public TMP_Dropdown downSpeedRateDropdown;
         public Button optionsBackBtn;
         public Button generalSettingsBtn;
         public Button soundSettingsBtn;
@@ -48,11 +50,7 @@ namespace Drone.Menu
         public Slider volumeEffectsSlider;
         public Slider volumeMusicsSlider;
         public Slider yawSensitivitySlider;
-        public GameObject generalSettings;
-        public GameObject soundSettings;
-        public GameObject controlSettings;
-        public GameObject difficultSettings;
-        public GameObject customizationSettings;
+        public GameObject downSpeedRatePanel;
         public TMP_InputField builderTimeInput;
         public TMP_InputField footballTimeInput;
         public TMP_InputField raceTimeInput;

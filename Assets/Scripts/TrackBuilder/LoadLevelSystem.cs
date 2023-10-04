@@ -15,24 +15,42 @@ namespace Drone.Builder
 
         public event Action<List<GameObject>> ObjectsCreatedEvent;
         public event Action LoadingCompleteEvent;
+
+        private BuilderManager _builder;
+        
+        public LoadLevelSystem(BuilderManager builderManager)
+        {
+            _builder = builderManager;
+        }
         
         public IEnumerator LoadScene(string levelName)
         {
-            var loadedData = LevelManager.LoadLevel(levelName);
+            List<GameObjectInfo> loadedData = null;
+            try
+            {
+                loadedData = LevelManager.LoadLevel(levelName);
+            }
+            catch
+            {
+                GameManagerUtils.BackToMenu(_builder.asyncLoad, _builder.builderUI.uiPanel, _builder.builderUI.loadPanel);
+                _builder.gameData.isErrorLoad = true;
+                yield break;
+            }
 
             foreach (var objInfo in loadedData)
             {
                 var loadOp = Addressables.LoadAssetAsync<GameObject>(objInfo.ObjectName);
                 yield return loadOp;
-                
+
                 if (loadOp.Status != AsyncOperationStatus.Succeeded || loadOp.Result == null)
                 {
                     Debug.LogError("Failed to load asset: " + objInfo.ObjectName);
                     continue;
                 }
-                
-                var newObj = Object.Instantiate(loadOp.Result, objInfo.Position, Quaternion.Euler(objInfo.Rotation));
-                
+
+                var newObj = Object.Instantiate(loadOp.Result, objInfo.Position,
+                    Quaternion.Euler(objInfo.Rotation));
+
                 TrackBuilderUtils.ChangeLayerRecursively(newObj.transform, objInfo.Layer);
                 TrackBuilderUtils.OffOutlineRecursively(newObj.transform);
                 newObj.transform.localScale = objInfo.Scale;
@@ -84,7 +102,8 @@ namespace Drone.Builder
                         ((MagnetKiller)trackObj.interactiveObject).magnetForce = objInfo.MagnetForce;
                         ((MagnetKiller)trackObj.interactiveObject).rotationSpeed = objInfo.MagnetKillerRotateSpeed;
                         ((MagnetKiller)trackObj.interactiveObject).baseDamage = objInfo.MagnetKillerDamage;
-                        ((MagnetKiller)trackObj.interactiveObject).damageInterval = objInfo.MagnetKillerDamageInterval;
+                        ((MagnetKiller)trackObj.interactiveObject).damageInterval =
+                            objInfo.MagnetKillerDamageInterval;
                         break;
                     case InteractiveType.Portal:
                         ((PortalObject)trackObj.interactiveObject).SetMap(objInfo.PortalMap);
@@ -92,7 +111,7 @@ namespace Drone.Builder
                     case InteractiveType.None:
                         break;
                 }
-                
+
                 if (trackObj.interactiveType != InteractiveType.None)
                 {
                     trackObj.interactiveObject.SetColorIndex(objInfo.ColorIndex);
@@ -101,9 +120,9 @@ namespace Drone.Builder
 
                 _objectsPool.Add(newObj);
             }
-            
+
             yield return null;
-            
+
             ObjectsCreatedEvent?.Invoke(_objectsPool);
             LoadingCompleteEvent?.Invoke();
         }

@@ -41,7 +41,6 @@ namespace Drone.Builder
         public Timer timer;
         public GameData gameData;
         public CinemachineBrain cameraBrain;
-        public CinemachineVirtualCamera thirdPersonCamera;
         public LayerMask layerMask;
         public GameObject pendingObject;
         public ObjectsType noScaleEditableObjects;
@@ -92,7 +91,7 @@ namespace Drone.Builder
 
         private void Start()
         {
-            _loadLevelSystem = new LoadLevelSystem();
+            _loadLevelSystem = new LoadLevelSystem(this);
             for (var i = 0; i < builderUI.createButtons.Count; i++)
             {
                 var i1 = i;
@@ -116,7 +115,7 @@ namespace Drone.Builder
             else if (isGameLevel)
             {
                 _loadLevelSystem.LoadingCompleteEvent += TestLevel;
-                StartLevel();
+                LoadLevel();
             }
             else
             {
@@ -133,19 +132,11 @@ namespace Drone.Builder
             CreateObjectsPoolScene();
         }
 
-        private void StartLevel()
-        {
-            if (objectsPool.Count > 0)
-                ClearObject();
-            
-            StartCoroutine(_loadLevelSystem.LoadScene(gameData.currentLevel));
-        }
-
         private void LoadLevel()
         {
             if (objectsPool.Count > 0)
                 ClearObject();
-            
+
             StartCoroutine(_loadLevelSystem.LoadScene(gameData.currentLevel));
         }
 
