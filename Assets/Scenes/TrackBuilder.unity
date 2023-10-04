@@ -19392,6 +19392,7 @@ MonoBehaviour:
   hoverSprite: {fileID: 21300000, guid: 44ae0fa124b529f4ea660a8e36477cf5, type: 3}
   pressedSprite: {fileID: 21300000, guid: e65012b4dbee0df42af6a9f3226db42b, type: 3}
   disabledSprite: {fileID: 21300000, guid: 4d2c00bbb4b411140a9dc53abe0ad54e, type: 3}
+  colorSwapper: {fileID: 0}
 --- !u!114 &393733318
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -35627,6 +35628,7 @@ MonoBehaviour:
   hoverSprite: {fileID: 21300000, guid: 44ae0fa124b529f4ea660a8e36477cf5, type: 3}
   pressedSprite: {fileID: 21300000, guid: e65012b4dbee0df42af6a9f3226db42b, type: 3}
   disabledSprite: {fileID: 21300000, guid: 4d2c00bbb4b411140a9dc53abe0ad54e, type: 3}
+  colorSwapper: {fileID: 0}
 --- !u!114 &781263893
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -40857,6 +40859,7 @@ MonoBehaviour:
   hoverSprite: {fileID: 21300000, guid: 44ae0fa124b529f4ea660a8e36477cf5, type: 3}
   pressedSprite: {fileID: 21300000, guid: e65012b4dbee0df42af6a9f3226db42b, type: 3}
   disabledSprite: {fileID: 21300000, guid: 4d2c00bbb4b411140a9dc53abe0ad54e, type: 3}
+  colorSwapper: {fileID: 0}
 --- !u!114 &886387535
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -63789,17 +63792,6 @@ MonoBehaviour:
       particleTrackingLimit: 0
       particleRestartFrom: 0
       particleSystems: []
---- !u!114 &1347674628 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2850353102837617468, guid: d02e1081ac5d4604e80dd2d3b7e27488, type: 3}
-  m_PrefabInstance: {fileID: 718910219344683247}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 45e653bab7fb20e499bda25e1b646fea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1348280457
 GameObject:
   m_ObjectHideFlags: 0
@@ -70682,6 +70674,7 @@ MonoBehaviour:
   hoverSprite: {fileID: 21300000, guid: b126ed0898ff9fe4c87e37b294f8c562, type: 3}
   pressedSprite: {fileID: 0}
   disabledSprite: {fileID: 0}
+  colorSwapper: {fileID: 0}
 --- !u!114 &1496775083
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -75210,6 +75203,7 @@ MonoBehaviour:
   hoverSprite: {fileID: 21300000, guid: b126ed0898ff9fe4c87e37b294f8c562, type: 3}
   pressedSprite: {fileID: 0}
   disabledSprite: {fileID: 0}
+  colorSwapper: {fileID: 0}
 --- !u!114 &1586764858
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -81879,6 +81873,7 @@ MonoBehaviour:
   hoverSprite: {fileID: 21300000, guid: 44ae0fa124b529f4ea660a8e36477cf5, type: 3}
   pressedSprite: {fileID: 21300000, guid: e65012b4dbee0df42af6a9f3226db42b, type: 3}
   disabledSprite: {fileID: 21300000, guid: 4d2c00bbb4b411140a9dc53abe0ad54e, type: 3}
+  colorSwapper: {fileID: 0}
 --- !u!114 &1715240471
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -88865,6 +88860,7 @@ MonoBehaviour:
   hoverSprite: {fileID: 21300000, guid: b126ed0898ff9fe4c87e37b294f8c562, type: 3}
   pressedSprite: {fileID: 0}
   disabledSprite: {fileID: 0}
+  colorSwapper: {fileID: 0}
 --- !u!114 &1836843430
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -89378,6 +89374,7 @@ MonoBehaviour:
   hoverSprite: {fileID: 21300000, guid: b126ed0898ff9fe4c87e37b294f8c562, type: 3}
   pressedSprite: {fileID: 0}
   disabledSprite: {fileID: 0}
+  colorSwapper: {fileID: 0}
 --- !u!114 &1847347822
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -94831,6 +94828,8 @@ MonoBehaviour:
   interfaceScale: 80
   currentYawSensitivity: 0
   currentSelectObjectIndex: 0
+  isSimpleMode: 0
+  isFastDownMode: 0
   isMove: 0
   isGameMode: 0
   isLoadLevel: 0
@@ -94852,7 +94851,6 @@ MonoBehaviour:
   timer: {fileID: 2022248679}
   gameData: {fileID: 11400000, guid: 2f9468335609be74e879c04f4b600642, type: 2}
   cameraBrain: {fileID: 963194234}
-  thirdPersonCamera: {fileID: 1347674628}
   layerMask:
     serializedVersion: 2
     m_Bits: 320
@@ -95055,6 +95053,7 @@ MonoBehaviour:
   hoverSprite: {fileID: 21300000, guid: 44ae0fa124b529f4ea660a8e36477cf5, type: 3}
   pressedSprite: {fileID: 21300000, guid: e65012b4dbee0df42af6a9f3226db42b, type: 3}
   disabledSprite: {fileID: 21300000, guid: 4d2c00bbb4b411140a9dc53abe0ad54e, type: 3}
+  colorSwapper: {fileID: 0}
 --- !u!114 &1964765987
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -104469,14 +104468,6 @@ PrefabInstance:
     - target: {fileID: 5984266150220761620, guid: d02e1081ac5d4604e80dd2d3b7e27488, type: 3}
       propertyPath: m_Name
       value: BuilderDrone(Clone)
-      objectReference: {fileID: 0}
-    - target: {fileID: 6062071509508275966, guid: d02e1081ac5d4604e80dd2d3b7e27488, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0.0000000042711794
-      objectReference: {fileID: 0}
-    - target: {fileID: 6062071509508275966, guid: d02e1081ac5d4604e80dd2d3b7e27488, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 5.1063476e-10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

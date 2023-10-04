@@ -17,6 +17,9 @@ namespace Drone
             var diff = 1 - upVector.magnitude;
             var finalDiff = Physics.gravity.magnitude * diff;
 
+            if (throttle < 0)
+                throttle -= 0.5f;
+            
             var engineForce = Vector3.zero;
             engineForce = transform.up * (rb.mass * Physics.gravity.magnitude + finalDiff + throttle * maxPower) / 4f;
 

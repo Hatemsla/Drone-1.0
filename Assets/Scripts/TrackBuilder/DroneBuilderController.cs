@@ -42,6 +42,7 @@ namespace Drone.Builder
 
         private void Start()
         {
+            isSimpleMode = BuilderManager.Instance.isSimpleMode;
             yawPower = BuilderManager.Instance.currentYawSensitivity;
             BuilderManager.Instance.StartGame += ActivatePhysics;
             BuilderManager.Instance.StopGame += DeactivatePhysics;
@@ -173,13 +174,13 @@ namespace Drone.Builder
         private void DroneMove()
         {
             if (_isMove != 0 || isSimpleMode)
-            {
                 foreach (var engine in _engines)
-                {
                     engine.UpdateEngine(rb, throttle * targetSpeed);
-                }
-            }
-            
+            else if (_isMove == 0 && !isSimpleMode)
+                if (!isFastDownMode)
+                    foreach (var engine in _engines)
+                        engine.UpdateEngine(rb, slowDownSpeed * targetSpeed);
+
             CheckDroneHover();
 
             var pitch = cyclic.y * minMaxPitch * targetSpeed;

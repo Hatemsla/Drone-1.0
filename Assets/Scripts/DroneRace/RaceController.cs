@@ -26,6 +26,7 @@ namespace Drone.DroneRace
         public float currentAIDroneSpeed;
         public int clipIndex;
         public bool isSimpleMode;
+        public bool isFastDownMode;
         public bool isGameStart;
         public Timer timer;
         public AsyncLoad asyncLoad;
@@ -46,6 +47,7 @@ namespace Drone.DroneRace
         private void Start()
         {
             droneRaceController.isSimpleMode = isSimpleMode;
+            droneRaceController.isFastDownMode = isFastDownMode;
             checkNode = droneRaceController.GetComponent<CheckNode>();
             _droneRaceCheckNodes = FindObjectsOfType<CheckNode>().ToList();
             foreach (var drone in _droneRaceCheckNodes)

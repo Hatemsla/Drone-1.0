@@ -13,6 +13,7 @@ namespace Drone.Menu
         public Sprite hoverSprite;
         public Sprite pressedSprite;
         public Sprite disabledSprite;
+        public ColorSwapper colorSwapper;
 
         private void Awake()
         {
@@ -44,6 +45,8 @@ namespace Drone.Menu
         public void OnPointerUp(PointerEventData eventData)
         {
             objectImage.sprite = defaultSprite;
+            if(colorSwapper != null)
+                colorSwapper.OnPointerExit(eventData);
         }
     }
 }

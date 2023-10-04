@@ -8,6 +8,7 @@ namespace Drone
         public string originLevel;
         public string currentLevel;
         public bool isSimpleMode;
+        public bool isFastDownMode;
         public int currentDifficultIndex;
         public int currentControlDifficultIndex;
         public int currentResolutionIndex;
@@ -29,7 +30,6 @@ namespace Drone
         {
             isErrorLoad = false;
             isLoadLevel = false;
-            isSimpleMode = true;
             isStartBuilder = false;
             isTeleportLevel = false;
         }

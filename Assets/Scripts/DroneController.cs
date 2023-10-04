@@ -12,9 +12,11 @@ namespace Drone
         public Vector2 cyclic;
         public float pedals;
         public float throttle;
+        public float slowDownSpeed;
         public float lerpSpeed;
         public float yaw;
         public bool isSimpleMode;
+        public bool isFastDownMode;
         public bool isStop;
         public float currentPercentSpeed;
         public float currentSpeed;

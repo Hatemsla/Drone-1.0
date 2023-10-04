@@ -15,6 +15,7 @@ namespace Drone.DroneFootball
         public float currentGateScale;
         public float currentAIDroneSpeed;
         public bool isSimpleMode;
+        public bool isFastDownMode;
         public bool isGameStart;
         public Transform targetCheckpoint;
         public DroneController droneFootballController;
@@ -40,6 +41,7 @@ namespace Drone.DroneFootball
         {
             footballCheckpointTrigger.currentGateScale = currentGateScale;
             droneFootballController.isSimpleMode = isSimpleMode;
+            droneFootballController.isFastDownMode = isFastDownMode;
             playerCheckNode = droneFootballController.GetComponent<CheckNode>();
 
             foreach (var droneAI in droneFootballAIList)

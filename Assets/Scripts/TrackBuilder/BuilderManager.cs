@@ -20,6 +20,8 @@ namespace Drone.Builder
         public float interfaceScale;
         public float currentYawSensitivity;
         public int currentSelectObjectIndex;
+        public bool isSimpleMode;
+        public bool isFastDownMode;
         public bool isMove;
         public bool isGameMode;
         public bool isLoadLevel;

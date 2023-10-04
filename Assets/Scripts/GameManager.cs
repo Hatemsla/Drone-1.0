@@ -66,6 +66,7 @@ namespace Drone
                     });
                     raceController.raceUIManager.confirmExitBtn.onClick.AddListener(GameManagerUtils.Exit);
                     raceController.isSimpleMode = gameData.isSimpleMode;
+                    raceController.isFastDownMode = gameData.isFastDownMode;
                     raceController.droneRaceController.yawPower = gameData.currentYawSensitivity;
                     server.player = raceController.droneRaceController;
                     raceController.currentAIDroneSpeed = gameData.currentAIDroneSpeed;
@@ -84,6 +85,7 @@ namespace Drone
                     });
                     footballController.footballUIManager.confirmExitBtn.onClick.AddListener(GameManagerUtils.Exit);
                     footballController.isSimpleMode = gameData.isSimpleMode;
+                    footballController.isFastDownMode = gameData.isFastDownMode;
                     footballController.droneFootballController.yawPower = gameData.currentYawSensitivity;
                     server.player = footballController.droneFootballController;
                     footballController.currentGateScale = gameData.currentGateScale;
@@ -99,6 +101,8 @@ namespace Drone
                     builderManager = FindObjectOfType<BuilderManager>();
                     builderManager.currentYawSensitivity = gameData.currentYawSensitivity;
                     builderManager.builderUI.confirmExitBtn.onClick.AddListener(GameManagerUtils.Exit);
+                    builderManager.isSimpleMode = gameData.isSimpleMode;
+                    builderManager.isFastDownMode = gameData.isFastDownMode;
                     builderManager.builderUI.backEditorTabBtn.onClick.AddListener(delegate
                     {
                         GameManagerUtils.BackToMenu(asyncLoad, builderManager.builderUI.uiPanel,

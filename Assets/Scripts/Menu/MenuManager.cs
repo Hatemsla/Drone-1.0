@@ -38,25 +38,14 @@ namespace Drone.Menu
             resolutions = Screen.resolutions.Distinct().ToArray();
             SetDropdownResolutions();
             SetDropdownDifficulties();
-
-            menuUIManager.raceBtn.onClick.AddListener(delegate { StartGame(2); });
-            menuUIManager.footballBtn.onClick.AddListener(delegate { StartGame(3); });
-            menuUIManager.createLevelBtn.onClick.AddListener(CreateLevel);
-            menuUIManager.loadLevelBtn.onClick.AddListener(LoadLevel);
-            menuUIManager.playBtn.onClick.AddListener(StartBuilder);
             
             OpenMenu("Start");
             menuUIManager.volumeEffectsSlider.value = gameData.currentEffectsVolume;
             menuUIManager.volumeMusicsSlider.value = gameData.currentMusicsVolume;
             menuUIManager.yawSensitivitySlider.value = gameData.currentYawSensitivity - 1;
-            menuUIManager.yawSensitivitySlider.onValueChanged.AddListener(delegate { ChangeYawSensitivity(); });
             menuUIManager.confirmExitBtn.onClick.AddListener(GameManagerUtils.Exit);
-            menuUIManager.isFullscreenToggle.onValueChanged.AddListener(Fullscreen);
-            menuUIManager.difficultDropdown.onValueChanged.AddListener(SetDifficult);
             menuUIManager.difficultDropdown.value = gameData.currentDifficultIndex;
-            menuUIManager.difficultControlDropdown.onValueChanged.AddListener(SetGameMode);
             menuUIManager.difficultControlDropdown.value = gameData.currentControlDifficultIndex;
-            menuUIManager.downSpeedRateDropdown.onValueChanged.AddListener(SetDownSpeedRate);
             menuUIManager.downSpeedRateDropdown.value = gameData.currentSpeedDownRateIndex;
             menuUIManager.authExitBtn.onClick.AddListener(GameManagerUtils.Exit);
             menuUIManager.gameBtn.onClick.AddListener(delegate { OpenMenu("Game"); });
@@ -306,6 +295,7 @@ namespace Drone.Menu
 
         public void SetDownSpeedRate(int value)
         {
+            gameData.isFastDownMode = value == 1;
             gameData.currentSpeedDownRateIndex = value;
         }
 
@@ -320,7 +310,7 @@ namespace Drone.Menu
             LevelNameChanged?.Invoke(level);
         }
 
-        private void StartGame(int sceneIndex)
+        public void StartGame(int sceneIndex)
         {
             GameTimeHandler();
             OpenMenu("Load");
