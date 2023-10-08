@@ -10,6 +10,9 @@ namespace Drone.Builder
 {
     public class BuilderUI : MonoBehaviour
     {
+        [Header("Edit buttons")] 
+        public List<Image> editButtonsList;
+        
         [Header("Drone view")]
         public GameObject droneView;
         public TMP_Text speedText;

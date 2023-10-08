@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using Drone;
 
 namespace Drone.Builder.ControllerElements
 {
@@ -16,14 +13,16 @@ namespace Drone.Builder.ControllerElements
         private Rigidbody grabberObjectRigidbody;
 
 
-        private bool isObjectGrabbed = false;
-        private bool isMovePrev = false;
+        private bool isObjectGrabbed;
+
+        private bool isMovePrev;
+
         //private Rigidbody grabbedObjectRigidbody;
         private FixedJoint joint;
         public float raycastDistance = 5f;
         private Ray ray;
 
-        void Update()
+        private void Update()
         {
             CheckGrab();
             ray = new Ray(transform.position, Vector3.up);
@@ -33,7 +32,7 @@ namespace Drone.Builder.ControllerElements
         private void set_gravity_if_move()
         {
             if (isMovePrev == BuilderManager.Instance.isMove)
-            { 
+            {
                 isMovePrev = !isMovePrev;
                 grabbedObjectRigidbody.isKinematic = !BuilderManager.Instance.isMove;
             }
@@ -42,27 +41,21 @@ namespace Drone.Builder.ControllerElements
         private void check_button()
         {
             if (!isObjectGrabbed)
-                {
-                    TryGrabObject();
-                }
-                else
-                {
-                    ReleaseObject();
-                }
+                TryGrabObject();
+            else
+                ReleaseObject();
         }
 
         private void OnEnable()
         {
             InputManager.Instance.ApplyOpenEvent += check_button;
             BuilderManager.Instance.ObjectChangeSceneEvent += FindPrompt;
-
         }
 
         private void OnDisable()
         {
             InputManager.Instance.ApplyOpenEvent -= check_button;
             BuilderManager.Instance.ObjectChangeSceneEvent -= FindPrompt;
-
         }
 
         private void FindPrompt()
@@ -77,11 +70,9 @@ namespace Drone.Builder.ControllerElements
                 RaycastHit hit;
                 if (Physics.Raycast(ray, out hit, raycastDistance))
                 {
-                    if (hit.collider.GetComponentInParent<DroneController>())//if (hit.collider.CompareTag("Player"))//
-                    {
+                    if (hit.collider.GetComponentInParent<DroneController>()) //if (hit.collider.CompareTag("Player"))//
                         //prompt.ChangePromptText("Для захвата нажмите F");
                         prompt.SetActive(BuilderManager.Instance.isMove);
-                    }
                 }
                 else
                 {
@@ -98,18 +89,16 @@ namespace Drone.Builder.ControllerElements
         {
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit, raycastDistance))
-            {
-                if (hit.collider.GetComponentInParent<DroneController>())//if (hit.collider.CompareTag("Player"))//
+                if (hit.collider.GetComponentInParent<DroneController>()) //if (hit.collider.CompareTag("Player"))//
                 {
                     grabberObject = hit.collider.gameObject;
                     grabberObjectRigidbody = grabberObject.GetComponent<Rigidbody>();
 
                     joint = gameObject.AddComponent<FixedJoint>();
                     joint.connectedBody = grabberObjectRigidbody;
-                    
+
                     isObjectGrabbed = true;
-                 }
-            }
+                }
         }
 
         private void ReleaseObject()

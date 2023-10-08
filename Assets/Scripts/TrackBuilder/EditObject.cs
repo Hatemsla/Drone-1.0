@@ -74,7 +74,7 @@ namespace Drone.Builder
         public void HideEditMenu()
         {
             editMenu.gameObject.SetActive(false);
-            builderUI.editButtons.SetActive(false);
+            // builderUI.editButtons.SetActive(false);
         }
         
         public void OnSelectObject(TrackObject obj)

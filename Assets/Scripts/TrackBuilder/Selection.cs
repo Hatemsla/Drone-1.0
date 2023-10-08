@@ -46,6 +46,9 @@ namespace Drone.Builder
         
         private void SelectObjects()
         {
+            if(BuilderManager.Instance.objectActionType is ActionType.SetOrigin)
+                return;
+            
             if (EventSystem.current.IsPointerOverGameObject() || BuilderManager.Instance.isMove) return;
             
             var ray = Camera.main!.ScreenPointToRay(Mouse.current.position.ReadValue());
@@ -84,6 +87,9 @@ namespace Drone.Builder
 
         private void SelectObject()
         {
+            if(BuilderManager.Instance.objectActionType is ActionType.SetOrigin)
+                return;
+            
             if (EventSystem.current.IsPointerOverGameObject() || BuilderManager.Instance.isMove) return;
             
             var ray = Camera.main!.ScreenPointToRay(Mouse.current.position.ReadValue());
@@ -176,6 +182,9 @@ namespace Drone.Builder
 
         public void AddSelection(GameObject obj)
         {
+            if(BuilderManager.Instance.objectActionType is ActionType.SetOrigin)
+                return;
+            
             if (selectedObjects.Contains(obj))
             {
                 RemoveSelection(obj);
@@ -191,6 +200,9 @@ namespace Drone.Builder
 
         public void Select(GameObject obj)
         {
+            if(BuilderManager.Instance.objectActionType is ActionType.SetOrigin)
+                return;
+            
             if (obj == selectedObject)
             {
                 foreach (var selectedObj in selectedObjects)

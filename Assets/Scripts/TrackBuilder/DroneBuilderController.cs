@@ -43,6 +43,7 @@ namespace Drone.Builder
         private void Start()
         {
             isSimpleMode = BuilderManager.Instance.isSimpleMode;
+            isFastDownMode = BuilderManager.Instance.isFastDownMode;
             yawPower = BuilderManager.Instance.currentYawSensitivity;
             BuilderManager.Instance.StartGame += ActivatePhysics;
             BuilderManager.Instance.StopGame += DeactivatePhysics;

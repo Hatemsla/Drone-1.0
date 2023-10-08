@@ -5,6 +5,7 @@ using System.Globalization;
 using System.Linq;
 using Cinemachine;
 using Drone.Sockets;
+using Drone.TrackBuilder.EditButtons;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -17,6 +18,13 @@ namespace Drone.Builder
     public sealed class BuilderManager : MonoBehaviour
     {
         public static BuilderManager Instance;
+
+        [Header("Builder tools")]
+        public Transform objectOrigin;
+        public Transform positionOrientation;
+        public Transform rotationOrientation;
+        public Transform scaleOrientation;
+        public float orientationScaleFactor;
         public float interfaceScale;
         public float currentYawSensitivity;
         public int currentSelectObjectIndex;
@@ -31,8 +39,12 @@ namespace Drone.Builder
         public bool isActivBlue;
         public bool isActivYellow;
         public bool isActivGreen;
+        
+        [Header("UI and Components")]
         public BuilderUI builderUI;
-        public EditMenu editMenu;
+        [SerializeField] private Selection selection;
+        [SerializeField] private EditMenu editMenu;
+        public ActionType objectActionType;
         public BuilderAudioManager builderAudioManager;
         public DroneBuilderController droneBuilderController;
         public DroneBuilderCheckNode droneBuilderCheckNode;
@@ -43,12 +55,16 @@ namespace Drone.Builder
         public Timer timer;
         public GameData gameData;
         public CinemachineBrain cameraBrain;
-        public LayerMask layerMask;
+        public LayerMask trackObjectLayerMask;
+        public LayerMask orientationLayerMask;
+        
+        [Header("Game Objects")]
         public GameObject pendingObject;
         public ObjectsType noScaleEditableObjects;
         public GameObject copyObject;
         public TrackObject currentObjectType;
         public Vector3 mousePos;
+        public List<ObjectAction> editButtonsAction;
         public List<GameObject> pendingObjects = new();
         public List<GameObject> objects;
         public List<GameObject> objectsPool;
@@ -69,7 +85,6 @@ namespace Drone.Builder
         private bool _isLevelEnd;
         private Connection[] _connections;
         private RaycastHit _hit;
-        private Selection _selection;
         private Vector3 _mainCameraPrevPosition;
         private Vector3 _startPointerSize;
         private Quaternion _mainCameraPrevRotation;
@@ -86,9 +101,8 @@ namespace Drone.Builder
         {
             Instance = this;
             _startPointerSize = builderUI.pathArrow.sizeDelta;
-            _selection = FindObjectOfType<Selection>();
-            _selection.Select(droneBuilderController.gameObject);
-            _selection.Deselect();
+            selection.Select(droneBuilderController.gameObject);
+            selection.Deselect();
         }
 
         private void Start()
@@ -101,6 +115,15 @@ namespace Drone.Builder
                 var trackObject = objects[i].GetComponent<TrackObject>();
                 builderUI.objectPreInfos[i].objectName = trackObject.objectName;
                 builderUI.objectPreInfos[i].objectDesc = trackObject.objectDescription;
+            }
+
+            foreach (var ed in builderUI.editButtonsList)
+            {
+                if (ed.GetComponent<SelectAction>())
+                    continue;
+                var color = ed.color;
+                color.a = 0.5f;
+                ed.color = color;
             }
 
             builderUI.pathArrow.gameObject.SetActive(false);
@@ -158,6 +181,9 @@ namespace Drone.Builder
             InputManager.Instance.ChangeObjectScaleEvent += ChangeObjectScale;
             InputManager.Instance.ExitGameEvent += CheckTabPanel;
             InputManager.Instance.ExitBuilderEvent += OpenExitPanel;
+            InputManager.Instance.SelectObjectEvent += SetOrigin;
+            
+            foreach (var edit in editButtonsAction) edit.EventAction += EditButtonsHandler;
         }
 
         private void OnDisable()
@@ -180,6 +206,96 @@ namespace Drone.Builder
             InputManager.Instance.ChangeObjectScaleEvent -= ChangeObjectScale;
             InputManager.Instance.ExitGameEvent -= CheckTabPanel;
             InputManager.Instance.ExitBuilderEvent -= OpenExitPanel;
+            InputManager.Instance.SelectObjectEvent -= SetOrigin;
+            
+            foreach (var edit in editButtonsAction) edit.EventAction -= EditButtonsHandler;
+        }
+
+        private void EditButtonsHandler(ObjectAction objectAction)
+        {
+            switch (objectAction)
+            {
+                case SelectAction selectAction:
+                    objectActionType = ActionType.Select;
+                    SetAlphaEditButton(selectAction.image);
+                    break;
+                case SetOriginAction setOriginAction:
+                    objectActionType = ActionType.SetOrigin;
+                    SetAlphaEditButton(setOriginAction.image);
+                    break;
+                case MoveAction moveAction:
+                    objectActionType = ActionType.Move;
+                    selection.Move();
+                    SetAlphaEditButton(moveAction.image);
+                    break;
+                case RotateAction rotateAction:
+                    objectActionType = ActionType.Rotate;
+                    SetAlphaEditButton(rotateAction.image);
+                    break;
+                case ScaleAction scaleAction:
+                    objectActionType = ActionType.Scale;
+                    SetAlphaEditButton(scaleAction.image);
+                    break;
+                case CopyAction copyAction:
+                    objectActionType = ActionType.Copy;
+                    CopyObject();
+                    SetAlphaEditButton(copyAction.image);
+                    break;
+                case PasteAction pasteAction:
+                    objectActionType = ActionType.Paste;
+                    PasteObject();
+                    SetAlphaEditButton(pasteAction.image);
+                    break;
+            }
+
+            HandleOrientations();
+        }
+
+        private void HandleOrientations()
+        {
+            switch (objectActionType)
+            {
+                case ActionType.Select:
+                    positionOrientation.gameObject.SetActive(false);
+                    break;
+                case ActionType.SetOrigin:
+                    positionOrientation.gameObject.SetActive(false);
+                    break;
+                case ActionType.Move:
+                    positionOrientation.gameObject.SetActive(true);
+                    break;
+                case ActionType.Rotate:
+                    positionOrientation.gameObject.SetActive(false);
+                    break;
+                case ActionType.Scale:
+                    positionOrientation.gameObject.SetActive(false);
+                    break;
+                case ActionType.Copy:
+                    positionOrientation.gameObject.SetActive(false);
+                    break;
+                case ActionType.Paste:
+                    positionOrientation.gameObject.SetActive(false);
+                    break;
+            }
+        }
+
+        private void SetAlphaEditButton(Image image)
+        {
+            foreach (var ed in builderUI.editButtonsList)
+            {
+                if (ed == image)
+                {
+                    var color = ed.color;
+                    color.a = 1f;
+                    ed.color = color;
+                }
+                else
+                {
+                    var color = ed.color;
+                    color.a = 0.5f;
+                    ed.color = color;
+                }
+            }
         }
 
         private void TurnPlayerActionMap() => InputManager.Instance.TurnCustomActionMap(Idents.ActionMaps.Player);
@@ -192,7 +308,6 @@ namespace Drone.Builder
             builderUI.createPanel.SetActive(!_isExitPanel);
             builderUI.editButtons.SetActive(!_isExitPanel);
             builderUI.objectEditPanel.SetActive(!_isExitPanel);
-            builderUI.editButtons.SetActive(!_isExitPanel);
             if(builderUI.exitTabPanel.activeSelf && !_isExitPanel)
                 builderUI.exitTabPanel.SetActive(false);
             if(builderUI.restartTabPanel.activeSelf && !_isExitPanel)
@@ -243,7 +358,7 @@ namespace Drone.Builder
 
         private void PlaceAndPickupObject()
         {
-            if (_selection.selectedObjects.Count > 0 && _selection.selectedObject != null)
+            if (selection.selectedObjects.Count > 0 && selection.selectedObject != null)
             {
                 PlaceObjects();
                 SelectObject(currentSelectObjectIndex);
@@ -252,10 +367,10 @@ namespace Drone.Builder
 
         private void PlaceObject()
         {
-            if (_selection.selectedObjects.Count > 0 && _selection.selectedObject != null)
+            if (selection.selectedObjects.Count > 0 && selection.selectedObject != null)
             {
                 PlaceObjects();
-                _selection.Deselect();
+                selection.Deselect();
             }
         }
 
@@ -266,36 +381,116 @@ namespace Drone.Builder
                 SetDroneParameters();
             }
 
-            var ray = cameraBrain.OutputCamera!.ScreenPointToRay(Mouse.current.position.ReadValue());
+            // var ray = cameraBrain.OutputCamera!.ScreenPointToRay(Mouse.current.position.ReadValue());
+            //
+            // if (Physics.Raycast(ray, out _hit, 10000, layerMask, QueryTriggerInteraction.Ignore) &&
+            //     !EventSystem.current.IsPointerOverGameObject())
+            // {
+            //     mousePos = _hit.point;
+            //
+            //     if (objectActionType is ActionType.Move)
+            //     {
+            //         if (pendingObjects.Count == 0 || pendingObject == null)
+            //             return;
+            //
+            //         if (pendingObjects.Count > 1)
+            //         {
+            //             var commonCenter = CalculateCommonCenter(pendingObjects);
+            //             var offset = mousePos - commonCenter;
+            //
+            //             foreach (var pendingObj in pendingObjects)
+            //             {
+            //                 pendingObj.transform.position += new Vector3(offset.x, 0, offset.z);
+            //             }
+            //         }
+            //         else
+            //         {
+            //             pendingObject.transform.position = currentObjectType.objectType switch
+            //             {
+            //                 ObjectsType.Floor => mousePos,
+            //                 _ => new Vector3(mousePos.x, mousePos.y + currentObjectType.yOffset, mousePos.z)
+            //             };
+            //         }
+            //     }
+            // }
+            //
+            // if(objectActionType is ActionType.Move)
+            //     UpdateObjectHeight();
+            
+            GetOrientations();
+            ConstantOrientationsSize();
+            UpdateOrientationsPosition();
+        }
 
-            if (Physics.Raycast(ray, out _hit, 10000, layerMask, QueryTriggerInteraction.Ignore) &&
+        private void GetOrientations()
+        {
+            var ray = cameraBrain.OutputCamera!.ScreenPointToRay(Mouse.current.position.ReadValue());
+            
+            if (Physics.Raycast(ray, out _hit, 10000, orientationLayerMask, QueryTriggerInteraction.Ignore) &&
                 !EventSystem.current.IsPointerOverGameObject())
             {
-                mousePos = _hit.point;
+                var getOrientation = _hit.transform.GetComponent<OrientationPosition>();
 
-                if (pendingObjects.Count == 0 || pendingObject == null) return;
-
-                if (pendingObjects.Count > 1)
+                if (getOrientation)
                 {
-                    var commonCenter = CalculateCommonCenter(pendingObjects);
-                    var offset = mousePos - commonCenter;
-
-                    foreach (var pendingObj in pendingObjects)
+                    pendingObject.transform.position = GetMouseNormalizedVector(getOrientation.orientationAxis);
+                    switch (getOrientation.orientationAxis)
                     {
-                        pendingObj.transform.position += new Vector3(offset.x, 0, offset.z);
+                        case OrientationAxis.X:
+                            break;
+                        case OrientationAxis.Y:
+                            break;
+                        case OrientationAxis.Z:
+                            break;
                     }
                 }
-                else
-                {
-                    pendingObject.transform.position = currentObjectType.objectType switch
-                    {
-                        ObjectsType.Floor => mousePos,
-                        _ => new Vector3(mousePos.x, mousePos.y + currentObjectType.yOffset, mousePos.z)
-                    };
-                }
             }
+        }
 
-            UpdateObjectHeight();
+        private Vector3 GetMouseNormalizedVector(OrientationAxis orientationAxis)
+        {
+            var mousePosition = Mouse.current.position.ReadValue();
+        
+            switch (orientationAxis)
+            {
+                case OrientationAxis.X:
+                    return new Vector3(mousePosition.x / Screen.width, 0f, 0f).normalized;
+                case OrientationAxis.Y:
+                    return new Vector3(0f, mousePosition.y / Screen.height, 0f).normalized;
+                case OrientationAxis.Z:
+                    return new Vector3(0f, 0f, mousePosition.x / Screen.width).normalized;
+                default:
+                    return Vector3.zero;
+            }
+        }
+
+        private void UpdateOrientationsPosition()
+        {
+            if(IsNoEditObject())
+                return;
+
+            positionOrientation.position = pendingObject.transform.position;
+        }
+
+        private void ConstantOrientationsSize()
+        {
+            var distanceToCamera =
+                Vector3.Distance(positionOrientation.position, cameraBrain.OutputCamera.transform.position);
+            var scale = distanceToCamera * orientationScaleFactor;
+
+            positionOrientation.localScale = new Vector3(scale, scale, scale);
+        }
+
+        private void SetOrigin()
+        {
+            if (objectActionType is not ActionType.SetOrigin) return;
+            
+            var ray = cameraBrain.OutputCamera!.ScreenPointToRay(Mouse.current.position.ReadValue());
+            if (Physics.Raycast(ray, out _hit, 10000, trackObjectLayerMask, QueryTriggerInteraction.Ignore) &&
+                !EventSystem.current.IsPointerOverGameObject())
+            {
+                objectOrigin.position = _hit.point;
+            }
         }
 
         private void UpdateObjectHeight()
@@ -322,9 +517,9 @@ namespace Drone.Builder
 
         public void CopyObject()
         {
-            if (_selection.selectedObject != null)
+            if (selection.selectedObject != null)
             {
-                copyObject = _selection.selectedObject;
+                copyObject = selection.selectedObject;
             }
         }
 
@@ -352,10 +547,7 @@ namespace Drone.Builder
         {
             var center = Vector3.zero;
 
-            foreach (var obj in objectsList)
-            {
-                center += obj.transform.position;
-            }
+            foreach (var obj in objectsList) center += obj.transform.position;
 
             center /= objectsList.Count;
 
@@ -420,6 +612,7 @@ namespace Drone.Builder
             if (isMove)
             {
                 StartGame?.Invoke();
+                objectOrigin.gameObject.SetActive(false);
                 _lamps = FindObjectsOfType<Lamp>().ToList();
                 var outlines = FindObjectsOfType<Outline>();
                 _connections = FindObjectsOfType<Connection>();
@@ -435,6 +628,7 @@ namespace Drone.Builder
             else
             {
                 StopGame?.Invoke();
+                objectOrigin.gameObject.SetActive(true);
                 TurnOnLamps();
                 TrackBuilderUtils.TurnAllConnections(_connections, true);
                 droneBuilderController.yaw = _dronePrevRotationY;
@@ -453,7 +647,7 @@ namespace Drone.Builder
             {
                 if (pendingObjects.Count > 1)
                 {
-                    pendingObjects = new List<GameObject>(_selection.selectedObjects);
+                    pendingObjects = new List<GameObject>(selection.selectedObjects);
                     foreach (var pendingObj in pendingObjects)
                     {
                         TrackBuilderUtils.ChangeLayerRecursively(pendingObj.transform,
@@ -462,8 +656,8 @@ namespace Drone.Builder
                 }
                 else
                 {
-                    pendingObject = _selection.selectedObject;
-                    currentObjectType = _selection.selectedObject.GetComponent<TrackObject>();
+                    pendingObject = selection.selectedObject;
+                    currentObjectType = selection.selectedObject.GetComponent<TrackObject>();
                     TrackBuilderUtils.ChangeLayerRecursively(pendingObject.transform,
                         LayerMask.NameToLayer(Idents.Layers.TrackGround));
                     undoRedoManager.ExecuteCommand(new PlaceCommand(objects[currentSelectObjectIndex],
@@ -507,20 +701,23 @@ namespace Drone.Builder
                 PlaceObjects();
 
             currentSelectObjectIndex = index;
-            pendingObject = Instantiate(objects[index], mousePos, transform.rotation);
-            pendingObjects.Add(pendingObject);
-            MoveGameObjectToScene(pendingObject, levelScene);
-            objectsPool.Add(pendingObject);
-            _selection.Deselect();
-            _selection.Select(pendingObject);
-            currentObjectType = pendingObject.GetComponent<TrackObject>();
+            var newObj = Instantiate(objects[index], objectOrigin.position, transform.rotation);
+            // pendingObject = Instantiate(objects[index], objectOrigin.position, transform.rotation);
+            // pendingObjects.Add(pendingObject);
+            TrackBuilderUtils.ChangeLayerRecursively(newObj.transform,
+                LayerMask.NameToLayer(Idents.Layers.TrackGround));
+            MoveGameObjectToScene(newObj, levelScene);
+            objectsPool.Add(newObj);
+            selection.Deselect();
+            selection.Select(newObj);
+            currentObjectType = newObj.GetComponent<TrackObject>();
             currentObjectType.isActive = true;
 
             if (currentObjectType.objectType == ObjectsType.Gate)
             {
                 currentObjectType.GetComponent<BuilderCheckpointTrigger>().checkpointId =
                     droneBuilderCheckNode.nodes.Count;
-                droneBuilderCheckNode.AddNode(pendingObject.transform);
+                droneBuilderCheckNode.AddNode(newObj.transform);
             }
         }
 
@@ -529,14 +726,14 @@ namespace Drone.Builder
             if (obj == null)
                 return;
 
-            pendingObject = Instantiate(obj, mousePos, copyObject.transform.rotation);
+            pendingObject = Instantiate(obj, objectOrigin.position, copyObject.transform.rotation);
             pendingObjects.Add(pendingObject);
             TrackBuilderUtils.ChangeLayerRecursively(pendingObject.transform, LayerMask.NameToLayer("Track"));
             TrackBuilderUtils.TurnTrackObjects(pendingObjects, true);
             MoveGameObjectToScene(pendingObject, levelScene);
             objectsPool.Add(pendingObject);
-            _selection.Deselect();
-            _selection.Select(pendingObject);
+            selection.Deselect();
+            selection.Select(pendingObject);
             currentObjectType = pendingObject.GetComponent<TrackObject>();
             currentObjectType.isActive = true;
 
