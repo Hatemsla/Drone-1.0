@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using Cinemachine;
+using Drone.RuntimeHandle;
+using Drone.RuntimeHandle.Handles;
 using Drone.Sockets;
 using Drone.TrackBuilder.EditButtons;
 using UnityEngine;
@@ -21,9 +23,7 @@ namespace Drone.Builder
 
         [Header("Builder tools")]
         public Transform objectOrigin;
-        public Transform positionOrientation;
-        public Transform rotationOrientation;
-        public Transform scaleOrientation;
+        public float positionSensitivity;
         public float orientationScaleFactor;
         public float interfaceScale;
         public float currentYawSensitivity;
@@ -45,6 +45,7 @@ namespace Drone.Builder
         [SerializeField] private Selection selection;
         [SerializeField] private EditMenu editMenu;
         public ActionType objectActionType;
+        public RuntimeTransformHandle runtimeTransformHandle;
         public BuilderAudioManager builderAudioManager;
         public DroneBuilderController droneBuilderController;
         public DroneBuilderCheckNode droneBuilderCheckNode;
@@ -83,6 +84,7 @@ namespace Drone.Builder
         private bool _isTabPanel;
         private bool _isExitPanel;
         private bool _isLevelEnd;
+        private bool _isHoldLeftButton;
         private Connection[] _connections;
         private RaycastHit _hit;
         private Vector3 _mainCameraPrevPosition;
@@ -90,23 +92,25 @@ namespace Drone.Builder
         private Quaternion _mainCameraPrevRotation;
         private float _dronePrevRotationY;
         private Vector3 _dronePrevPosition;
-        private Vector3 _prevMousePos;
+        private Vector2 _prevMousePos;
         private float _objectHeightValue;
 
         private bool _isBuilderExitTab;
         private bool _isGameExitTab;
         private bool _isEditorExitTab;
+        private bool _isFreeMoveBefore;
 
         private void Awake()
         {
             Instance = this;
             _startPointerSize = builderUI.pathArrow.sizeDelta;
-            selection.Select(droneBuilderController.gameObject);
-            selection.Deselect();
         }
 
         private void Start()
         {
+            selection.Select(droneBuilderController.gameObject);
+            selection.Deselect();
+            
             _loadLevelSystem = new LoadLevelSystem(this);
             for (var i = 0; i < builderUI.createButtons.Count; i++)
             {
@@ -176,12 +180,18 @@ namespace Drone.Builder
             InputManager.Instance.PlaceObjectEvent += PlaceObject;
             InputManager.Instance.PlaceAndPickupObjectEvent += PlaceAndPickupObject;
             InputManager.Instance.RotateYObjectEvent += RotateYObject;
-            InputManager.Instance.RotateXObjectEvent += RotateXObject;
             InputManager.Instance.ChangeObjectHeightEvent += ChangeObjectHeight;
             InputManager.Instance.ChangeObjectScaleEvent += ChangeObjectScale;
             InputManager.Instance.ExitGameEvent += CheckTabPanel;
             InputManager.Instance.ExitBuilderEvent += OpenExitPanel;
             InputManager.Instance.SelectObjectEvent += SetOrigin;
+            InputManager.Instance.LeftButtonHoldEvent += LeftButtonHold;
+            InputManager.Instance.FreeMoveEvent += FreeMove;
+
+            InputManager.Instance.SelectEvent += OnSetSelect;
+            InputManager.Instance.PositionEvent += OnSetPosition;
+            InputManager.Instance.RotationEvent += OnSetRotation;
+            InputManager.Instance.ScaleEvent += OnSetScale;
             
             foreach (var edit in editButtonsAction) edit.EventAction += EditButtonsHandler;
         }
@@ -201,80 +211,117 @@ namespace Drone.Builder
             InputManager.Instance.PlaceObjectEvent -= PlaceObject;
             InputManager.Instance.PlaceAndPickupObjectEvent -= PlaceAndPickupObject;
             InputManager.Instance.RotateYObjectEvent -= RotateYObject;
-            InputManager.Instance.RotateXObjectEvent -= RotateXObject;
             InputManager.Instance.ChangeObjectHeightEvent -= ChangeObjectHeight;
             InputManager.Instance.ChangeObjectScaleEvent -= ChangeObjectScale;
             InputManager.Instance.ExitGameEvent -= CheckTabPanel;
             InputManager.Instance.ExitBuilderEvent -= OpenExitPanel;
             InputManager.Instance.SelectObjectEvent -= SetOrigin;
+            InputManager.Instance.LeftButtonHoldEvent -= LeftButtonHold;
+            InputManager.Instance.FreeMoveEvent -= FreeMove;
+            
+            InputManager.Instance.SelectEvent -= OnSetSelect;
+            InputManager.Instance.PositionEvent -= OnSetPosition;
+            InputManager.Instance.RotationEvent -= OnSetRotation;
+            InputManager.Instance.ScaleEvent -= OnSetScale;
             
             foreach (var edit in editButtonsAction) edit.EventAction -= EditButtonsHandler;
         }
 
+        private void LeftButtonHold(bool value)
+        {
+            _isHoldLeftButton = value;
+        }
+        
+        private void OnSetSelect()
+        {
+            EditButtonsHandler(editButtonsAction.FirstOrDefault(x => x is SelectAction));
+        }
+        
+        private void OnSetPosition()
+        {
+            EditButtonsHandler(editButtonsAction.FirstOrDefault(x => x is MoveAction));
+        }
+        
+        private void OnSetRotation()
+        {
+            EditButtonsHandler(editButtonsAction.FirstOrDefault(x => x is RotateAction));
+        }
+        
+        private void OnSetScale()
+        {
+            EditButtonsHandler(editButtonsAction.FirstOrDefault(x => x is ScaleAction));
+        }
+        
+        private void FreeMove()
+        {
+            if(selection.selectedObject == null) return;
+            
+            if (runtimeTransformHandle.gameObject.activeSelf || !_isFreeMoveBefore)
+            {
+                runtimeTransformHandle.gameObject.SetActive(false);
+                objectActionType = ActionType.FreeMove;
+                selection.Move();
+                SetAlphaEditButton((editButtonsAction.FirstOrDefault(x => x is MoveAction) as MoveAction)?.image);
+                runtimeTransformHandle.type = HandleType.POSITION;
+            }
+            else
+            {
+                EditButtonsHandler(editButtonsAction.FirstOrDefault(x => x is MoveAction));
+            }
+            _isFreeMoveBefore = !_isFreeMoveBefore;
+        }
+
         private void EditButtonsHandler(ObjectAction objectAction)
         {
+            if(selection.selectedObject == null) return;
+            
             switch (objectAction)
             {
                 case SelectAction selectAction:
                     objectActionType = ActionType.Select;
                     SetAlphaEditButton(selectAction.image);
+                    runtimeTransformHandle.gameObject.SetActive(false);
+                    _isFreeMoveBefore = false;
                     break;
                 case SetOriginAction setOriginAction:
                     objectActionType = ActionType.SetOrigin;
                     SetAlphaEditButton(setOriginAction.image);
+                    runtimeTransformHandle.gameObject.SetActive(false);
                     break;
                 case MoveAction moveAction:
                     objectActionType = ActionType.Move;
                     selection.Move();
                     SetAlphaEditButton(moveAction.image);
+                    runtimeTransformHandle.gameObject.SetActive(true);
+                    runtimeTransformHandle.type = HandleType.POSITION;
+                    TrackBuilderUtils.ChangeLayerRecursively(runtimeTransformHandle.transform, LayerMask.NameToLayer(Idents.Layers.TrackGround));
                     break;
                 case RotateAction rotateAction:
                     objectActionType = ActionType.Rotate;
                     SetAlphaEditButton(rotateAction.image);
+                    runtimeTransformHandle.gameObject.SetActive(true);
+                    runtimeTransformHandle.type = HandleType.ROTATION;
+                    TrackBuilderUtils.ChangeLayerRecursively(runtimeTransformHandle.transform, LayerMask.NameToLayer(Idents.Layers.TrackGround));
                     break;
                 case ScaleAction scaleAction:
+                    if(selection.selectedObject.GetComponent<DroneController>()) return;
                     objectActionType = ActionType.Scale;
                     SetAlphaEditButton(scaleAction.image);
+                    runtimeTransformHandle.gameObject.SetActive(true);
+                    runtimeTransformHandle.type = HandleType.SCALE;
+                    TrackBuilderUtils.ChangeLayerRecursively(runtimeTransformHandle.transform, LayerMask.NameToLayer(Idents.Layers.TrackGround));
                     break;
                 case CopyAction copyAction:
                     objectActionType = ActionType.Copy;
                     CopyObject();
                     SetAlphaEditButton(copyAction.image);
+                    runtimeTransformHandle.gameObject.SetActive(false);
                     break;
                 case PasteAction pasteAction:
                     objectActionType = ActionType.Paste;
                     PasteObject();
                     SetAlphaEditButton(pasteAction.image);
-                    break;
-            }
-
-            HandleOrientations();
-        }
-
-        private void HandleOrientations()
-        {
-            switch (objectActionType)
-            {
-                case ActionType.Select:
-                    positionOrientation.gameObject.SetActive(false);
-                    break;
-                case ActionType.SetOrigin:
-                    positionOrientation.gameObject.SetActive(false);
-                    break;
-                case ActionType.Move:
-                    positionOrientation.gameObject.SetActive(true);
-                    break;
-                case ActionType.Rotate:
-                    positionOrientation.gameObject.SetActive(false);
-                    break;
-                case ActionType.Scale:
-                    positionOrientation.gameObject.SetActive(false);
-                    break;
-                case ActionType.Copy:
-                    positionOrientation.gameObject.SetActive(false);
-                    break;
-                case ActionType.Paste:
-                    positionOrientation.gameObject.SetActive(false);
+                    runtimeTransformHandle.gameObject.SetActive(false);
                     break;
             }
         }
@@ -312,22 +359,6 @@ namespace Drone.Builder
                 builderUI.exitTabPanel.SetActive(false);
             if(builderUI.restartTabPanel.activeSelf && !_isExitPanel)
                 builderUI.restartTabPanel.SetActive(false);
-        }
-
-        private void RotateXObject(float value)
-        {
-            if (IsNoEditObject())
-                return;
-
-            switch (value)
-            {
-                case > 0:
-                    RotateObject(pendingObject.transform.right, 10f, Space.World);
-                    break;
-                case < 0:
-                    RotateObject(pendingObject.transform.right, -10f, Space.World);
-                    break;
-            }
         }
 
         private void ChangeObjectScale(float value)
@@ -381,104 +412,40 @@ namespace Drone.Builder
                 SetDroneParameters();
             }
 
-            // var ray = cameraBrain.OutputCamera!.ScreenPointToRay(Mouse.current.position.ReadValue());
-            //
-            // if (Physics.Raycast(ray, out _hit, 10000, layerMask, QueryTriggerInteraction.Ignore) &&
-            //     !EventSystem.current.IsPointerOverGameObject())
-            // {
-            //     mousePos = _hit.point;
-            //
-            //     if (objectActionType is ActionType.Move)
-            //     {
-            //         if (pendingObjects.Count == 0 || pendingObject == null)
-            //             return;
-            //
-            //         if (pendingObjects.Count > 1)
-            //         {
-            //             var commonCenter = CalculateCommonCenter(pendingObjects);
-            //             var offset = mousePos - commonCenter;
-            //
-            //             foreach (var pendingObj in pendingObjects)
-            //             {
-            //                 pendingObj.transform.position += new Vector3(offset.x, 0, offset.z);
-            //             }
-            //         }
-            //         else
-            //         {
-            //             pendingObject.transform.position = currentObjectType.objectType switch
-            //             {
-            //                 ObjectsType.Floor => mousePos,
-            //                 _ => new Vector3(mousePos.x, mousePos.y + currentObjectType.yOffset, mousePos.z)
-            //             };
-            //         }
-            //     }
-            // }
-            //
-            // if(objectActionType is ActionType.Move)
-            //     UpdateObjectHeight();
-            
-            GetOrientations();
-            ConstantOrientationsSize();
-            UpdateOrientationsPosition();
-        }
-
-        private void GetOrientations()
-        {
-            var ray = cameraBrain.OutputCamera!.ScreenPointToRay(Mouse.current.position.ReadValue());
-            
-            if (Physics.Raycast(ray, out _hit, 10000, orientationLayerMask, QueryTriggerInteraction.Ignore) &&
-                !EventSystem.current.IsPointerOverGameObject())
+            if (objectActionType is ActionType.FreeMove)
             {
-                var getOrientation = _hit.transform.GetComponent<OrientationPosition>();
+                var ray = cameraBrain.OutputCamera!.ScreenPointToRay(Mouse.current.position.ReadValue());
 
-                if (getOrientation)
+                if (Physics.Raycast(ray, out _hit, 10000, trackObjectLayerMask, QueryTriggerInteraction.Ignore) &&
+                    !EventSystem.current.IsPointerOverGameObject())
                 {
-                    pendingObject.transform.position = GetMouseNormalizedVector(getOrientation.orientationAxis);
-                    switch (getOrientation.orientationAxis)
+                    mousePos = _hit.point;
+
+                    if (pendingObjects.Count == 0 || pendingObject == null)
+                        return;
+
+                    if (pendingObjects.Count > 1)
                     {
-                        case OrientationAxis.X:
-                            break;
-                        case OrientationAxis.Y:
-                            break;
-                        case OrientationAxis.Z:
-                            break;
+                        var commonCenter = CalculateCommonCenter(pendingObjects);
+                        var offset = mousePos - commonCenter;
+
+                        foreach (var pendingObj in pendingObjects)
+                        {
+                            pendingObj.transform.position += new Vector3(offset.x, 0, offset.z);
+                        }
+                    }
+                    else
+                    {
+                        pendingObject.transform.position = currentObjectType.objectType switch
+                        {
+                            ObjectsType.Floor => mousePos,
+                            _ => new Vector3(mousePos.x, mousePos.y + currentObjectType.yOffset, mousePos.z)
+                        };
                     }
                 }
+
+                UpdateObjectHeight();
             }
-        }
-
-        private Vector3 GetMouseNormalizedVector(OrientationAxis orientationAxis)
-        {
-            var mousePosition = Mouse.current.position.ReadValue();
-        
-            switch (orientationAxis)
-            {
-                case OrientationAxis.X:
-                    return new Vector3(mousePosition.x / Screen.width, 0f, 0f).normalized;
-                case OrientationAxis.Y:
-                    return new Vector3(0f, mousePosition.y / Screen.height, 0f).normalized;
-                case OrientationAxis.Z:
-                    return new Vector3(0f, 0f, mousePosition.x / Screen.width).normalized;
-                default:
-                    return Vector3.zero;
-            }
-        }
-
-        private void UpdateOrientationsPosition()
-        {
-            if(IsNoEditObject())
-                return;
-
-            positionOrientation.position = pendingObject.transform.position;
-        }
-
-        private void ConstantOrientationsSize()
-        {
-            var distanceToCamera =
-                Vector3.Distance(positionOrientation.position, cameraBrain.OutputCamera.transform.position);
-            var scale = distanceToCamera * orientationScaleFactor;
-
-            positionOrientation.localScale = new Vector3(scale, scale, scale);
         }
 
         private void SetOrigin()
@@ -665,6 +632,7 @@ namespace Drone.Builder
                         currentObjectType.yOffset));
                 }
 
+                EditButtonsHandler(editButtonsAction.FirstOrDefault(x => x is SelectAction));
                 TrackBuilderUtils.TurnTrackObjects(pendingObjects, false);
                 pendingObjects.Clear();
                 currentObjectType = null;
@@ -681,7 +649,7 @@ namespace Drone.Builder
             try
             {
                 if (pendingObjects.Count != 1) return;
-                TrackBuilderUtils.ChangeLayerRecursively(pendingObject.transform, LayerMask.NameToLayer("TrackGround"));
+                TrackBuilderUtils.ChangeLayerRecursively(pendingObject.transform, LayerMask.NameToLayer(Idents.Layers.TrackGround));
                 currentObjectType = null;
                 pendingObject = null;
             }
@@ -726,9 +694,10 @@ namespace Drone.Builder
             if (obj == null)
                 return;
 
+            objectActionType = ActionType.Select;
             pendingObject = Instantiate(obj, objectOrigin.position, copyObject.transform.rotation);
             pendingObjects.Add(pendingObject);
-            TrackBuilderUtils.ChangeLayerRecursively(pendingObject.transform, LayerMask.NameToLayer("Track"));
+            TrackBuilderUtils.ChangeLayerRecursively(pendingObject.transform, LayerMask.NameToLayer(Idents.Layers.Track));
             TrackBuilderUtils.TurnTrackObjects(pendingObjects, true);
             MoveGameObjectToScene(pendingObject, levelScene);
             objectsPool.Add(pendingObject);

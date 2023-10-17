@@ -14,14 +14,8 @@ namespace Drone.Builder
     public class EditObject : MonoBehaviour
     {
         public TrackObject currentObject;
-        [SerializeField] private BuilderUI builderUI;
-        [SerializeField] private EditMenu editMenu;
-        [SerializeField] private Slider rotationXSlider;
-        [SerializeField] private Slider rotationYSlider;
-        [SerializeField] private Slider rotationZSlider;
-        [SerializeField] private TMP_InputField rotationXInput;
-        [SerializeField] private TMP_InputField rotationYInput;
-        [SerializeField] private TMP_InputField rotationZInput;
+        public BuilderUI builderUI;
+        public EditMenu editMenu;
 
         private List<string> _maps;
         private List<string> _sounds;
@@ -74,7 +68,6 @@ namespace Drone.Builder
         public void HideEditMenu()
         {
             editMenu.gameObject.SetActive(false);
-            // builderUI.editButtons.SetActive(false);
         }
         
         public void OnSelectObject(TrackObject obj)
@@ -100,79 +93,47 @@ namespace Drone.Builder
             if(float.TryParse(value, out var z))
                 currentObject.Position = new Vector3(currentObject.Position.x, currentObject.Position.y, z);
         }
-        
-        public void OnXRotationChanged(float value)
-        {
-            rotationXInput.text = Mathf.RoundToInt(value).ToString();
-            var delta = value - currentObject.previousRotation.x;
-            currentObject.transform.eulerAngles += new Vector3(delta, 0, 0);
-            currentObject.previousRotation.x = value;
-
-        }
 
         public void OnXRotationTextChanged(string text)
         {
-            var currentRotation = currentObject.Rotation.eulerAngles;
-            var xRot = float.Parse(text);
-            xRot = xRot switch
-            {
-                > 90f => 90f,
-                < -90f => -90f,
-                _ => xRot
-            };
-            rotationXSlider.value = xRot;
-            currentRotation.x = xRot;
-            currentObject.Rotation = Quaternion.Euler(currentRotation);
+            // var currentRotation = currentObject.Rotation.eulerAngles;
+            // var xRot = float.Parse(text);
+            // xRot = xRot switch
+            // {
+            //     > 180f => 180f,
+            //     < -180f => -180f,
+            //     _ => xRot
+            // };
+            // currentRotation.x = xRot;
+            // currentObject.Rotation = Quaternion.Euler(currentRotation);
         }
 
         public void OnYRotationTextChanged(string text)
         {
-            var currentRotation = currentObject.Rotation.eulerAngles;
-            var xRot = float.Parse(text);
-            xRot = xRot switch
-            {
-                > 90f => 90f,
-                < -90f => -90f,
-                _ => xRot
-            };
-            rotationYSlider.value = xRot;
-            currentRotation.y = xRot;
-            currentObject.Rotation = Quaternion.Euler(currentRotation);
+            // var currentRotation = currentObject.Rotation.eulerAngles;
+            // var xRot = float.Parse(text);
+            // xRot = xRot switch
+            // {
+            //     > 180f => 180f,
+            //     < -180f => -180f,
+            //     _ => xRot
+            // };
+            // currentRotation.y = xRot;
+            // currentObject.Rotation = Quaternion.Euler(currentRotation);
         }
 
         public void OnZRotationTextChanged(string text)
         {
-            var currentRotation = currentObject.Rotation.eulerAngles;
-            var xRot = float.Parse(text);
-            xRot = xRot switch
-            {
-                > 90f => 90f,
-                < -90f => -90f,
-                _ => xRot
-            };
-            rotationZSlider.value = xRot;
-            currentRotation.z = xRot;
-            currentObject.Rotation = Quaternion.Euler(currentRotation);
-        }
-
-        public void OnYRotationChanged(float value)
-        {
-            rotationYInput.text = Mathf.RoundToInt(value).ToString();
-
-            var delta = value - currentObject.previousRotation.y;
-            currentObject.transform.eulerAngles += new Vector3(0, delta, 0);
-
-            currentObject.previousRotation.y = value;
-        }
-
-        public void OnZRotationChanged(float value)
-        {
-            rotationZInput.text = Mathf.RoundToInt(value).ToString();
-
-            var delta = value - currentObject.previousRotation.z;
-            currentObject.transform.eulerAngles += new Vector3(0, 0, delta);
-
-            currentObject.previousRotation.z = value;
+            // var currentRotation = currentObject.Rotation.eulerAngles;
+            // var xRot = float.Parse(text);
+            // xRot = xRot switch
+            // {
+            //     > 180f => 180f,
+            //     < -180f => -180f,
+            //     _ => xRot
+            // };
+            // currentRotation.z = xRot;
+            // currentObject.Rotation = Quaternion.Euler(currentRotation);
         }
 
         public void OnXYZScaleChanged(float value)

@@ -8,6 +8,7 @@
         Rotate,
         Scale,
         Copy,
-        Paste
+        Paste,
+        FreeMove,
     }
 }

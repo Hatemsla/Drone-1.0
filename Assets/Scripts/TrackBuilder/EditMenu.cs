@@ -13,73 +13,70 @@ namespace Drone.Builder
 {
     public class EditMenu : MonoBehaviour
     {
-        [SerializeField] private TMP_Text objectName;
-        [SerializeField] private Image objectImage;
-        [SerializeField] private TMP_InputField xPos;
-        [SerializeField] private TMP_InputField yPos;
-        [SerializeField] private TMP_InputField zPos;
-        [SerializeField] private TMP_InputField altXPos;
-        [SerializeField] private TMP_InputField altYPos;
-        [SerializeField] private TMP_InputField altZPos;
-        [SerializeField] private Slider xRot;
-        [SerializeField] private Slider yRot;
-        [SerializeField] private Slider zRot;
-        [SerializeField] private TMP_InputField xRotValue;
-        [SerializeField] private TMP_InputField yRotValue;
-        [SerializeField] private TMP_InputField zRotValue;
-        [SerializeField] private TMP_InputField hintInput;
-        [SerializeField] private TMP_InputField passwordInput;
-        [SerializeField] private Slider xyzScale;
-        [SerializeField] private Slider windmillRotSpeed;
-        [SerializeField] private Slider magnetForce;
-        [SerializeField] private Slider pendulumSpeed;
-        [SerializeField] private Slider pendulumAngle;
-        [SerializeField] private Slider windForce;
-        [SerializeField] private Slider batteryEnergy;
-        [SerializeField] private Slider boostForce;
-        [SerializeField] private Slider TimeDelay;
-        [SerializeField] private TMP_Text xyzScaleValue;
-        [SerializeField] private TMP_Text windmillRotSpeedValue;
-        [SerializeField] private TMP_Text magnetForceValue;
-        [SerializeField] private TMP_Text magnetKillerRotateSpeedValue;
-        [SerializeField] private TMP_Text magnetKillerDamageValue;
-        [SerializeField] private TMP_Text magnetKillerDamageIntervalValue;
-        [SerializeField] private TMP_Text pendulumSpeedValue;
-        [SerializeField] private TMP_Text pendulumAngleValue;
-        [SerializeField] private TMP_Text windForceValue;
-        [SerializeField] private TMP_Text batteryEnergyValue;
-        [SerializeField] private TMP_Text boostForceValue;
-        [SerializeField] private TMP_Text passwordHint;
-        [SerializeField] private TMP_Text TimeDelayValue;
-        [SerializeField] private Toggle activeToggle;
-        [SerializeField] private Toggle hasPasswordToggle;
-        [SerializeField] private Toggle is_hacked;
-        [SerializeField] private TMP_Dropdown color;
-        [SerializeField] private TMP_Dropdown color_panel;
-        [SerializeField] private TMP_Dropdown color_button;
-        [SerializeField] private TMP_Dropdown code_n1;
-        [SerializeField] private TMP_Dropdown code_n2;
-        [SerializeField] private TMP_Dropdown code_n3;
-        [SerializeField] private TMP_Dropdown mapsDropdown;
-        [SerializeField] private TMP_Dropdown soundsDropdown;
-        [SerializeField] private GameObject isActivePanel;
-        [SerializeField] private GameObject colorPanel;
-        [SerializeField] private GameObject windmillPanel;
-        [SerializeField] private GameObject magnetPanel;
-        [SerializeField] private GameObject magnetKillerPanel;
-        [SerializeField] private GameObject pendulumPanel;
-        [SerializeField] private GameObject windPanel;
-        [SerializeField] private GameObject batteryPanel;
-        [SerializeField] private GameObject boostPanel;
-        [SerializeField] private GameObject hintPanel;
-        [SerializeField] private GameObject drawPanel; 
-        [SerializeField] private GameObject electrogatePanel; 
-        [SerializeField] private GameObject controllerPanelPanel; 
-        [SerializeField] private GameObject controllerButtonPanel;
-        [SerializeField] private GameObject portPanel;
-        [SerializeField] private GameObject triggerMessagePanel;
-        [SerializeField] private GameObject mapsPanel;
-        [SerializeField] private List<GameObject> interactivePanels;
+        public TMP_Text objectName;
+        public Image objectImage;
+        public TMP_InputField xPos;
+        public TMP_InputField yPos;
+        public TMP_InputField zPos;
+        public TMP_InputField altXPos;
+        public TMP_InputField altYPos;
+        public TMP_InputField altZPos;
+        public TMP_InputField rotationXInput;
+        public TMP_InputField rotationYInput;
+        public TMP_InputField rotationZInput;
+        public TMP_InputField hintInput;
+        public TMP_InputField passwordInput;
+        public Slider xyzScale;
+        public Slider windmillRotSpeed;
+        public Slider magnetForce;
+        public Slider pendulumSpeed;
+        public Slider pendulumAngle;
+        public Slider windForce;
+        public Slider batteryEnergy;
+        public Slider boostForce;
+        public Slider TimeDelay;
+        public TMP_Text xyzScaleValue;
+        public TMP_Text windmillRotSpeedValue;
+        public TMP_Text magnetForceValue;
+        public TMP_Text magnetKillerRotateSpeedValue;
+        public TMP_Text magnetKillerDamageValue;
+        public TMP_Text magnetKillerDamageIntervalValue;
+        public TMP_Text pendulumSpeedValue;
+        public TMP_Text pendulumAngleValue;
+        public TMP_Text windForceValue;
+        public TMP_Text batteryEnergyValue;
+        public TMP_Text boostForceValue;
+        public TMP_Text passwordHint;
+        public TMP_Text TimeDelayValue;
+        public Toggle activeToggle;
+        public Toggle hasPasswordToggle;
+        public Toggle is_hacked;
+        public TMP_Dropdown color;
+        public TMP_Dropdown color_panel;
+        public TMP_Dropdown color_button;
+        public TMP_Dropdown code_n1;
+        public TMP_Dropdown code_n2;
+        public TMP_Dropdown code_n3;
+        public TMP_Dropdown mapsDropdown;
+        public TMP_Dropdown soundsDropdown;
+        public GameObject isActivePanel;
+        public GameObject colorPanel;
+        public GameObject windmillPanel;
+        public GameObject magnetPanel;
+        public GameObject magnetKillerPanel;
+        public GameObject pendulumPanel;
+        public GameObject windPanel;
+        public GameObject batteryPanel;
+        public GameObject boostPanel;
+        public GameObject hintPanel;
+        public GameObject drawPanel; 
+        public GameObject electrogatePanel; 
+        public GameObject controllerPanelPanel; 
+        public GameObject controllerButtonPanel;
+        public GameObject portPanel;
+        public GameObject triggerMessagePanel;
+        public GameObject mapsPanel;
+        public List<GameObject> interactivePanels;
 
         private Dictionary<float, int> _sliderValues = new Dictionary<float, int>()
         {
@@ -124,6 +121,13 @@ namespace Drone.Builder
             soundsDropdown.AddOptions(_sounds);
         }
 
+        public void UpdateRotationsView(TrackObject trackObject)
+        {
+            rotationXInput.text = trackObject.Rotation.eulerAngles.x.ToString(CultureInfo.CurrentUICulture);
+            rotationYInput.text = trackObject.Rotation.eulerAngles.y.ToString(CultureInfo.CurrentUICulture);
+            rotationZInput.text = trackObject.Rotation.eulerAngles.z.ToString(CultureInfo.CurrentUICulture);
+        }
+
         public void SetEditPanelParams(TrackObject trackObject, float newScale)
         {
             objectName.text = trackObject.objectName;
@@ -137,15 +141,6 @@ namespace Drone.Builder
             altYPos.text = trackObject.Position.y.ToString("f2", CultureInfo.CurrentCulture);
             altZPos.text = trackObject.Position.z.ToString("f2", CultureInfo.CurrentCulture);
 
-            xRotValue.text = trackObject.Rotation.eulerAngles.x < 180
-                ? trackObject.Rotation.eulerAngles.x.ToString("f1", CultureInfo.CurrentCulture)
-                : (trackObject.Rotation.eulerAngles.x - 360f).ToString("f1", CultureInfo.CurrentCulture);
-            yRotValue.text = trackObject.Rotation.eulerAngles.y < 180
-                ? trackObject.Rotation.eulerAngles.y.ToString("f1", CultureInfo.CurrentCulture)
-                : (trackObject.Rotation.eulerAngles.y - 360f).ToString("f1", CultureInfo.CurrentCulture);
-            zRotValue.text = trackObject.Rotation.eulerAngles.z < 180
-                ? trackObject.Rotation.eulerAngles.z.ToString("f1", CultureInfo.CurrentCulture)
-                : (trackObject.Rotation.eulerAngles.z - 360f).ToString("f1", CultureInfo.CurrentCulture);
             xyzScaleValue.text = trackObject.Scale.x.ToString("f1", CultureInfo.CurrentCulture);
             
             if(trackObject.objectType is ObjectsType.Gate or ObjectsType.Drone)

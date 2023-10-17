@@ -524,15 +524,6 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             ""id"": ""fb490786-d75d-4d33-854b-fc5655edac6e"",
             ""actions"": [
                 {
-                    ""name"": ""RotateYObject"",
-                    ""type"": ""Value"",
-                    ""id"": ""abaefa60-5129-4080-b021-ca8edaba51d5"",
-                    ""expectedControlType"": ""Axis"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": true
-                },
-                {
                     ""name"": ""DeleteObject"",
                     ""type"": ""Button"",
                     ""id"": ""f0229cc1-0dbd-4114-9dfb-8d64e21a1973"",
@@ -632,15 +623,6 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""RotateXObject"",
-                    ""type"": ""Value"",
-                    ""id"": ""a6774e7c-5ea9-4a96-b195-0d44ad0a0ead"",
-                    ""expectedControlType"": ""Axis"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": true
-                },
-                {
                     ""name"": ""MouseScroll"",
                     ""type"": ""Value"",
                     ""id"": ""fea7d3a1-7eb0-4099-a562-955c9090eeb2"",
@@ -662,6 +644,60 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""name"": ""ExitBtn"",
                     ""type"": ""Button"",
                     ""id"": ""0714fe25-e54b-4fcd-b8e0-8c975b518950"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""HoldAction"",
+                    ""type"": ""Button"",
+                    ""id"": ""71fd09c7-61bd-44f2-b460-1f520a1cc26f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Hold"",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""FreeMove"",
+                    ""type"": ""Button"",
+                    ""id"": ""3c55ac93-3dc7-467e-8573-61d079e26aa9"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Select"",
+                    ""type"": ""Button"",
+                    ""id"": ""fdf139f9-b4c6-4b0a-bcfb-438ff6fe0fce"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Position"",
+                    ""type"": ""Button"",
+                    ""id"": ""767a6d4c-25dc-4a65-ae5d-ad9db9f19838"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Rotation"",
+                    ""type"": ""Button"",
+                    ""id"": ""617643f0-a23b-4127-b2a6-c1ada5747841"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Scale"",
+                    ""type"": ""Button"",
+                    ""id"": ""c9e27e06-5449-4440-9cf6-38b3de87eefd"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -890,39 +926,6 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": ""RotateObject"",
-                    ""id"": ""b2b58d8c-c5c3-4e0d-9b50-940af1304aab"",
-                    ""path"": ""1DAxis"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""RotateYObject"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""negative"",
-                    ""id"": ""1e325977-cd43-487d-9c23-f71d96daacf5"",
-                    ""path"": ""<Keyboard>/q"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""RotateYObject"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""positive"",
-                    ""id"": ""5eb1b4d1-1c39-4cfa-b27d-3383a8ed00d4"",
-                    ""path"": ""<Keyboard>/e"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""RotateYObject"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
                     ""name"": ""UpdateHeight"",
                     ""id"": ""d6ec9a20-9fd6-415b-a188-56fa387298af"",
                     ""path"": ""1DAxis"",
@@ -936,7 +939,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""negative"",
                     ""id"": ""570253c2-1706-453a-8998-fadd0919b8f3"",
-                    ""path"": ""<Keyboard>/s"",
+                    ""path"": ""<Keyboard>/downArrow"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -947,7 +950,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""positive"",
                     ""id"": ""64916223-ff2f-413c-b170-e95b0945896a"",
-                    ""path"": ""<Keyboard>/w"",
+                    ""path"": ""<Keyboard>/upArrow"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -969,7 +972,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""negative"",
                     ""id"": ""42d83531-dee7-43d7-8d13-62a35340cb3c"",
-                    ""path"": ""<Keyboard>/d"",
+                    ""path"": ""<Keyboard>/rightArrow"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -980,44 +983,11 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""positive"",
                     ""id"": ""ddef5f59-95d5-4a62-83a9-c5e04431d86b"",
-                    ""path"": ""<Keyboard>/a"",
+                    ""path"": ""<Keyboard>/leftArrow"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""ChangeObjectScale"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""RotateObject"",
-                    ""id"": ""b7b76217-b01a-43f4-b4a8-db0b59c6920f"",
-                    ""path"": ""1DAxis"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""RotateXObject"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""Negative"",
-                    ""id"": ""32478dad-0a4a-4702-a620-7059c793973c"",
-                    ""path"": ""<Keyboard>/x"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""RotateXObject"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""Positive"",
-                    ""id"": ""a57c0b2a-7263-4162-b633-add796c08907"",
-                    ""path"": ""<Keyboard>/z"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""RotateXObject"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -1073,6 +1043,72 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""ExitBtn"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2270a49f-d41e-4c9d-b3bb-769391e45909"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""HoldAction"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ea63b79c-0e7a-40cd-a59c-7fd42cd95cec"",
+                    ""path"": ""<Keyboard>/g"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""FreeMove"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""274a03d7-e7eb-4208-9c04-982abceb1635"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Select"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""eab928e0-7869-43c5-aa7f-4b0114385efd"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Position"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9cca3ac8-224c-4068-a0cc-d58ad6752452"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Rotation"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e3e02f4a-0832-4a7d-89d3-61f79b819fbb"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Scale"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -2107,7 +2143,6 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         m_Player_ReturnToCheckpoint = m_Player.FindAction("ReturnToCheckpoint", throwIfNotFound: true);
         // Builder
         m_Builder = asset.FindActionMap("Builder", throwIfNotFound: true);
-        m_Builder_RotateYObject = m_Builder.FindAction("RotateYObject", throwIfNotFound: true);
         m_Builder_DeleteObject = m_Builder.FindAction("DeleteObject", throwIfNotFound: true);
         m_Builder_SelectObjects = m_Builder.FindAction("SelectObjects", throwIfNotFound: true);
         m_Builder_SelectObject = m_Builder.FindAction("SelectObject", throwIfNotFound: true);
@@ -2119,10 +2154,15 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         m_Builder_CopyObject = m_Builder.FindAction("CopyObject", throwIfNotFound: true);
         m_Builder_ChangeObjectHeight = m_Builder.FindAction("ChangeObjectHeight", throwIfNotFound: true);
         m_Builder_ChangeObjectScale = m_Builder.FindAction("ChangeObjectScale", throwIfNotFound: true);
-        m_Builder_RotateXObject = m_Builder.FindAction("RotateXObject", throwIfNotFound: true);
         m_Builder_MouseScroll = m_Builder.FindAction("MouseScroll", throwIfNotFound: true);
         m_Builder_LockCursor = m_Builder.FindAction("LockCursor", throwIfNotFound: true);
         m_Builder_ExitBtn = m_Builder.FindAction("ExitBtn", throwIfNotFound: true);
+        m_Builder_HoldAction = m_Builder.FindAction("HoldAction", throwIfNotFound: true);
+        m_Builder_FreeMove = m_Builder.FindAction("FreeMove", throwIfNotFound: true);
+        m_Builder_Select = m_Builder.FindAction("Select", throwIfNotFound: true);
+        m_Builder_Position = m_Builder.FindAction("Position", throwIfNotFound: true);
+        m_Builder_Rotation = m_Builder.FindAction("Rotation", throwIfNotFound: true);
+        m_Builder_Scale = m_Builder.FindAction("Scale", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -2417,7 +2457,6 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
     // Builder
     private readonly InputActionMap m_Builder;
     private List<IBuilderActions> m_BuilderActionsCallbackInterfaces = new List<IBuilderActions>();
-    private readonly InputAction m_Builder_RotateYObject;
     private readonly InputAction m_Builder_DeleteObject;
     private readonly InputAction m_Builder_SelectObjects;
     private readonly InputAction m_Builder_SelectObject;
@@ -2429,15 +2468,19 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
     private readonly InputAction m_Builder_CopyObject;
     private readonly InputAction m_Builder_ChangeObjectHeight;
     private readonly InputAction m_Builder_ChangeObjectScale;
-    private readonly InputAction m_Builder_RotateXObject;
     private readonly InputAction m_Builder_MouseScroll;
     private readonly InputAction m_Builder_LockCursor;
     private readonly InputAction m_Builder_ExitBtn;
+    private readonly InputAction m_Builder_HoldAction;
+    private readonly InputAction m_Builder_FreeMove;
+    private readonly InputAction m_Builder_Select;
+    private readonly InputAction m_Builder_Position;
+    private readonly InputAction m_Builder_Rotation;
+    private readonly InputAction m_Builder_Scale;
     public struct BuilderActions
     {
         private @PlayerInputs m_Wrapper;
         public BuilderActions(@PlayerInputs wrapper) { m_Wrapper = wrapper; }
-        public InputAction @RotateYObject => m_Wrapper.m_Builder_RotateYObject;
         public InputAction @DeleteObject => m_Wrapper.m_Builder_DeleteObject;
         public InputAction @SelectObjects => m_Wrapper.m_Builder_SelectObjects;
         public InputAction @SelectObject => m_Wrapper.m_Builder_SelectObject;
@@ -2449,10 +2492,15 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         public InputAction @CopyObject => m_Wrapper.m_Builder_CopyObject;
         public InputAction @ChangeObjectHeight => m_Wrapper.m_Builder_ChangeObjectHeight;
         public InputAction @ChangeObjectScale => m_Wrapper.m_Builder_ChangeObjectScale;
-        public InputAction @RotateXObject => m_Wrapper.m_Builder_RotateXObject;
         public InputAction @MouseScroll => m_Wrapper.m_Builder_MouseScroll;
         public InputAction @LockCursor => m_Wrapper.m_Builder_LockCursor;
         public InputAction @ExitBtn => m_Wrapper.m_Builder_ExitBtn;
+        public InputAction @HoldAction => m_Wrapper.m_Builder_HoldAction;
+        public InputAction @FreeMove => m_Wrapper.m_Builder_FreeMove;
+        public InputAction @Select => m_Wrapper.m_Builder_Select;
+        public InputAction @Position => m_Wrapper.m_Builder_Position;
+        public InputAction @Rotation => m_Wrapper.m_Builder_Rotation;
+        public InputAction @Scale => m_Wrapper.m_Builder_Scale;
         public InputActionMap Get() { return m_Wrapper.m_Builder; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -2462,9 +2510,6 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         {
             if (instance == null || m_Wrapper.m_BuilderActionsCallbackInterfaces.Contains(instance)) return;
             m_Wrapper.m_BuilderActionsCallbackInterfaces.Add(instance);
-            @RotateYObject.started += instance.OnRotateYObject;
-            @RotateYObject.performed += instance.OnRotateYObject;
-            @RotateYObject.canceled += instance.OnRotateYObject;
             @DeleteObject.started += instance.OnDeleteObject;
             @DeleteObject.performed += instance.OnDeleteObject;
             @DeleteObject.canceled += instance.OnDeleteObject;
@@ -2498,9 +2543,6 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @ChangeObjectScale.started += instance.OnChangeObjectScale;
             @ChangeObjectScale.performed += instance.OnChangeObjectScale;
             @ChangeObjectScale.canceled += instance.OnChangeObjectScale;
-            @RotateXObject.started += instance.OnRotateXObject;
-            @RotateXObject.performed += instance.OnRotateXObject;
-            @RotateXObject.canceled += instance.OnRotateXObject;
             @MouseScroll.started += instance.OnMouseScroll;
             @MouseScroll.performed += instance.OnMouseScroll;
             @MouseScroll.canceled += instance.OnMouseScroll;
@@ -2510,13 +2552,28 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @ExitBtn.started += instance.OnExitBtn;
             @ExitBtn.performed += instance.OnExitBtn;
             @ExitBtn.canceled += instance.OnExitBtn;
+            @HoldAction.started += instance.OnHoldAction;
+            @HoldAction.performed += instance.OnHoldAction;
+            @HoldAction.canceled += instance.OnHoldAction;
+            @FreeMove.started += instance.OnFreeMove;
+            @FreeMove.performed += instance.OnFreeMove;
+            @FreeMove.canceled += instance.OnFreeMove;
+            @Select.started += instance.OnSelect;
+            @Select.performed += instance.OnSelect;
+            @Select.canceled += instance.OnSelect;
+            @Position.started += instance.OnPosition;
+            @Position.performed += instance.OnPosition;
+            @Position.canceled += instance.OnPosition;
+            @Rotation.started += instance.OnRotation;
+            @Rotation.performed += instance.OnRotation;
+            @Rotation.canceled += instance.OnRotation;
+            @Scale.started += instance.OnScale;
+            @Scale.performed += instance.OnScale;
+            @Scale.canceled += instance.OnScale;
         }
 
         private void UnregisterCallbacks(IBuilderActions instance)
         {
-            @RotateYObject.started -= instance.OnRotateYObject;
-            @RotateYObject.performed -= instance.OnRotateYObject;
-            @RotateYObject.canceled -= instance.OnRotateYObject;
             @DeleteObject.started -= instance.OnDeleteObject;
             @DeleteObject.performed -= instance.OnDeleteObject;
             @DeleteObject.canceled -= instance.OnDeleteObject;
@@ -2550,9 +2607,6 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @ChangeObjectScale.started -= instance.OnChangeObjectScale;
             @ChangeObjectScale.performed -= instance.OnChangeObjectScale;
             @ChangeObjectScale.canceled -= instance.OnChangeObjectScale;
-            @RotateXObject.started -= instance.OnRotateXObject;
-            @RotateXObject.performed -= instance.OnRotateXObject;
-            @RotateXObject.canceled -= instance.OnRotateXObject;
             @MouseScroll.started -= instance.OnMouseScroll;
             @MouseScroll.performed -= instance.OnMouseScroll;
             @MouseScroll.canceled -= instance.OnMouseScroll;
@@ -2562,6 +2616,24 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @ExitBtn.started -= instance.OnExitBtn;
             @ExitBtn.performed -= instance.OnExitBtn;
             @ExitBtn.canceled -= instance.OnExitBtn;
+            @HoldAction.started -= instance.OnHoldAction;
+            @HoldAction.performed -= instance.OnHoldAction;
+            @HoldAction.canceled -= instance.OnHoldAction;
+            @FreeMove.started -= instance.OnFreeMove;
+            @FreeMove.performed -= instance.OnFreeMove;
+            @FreeMove.canceled -= instance.OnFreeMove;
+            @Select.started -= instance.OnSelect;
+            @Select.performed -= instance.OnSelect;
+            @Select.canceled -= instance.OnSelect;
+            @Position.started -= instance.OnPosition;
+            @Position.performed -= instance.OnPosition;
+            @Position.canceled -= instance.OnPosition;
+            @Rotation.started -= instance.OnRotation;
+            @Rotation.performed -= instance.OnRotation;
+            @Rotation.canceled -= instance.OnRotation;
+            @Scale.started -= instance.OnScale;
+            @Scale.performed -= instance.OnScale;
+            @Scale.canceled -= instance.OnScale;
         }
 
         public void RemoveCallbacks(IBuilderActions instance)
@@ -2994,7 +3066,6 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
     }
     public interface IBuilderActions
     {
-        void OnRotateYObject(InputAction.CallbackContext context);
         void OnDeleteObject(InputAction.CallbackContext context);
         void OnSelectObjects(InputAction.CallbackContext context);
         void OnSelectObject(InputAction.CallbackContext context);
@@ -3006,10 +3077,15 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         void OnCopyObject(InputAction.CallbackContext context);
         void OnChangeObjectHeight(InputAction.CallbackContext context);
         void OnChangeObjectScale(InputAction.CallbackContext context);
-        void OnRotateXObject(InputAction.CallbackContext context);
         void OnMouseScroll(InputAction.CallbackContext context);
         void OnLockCursor(InputAction.CallbackContext context);
         void OnExitBtn(InputAction.CallbackContext context);
+        void OnHoldAction(InputAction.CallbackContext context);
+        void OnFreeMove(InputAction.CallbackContext context);
+        void OnSelect(InputAction.CallbackContext context);
+        void OnPosition(InputAction.CallbackContext context);
+        void OnRotation(InputAction.CallbackContext context);
+        void OnScale(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

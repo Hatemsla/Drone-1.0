@@ -502,15 +502,6 @@
             "id": "fb490786-d75d-4d33-854b-fc5655edac6e",
             "actions": [
                 {
-                    "name": "RotateYObject",
-                    "type": "Value",
-                    "id": "abaefa60-5129-4080-b021-ca8edaba51d5",
-                    "expectedControlType": "Axis",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                },
-                {
                     "name": "DeleteObject",
                     "type": "Button",
                     "id": "f0229cc1-0dbd-4114-9dfb-8d64e21a1973",
@@ -610,15 +601,6 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "RotateXObject",
-                    "type": "Value",
-                    "id": "a6774e7c-5ea9-4a96-b195-0d44ad0a0ead",
-                    "expectedControlType": "Axis",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                },
-                {
                     "name": "MouseScroll",
                     "type": "Value",
                     "id": "fea7d3a1-7eb0-4099-a562-955c9090eeb2",
@@ -640,6 +622,60 @@
                     "name": "ExitBtn",
                     "type": "Button",
                     "id": "0714fe25-e54b-4fcd-b8e0-8c975b518950",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "HoldAction",
+                    "type": "Button",
+                    "id": "71fd09c7-61bd-44f2-b460-1f520a1cc26f",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Hold",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "FreeMove",
+                    "type": "Button",
+                    "id": "3c55ac93-3dc7-467e-8573-61d079e26aa9",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Select",
+                    "type": "Button",
+                    "id": "fdf139f9-b4c6-4b0a-bcfb-438ff6fe0fce",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Position",
+                    "type": "Button",
+                    "id": "767a6d4c-25dc-4a65-ae5d-ad9db9f19838",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Rotation",
+                    "type": "Button",
+                    "id": "617643f0-a23b-4127-b2a6-c1ada5747841",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Scale",
+                    "type": "Button",
+                    "id": "c9e27e06-5449-4440-9cf6-38b3de87eefd",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -868,39 +904,6 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "RotateObject",
-                    "id": "b2b58d8c-c5c3-4e0d-9b50-940af1304aab",
-                    "path": "1DAxis",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "RotateYObject",
-                    "isComposite": true,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "negative",
-                    "id": "1e325977-cd43-487d-9c23-f71d96daacf5",
-                    "path": "<Keyboard>/q",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "RotateYObject",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "positive",
-                    "id": "5eb1b4d1-1c39-4cfa-b27d-3383a8ed00d4",
-                    "path": "<Keyboard>/e",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "RotateYObject",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
                     "name": "UpdateHeight",
                     "id": "d6ec9a20-9fd6-415b-a188-56fa387298af",
                     "path": "1DAxis",
@@ -914,7 +917,7 @@
                 {
                     "name": "negative",
                     "id": "570253c2-1706-453a-8998-fadd0919b8f3",
-                    "path": "<Keyboard>/s",
+                    "path": "<Keyboard>/downArrow",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -925,7 +928,7 @@
                 {
                     "name": "positive",
                     "id": "64916223-ff2f-413c-b170-e95b0945896a",
-                    "path": "<Keyboard>/w",
+                    "path": "<Keyboard>/upArrow",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -947,7 +950,7 @@
                 {
                     "name": "negative",
                     "id": "42d83531-dee7-43d7-8d13-62a35340cb3c",
-                    "path": "<Keyboard>/d",
+                    "path": "<Keyboard>/rightArrow",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -958,44 +961,11 @@
                 {
                     "name": "positive",
                     "id": "ddef5f59-95d5-4a62-83a9-c5e04431d86b",
-                    "path": "<Keyboard>/a",
+                    "path": "<Keyboard>/leftArrow",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "ChangeObjectScale",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "RotateObject",
-                    "id": "b7b76217-b01a-43f4-b4a8-db0b59c6920f",
-                    "path": "1DAxis",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "RotateXObject",
-                    "isComposite": true,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "Negative",
-                    "id": "32478dad-0a4a-4702-a620-7059c793973c",
-                    "path": "<Keyboard>/x",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "RotateXObject",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "Positive",
-                    "id": "a57c0b2a-7263-4162-b633-add796c08907",
-                    "path": "<Keyboard>/z",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "RotateXObject",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -1051,6 +1021,72 @@
                     "processors": "",
                     "groups": "",
                     "action": "ExitBtn",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2270a49f-d41e-4c9d-b3bb-769391e45909",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "HoldAction",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ea63b79c-0e7a-40cd-a59c-7fd42cd95cec",
+                    "path": "<Keyboard>/g",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "FreeMove",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "274a03d7-e7eb-4208-9c04-982abceb1635",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Select",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "eab928e0-7869-43c5-aa7f-4b0114385efd",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Position",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9cca3ac8-224c-4068-a0cc-d58ad6752452",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Rotation",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e3e02f4a-0832-4a7d-89d3-61f79b819fbb",
+                    "path": "<Keyboard>/r",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Scale",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

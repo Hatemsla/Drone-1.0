@@ -87,7 +87,7 @@ namespace Drone.Builder
 
         private void SelectObject()
         {
-            if(BuilderManager.Instance.objectActionType is ActionType.SetOrigin)
+            if(BuilderManager.Instance.objectActionType is not ActionType.Select)
                 return;
             
             if (EventSystem.current.IsPointerOverGameObject() || BuilderManager.Instance.isMove) return;
@@ -200,7 +200,7 @@ namespace Drone.Builder
 
         public void Select(GameObject obj)
         {
-            if(BuilderManager.Instance.objectActionType is ActionType.SetOrigin)
+            if(BuilderManager.Instance.objectActionType is not ActionType.Select)
                 return;
             
             if (obj == selectedObject)
@@ -226,6 +226,13 @@ namespace Drone.Builder
             TrackBuilderUtils.TurnAllOutlineEffects(outlines, true);
             selectedObject = obj;
             selectedTrackObject = obj.GetComponent<TrackObject>();
+
+            BuilderManager.Instance.runtimeTransformHandle.target = selectedObject.transform;
+            // BuilderManager.Instance.runtimeTransformHandle.gameObject.SetActive(true);
+            
+            if(selectedTrackObject != null)
+                editObject.editMenu.UpdateRotationsView(selectedTrackObject);
+            
             switch (selectedTrackObject.objectType)
             {
                 case ObjectsType.Floor:
@@ -258,6 +265,7 @@ namespace Drone.Builder
             }
             
             selectedObject.GetComponent<TrackObject>().isActive = false;
+            BuilderManager.Instance.runtimeTransformHandle.gameObject.SetActive(false);
             selectedObject = null;
             selectedTrackObject = null;
             selectedObjects.Clear();

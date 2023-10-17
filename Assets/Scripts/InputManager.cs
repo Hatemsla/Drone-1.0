@@ -52,6 +52,12 @@ namespace Drone
         public event Action HpRestoreEvent;
         public event Action ArmorRestoreEvent;
         public event Action ExitBuilderEvent;
+        public event Action FreeMoveEvent;
+        public event Action SelectEvent;
+        public event Action PositionEvent;
+        public event Action RotationEvent;
+        public event Action ScaleEvent;
+        public event Action<bool> LeftButtonHoldEvent; 
 
         public static event Action RebindComplete;
         public static event Action RebindCanceled;
@@ -109,15 +115,20 @@ namespace Drone
             _playerInput.Builder.SelectObject.performed += _ => SelectObjectEvent?.Invoke();
             _playerInput.Builder.SelectObjects.performed += _ => SelectObjectsEvent?.Invoke();
             _playerInput.Builder.DeleteObject.performed += _ => DeleteObjectEvent?.Invoke();
-            _playerInput.Builder.RotateYObject.performed += _ => RotateYObjectEvent?.Invoke(_.ReadValue<float>());
+            _playerInput.Builder.FreeMove.performed += _ => FreeMoveEvent?.Invoke();
             _playerInput.Builder.MouseScroll.performed += _ => RotateYObjectEvent?.Invoke(_.ReadValue<float>());
-            _playerInput.Builder.RotateXObject.performed += _ => RotateXObjectEvent?.Invoke(_.ReadValue<float>());
             _playerInput.Builder.ChangeObjectHeight.performed += _ => ChangeObjectHeightEvent?.Invoke(_.ReadValue<float>());
             _playerInput.Builder.ChangeObjectHeight.canceled += _ => ChangeObjectHeightEvent?.Invoke(0f);
             _playerInput.Builder.ChangeObjectScale.performed += _ => ChangeObjectScaleEvent?.Invoke(_.ReadValue<float>());
             _playerInput.Builder.LockCursor.performed += _ => LockCursorEvent?.Invoke();
             _playerInput.Builder.LockCursor.performed += _ => InputSystem.EnableDevice(Keyboard.current);
             _playerInput.Builder.ExitBtn.performed += _ => ExitBuilderEvent?.Invoke();
+            _playerInput.Builder.Select.performed += _ => SelectEvent?.Invoke();
+            _playerInput.Builder.Position.performed += _ => PositionEvent?.Invoke();
+            _playerInput.Builder.Rotation.performed += _ => RotationEvent?.Invoke();
+            _playerInput.Builder.Scale.performed += _ => ScaleEvent?.Invoke();
+            _playerInput.Builder.HoldAction.performed += _ => LeftButtonHoldEvent?.Invoke(true);
+            _playerInput.Builder.HoldAction.canceled += _ => LeftButtonHoldEvent?.Invoke(false);
             
             _playerInput.Camera.SetCursor.performed += _ => SetCursorEvent?.Invoke();
             _playerInput.Camera.CameraBoostSpeed.performed += _ => CameraBoostEvent?.Invoke();

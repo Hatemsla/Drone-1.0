@@ -23,6 +23,7 @@ namespace Drone.Builder
 
         private void OnTriggerEnter(Collider other)
         {
+            if(BuilderManager.Instance.objectActionType is not ActionType.FreeMove) return;
             if (!_trackObject.isActive || BuilderManager.Instance.pendingObjects.Count != 1) return;
             if (BuilderManager.Instance.pendingObject == null)
                 return;
@@ -103,6 +104,7 @@ namespace Drone.Builder
 
         private void OnTriggerStay(Collider other)
         {
+            if(BuilderManager.Instance.objectActionType is not ActionType.FreeMove) return;
             if (!_trackObject.isActive || BuilderManager.Instance.pendingObjects.Count != 1) return;
             
             var otherConnection = other.GetComponent<Connection>();
