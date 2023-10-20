@@ -27,21 +27,13 @@ namespace Drone.Builder
         public HelpMessage helpMessage;
         public DroneBars healthBar;
         public DroneBars armorBar;
-        
-        [Header("UI")]
-        public Button floorBtn;
-        public Button wallBtn;
-        public Button slantBtn;
-        public Button gateBtn;
-        public Button editorGameExitBtn;
-        public Button editorExitBtn;
-        public Button gameExitBtn;
+
+        [Header("UI")] 
+        public TMP_Text spaceText;
         public Button backEditorTabBtn;
         public Button backGameTabBtn;
         public Button backBuilderTabBtn;
         public Button saveBtn;
-        public Button testLevelBtn;
-        public Button returnToLevelBtn;
         
         public RectTransform pathArrow;
         public Image pathArrowImage;
@@ -61,8 +53,6 @@ namespace Drone.Builder
         public GameObject terminalUI;
         public GameObject loadPanel;
         public GameObject objectEditPanel;
-        public GameObject saveLevelPanel;
-        public GameObject createButtonsParent;
         public GameObject securityCameraView;
 
         public List<Button> createButtons;
@@ -72,7 +62,6 @@ namespace Drone.Builder
         public GameObject exitTabPanel;
         public GameObject restartTabPanel;
         public Button confirmExitBtn;
-        public Button cancelExitBtn;
         public Slider targetSpeedSlider1;
         public Slider targetSpeedSlider2;
         public Slider targetSpeedSlider3;
@@ -117,7 +106,6 @@ namespace Drone.Builder
         
         private void ActivateBuilderUI()
         {
-            createPanel.SetActive(true);
             createPanel.SetActive(true);
             droneView.SetActive(false);
             pathArrow.gameObject.SetActive(false);

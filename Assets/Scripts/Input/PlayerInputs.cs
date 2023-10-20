@@ -702,6 +702,15 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SwitchLocalGlobal"",
+                    ""type"": ""Button"",
+                    ""id"": ""13fd9e52-7f2e-45e8-83e6-0e8ce52e113a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -861,17 +870,6 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""0c009cc5-91ac-4573-a59d-0ceb5bd01fca"",
-                    ""path"": ""<Keyboard>/t"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""PlaceAndPickupSameObejct"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""1905266f-7d4a-444c-997f-104e16d83f74"",
                     ""path"": ""<Mouse>/leftButton"",
                     ""interactions"": """",
@@ -955,39 +953,6 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""ChangeObjectHeight"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""UpdateScale"",
-                    ""id"": ""3c5afe09-527c-489d-a9dd-7549ca7bcb33"",
-                    ""path"": ""1DAxis"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""ChangeObjectScale"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""negative"",
-                    ""id"": ""42d83531-dee7-43d7-8d13-62a35340cb3c"",
-                    ""path"": ""<Keyboard>/rightArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""ChangeObjectScale"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""positive"",
-                    ""id"": ""ddef5f59-95d5-4a62-83a9-c5e04431d86b"",
-                    ""path"": ""<Keyboard>/leftArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""ChangeObjectScale"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
                 },
@@ -1093,7 +1058,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""9cca3ac8-224c-4068-a0cc-d58ad6752452"",
-                    ""path"": ""<Keyboard>/e"",
+                    ""path"": ""<Keyboard>/r"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -1104,11 +1069,88 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""e3e02f4a-0832-4a7d-89d3-61f79b819fbb"",
-                    ""path"": ""<Keyboard>/r"",
+                    ""path"": ""<Keyboard>/s"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Scale"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""UpdateScale"",
+                    ""id"": ""3c5afe09-527c-489d-a9dd-7549ca7bcb33"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ChangeObjectScale"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""42d83531-dee7-43d7-8d13-62a35340cb3c"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ChangeObjectScale"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""ddef5f59-95d5-4a62-83a9-c5e04431d86b"",
+                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ChangeObjectScale"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""One Modifier"",
+                    ""id"": ""0b34ca06-90f8-4d3f-aa14-fd4bdb195b30"",
+                    ""path"": ""OneModifier"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PlaceAndPickupSameObejct"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""modifier"",
+                    ""id"": ""b2dc5ac3-b43f-4429-aed8-57bf0cf8776b"",
+                    ""path"": ""<Keyboard>/shift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PlaceAndPickupSameObejct"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""binding"",
+                    ""id"": ""60a82490-c021-4637-b5ea-ad3b5126b514"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PlaceAndPickupSameObejct"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""905608c9-559f-4379-a60f-a0f4539e84d4"",
+                    ""path"": ""<Keyboard>/tab"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SwitchLocalGlobal"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -2163,6 +2205,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         m_Builder_Position = m_Builder.FindAction("Position", throwIfNotFound: true);
         m_Builder_Rotation = m_Builder.FindAction("Rotation", throwIfNotFound: true);
         m_Builder_Scale = m_Builder.FindAction("Scale", throwIfNotFound: true);
+        m_Builder_SwitchLocalGlobal = m_Builder.FindAction("SwitchLocalGlobal", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -2477,6 +2520,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
     private readonly InputAction m_Builder_Position;
     private readonly InputAction m_Builder_Rotation;
     private readonly InputAction m_Builder_Scale;
+    private readonly InputAction m_Builder_SwitchLocalGlobal;
     public struct BuilderActions
     {
         private @PlayerInputs m_Wrapper;
@@ -2501,6 +2545,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         public InputAction @Position => m_Wrapper.m_Builder_Position;
         public InputAction @Rotation => m_Wrapper.m_Builder_Rotation;
         public InputAction @Scale => m_Wrapper.m_Builder_Scale;
+        public InputAction @SwitchLocalGlobal => m_Wrapper.m_Builder_SwitchLocalGlobal;
         public InputActionMap Get() { return m_Wrapper.m_Builder; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -2570,6 +2615,9 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @Scale.started += instance.OnScale;
             @Scale.performed += instance.OnScale;
             @Scale.canceled += instance.OnScale;
+            @SwitchLocalGlobal.started += instance.OnSwitchLocalGlobal;
+            @SwitchLocalGlobal.performed += instance.OnSwitchLocalGlobal;
+            @SwitchLocalGlobal.canceled += instance.OnSwitchLocalGlobal;
         }
 
         private void UnregisterCallbacks(IBuilderActions instance)
@@ -2634,6 +2682,9 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @Scale.started -= instance.OnScale;
             @Scale.performed -= instance.OnScale;
             @Scale.canceled -= instance.OnScale;
+            @SwitchLocalGlobal.started -= instance.OnSwitchLocalGlobal;
+            @SwitchLocalGlobal.performed -= instance.OnSwitchLocalGlobal;
+            @SwitchLocalGlobal.canceled -= instance.OnSwitchLocalGlobal;
         }
 
         public void RemoveCallbacks(IBuilderActions instance)
@@ -3086,6 +3137,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         void OnPosition(InputAction.CallbackContext context);
         void OnRotation(InputAction.CallbackContext context);
         void OnScale(InputAction.CallbackContext context);
+        void OnSwitchLocalGlobal(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

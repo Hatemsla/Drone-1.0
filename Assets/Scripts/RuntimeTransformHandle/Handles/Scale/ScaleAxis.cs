@@ -81,7 +81,8 @@ namespace Drone.RuntimeHandle.Handles.Scale
             }
 
             delta = axisScaleDelta;
-            var scale = Vector3.Scale(_startScale, Vector3.one * axisScaleDelta);
+            // var scale = Vector3.Scale(_startScale, Vector3.one * axisScaleDelta);
+            var scale = Vector3.one * axisScaleDelta;
 
             _parentTransformHandle.target.localScale = new Vector3(Mathf.Clamp(scale.x, 0.5f, 8f),
                 Mathf.Clamp(scale.y, 0.5f, 8f), Mathf.Clamp(scale.z, 0.5f, 8f));

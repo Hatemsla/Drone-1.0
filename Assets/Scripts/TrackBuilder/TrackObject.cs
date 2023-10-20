@@ -39,20 +39,20 @@ namespace Drone.Builder
 
         public Vector3 Position
         {
-            get => transform.localPosition;
+            get => transform.position;
             set
             {
-                transform.localPosition = value;
+                transform.position = value;
                 PositionChanged?.Invoke(value);
             }
         }
 
         public Quaternion Rotation
         {
-            get => transform.localRotation;
+            get => transform.rotation;
             set
             {
-                transform.localRotation = value;
+                transform.rotation = value;
                 RotationChanged?.Invoke(value);
             }
         }

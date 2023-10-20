@@ -18,6 +18,7 @@ namespace Drone
         public event Action SelectObjectEvent;
         public event Action SelectObjectsEvent;
         public event Action DeleteObjectEvent;
+        public event Action SwitchToLocalGlobal;
         public event Action<float> RotateYObjectEvent;
         public event Action<float> RotateXObjectEvent;
         public event Action<float> PedalsEvent;
@@ -115,6 +116,7 @@ namespace Drone
             _playerInput.Builder.SelectObject.performed += _ => SelectObjectEvent?.Invoke();
             _playerInput.Builder.SelectObjects.performed += _ => SelectObjectsEvent?.Invoke();
             _playerInput.Builder.DeleteObject.performed += _ => DeleteObjectEvent?.Invoke();
+            _playerInput.Builder.SwitchLocalGlobal.performed += _ => SwitchToLocalGlobal?.Invoke();
             _playerInput.Builder.FreeMove.performed += _ => FreeMoveEvent?.Invoke();
             _playerInput.Builder.MouseScroll.performed += _ => RotateYObjectEvent?.Invoke(_.ReadValue<float>());
             _playerInput.Builder.ChangeObjectHeight.performed += _ => ChangeObjectHeightEvent?.Invoke(_.ReadValue<float>());

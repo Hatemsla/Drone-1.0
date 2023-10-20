@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Drone.Builder;
 using UnityEngine;
 
 namespace Drone.RuntimeHandle.Handles.Position
@@ -9,7 +10,7 @@ namespace Drone.RuntimeHandle.Handles.Position
         protected List<PositionAxis> _axes;
         protected List<PositionPlane> _planes;
 
-        public PositionHandle Initialize(RuntimeTransformHandle p_runtimeHandle)
+        public PositionHandle Initialize(RuntimeTransformHandle p_runtimeHandle, EditObject editObject)
         {
             _parentTransformHandle = p_runtimeHandle;
             transform.SetParent(_parentTransformHandle.transform, false);
@@ -18,15 +19,15 @@ namespace Drone.RuntimeHandle.Handles.Position
 
             if (_parentTransformHandle.axes == HandleAxes.X || _parentTransformHandle.axes == HandleAxes.XY || _parentTransformHandle.axes == HandleAxes.XZ || _parentTransformHandle.axes == HandleAxes.XYZ)
                 _axes.Add(new GameObject().AddComponent<PositionAxis>()
-                    .Initialize(_parentTransformHandle, Vector3.right, Color.red));
+                    .Initialize(_parentTransformHandle, Vector3.right, Color.red, editObject));
             
             if (_parentTransformHandle.axes == HandleAxes.Y || _parentTransformHandle.axes == HandleAxes.XY || _parentTransformHandle.axes == HandleAxes.YZ || _parentTransformHandle.axes == HandleAxes.XYZ)
                 _axes.Add(new GameObject().AddComponent<PositionAxis>()
-                    .Initialize(_parentTransformHandle, Vector3.up, Color.green));
+                    .Initialize(_parentTransformHandle, Vector3.up, Color.green, editObject));
 
             if (_parentTransformHandle.axes == HandleAxes.Z || _parentTransformHandle.axes == HandleAxes.XZ || _parentTransformHandle.axes == HandleAxes.YZ || _parentTransformHandle.axes == HandleAxes.XYZ)
                 _axes.Add(new GameObject().AddComponent<PositionAxis>()
-                    .Initialize(_parentTransformHandle, Vector3.forward, Color.blue));
+                    .Initialize(_parentTransformHandle, Vector3.forward, Color.blue, editObject));
 
             _planes = new List<PositionPlane>();
             

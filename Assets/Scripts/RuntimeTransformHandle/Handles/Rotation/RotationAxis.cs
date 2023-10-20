@@ -6,6 +6,7 @@ namespace Drone.RuntimeHandle.Handles.Rotation
 {
     public class RotationAxis : HandleBase
     {
+        private EditObject _editObject;
         private Mesh _arcMesh;
         private Material _arcMaterial;
         private Vector3 _axis;
@@ -16,12 +17,13 @@ namespace Drone.RuntimeHandle.Handles.Rotation
 
         private Quaternion _startRotation;
 
-        public RotationAxis Initialize(RuntimeTransformHandle p_runtimeHandle, Vector3 p_axis, Color p_color)
+        public RotationAxis Initialize(RuntimeTransformHandle p_runtimeHandle, Vector3 p_axis, Color p_color, EditObject editObject)
         {
             _parentTransformHandle = p_runtimeHandle;
             _axis = p_axis;
             _defaultColor = p_color;
-
+            _editObject = editObject;
+            
             InitializeMaterial();
 
             transform.SetParent(p_runtimeHandle.transform, false);
@@ -93,6 +95,8 @@ namespace Drone.RuntimeHandle.Handles.Rotation
             _arcMesh = MeshUtils.CreateArc(transform.position, _hitPoint, _rotatedAxis, 2, angleRadians,
                 Mathf.Abs(Mathf.CeilToInt(angleDegrees)) + 1);
             DrawArc();
+            
+            _editObject.editMenu.UpdateRotationsView(_editObject.currentObject);
 
             base.Interact(p_previousPosition);
         }

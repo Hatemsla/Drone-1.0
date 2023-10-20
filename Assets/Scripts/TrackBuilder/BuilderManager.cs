@@ -23,8 +23,6 @@ namespace Drone.Builder
 
         [Header("Builder tools")]
         public Transform objectOrigin;
-        public float positionSensitivity;
-        public float orientationScaleFactor;
         public float interfaceScale;
         public float currentYawSensitivity;
         public int currentSelectObjectIndex;
@@ -57,7 +55,6 @@ namespace Drone.Builder
         public GameData gameData;
         public CinemachineBrain cameraBrain;
         public LayerMask trackObjectLayerMask;
-        public LayerMask orientationLayerMask;
         
         [Header("Game Objects")]
         public GameObject pendingObject;
@@ -84,7 +81,6 @@ namespace Drone.Builder
         private bool _isTabPanel;
         private bool _isExitPanel;
         private bool _isLevelEnd;
-        private bool _isHoldLeftButton;
         private Connection[] _connections;
         private RaycastHit _hit;
         private Vector3 _mainCameraPrevPosition;
@@ -148,6 +144,7 @@ namespace Drone.Builder
             }
             else
             {
+                builderUI.loadLevelPanel.SetActive(false);
                 CreateObjectsPoolScene();
             }
         }
@@ -185,8 +182,8 @@ namespace Drone.Builder
             InputManager.Instance.ExitGameEvent += CheckTabPanel;
             InputManager.Instance.ExitBuilderEvent += OpenExitPanel;
             InputManager.Instance.SelectObjectEvent += SetOrigin;
-            InputManager.Instance.LeftButtonHoldEvent += LeftButtonHold;
             InputManager.Instance.FreeMoveEvent += FreeMove;
+            InputManager.Instance.SwitchToLocalGlobal += OnSwitchLocalGlobal;
 
             InputManager.Instance.SelectEvent += OnSetSelect;
             InputManager.Instance.PositionEvent += OnSetPosition;
@@ -216,8 +213,8 @@ namespace Drone.Builder
             InputManager.Instance.ExitGameEvent -= CheckTabPanel;
             InputManager.Instance.ExitBuilderEvent -= OpenExitPanel;
             InputManager.Instance.SelectObjectEvent -= SetOrigin;
-            InputManager.Instance.LeftButtonHoldEvent -= LeftButtonHold;
             InputManager.Instance.FreeMoveEvent -= FreeMove;
+            InputManager.Instance.SwitchToLocalGlobal -= OnSwitchLocalGlobal;
             
             InputManager.Instance.SelectEvent -= OnSetSelect;
             InputManager.Instance.PositionEvent -= OnSetPosition;
@@ -226,10 +223,19 @@ namespace Drone.Builder
             
             foreach (var edit in editButtonsAction) edit.EventAction -= EditButtonsHandler;
         }
-
-        private void LeftButtonHold(bool value)
+        
+        private void OnSwitchLocalGlobal()
         {
-            _isHoldLeftButton = value;
+            if (runtimeTransformHandle.space == HandleSpace.LOCAL)
+            {
+                runtimeTransformHandle.space = HandleSpace.WORLD;
+                builderUI.spaceText.text = "world";
+            }
+            else
+            {
+                runtimeTransformHandle.space = HandleSpace.LOCAL;
+                builderUI.spaceText.text = "local";
+            }
         }
         
         private void OnSetSelect()
@@ -271,10 +277,8 @@ namespace Drone.Builder
             _isFreeMoveBefore = !_isFreeMoveBefore;
         }
 
-        private void EditButtonsHandler(ObjectAction objectAction)
+        public void EditButtonsHandler(ObjectAction objectAction)
         {
-            if(selection.selectedObject == null) return;
-            
             switch (objectAction)
             {
                 case SelectAction selectAction:
@@ -289,6 +293,7 @@ namespace Drone.Builder
                     runtimeTransformHandle.gameObject.SetActive(false);
                     break;
                 case MoveAction moveAction:
+                    if(selection.selectedObject == null) return;
                     objectActionType = ActionType.Move;
                     selection.Move();
                     SetAlphaEditButton(moveAction.image);
@@ -297,6 +302,7 @@ namespace Drone.Builder
                     TrackBuilderUtils.ChangeLayerRecursively(runtimeTransformHandle.transform, LayerMask.NameToLayer(Idents.Layers.TrackGround));
                     break;
                 case RotateAction rotateAction:
+                    if(selection.selectedObject == null) return;
                     objectActionType = ActionType.Rotate;
                     SetAlphaEditButton(rotateAction.image);
                     runtimeTransformHandle.gameObject.SetActive(true);
@@ -304,7 +310,7 @@ namespace Drone.Builder
                     TrackBuilderUtils.ChangeLayerRecursively(runtimeTransformHandle.transform, LayerMask.NameToLayer(Idents.Layers.TrackGround));
                     break;
                 case ScaleAction scaleAction:
-                    if(selection.selectedObject.GetComponent<DroneController>()) return;
+                    if(selection.selectedObject.GetComponent<DroneController>() || selection.selectedObject == null) return;
                     objectActionType = ActionType.Scale;
                     SetAlphaEditButton(scaleAction.image);
                     runtimeTransformHandle.gameObject.SetActive(true);
@@ -312,12 +318,14 @@ namespace Drone.Builder
                     TrackBuilderUtils.ChangeLayerRecursively(runtimeTransformHandle.transform, LayerMask.NameToLayer(Idents.Layers.TrackGround));
                     break;
                 case CopyAction copyAction:
+                    if(selection.selectedObject == null) return;
                     objectActionType = ActionType.Copy;
                     CopyObject();
                     SetAlphaEditButton(copyAction.image);
                     runtimeTransformHandle.gameObject.SetActive(false);
                     break;
                 case PasteAction pasteAction:
+                    if(copyObject == null) return;
                     objectActionType = ActionType.Paste;
                     PasteObject();
                     SetAlphaEditButton(pasteAction.image);
@@ -350,20 +358,31 @@ namespace Drone.Builder
         
         private void OpenExitPanel()
         {
-            _isExitPanel = !_isExitPanel;
-            builderUI.exitBuilderPanel.SetActive(_isExitPanel);
-            builderUI.createPanel.SetActive(!_isExitPanel);
-            builderUI.editButtons.SetActive(!_isExitPanel);
-            builderUI.objectEditPanel.SetActive(!_isExitPanel);
-            if(builderUI.exitTabPanel.activeSelf && !_isExitPanel)
-                builderUI.exitTabPanel.SetActive(false);
-            if(builderUI.restartTabPanel.activeSelf && !_isExitPanel)
-                builderUI.restartTabPanel.SetActive(false);
+            if (!builderUI.loadLevelPanel.activeInHierarchy)
+            {
+                _isExitPanel = !_isExitPanel;
+                builderUI.exitBuilderPanel.SetActive(_isExitPanel);
+                builderUI.createPanel.SetActive(!_isExitPanel);
+                builderUI.editButtons.SetActive(!_isExitPanel);
+                if (_isExitPanel)
+                {
+                    builderUI.objectEditPanel.SetActive(false);
+                }
+                else
+                {
+                    builderUI.objectEditPanel.SetActive(selection.selectedObject);
+                }
+
+                if (builderUI.exitTabPanel.activeSelf && !_isExitPanel)
+                    builderUI.exitTabPanel.SetActive(false);
+                if (builderUI.restartTabPanel.activeSelf && !_isExitPanel)
+                    builderUI.restartTabPanel.SetActive(false);
+            }
         }
 
         private void ChangeObjectScale(float value)
         {
-            if (IsNoEditObject() || noScaleEditableObjects.HasFlag(currentObjectType.objectType))
+            if (IsNoEditObject() || noScaleEditableObjects.HasFlag(currentObjectType.objectType) || objectActionType is not ActionType.Scale)
                 return;
 
             editMenu.SetEditPanelParams(currentObjectType, currentObjectType.Scale.x + value * 0.5f);
@@ -371,7 +390,7 @@ namespace Drone.Builder
 
         private void RotateYObject(float value)
         {
-            if (IsNoEditObject())
+            if (IsNoEditObject() || objectActionType is not ActionType.Rotate)
                 return;
 
             switch (value)
@@ -383,6 +402,8 @@ namespace Drone.Builder
                     RotateObject(pendingObject.transform.up, -10, Space.World);
                     break;
             }
+            
+            editMenu.UpdateRotationsView(selection.selectedTrackObject);
         }
 
         private bool IsNoEditObject() => currentObjectType == null || pendingObject == null || pendingObjects.Count > 1;
@@ -445,6 +466,7 @@ namespace Drone.Builder
                 }
 
                 UpdateObjectHeight();
+                editMenu.UpdatePositionsView(selection.selectedTrackObject);
             }
         }
 

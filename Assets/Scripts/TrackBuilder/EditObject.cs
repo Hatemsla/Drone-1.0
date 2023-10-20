@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Drone.Builder.Text3D;
 using Drone.Builder.ControllerElements;
+using Drone.RuntimeHandle.Handles;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -19,6 +20,8 @@ namespace Drone.Builder
 
         private List<string> _maps;
         private List<string> _sounds;
+
+        public Quaternion _startRotation;
         
         private readonly Dictionary<int, float> _sliderValues = new()
         {
@@ -78,62 +81,224 @@ namespace Drone.Builder
 
         public void OnXPositionChanged(string value)
         {
-            if(float.TryParse(value, out var x))
-                currentObject.Position = new Vector3(x, currentObject.Position.y, currentObject.Position.z);
+            if(currentObject == null) return;
+            
+            if (float.TryParse(value, out var x))
+            {
+                if (x == 0)
+                {
+                    currentObject.Position = new Vector3(0f, currentObject.Position.y, currentObject.Position.z);
+                    return;
+                }
+                
+                if(Mathf.Abs(x - currentObject.Position.z) == 0f)
+                    return;
+                
+                if (BuilderManager.Instance.runtimeTransformHandle.space == HandleSpace.WORLD)
+                {
+                    currentObject.Position = new Vector3(x, currentObject.Position.y, currentObject.Position.z);
+                }
+                else
+                {
+                    var localDelta = new Vector3(x, 0, 0);
+                    var worldDelta = currentObject.transform.TransformDirection(localDelta);
+                    currentObject.Position += worldDelta;
+                }
+            }
+            else
+            {
+                editMenu.xPos.text = "0";
+                editMenu.altXPos.text = "0";
+            }
+
+            editMenu.UpdatePositionsView(currentObject);
         }
         
         public void OnYPositionChanged(string value)
         {
-            if(float.TryParse(value, out var y))
-                currentObject.Position = new Vector3(currentObject.Position.x, y, currentObject.Position.z);
+            if(currentObject == null) return;
+            
+            if (float.TryParse(value, out var y))
+            {
+                if (y == 0)
+                {
+                    currentObject.Position = new Vector3(currentObject.Position.x, 0f, currentObject.Position.z);
+                    return;
+                }
+                
+                if(Mathf.Abs(y - currentObject.Position.z) == 0f)
+                    return;
+                
+                if (BuilderManager.Instance.runtimeTransformHandle.space == HandleSpace.WORLD)
+                {
+                    currentObject.Position = new Vector3(currentObject.Position.x, y, currentObject.Position.z);
+                }
+                else
+                {
+                    var localDelta = new Vector3(0, y, 0);
+                    var worldDelta = currentObject.transform.TransformDirection(localDelta);
+                    currentObject.Position += worldDelta;
+                }
+            }
+            else
+            {
+                editMenu.yPos.text = "0";
+                editMenu.altYPos.text = "0";
+            }
+            
+            editMenu.UpdatePositionsView(currentObject);
         }
         
         public void OnZPositionChanged(string value)
         {
-            if(float.TryParse(value, out var z))
-                currentObject.Position = new Vector3(currentObject.Position.x, currentObject.Position.y, z);
+            if(currentObject == null) return;
+            
+            if (float.TryParse(value, out var z))
+            {
+                if (z == 0)
+                {
+                    currentObject.Position = new Vector3(currentObject.Position.x, currentObject.Position.y, 0f);
+                    return;
+                }
+
+                if(Mathf.Abs(z - currentObject.Position.z) == 0f)
+                    return;
+
+                if (BuilderManager.Instance.runtimeTransformHandle.space == HandleSpace.WORLD)
+                {
+                    currentObject.Position = new Vector3(currentObject.Position.x, currentObject.Position.y, z);
+                }
+                else
+                {
+                    var localDelta = new Vector3(0, 0, z);
+                    var worldDelta = currentObject.transform.TransformDirection(localDelta);
+                    currentObject.Position += worldDelta;
+                }
+            }
+            else
+            {
+                editMenu.zPos.text = "0";
+                editMenu.altZPos.text = "0";
+            }
+            
+            editMenu.UpdatePositionsView(currentObject);
         }
 
         public void OnXRotationTextChanged(string text)
         {
-            // var currentRotation = currentObject.Rotation.eulerAngles;
-            // var xRot = float.Parse(text);
-            // xRot = xRot switch
-            // {
-            //     > 180f => 180f,
-            //     < -180f => -180f,
-            //     _ => xRot
-            // };
-            // currentRotation.x = xRot;
-            // currentObject.Rotation = Quaternion.Euler(currentRotation);
+            if(currentObject == null) return;
+
+            if (!float.TryParse(text, out var xRot)) return;
+            
+            xRot = xRot switch
+            {
+                > 180f => 180f,
+                < -180f => -180f,
+                _ => xRot
+            };
+            
+            // currentObject.Rotation = _startRotation * Quaternion.Euler(Vector3.right * xRot);
+        }
+
+        public void OnXRotationEndEdit(string text)
+        {
+            if(currentObject == null) return;
+            if (editMenu.rotationZInput.text.Length != 0)
+            {
+                currentObject.Rotation = Quaternion.Euler(float.Parse(text), currentObject.Rotation.eulerAngles.y,
+                    currentObject.Rotation.eulerAngles.z);
+            }
+            else
+            {
+                currentObject.Rotation = Quaternion.Euler(0f, currentObject.Rotation.eulerAngles.y,
+                    currentObject.Rotation.eulerAngles.z);
+                editMenu.rotationZInput.text = "0";
+            }
+        }
+
+        public void OnXStartRotation(string text)
+        {
+            if(currentObject == null) return;
+
+            _startRotation = currentObject.Rotation;
         }
 
         public void OnYRotationTextChanged(string text)
         {
-            // var currentRotation = currentObject.Rotation.eulerAngles;
-            // var xRot = float.Parse(text);
-            // xRot = xRot switch
-            // {
-            //     > 180f => 180f,
-            //     < -180f => -180f,
-            //     _ => xRot
-            // };
-            // currentRotation.y = xRot;
-            // currentObject.Rotation = Quaternion.Euler(currentRotation);
+            if(currentObject == null) return;
+
+            if (!float.TryParse(text, out var yRot)) return;
+            
+            yRot = yRot switch
+            {
+                > 180f => 180f,
+                < -180f => -180f,
+                _ => yRot
+            };
+            
+            // currentObject.Rotation = _startRotation * Quaternion.Euler(Vector3.right * yRot);
+        }
+        
+        public void OnYRotationEndEdit(string text)
+        {
+            if(currentObject == null) return;
+            if (editMenu.rotationYInput.text.Length != 0)
+            {
+                currentObject.Rotation = Quaternion.Euler(currentObject.Rotation.eulerAngles.x, float.Parse(text),
+                    currentObject.Rotation.eulerAngles.z);
+            }
+            else
+            {
+                currentObject.Rotation = Quaternion.Euler(currentObject.Rotation.eulerAngles.x, 0f,
+                    currentObject.Rotation.eulerAngles.z);
+                editMenu.rotationYInput.text = "0";
+            }
+        }
+        
+        public void OnYStartRotation(string text)
+        {
+            if(currentObject == null) return;
+
+            _startRotation = currentObject.Rotation;
         }
 
         public void OnZRotationTextChanged(string text)
         {
-            // var currentRotation = currentObject.Rotation.eulerAngles;
-            // var xRot = float.Parse(text);
-            // xRot = xRot switch
-            // {
-            //     > 180f => 180f,
-            //     < -180f => -180f,
-            //     _ => xRot
-            // };
-            // currentRotation.z = xRot;
-            // currentObject.Rotation = Quaternion.Euler(currentRotation);
+            if(currentObject == null) return;
+
+            if (!float.TryParse(text, out var zRot)) return;
+            
+            zRot = zRot switch
+            {
+                > 180f => 180f,
+                < -180f => -180f,
+                _ => zRot
+            };
+            
+            // currentObject.Rotation = _startRotation * Quaternion.Euler(Vector3.right * zRot);
+        }
+        
+        public void OnZRotationEndEdit(string text)
+        {
+            if(currentObject == null) return;
+            if (editMenu.rotationZInput.text.Length != 0)
+            {
+                currentObject.Rotation = Quaternion.Euler(currentObject.Rotation.eulerAngles.x, currentObject.Rotation.eulerAngles.y,
+                    float.Parse(text));
+            }
+            else
+            {
+                currentObject.Rotation = Quaternion.Euler(currentObject.Rotation.eulerAngles.x, currentObject.Rotation.eulerAngles.y,
+                    0f);
+                editMenu.rotationZInput.text = "0";
+            }
+        }
+        
+        public void OnZStartRotation(string text)
+        {
+            if(currentObject == null) return;
+
+            _startRotation = currentObject.Rotation;
         }
 
         public void OnXYZScaleChanged(float value)

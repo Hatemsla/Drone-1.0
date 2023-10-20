@@ -123,16 +123,13 @@ namespace Drone.Builder
 
         public void UpdateRotationsView(TrackObject trackObject)
         {
-            rotationXInput.text = trackObject.Rotation.eulerAngles.x.ToString(CultureInfo.CurrentUICulture);
-            rotationYInput.text = trackObject.Rotation.eulerAngles.y.ToString(CultureInfo.CurrentUICulture);
-            rotationZInput.text = trackObject.Rotation.eulerAngles.z.ToString(CultureInfo.CurrentUICulture);
+            rotationXInput.text = trackObject.Rotation.eulerAngles.x.ToString("f0", CultureInfo.CurrentUICulture);
+            rotationYInput.text = trackObject.Rotation.eulerAngles.y.ToString("f0", CultureInfo.CurrentUICulture);
+            rotationZInput.text = trackObject.Rotation.eulerAngles.z.ToString("f0", CultureInfo.CurrentUICulture);
         }
 
-        public void SetEditPanelParams(TrackObject trackObject, float newScale)
+        public void UpdatePositionsView(TrackObject trackObject)
         {
-            objectName.text = trackObject.objectName;
-            if(trackObject.objectSprite)
-                objectImage.sprite = trackObject.objectSprite;
             xPos.text = trackObject.Position.x.ToString("f1", CultureInfo.CurrentCulture);
             yPos.text = trackObject.Position.y.ToString("f1", CultureInfo.CurrentCulture);
             zPos.text = trackObject.Position.z.ToString("f1", CultureInfo.CurrentCulture);
@@ -140,6 +137,14 @@ namespace Drone.Builder
             altXPos.text = trackObject.Position.x.ToString("f2", CultureInfo.CurrentCulture);
             altYPos.text = trackObject.Position.y.ToString("f2", CultureInfo.CurrentCulture);
             altZPos.text = trackObject.Position.z.ToString("f2", CultureInfo.CurrentCulture);
+        }
+
+        public void SetEditPanelParams(TrackObject trackObject, float newScale)
+        {
+            objectName.text = trackObject.objectName;
+            if(trackObject.objectSprite)
+                objectImage.sprite = trackObject.objectSprite;
+            
 
             xyzScaleValue.text = trackObject.Scale.x.ToString("f1", CultureInfo.CurrentCulture);
             

@@ -4,6 +4,7 @@ using System.Linq;
 using Drone;
 using Drone.Builder.ControllerElements;
 using Drone.TrackBuilder;
+using Drone.TrackBuilder.EditButtons;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -167,6 +168,10 @@ namespace Drone.Builder
         {
             if (selectedObject == null) return;
             if (selectedTrackObject.objectType == ObjectsType.Drone) return;
+
+            BuilderManager.Instance.runtimeTransformHandle.SetTarget(transform);
+            BuilderManager.Instance.runtimeTransformHandle.gameObject.SetActive(false);
+            BuilderManager.Instance.EditButtonsHandler(BuilderManager.Instance.editButtonsAction.FirstOrDefault(x => x is SelectAction));
             
             foreach (var selectedObj in selectedObjects)
             {
@@ -227,12 +232,14 @@ namespace Drone.Builder
             selectedObject = obj;
             selectedTrackObject = obj.GetComponent<TrackObject>();
 
-            BuilderManager.Instance.runtimeTransformHandle.target = selectedObject.transform;
-            // BuilderManager.Instance.runtimeTransformHandle.gameObject.SetActive(true);
-            
-            if(selectedTrackObject != null)
+            BuilderManager.Instance.runtimeTransformHandle.SetTarget(selectedObject.transform);
+
+            if (selectedTrackObject != null)
+            {
                 editObject.editMenu.UpdateRotationsView(selectedTrackObject);
-            
+                editObject.editMenu.UpdatePositionsView(selectedTrackObject);
+            }
+
             switch (selectedTrackObject.objectType)
             {
                 case ObjectsType.Floor:

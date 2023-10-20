@@ -17,7 +17,6 @@ namespace Drone.Builder.ControllerElements
 
         private bool isMovePrev;
 
-        //private Rigidbody grabbedObjectRigidbody;
         private FixedJoint joint;
         public float raycastDistance = 5f;
         private Ray ray;
@@ -26,19 +25,20 @@ namespace Drone.Builder.ControllerElements
         {
             CheckGrab();
             ray = new Ray(transform.position, Vector3.up);
-            set_gravity_if_move();
+            SetGravityIfMove();
         }
 
-        private void set_gravity_if_move()
+        private void SetGravityIfMove()
         {
             if (isMovePrev == BuilderManager.Instance.isMove)
             {
                 isMovePrev = !isMovePrev;
-                grabbedObjectRigidbody.isKinematic = !BuilderManager.Instance.isMove;
+                if(grabbedObjectRigidbody)
+                    grabbedObjectRigidbody.isKinematic = !BuilderManager.Instance.isMove;
             }
         }
 
-        private void check_button()
+        private void CheckButton()
         {
             if (!isObjectGrabbed)
                 TryGrabObject();
@@ -48,13 +48,13 @@ namespace Drone.Builder.ControllerElements
 
         private void OnEnable()
         {
-            InputManager.Instance.ApplyOpenEvent += check_button;
+            InputManager.Instance.ApplyOpenEvent += CheckButton;
             BuilderManager.Instance.ObjectChangeSceneEvent += FindPrompt;
         }
 
         private void OnDisable()
         {
-            InputManager.Instance.ApplyOpenEvent -= check_button;
+            InputManager.Instance.ApplyOpenEvent -= CheckButton;
             BuilderManager.Instance.ObjectChangeSceneEvent -= FindPrompt;
         }
 

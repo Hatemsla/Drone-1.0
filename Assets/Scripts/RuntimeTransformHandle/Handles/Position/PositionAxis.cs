@@ -11,12 +11,15 @@ namespace Drone.RuntimeHandle.Handles.Position
 
         private Vector3 _interactionOffset;
         private Ray _raxisRay;
+        private EditObject _editObject;
 
-        public PositionAxis Initialize(RuntimeTransformHandle p_runtimeHandle, Vector3 p_axis, Color p_color)
+        public PositionAxis Initialize(RuntimeTransformHandle p_runtimeHandle, Vector3 p_axis, Color p_color,
+            EditObject editObject)
         {
             _parentTransformHandle = p_runtimeHandle;
             _axis = p_axis;
             _defaultColor = p_color;
+            _editObject = editObject;
 
             InitializeMaterial();
 
@@ -71,6 +74,8 @@ namespace Drone.RuntimeHandle.Handles.Position
             }
 
             _parentTransformHandle.target.position = position;
+            
+            _editObject.editMenu.UpdatePositionsView(_editObject.currentObject);
 
             base.Interact(p_previousPosition);
         }

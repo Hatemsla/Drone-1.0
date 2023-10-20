@@ -1,3 +1,4 @@
+using Drone.Builder;
 using Drone.RuntimeHandle.Handles;
 using Drone.RuntimeHandle.Handles.Position;
 using Drone.RuntimeHandle.Handles.Rotation;
@@ -22,6 +23,7 @@ namespace Drone.RuntimeHandle
         public bool autoScale;
         public float autoScaleFactor = 1;
         public Camera handleCamera;
+        public EditObject editObject;
 
         private Vector3 _previousMousePosition;
         private HandleBase _previousAxis;
@@ -64,10 +66,10 @@ namespace Drone.RuntimeHandle
             switch (type)
             {
                 case HandleType.POSITION:
-                    _positionHandle = gameObject.AddComponent<PositionHandle>().Initialize(this);
+                    _positionHandle = gameObject.AddComponent<PositionHandle>().Initialize(this, editObject);
                     break;
                 case HandleType.ROTATION:
-                    _rotationHandle = gameObject.AddComponent<RotationHandle>().Initialize(this);
+                    _rotationHandle = gameObject.AddComponent<RotationHandle>().Initialize(this, editObject);
                     break;
                 case HandleType.SCALE:
                     _scaleHandle = gameObject.AddComponent<ScaleHandle>().Initialize(this);
